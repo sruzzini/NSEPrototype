@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package DataLayer.WaysideController;
+package DataLayer.Train;
 
 /**
  *
  * @author domino54
  */
-public class Wayside {
+public class TrainCommands {
     
 }

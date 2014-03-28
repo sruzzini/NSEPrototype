@@ -5,6 +5,8 @@
  */
 
 package DataLayer.Train;
+import DataLayer.TrackModel.TrackSignal;
+import DataLayer.TrackModel.BeaconSignal;
 
 /**
  *
@@ -12,5 +14,9 @@ package DataLayer.Train;
  */
 public class Train 
 {
+    private TrainStatus status;
+    private TrainCommands commands;
+    private TrackSignal trackSignal;
+    private BeaconSignal beaconSignal;
     
 }
