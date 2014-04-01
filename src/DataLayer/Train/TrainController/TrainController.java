@@ -72,6 +72,27 @@ public class TrainController
         this.DesiredTemperature = TrainController.ROOM_TEMP;
     }
     
+    public TrainController(int multiplier, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
+    {
+        this.iD = 0;
+        this.timeMultiplier = multiplier;
+        this.time = System.currentTimeMillis();
+        this.samplePeriod = TrainController.STANDARD_SAMPLE_PERIOD;
+        this.trainStatus = status;
+        this.trackSignal = signal;
+        this.lastBeacon = beacon;
+        this.lastIntermediary = 0;
+        this.lastVelocityError = 0;
+        this.VelocitySetPoint = 0;
+        this.OperatorEBrake = OperatorInputStatus.AUTO;
+        this.OperatorSBrake = OperatorInputStatus.AUTO;
+        this.OperatorExtLights = OperatorInputStatus.AUTO;
+        this.OperatorIntLights = OperatorInputStatus.AUTO;
+        this.OperatorLeftDoor = OperatorInputStatus.AUTO;
+        this.OperatorRightDoor = OperatorInputStatus.AUTO;
+        this.DesiredTemperature = TrainController.ROOM_TEMP;
+    }
+    
     public TrainController(int id, int multiplier, double period, TrainStatus t, TrackSignal s, double velocity,
                            OperatorInputStatus ebrake, OperatorInputStatus sbrake, OperatorInputStatus elights, 
                            OperatorInputStatus ilights, OperatorInputStatus ldoor, OperatorInputStatus rdoor, double temp)
