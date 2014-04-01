@@ -15,7 +15,7 @@ import DataLayer.TrackModel.BeaconSignal;
 public class Train 
 {
     private TrainStatus status;
-    private TrainCommands commands;
+    private TrainCommand commands;
     private TrackSignal trackSignal;
     private BeaconSignal beaconSignal;
     

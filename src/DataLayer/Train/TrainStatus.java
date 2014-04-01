@@ -12,6 +12,12 @@ package DataLayer.Train;
  */
 public class TrainStatus 
 {
+    //Failures
+    public static final int ENGINE_FAILURE = 1;
+    public static final int SIGNAL_PICKUP_FAILURE = 3;
+    public static final int E_BRAKE_FAILURE = 7;
+    public static final int S_BRAKE_FAILURE = 13;
+    
     private double velocity; // meters/sec
     private double mass; // metric tons
     private double temperature; // degrees C
