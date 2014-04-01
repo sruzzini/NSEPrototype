@@ -1,19 +1,88 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * TrackSignal class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Ryan Mertz
+ *  Stephen T. Ruzzini
+ *
+ *****************************************************************************/
 
 package DataLayer.TrackModel;
 
-/**
- *
- * @author domino54
- */
 public class TrackSignal 
 {
     private double velocityCommand; // meters/sec
     private int authority;
     private boolean isUnderground;
     private String nextDestination;
+    
+    //Constructors
+    public TrackSignal()
+    {
+        this.velocityCommand = 0;
+        this.authority = 0;
+        this.isUnderground = false;
+        this.nextDestination = null;
+    }
+    
+    public TrackSignal(double velocity, int authority, boolean isUnderground, String nextDestination)
+    {
+        this.velocityCommand = velocity;
+        this.authority = authority;
+        this.isUnderground = isUnderground;
+        this.nextDestination = nextDestination;
+    }
+    
+    
+    //Getters
+    public double getVelocityCommand()
+    {
+        return this.velocityCommand;
+    }
+    
+    public int getAuthority()
+    {
+        return this.authority;
+    }
+    
+    public boolean getUndergroundStatus()
+    {
+        return this.isUnderground;
+    }
+    
+    public String getNextDestination()
+    {
+        String s = "**Destination Not Specified**";
+        if (this.nextDestination != null)
+        {
+            s = this.nextDestination;
+        }
+        return s;
+    }
+    
+    
+    //Setters
+    public void setVelocityCommand(double x)
+    {
+        this.velocityCommand = x;
+    }
+    
+    public void setAuthority(int x)
+    {
+        this.authority = x;
+    }
+    
+    public void setUndergroundStatus(boolean x)
+    {
+        this.isUnderground = x;
+    }
+    
+    public void setNextDestination(String x)
+    {
+        this.nextDestination = x;
+    }
 }

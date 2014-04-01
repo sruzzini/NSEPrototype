@@ -1,17 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * Train class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Drew Winfield
+ *  Stephen T. Ruzzini
+ *
+ *****************************************************************************/
 
 package DataLayer.Train;
 import DataLayer.TrackModel.TrackSignal;
 import DataLayer.TrackModel.BeaconSignal;
 
-/**
- *
- * @author domino54
- */
 public class Train 
 {
     private TrainStatus status;

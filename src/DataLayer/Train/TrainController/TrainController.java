@@ -1,18 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * TrainController class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Stephen T. Ruzzini
+ *
+ *****************************************************************************/
 
 package DataLayer.Train.TrainController;
 import DataLayer.TrackModel.TrackSignal;
 import DataLayer.TrackModel.BeaconSignal;
 import DataLayer.Train.*;
 
-/**
- *
- * @author domino54
- */
+
 public class TrainController 
 {
     public static final double STANDARD_SAMPLE_PERIOD = 0.1;
