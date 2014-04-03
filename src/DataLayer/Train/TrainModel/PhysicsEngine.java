@@ -7,7 +7,7 @@
 package DataLayer.Train.TrainModel;
 
 import java.util.Calendar;
-
+import DataLayer.Train.ModelPhysics;
 /**
  *
  * @author drewwinfield
@@ -21,10 +21,12 @@ public class PhysicsEngine implements Runnable
     private double gradient;
     private boolean sBrakeStatus;
     private boolean eBrakeStatus;
-    private long time;
     private int time_multiplier;
+    
     private double velocity;
     private double delta_x;
+    
+    ModelPhysics modelPhysics;
     
     private final double passengerMass = 70; // avg weight of a passenger, in kg.  maybe.
     private final double trackCoeffFric = .005; // track's coefficient of friction
@@ -32,6 +34,7 @@ public class PhysicsEngine implements Runnable
     
     private final double maxSpeed = 19.44; // in m/s
     private final int maxPassengers = 222; // max number of persons on train
+    private final int crewCount = 5;
     private final double emptyMass = 40900; // in kg
     private final double fullMass = 56700; // in kg
     
@@ -57,6 +60,11 @@ public class PhysicsEngine implements Runnable
         signalFailure = false;
         sBrakeFailure = false;
         eBrakeFailure = false;
+    }
+    
+    public PhysicsEngine(ModelPhysics mp)
+    {
+        modelPhysics = mp;
     }
     // Velocity
     public double getVelocity()
@@ -168,6 +176,26 @@ public class PhysicsEngine implements Runnable
         double eBrakeForce = twoThirdLoadMass * twoThirdLoadEBrakeAccel;
         return eBrakeForce;
     }
+    private void getPhysicsInfo()
+    {
+        motorPower = modelPhysics.motorPower;
+        sBrakeStatus = modelPhysics.sBrakeStatus;
+        eBrakeStatus = modelPhysics.eBrakeStatus;
+        time_multiplier = modelPhysics.time_multiplier;
+        gradient = modelPhysics.gradient;
+        passengers = passengers + modelPhysics.passengerChange;
+    }
+    private void sendPhysicsInfo()
+    {
+        modelPhysics.velocity = velocity;
+        modelPhysics.delta_x = delta_x;
+        modelPhysics.mass = mass;
+        modelPhysics.eBrakeFailure = eBrakeFailure;
+        modelPhysics.sBrakeFailure = sBrakeFailure;
+        modelPhysics.signalFailure = signalFailure;
+        modelPhysics.engineFailure = engineFailure;
+    }
+    //private void
     public void simulate()
     {
         // F_engine + F_friction + F_mg / m = a
@@ -199,7 +227,8 @@ public class PhysicsEngine implements Runnable
         while (true)
         //for (int i = 0; i < 100; i++)
         {
-            mass = emptyMass + passengers * passengerMass; // calc mass using passenger count 
+            getPhysicsInfo();
+            mass = emptyMass + (passengers + crewCount) * passengerMass; // calc mass using passenger count
             
             // calculate fGravity
             gravAngle = Math.atan(gradient / 100);
@@ -282,6 +311,7 @@ public class PhysicsEngine implements Runnable
             
             delta_x = delta_x + velocity * deltaT;
             System.out.println(delta_x);
+            sendPhysicsInfo();
             /*
             if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
             {

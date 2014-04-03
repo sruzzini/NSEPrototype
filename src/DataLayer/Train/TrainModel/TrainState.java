@@ -5,6 +5,7 @@
  */
 
 package DataLayer.Train.TrainModel;
+import DataLayer.Train.ModelState;
 
 /**
  *
@@ -19,6 +20,8 @@ public class TrainState {
     private String announcement;
     private boolean heater;
     private int temperature;
+    private ModelState modelState;
+    private String advertisement;
     
     public TrainState()
     {
@@ -29,6 +32,15 @@ public class TrainState {
         announcement = "";
         heater = false;
         temperature = 65;
+        advertisement = "";
+        
+    }
+    
+    // unless we have a train state thread doing the updating, pretty sure 
+    // we'll need the train to update these values
+    public TrainState(ModelState ms)
+    {
+        modelState = ms;
     }
     
     // right doors
@@ -94,5 +106,13 @@ public class TrainState {
     {
         return temperature;
     }
-    
+    // advertisement
+    public void setAdvertisement(String newAdvertisement)
+    {
+        advertisement = newAdvertisement;
+    }
+    public String getAdvertisement()
+    {
+        return advertisement;
+    }
 }

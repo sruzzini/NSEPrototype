@@ -19,6 +19,7 @@ public class TrackSignal
     private int authority;
     private boolean isUnderground;
     private String nextDestination;
+    private int gradient;
     
     //Constructors
     public TrackSignal()
@@ -27,6 +28,7 @@ public class TrackSignal
         this.authority = 0;
         this.isUnderground = false;
         this.nextDestination = null;
+        this.gradient = 0;
     }
     
     public TrackSignal(double velocity, int authority, boolean isUnderground, String nextDestination)
@@ -35,6 +37,7 @@ public class TrackSignal
         this.authority = authority;
         this.isUnderground = isUnderground;
         this.nextDestination = nextDestination;
+        this.gradient = 0;
     }
     
     

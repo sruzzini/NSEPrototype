@@ -5,11 +5,28 @@
  */
 
 package DataLayer.Train.TrainModel;
+import DataLayer.Train.ModelState;
+import DataLayer.Train.ModelPhysics;
 
 /**
  *
  * @author drewwinfield
  */
+
+
+
 public class TrainModel {
+        
+    private final ModelState modelState;
+    private final ModelPhysics modelPhysics;
+    public final TrainState state;
+    public final PhysicsEngine physics;
     
+    public TrainModel(ModelPhysics mp, ModelState ms)
+    {
+        modelPhysics = mp;
+        modelState = ms;
+        state = new TrainState(modelState);
+        physics = new PhysicsEngine(modelPhysics);
+    }
 }
