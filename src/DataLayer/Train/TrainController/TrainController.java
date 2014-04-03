@@ -16,6 +16,7 @@ import DataLayer.TrackModel.BeaconSignal;
 import DataLayer.Train.*;
 
 
+//Train Controller Class
 public class TrainController 
 {
     public static final double STANDARD_SAMPLE_PERIOD = 0.1;
