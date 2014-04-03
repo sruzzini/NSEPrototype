@@ -24,6 +24,8 @@ public class Train implements Runnable
     private int timeMultiplier;
     private TrainStatus status;
     private TrainCommand commands;
+    private ModelPhysics modelPhysics;
+    private ModelState modelState;
     private TrackSignal trackSignal;
     private BeaconSignal beaconSignal;
     private TrainController controller;
@@ -36,10 +38,12 @@ public class Train implements Runnable
         this.timeMultiplier = 1;
         this.status = new TrainStatus();
         this.commands = new TrainCommand();
+        this.modelPhysics = new ModelPhysics();
+        this.modelState = new ModelState();
         this.trackSignal = new TrackSignal();
         this.beaconSignal = null;
         this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
-        //this.model = new TrainModel(this.timeMultiplier, this.status, this.commands);
+        this.model = new TrainModel(this.modelPhysics, this.modelState);
     }
     
     public Train(int multiplier, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
@@ -50,7 +54,7 @@ public class Train implements Runnable
         this.trackSignal = signal;
         this.beaconSignal = beacon;
         this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
-        //this.model = new TrainModel(this.timeMultiplier, this.status, this.commands);
+        this.model = new TrainModel(this.modelPhysics, this.modelState);
     }
     
     
@@ -84,7 +88,26 @@ public class Train implements Runnable
     {
         this.beaconSignal = s;
     }
+    public double getDeltaX()
+    {
+        return modelPhysics.delta_x;
+    }
+    // Private method
+    private void updateModelPhysics(TrainCommand c)
+    {
+        modelPhysics.motorPower = c.PowerCommand;
+        modelPhysics.sBrakeStatus = c.ServiceBrakeOn;
+        modelPhysics.eBrakeStatus = c.EmergencyBrakeOn;
+        modelPhysics.time_multiplier = timeMultiplier;
+        // get this from track
+        //passengerChange;
+        //public double gradient;
     
+    }
+    private void updateModelState()
+    {
+        
+    }
     
     //Public Methods
     public void run()
@@ -99,7 +122,7 @@ public class Train implements Runnable
         while(true)
         {
             this.commands = controller.getTrainCommand();
-            
+            updateModelPhysics(commands);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
