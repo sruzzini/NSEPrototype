@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package DataLayer.Bundles;
+package DataLayer.TrackModel;
 
 import DataLayer.EnumTypes.LineColor;
 

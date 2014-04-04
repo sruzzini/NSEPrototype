@@ -1,16 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * NSE class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Nathan Hachten
+ *  Michael Kudlaty
+ *  Ryan Mertz
+ *  Stephen Ruzzini
+ *  Drew Winfield
+ *
+ *****************************************************************************/
 
 package DataLayer;
 
-/**
- *
- * @author domino54
- */
+import DataLayer.CTC.*;
+import DataLayer.TrackModel.*;
+import DataLayer.Train.*;
+import DataLayer.Wayside.*;
+import java.util.*;
+
+
 public class NSE 
 {
+    public CTC CTCOffice;
+    public TrackModel Track;
+    public ArrayList<Wayside> WaysideControllers;
+    public ArrayList<TrainLocation> TrainLocations;
+    public ArrayList<Train> Trains;
     
 }

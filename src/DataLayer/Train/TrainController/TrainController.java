@@ -119,7 +119,7 @@ public class TrainController
     
     
     //Public methods
-    public void readTrainToControllerBundle(TrainStatus trainS, TrackSignal trackS, BeaconSignal beacon)
+    public void ReadTrainToControllerBundle(TrainStatus trainS, TrackSignal trackS, BeaconSignal beacon)
     {
         this.trainStatus = trainS;
         this.trackSignal = trackS;
@@ -129,12 +129,12 @@ public class TrainController
         }
     }
     
-    public void setTimeMultiplier(int multiplier)
+    public void SetTimeMultiplier(int multiplier)
     {
         this.timeMultiplier = multiplier;
     }
     
-    public TrainCommand getTrainCommand()
+    public TrainCommand GetTrainCommand()
     {
         TrainCommand toReturn;
         TrainCommand[] safetyArray = new TrainCommand[3];
