@@ -8,6 +8,7 @@ package DataLayer.Wayside;
 
 import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
+import DataLayer.Bundles.Switch;
 import DataLayer.EnumTypes.LineColor;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public final class Wayside {
     //private final LineColor[] lines;
     
     
-    public Wayside(BlockInfoBundle[] blockInfoArray)
+    public Wayside(BlockInfoBundle[] blockInfoArray, BlockSignalBundle[] blockSignalArray)
     {
         int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
         LineColor[] lines = new LineColor[] {LineColor.GREEN, LineColor.GREEN, LineColor.GREEN,
@@ -38,6 +39,7 @@ public final class Wayside {
         }
         
         this.setBlockInfoArray(blockInfoArray);
+        this.setBlockSignalArray(blockSignalArray);
         
         
     }
@@ -58,6 +60,18 @@ public final class Wayside {
                         this.controllers[i].sendTravelSignal(packet);
                     }
                 }
+            }
+        }
+    }
+    
+    public void sendSwitchStateSignal(Switch packet)
+    {
+        for (TrackController tc : this.controllers)
+        {
+            if (tc.getLine() == packet.getLineID() && tc.containsBlock(packet.getBlockID()))
+            {
+                tc.sendSwitchStateSignal(packet);
+                break;
             }
         }
     }
@@ -83,5 +97,80 @@ public final class Wayside {
             tc.setTrackBlockInfo(list.get(tc.getId()));
         }
     }
+    
+    public void setBlockSignalArray(BlockSignalBundle[] blockSignalArray)
+    {
+        List<List<BlockSignalBundle>> list;
+        list = new ArrayList<>(controllerCount);
+        
+        for (BlockSignalBundle b : blockSignalArray)
+        {
+            for (TrackController tc : this.controllers)
+            {
+                if (b.getLineID() == tc.getLine() && tc.containsBlock(b.getBlockID()))
+                {
+                    //add block to tc's arraylist
+                    list.get(tc.getId()).add(b);
+                }
+            }
+        }
+        for (TrackController tc : this.controllers)
+        {
+            tc.setTrackSignalInfo(list.get(tc.getId()));
+        }
+        
+    }
+    
+    public ArrayList<BlockSignalBundle> getBlockSignalCommands()
+    {
+        ArrayList<BlockSignalBundle> commands;
+        commands = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (BlockSignalBundle c : tc.getCommandSignalQueue())
+            {
+                commands.add(c);
+            }
+        }
+        
+        return commands;
+    }
+    
+    public ArrayList<BlockInfoBundle> getBlockInfoCommands()
+    {
+        ArrayList<BlockInfoBundle> commands;
+        commands = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (BlockInfoBundle c : tc.getCommandBlockQueue())
+            {
+                commands.add(c);
+            }
+        }
+        
+        return commands;
+    }
+    
+    public ArrayList<Switch> getSwitchCommands()
+    {
+        ArrayList<Switch> commands;
+        commands = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (Switch c : tc.getCommandSwitchQueue())
+            {
+                commands.add(c);
+            }
+        }
+        
+        return commands;
+    }
+    
+   
+    
+    
     
 }

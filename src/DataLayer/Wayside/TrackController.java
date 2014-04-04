@@ -8,6 +8,7 @@ package DataLayer.Wayside;
 
 import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
+import DataLayer.Bundles.Switch;
 import DataLayer.EnumTypes.LineColor;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -20,14 +21,25 @@ import java.util.List;
 public class TrackController {
     private final int id;
     private final LineColor line;
-    private final int[] blockNums;
+    private final int[] blocksInSector;
     private Hashtable<Integer, BlockInfoBundle> trackBlockInfo;
-    private ArrayList<BlockSignalBundle> commandSignalQueue;
+    private Hashtable<Integer, BlockSignalBundle> trackSignalInfo;
+    private Hashtable<Integer, Switch> switchInfo;
+    private final ArrayList<BlockSignalBundle> commandSignalQueue;
+    private final ArrayList<Switch> commandSwitchQueue;
+    private final ArrayList<BlockInfoBundle> commandBlockQueue;
+    private final PLC plcProgram;
 
-    public TrackController(int id, LineColor line, int[] blockNums) {
+    public TrackController(int id, LineColor line, int[] blocksInSector) {
         this.id = id;
         this.line = line;
-        this.blockNums = blockNums;
+        this.blocksInSector = blocksInSector;
+        plcProgram = new PLCGreenOne(id, line, blocksInSector);
+        this.commandSignalQueue = new ArrayList<>();
+        this.commandSwitchQueue = new ArrayList<>();
+        this.commandBlockQueue = new ArrayList<>();
+        this.trackBlockInfo = new Hashtable();
+        this.trackSignalInfo = new Hashtable();
     }
     
     public void sendTravelSignal(BlockSignalBundle packet)
@@ -43,8 +55,13 @@ public class TrackController {
             packet.setSpeed(speedLimit);
         }
         
-        commandSignalQueue.add(packet);
+        this.commandSignalQueue.add(packet);
         
+    }
+    
+    public void sendSwitchStateSignal(Switch packet)
+    {
+        this.commandSwitchQueue.add(packet);
     }
 
     public int getId() {
@@ -56,13 +73,13 @@ public class TrackController {
     }
 
     public int[] getBlockNums() {
-        return blockNums;
+        return blocksInSector;
     }
     
     public boolean containsBlock(int n)
     {
         boolean result = false;
-        for (int b : this.blockNums)
+        for (int b : this.blocksInSector)
         {
             if (b == n)
             {
@@ -81,6 +98,28 @@ public class TrackController {
             this.trackBlockInfo.put(b.getBlockID(), b);
         }
     }
+    
+    public void setTrackSignalInfo(List<BlockSignalBundle> info)
+    {
+        for (BlockSignalBundle b : info)
+        {
+            this.trackSignalInfo.put(b.getBlockID(), b);
+        }
+    }
+
+    public ArrayList<BlockSignalBundle> getCommandSignalQueue() {
+        return commandSignalQueue;
+    }
+
+    public ArrayList<Switch> getCommandSwitchQueue() {
+        return commandSwitchQueue;
+    }
+
+    public ArrayList<BlockInfoBundle> getCommandBlockQueue() {
+        return commandBlockQueue;
+    }
+    
+    
     
     
     
