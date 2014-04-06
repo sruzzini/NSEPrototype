@@ -8,7 +8,8 @@ package DataLayer.Wayside;
 
 import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
-import DataLayer.Bundles.Switch;
+//import DataLayer.Bundles.Switch;
+import DataLayer.TrackModel.Switch;
 import DataLayer.EnumTypes.LineColor;
 import java.util.ArrayList;
 import java.util.Hashtable;
