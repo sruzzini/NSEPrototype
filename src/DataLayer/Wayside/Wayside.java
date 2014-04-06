@@ -23,7 +23,7 @@ import java.util.List;
  */
 public final class Wayside {
     private final TrackController[] controllers;
-    private final int controllerCount = 6;
+    private static final int CONTROLLER_COUNT = 6;
     //private final int[][] blockNums;
     //private final LineColor[] lines;
     
@@ -33,9 +33,9 @@ public final class Wayside {
         int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
         LineColor[] lines = new LineColor[] {LineColor.GREEN, LineColor.GREEN, LineColor.GREEN,
             LineColor.RED, LineColor.RED, LineColor.RED};
-        this.controllers = new TrackController[controllerCount];
+        this.controllers = new TrackController[CONTROLLER_COUNT];
         
-        for (int i = 0; i < controllerCount; i++)
+        for (int i = 0; i < CONTROLLER_COUNT; i++)
         {
             controllers[i] = new TrackController(i, lines[i], blockNums[i]);
         }
@@ -51,7 +51,7 @@ public final class Wayside {
         LineColor line = packet.LineID;
         int blockNum = packet.BlockID;
         
-        for (int i=0; i < controllerCount; i++)
+        for (int i=0; i < CONTROLLER_COUNT; i++)
         {
             if (controllers[i].getLine() == line)
             {
@@ -79,10 +79,10 @@ public final class Wayside {
         }
     }
     
-    public void setBlockInfoArray(List<Block> blockArray, LineColor line)
+    public void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
     {
-        List<List<Block>> list;
-        list = new ArrayList<>(controllerCount);
+        ArrayList<ArrayList<Block>> list;
+        list = new ArrayList<>(CONTROLLER_COUNT);
         
         for (Block b : blockArray)
         {
@@ -106,10 +106,26 @@ public final class Wayside {
         
     }
     
+    public ArrayList<Block> getBlockInfoArray(LineColor line)
+    {
+        ArrayList<Block> blockList;
+        blockList = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            if (tc.getLine() == line)
+            {
+                blockList.addAll(tc.getBlockInfo());
+            }
+        }
+        
+        return blockList;
+    }
+    
     public void setSwitchArray(List<Switch> switchArray)
     {
         List<List<Switch>> list;
-        list = new ArrayList<>(controllerCount);
+        list = new ArrayList<>(CONTROLLER_COUNT);
         LineColor line = switchArray.get(0).lineID;
         
         for (Switch s : switchArray)

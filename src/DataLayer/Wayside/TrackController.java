@@ -26,6 +26,7 @@ public class TrackController {
     private final int[] blocksInSector;
    // private Hashtable<Integer, BlockInfoBundle> trackBlockInfo;
     //private Hashtable<Integer, BlockSignalBundle> trackSignalInfo;
+    private ArrayList<Block> blockArray;
     private Hashtable<Integer, Block> blockInfo;
     private Hashtable<Integer, Switch> switchInfo;
     private final ArrayList<BlockSignalBundle> commandSignalQueue;
@@ -96,13 +97,18 @@ public class TrackController {
         return result;
     }
     
-    public void setTrackBlockInfo(List<Block> info)
+    public void setTrackBlockInfo(ArrayList<Block> info)
     {
-        //this.trackBlockInfo = info;
+        this.blockArray = info;
         for (Block b : info)
         {
             this.blockInfo.put(b.getBlockID(), b);
         }
+    }
+    
+    public ArrayList<Block> getBlockInfo()
+    {
+        return this.blockArray;
     }
     
     public void setSwitchInfo(List<Switch> info)
@@ -112,14 +118,6 @@ public class TrackController {
             this.switchInfo.put(s.switchID, s);
         }
     }
-    
-   /* public void setTrackSignalInfo(List<BlockSignalBundle> info)
-    {
-        for (BlockSignalBundle b : info)
-        {
-            this.trackSignalInfo.put(b.getBlockID(), b);
-        }
-    }*/
 
     public ArrayList<BlockSignalBundle> getCommandSignalQueue() {
         return commandSignalQueue;
