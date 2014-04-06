@@ -12,6 +12,10 @@ import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.TrackModel.Switch;
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.Block;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,27 +26,76 @@ import java.util.List;
  * @since 2014-04-02
  */
 public final class Wayside {
-    private final TrackController[] controllers;
-    private static final int CONTROLLER_COUNT = 6;
+    private  TrackController[] controllers;
+    private  int controllerCount;
     //private final int[][] blockNums;
     //private final LineColor[] lines;
     
     
     public Wayside()
     {
-        int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
+       /* int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
         LineColor[] lines = new LineColor[] {LineColor.GREEN, LineColor.GREEN, LineColor.GREEN,
-            LineColor.RED, LineColor.RED, LineColor.RED};
-        this.controllers = new TrackController[CONTROLLER_COUNT];
+            LineColor.RED, LineColor.RED, LineColor.RED};*/
+        //int[][] blockNums = new int[][];
         
-        for (int i = 0; i < CONTROLLER_COUNT; i++)
+        BufferedReader br = null;
+        
+        try 
         {
-            controllers[i] = new TrackController(i, lines[i], blockNums[i]);
-        }
+            String fileName = "wayside_layout.txt";
+            String currentLine;
+            br = new BufferedReader(new FileReader(fileName));
+            
+            controllerCount = Integer.parseInt(br.readLine());
+            
+        
+            this.controllers = new TrackController[controllerCount];
+            //int[][] blockNums = new int[controllerCount][];
+            //LineColor[] lines = new LineColor[controllerCount];
+            
+            
+            String[] controllerInfo;
+            String[] blocks;
+            int[] blockNums;
+            LineColor line;
+            for (int i = 0; i < controllerCount; i++)
+            {
+                currentLine = br.readLine();
+                controllerInfo = currentLine.split(":");
+                if (controllerInfo[1].equals("Green"))
+                {
+                    line = LineColor.GREEN;
+                }
+                else
+                {
+                    line = LineColor.RED;
+                }
+                blocks = controllerInfo[2].split(",");
+                blockNums = new int[blocks.length];
+                for (int j =0; j < blockNums.length; j++)
+                {
+                    blockNums[j] = Integer.parseInt(blocks[j]);
+                }
+                
+                controllers[i] = new TrackController(Integer.parseInt(controllerInfo[0]), line, blockNums);
+               
+                
+            }
+           
         
        // this.setBlockInfoArray(blockInfoArray);
         //this.setBlockSignalArray(blockSignalArray);
         
+        }
+        catch (FileNotFoundException e)
+        {
+            //catch error
+        }
+        catch (IOException e1)
+        {
+            //catch error
+        }
         
     }
     
@@ -51,7 +104,7 @@ public final class Wayside {
         LineColor line = packet.LineID;
         int blockNum = packet.BlockID;
         
-        for (int i=0; i < CONTROLLER_COUNT; i++)
+        for (int i=0; i < controllerCount; i++)
         {
             if (controllers[i].getLine() == line)
             {
@@ -82,7 +135,7 @@ public final class Wayside {
     public void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
     {
         ArrayList<ArrayList<Block>> list;
-        list = new ArrayList<>(CONTROLLER_COUNT);
+        list = new ArrayList<>(controllerCount);
         
         for (Block b : blockArray)
         {
@@ -125,7 +178,7 @@ public final class Wayside {
     public void setSwitchArray(List<Switch> switchArray)
     {
         List<List<Switch>> list;
-        list = new ArrayList<>(CONTROLLER_COUNT);
+        list = new ArrayList<>(controllerCount);
         LineColor line = switchArray.get(0).lineID;
         
         for (Switch s : switchArray)

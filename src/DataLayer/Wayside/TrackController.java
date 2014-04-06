@@ -34,7 +34,7 @@ public class TrackController {
     private final ArrayList<BlockInfoBundle> commandBlockQueue;
     private final PLC plcProgram;
 
-    public TrackController(int id, LineColor line, int[] blocksInSector) {
+    public TrackController(int id, LineColor line, int[] blocksInSector)  {
         this.id = id;
         this.line = line;
         this.blocksInSector = blocksInSector;
@@ -47,6 +47,8 @@ public class TrackController {
         //this.trackBlockInfo = new Hashtable();
         //this.trackSignalInfo = new Hashtable();
     }
+    
+    
     
     public void sendTravelSignal(BlockSignalBundle packet)
     {
