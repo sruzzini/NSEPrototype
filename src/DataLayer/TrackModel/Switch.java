@@ -1,9 +1,11 @@
 
 package DataLayer.TrackModel;
 
+import DataLayer.EnumTypes.LineColor;
+
 public class Switch 
 {
-    public int lineID;
+    public LineColor lineID;
     public int switchID;
     public int typeOfSwitch; // 1 = diverge, 2 = convergere
     public int approachBlock;
@@ -11,7 +13,7 @@ public class Switch
     public int divergentBlock;
     public boolean straight;
     
-    public Switch(int lineID, int switchID, int typeOfSwitch, int approachBlock, 
+    public Switch(LineColor lineID, int switchID, int typeOfSwitch, int approachBlock, 
             int straightBlock, int divergentBlock, boolean straight)
     {
         this.lineID = lineID;

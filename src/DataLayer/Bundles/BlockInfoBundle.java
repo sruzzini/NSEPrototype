@@ -21,14 +21,16 @@ import DataLayer.EnumTypes.XingState;
  * @since 03-30-2014
  */
 public class BlockInfoBundle extends BlockBundle {
-    public LightColor lightColor;
-    public XingState rrXingState;
+    public LightColor LightColor;
+    public XingState RRXingState;
 
-    public BlockInfoBundle(LightColor lightColor, XingState rrXingState, int blockID, LineColor lineID) {
-        super(blockID, lineID);
-        this.lightColor = lightColor;
-        this.rrXingState = rrXingState;
+    public BlockInfoBundle(LightColor LightColor, XingState RRXingState, int BlockID, LineColor LineID) {
+        super(BlockID, LineID);
+        this.LightColor = LightColor;
+        this.RRXingState = RRXingState;
     }
+
+    
 
     
     

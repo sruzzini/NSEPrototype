@@ -11,6 +11,7 @@ import DataLayer.Bundles.BlockSignalBundle;
 //import DataLayer.Bundles.Switch;
 import DataLayer.TrackModel.Switch;
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.TrackModel.Block;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public final class Wayside {
     //private final LineColor[] lines;
     
     
-    public Wayside(BlockInfoBundle[] blockInfoArray, BlockSignalBundle[] blockSignalArray)
+    public Wayside()
     {
         int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
         LineColor[] lines = new LineColor[] {LineColor.GREEN, LineColor.GREEN, LineColor.GREEN,
@@ -39,16 +40,16 @@ public final class Wayside {
             controllers[i] = new TrackController(i, lines[i], blockNums[i]);
         }
         
-        this.setBlockInfoArray(blockInfoArray);
-        this.setBlockSignalArray(blockSignalArray);
+       // this.setBlockInfoArray(blockInfoArray);
+        //this.setBlockSignalArray(blockSignalArray);
         
         
     }
     
     public void sendTravelSignal(BlockSignalBundle packet)
     {
-        LineColor line = packet.getLineID();
-        int blockNum = packet.getBlockID();
+        LineColor line = packet.LineID;
+        int blockNum = packet.BlockID;
         
         for (int i=0; i < controllerCount; i++)
         {
@@ -69,7 +70,8 @@ public final class Wayside {
     {
         for (TrackController tc : this.controllers)
         {
-            if (tc.getLine() == packet.getLineID() && tc.containsBlock(packet.getBlockID()))
+            if (tc.getLine() == packet.lineID && (tc.containsBlock(packet.straightBlock) || 
+                    tc.containsBlock(packet.approachBlock) || tc.containsBlock(packet.divergentBlock) ))
             {
                 tc.sendSwitchStateSignal(packet);
                 break;
@@ -77,49 +79,58 @@ public final class Wayside {
         }
     }
     
-    public void setBlockInfoArray(BlockInfoBundle[] blockInfoArray)
+    public void setBlockInfoArray(List<Block> blockArray, LineColor line)
     {
-        List<List<BlockInfoBundle>> list;
+        List<List<Block>> list;
         list = new ArrayList<>(controllerCount);
         
-        for (BlockInfoBundle b : blockInfoArray)
+        for (Block b : blockArray)
         {
             for (TrackController tc : this.controllers)
             {
-                if (b.getLineID() == tc.getLine() && tc.containsBlock(b.getBlockID()))
+                if (tc.getLine() == line && tc.containsBlock(b.getBlockID()))
                 {
-                    //add block to tc's arraylist
                     list.get(tc.getId()).add(b);
                 }
+                      
             }
         }
+        
         for (TrackController tc : this.controllers)
         {
-            tc.setTrackBlockInfo(list.get(tc.getId()));
+            if (tc.getLine() == line)
+            {
+                tc.setTrackBlockInfo(list.get(tc.getId()));
+            }
         }
+        
     }
     
-    public void setBlockSignalArray(BlockSignalBundle[] blockSignalArray)
+    public void setSwitchArray(List<Switch> switchArray)
     {
-        List<List<BlockSignalBundle>> list;
+        List<List<Switch>> list;
         list = new ArrayList<>(controllerCount);
+        LineColor line = switchArray.get(0).lineID;
         
-        for (BlockSignalBundle b : blockSignalArray)
+        for (Switch s : switchArray)
         {
             for (TrackController tc : this.controllers)
             {
-                if (b.getLineID() == tc.getLine() && tc.containsBlock(b.getBlockID()))
+                if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock) || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
                 {
-                    //add block to tc's arraylist
-                    list.get(tc.getId()).add(b);
+                    list.get(tc.getId()).add(s);
                 }
+                      
             }
         }
+        
         for (TrackController tc : this.controllers)
         {
-            tc.setTrackSignalInfo(list.get(tc.getId()));
+            if (tc.getLine() == line)
+            {
+                tc.setSwitchInfo(list.get(tc.getId()));
+            }
         }
-        
     }
     
     public ArrayList<BlockSignalBundle> getBlockSignalCommands()
