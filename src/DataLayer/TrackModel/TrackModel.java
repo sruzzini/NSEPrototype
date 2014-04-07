@@ -12,11 +12,8 @@ public class TrackModel
     
     public TrackModel()
     {
+        
         theLines = new ArrayList<>();
-    }
-    
-    public void uploadTrackSpec(String filename)
-    {
         
     }
     
@@ -87,4 +84,6 @@ public class TrackModel
         BlockSignalBundle b = new BlockSignalBundle(a, d, s, block, line, c);
         return b;
     }
+    
+    
 }
