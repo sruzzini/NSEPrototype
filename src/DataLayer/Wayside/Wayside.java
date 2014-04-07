@@ -30,6 +30,7 @@ import java.util.List;
 public final class Wayside {
     private  TrackController[] controllers;
     private  int controllerCount;
+    private TrackModel track;
     //private final int[][] blockNums;
     //private final LineColor[] lines;
     
@@ -138,9 +139,9 @@ public final class Wayside {
         }
     }
     
-    public void sendDispathSignal(DispatchBundle packet)
+    public void sendDispatchSignal(DispatchBundle packet)
     {
-        
+        this.track.setDispatchSignal(packet);
     }
     
     public void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
@@ -184,6 +185,22 @@ public final class Wayside {
         }
         
         return blockList;
+    }
+    
+    public ArrayList<BlockSignalBundle> getOccupancyInfo()
+    {
+        ArrayList<BlockSignalBundle> occupiedBlocks;
+        occupiedBlocks = new ArrayList<>();
+        
+        return occupiedBlocks;
+    }
+    
+    public ArrayList<Switch> getSwitchInfo()
+    {
+        ArrayList<Switch> switchInfo;
+        switchInfo = new ArrayList<>();
+        
+        return switchInfo;
     }
     
     public void setSwitchArray(List<Switch> switchArray)
