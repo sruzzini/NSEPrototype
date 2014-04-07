@@ -85,5 +85,24 @@ public class TrackModel
         return b;
     }
     
+    public TrackSignal getTrackSignal(LineColor line, int block)
+    {
+        int lineNum = 0;
+        switch (line)
+        {
+            case GREEN:
+                lineNum = 0;
+            case RED:
+                lineNum = 1;
+        }
+        int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
+        int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
+        String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
+        double s = theLines.get(lineNum).theBlocks.get(block).getVelocity();
+        double g = theLines.get(lineNum).theBlocks.get(block).getGradient();
+        boolean u = theLines.get(lineNum).theBlocks.get(block).isUnderground();
+        TrackSignal t = new TrackSignal(s, a, u, dd);
+        return t;
+    }
     
 }
