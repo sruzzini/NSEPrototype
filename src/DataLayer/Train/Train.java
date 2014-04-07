@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 public class Train implements Runnable
 {
+    private int iD;
     private int timeMultiplier;
     private TrainStatus status;
     private TrainCommand commands;
@@ -35,6 +36,7 @@ public class Train implements Runnable
     //Contructors
     public Train()
     {
+        this.iD = 1;
         this.timeMultiplier = 1;
         this.status = new TrainStatus();
         this.commands = new TrainCommand();
@@ -46,8 +48,23 @@ public class Train implements Runnable
         this.model = new TrainModel(this.modelPhysics, this.modelState);
     }
     
-    public Train(int multiplier, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
+    public Train(int id)
     {
+        this.iD = id;
+        this.timeMultiplier = 1;
+        this.status = new TrainStatus();
+        this.commands = new TrainCommand();
+        this.modelPhysics = new ModelPhysics();
+        this.modelState = new ModelState();
+        this.trackSignal = new TrackSignal();
+        this.beaconSignal = null;
+        this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
+        this.model = new TrainModel(this.modelPhysics, this.modelState);
+    }
+    
+    public Train(int id, int multiplier, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
+    {
+        this.iD = id;
         this.timeMultiplier = multiplier;
         this.status = status;
         this.commands = new TrainCommand();
@@ -90,7 +107,7 @@ public class Train implements Runnable
     }
     public double getDeltaX()
     {
-        return modelPhysics.delta_x;
+        return this.modelPhysics.delta_x;
     }
     // Private method
     private void updateModelPhysics(TrainCommand c)
@@ -121,7 +138,7 @@ public class Train implements Runnable
         
         while(true)
         {
-            this.commands = controller.getTrainCommand();
+            this.commands = this.controller.GetTrainCommand();
             updateModelPhysics(commands);
             try {
                 Thread.sleep(100);
