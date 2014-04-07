@@ -14,10 +14,12 @@ import DataLayer.EnumTypes.LineColor;
  */
 public class DispatchBundle extends BlockSignalBundle {
     public int trainID;
+    public LineColor toLine;
 
-    public DispatchBundle(int trainID, int Authority, int Destination, double Speed, int blockID, LineColor lineID, boolean closed) {
+    public DispatchBundle(int trainID, LineColor toLine, int Authority, int Destination, double Speed, int blockID, LineColor lineID, boolean closed) {
         super(Authority, Destination, Speed, blockID, lineID, closed);
         this.trainID = trainID;
+        this.toLine = toLine;
     }
     
 }
