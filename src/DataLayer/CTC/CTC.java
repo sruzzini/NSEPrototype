@@ -56,6 +56,20 @@ public class CTC
         iniTrack();
         iniTrains();         
     }
+    
+    public CTC() 
+    {
+        int nTrains = 10;
+        trains = new TrainsClass[nTrains];
+        green = new ArrayList<>();
+        red = new ArrayList<>();
+        blockClosings = new ArrayList<>();
+        closures = new ArrayList<>();
+        closings = 0;
+               
+        iniTrack();
+        iniTrains();         
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
