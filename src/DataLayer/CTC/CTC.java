@@ -101,7 +101,7 @@ public class CTC
                 line = 0;
             }
             
-            trainRouteInfo[i] = new BlockSignalBundle(line, Integer.parseInt(trains[i].block), trains[i].speed, trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].line);
+            //trainRouteInfo[i] = new BlockSignalBundle(line, Integer.parseInt(trains[i].block), trains[i].speed, trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].line);
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
@@ -159,7 +159,7 @@ public class CTC
             }
         }
         
-        if(train.block.equals("Yard"))
+        /*if(train.block.equals("Yard"))
         {
             authority = 1;
             for(int i = 0; i < path.size(); i++)
@@ -169,7 +169,7 @@ public class CTC
                     //if()
                 }
             }            
-        }        
+        } */       
         return authority;
     }
     private void iniTrains()
