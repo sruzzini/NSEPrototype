@@ -100,12 +100,19 @@ public class NSE
         
         while(this.isRunning)
         {
+            //check for 10 min elapsed, if so, dispatch new train
+            
             //Communicate from CTC to Wayside
+            ArrayList<BlockSignalBundle> occInfo = this.Wayside.getOccupancyInfo();
+            ArrayList<Switch> switchInfo = this.Wayside.getSwitchInfo();
+            this.CTCOffice.updateBlockInfo(occInfo, switchInfo);
+            
             ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.getRouteInfo();
             for (BlockSignalBundle bundle : toWaysideInfo)
             {
                 this.Wayside.sendTravelSignal(bundle);
             }
+            
             
             //Communicate from Wayside to Track
             
