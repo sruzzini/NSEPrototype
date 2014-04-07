@@ -28,36 +28,38 @@ public class CTC
 {
     
     private int closings;
-    private ArrayList<String[]> green;
-    private ArrayList<String[]> red;    
-    private ArrayList<String[]> blockClosings;
-    
-    
+    private int numberOfTrains;
     private String[] greenSections;
     private String[] redSections;
-    
-    private TrainsClass[] trains;
     private String[] numberTrains;
-    private ArrayList<BlockSignalBundle> closures;
-    private String[] trackPath = ("YY,K,L,M,N,O,P,Q,N,R,S,T,U,V,W,X,Y,Z,F,E,D,C,B,A,D,E,F,G,H,I,ZZ|J").split(",");
-    
+    private String[] trackPath;
+    private TrainsClass[] trains;
+    private ArrayList<String[]> green;
+    private ArrayList<String[]> red;    
+    private ArrayList<String[]> blockClosings;    
+    private ArrayList<String[]> path;
+    private ArrayList<BlockSignalBundle> closures;    
     private ArrayList<TrainLocation> trainLocations;
     private ArrayList<Switch> switchPostions;
-    private ArrayList<String[]> path;
+    
     /**
      * Creates new form CTCGUI
      * @param nTrains
      */
     public CTC(int nTrains) 
     {
-        trains = new TrainsClass[nTrains];
+        
+        this.closings = 0;
         this.trainLocations = new ArrayList<>();
-        switchPostions = new ArrayList<>();
-        green = new ArrayList<>();
-        red = new ArrayList<>();
-        blockClosings = new ArrayList<>();
-        closures = new ArrayList<>();
-        closings = 0;
+        this.switchPostions = new ArrayList<>();
+        this.trackPath = ("YY,K,L,M,N,O,P,Q,N,R,S,T,U,V,W,X,Y,Z,F,E,D,C,B,A,D,E,F,G,H,I,ZZ|J").split(",");
+        this.trains = new TrainsClass[nTrains];
+
+        this.green = new ArrayList<>();
+        this.red = new ArrayList<>();
+        this.blockClosings = new ArrayList<>();
+        this.closures = new ArrayList<>();
+        
                
         iniTrack();
         iniTrains();         
@@ -65,13 +67,14 @@ public class CTC
     
     public CTC() 
     {
-        int nTrains = 10;
-        trains = new TrainsClass[nTrains];
-        green = new ArrayList<>();
-        red = new ArrayList<>();
-        blockClosings = new ArrayList<>();
-        closures = new ArrayList<>();
-        closings = 0;
+        numberOfTrains = 10;
+        this.trackPath = ("YY,K,L,M,N,O,P,Q,N,R,S,T,U,V,W,X,Y,Z,F,E,D,C,B,A,D,E,F,G,H,I,ZZ|J").split(",");
+        this.trains = new TrainsClass[10];
+        this.green = new ArrayList<>();
+        this.red = new ArrayList<>();
+        this.blockClosings = new ArrayList<>();
+        this.closures = new ArrayList<>();
+        this.closings = 0;
                
         iniTrack();
         iniTrains();         
@@ -103,10 +106,12 @@ public class CTC
         
         return closures;
     }
+
+    //update the local train locations, block signals, switches positions
     
-    public BlockSignalBundle[] getRouteInfo()//int line, int block, double velocity, int authority, int destination)
+    public ArrayList<BlockSignalBundle> getRouteInfo()//int line, int block, double velocity, int authority, int destination)
     {
-        BlockSignalBundle[] trainRouteInfo = new BlockSignalBundle[trains.length]; 
+        ArrayList<BlockSignalBundle> trainRouteInfo = new BlockSignalBundle[trains.length]; 
         
         for(int i = 0; i < trains.length; i++)
         {
@@ -153,7 +158,7 @@ public class CTC
     
         for(i = 0; i < path.size(); i++)
         {
-            if(path.get(i).equals(train.section_current))
+            if(trackPath[i].equals(train.section_current))
             {
                 if(train.line == LineColor.GREEN)
                 {
@@ -329,10 +334,17 @@ public class CTC
       }
     }
     
-    public void setTrainLocations(ArrayList<TrainLocation> trainLoc)
+    public void setTrainLocations(ArrayList<TrainLocation> trainLocations)
     {
-        this.trainLocations = trainLoc;
+        this.trainLocations = trainLocations;
     }      
+    
+    public DispatchBundle getDispatcher()
+    {
+        DispatchBundle train;// = new DispatchBundle();
+        
+        return train;
+    }
 }   
  
 
