@@ -1,66 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package DataLayer.TrackModel;
 
 import DataLayer.EnumTypes.LineColor;
 
-/**
- *
- * @author nwhachten
- * @version 1.0
- * @since 2014-03-30
- */
-public class Switch {
-    private final int blockID;
-    private final LineColor lineID;
-    private final int approachBlock;
-    private final int divergentBlock;
-    private final int straightBlock;
-    private boolean straight;
-
-    public Switch(int blockID, LineColor lineID, int approachBlock, int divergentBlock, int straightBlock) {
-        this.blockID = blockID;
+public class Switch 
+{
+    public LineColor lineID;
+    public int switchID;
+    public int typeOfSwitch; // 1 = diverge, 2 = convergere
+    public int approachBlock;
+    public int straightBlock;
+    public int divergentBlock;
+    public boolean straight;
+    
+    public Switch(LineColor lineID, int switchID, int typeOfSwitch, int approachBlock, 
+            int straightBlock, int divergentBlock, boolean straight)
+    {
         this.lineID = lineID;
+        this.switchID = switchID;
+        this.typeOfSwitch = typeOfSwitch;
         this.approachBlock = approachBlock;
-        this.divergentBlock = divergentBlock;
         this.straightBlock = straightBlock;
-        this.straight = true;
-    }
-
-    public int getBlockID() {
-        return blockID;
-    }
-
-    public LineColor getLineID() {
-        return lineID;
-    }
-
-    public int getApproachBlock() {
-        return approachBlock;
-    }
-
-    public int getDivergentBlock() {
-        return divergentBlock;
-    }
-
-    public int getStraightBlock() {
-        return straightBlock;
-    }
-
-    public boolean isStraight() {
-        return straight;
-    }
-
-    public void setStraight(boolean straight) {
+        this.divergentBlock = divergentBlock;
         this.straight = straight;
     }
     
-    
-    
-    
-    
+    public boolean isStraight() 
+    {
+        return straight;
+    }
 }

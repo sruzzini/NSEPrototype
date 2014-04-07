@@ -15,37 +15,20 @@ import DataLayer.EnumTypes.LineColor;
  * @since 2014-03-30
  */
 public abstract class BlockBundle {
-    protected final int blockID;
-    protected final LineColor lineID;
-    protected boolean closed;
+    public final int BlockID;
+    public final LineColor LineID;
+    public boolean Closed;
 
-    public BlockBundle(int blockID, LineColor lineID) {
-        this.blockID = blockID;
-        this.lineID = lineID;
-        this.closed = false;
-    }
-
-    public int getBlockID() {
-        return blockID;
-    }
-
-    public LineColor getLineID() {
-        return lineID;
-    }
-
- 
-    public boolean isClosed() {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) {
-        this.closed = closed;
+    public BlockBundle(int BlockID, LineColor LineID) {
+        this.BlockID = BlockID;
+        this.LineID = LineID;
+        this.Closed = false;
     }
     
-    
-    
-    
-    
-    
+    public BlockBundle(int BlockID, LineColor LineID, boolean closed) {
+        this.BlockID = BlockID;
+        this.LineID = LineID;
+        this.Closed = closed;
+    }
     
 }

@@ -8,8 +8,14 @@ package DataLayer.Wayside;
 
 import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
+//import DataLayer.Bundles.Switch;
 import DataLayer.TrackModel.Switch;
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.TrackModel.Block;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,34 +26,83 @@ import java.util.List;
  * @since 2014-04-02
  */
 public final class Wayside {
-    private final TrackController[] controllers;
-    private final int controllerCount = 6;
+    private  TrackController[] controllers;
+    private  int controllerCount;
     //private final int[][] blockNums;
     //private final LineColor[] lines;
     
     
-    public Wayside(BlockInfoBundle[] blockInfoArray, BlockSignalBundle[] blockSignalArray)
+    public Wayside()
     {
-        int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
+       /* int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
         LineColor[] lines = new LineColor[] {LineColor.GREEN, LineColor.GREEN, LineColor.GREEN,
-            LineColor.RED, LineColor.RED, LineColor.RED};
-        this.controllers = new TrackController[controllerCount];
+            LineColor.RED, LineColor.RED, LineColor.RED};*/
+        //int[][] blockNums = new int[][];
         
-        for (int i = 0; i < controllerCount; i++)
+        BufferedReader br = null;
+        
+        try 
         {
-            controllers[i] = new TrackController(i, lines[i], blockNums[i]);
+            String fileName = "wayside_layout.txt";
+            String currentLine;
+            br = new BufferedReader(new FileReader(fileName));
+            
+            controllerCount = Integer.parseInt(br.readLine());
+            
+        
+            this.controllers = new TrackController[controllerCount];
+            //int[][] blockNums = new int[controllerCount][];
+            //LineColor[] lines = new LineColor[controllerCount];
+            
+            
+            String[] controllerInfo;
+            String[] blocks;
+            int[] blockNums;
+            LineColor line;
+            for (int i = 0; i < controllerCount; i++)
+            {
+                currentLine = br.readLine();
+                controllerInfo = currentLine.split(":");
+                if (controllerInfo[1].equals("Green"))
+                {
+                    line = LineColor.GREEN;
+                }
+                else
+                {
+                    line = LineColor.RED;
+                }
+                blocks = controllerInfo[2].split(",");
+                blockNums = new int[blocks.length];
+                for (int j =0; j < blockNums.length; j++)
+                {
+                    blockNums[j] = Integer.parseInt(blocks[j]);
+                }
+                
+                controllers[i] = new TrackController(Integer.parseInt(controllerInfo[0]), line, blockNums);
+               
+                
+            }
+           
+        
+       // this.setBlockInfoArray(blockInfoArray);
+        //this.setBlockSignalArray(blockSignalArray);
+        
         }
-        
-        this.setBlockInfoArray(blockInfoArray);
-        this.setBlockSignalArray(blockSignalArray);
-        
+        catch (FileNotFoundException e)
+        {
+            //catch error
+        }
+        catch (IOException e1)
+        {
+            //catch error
+        }
         
     }
     
     public void sendTravelSignal(BlockSignalBundle packet)
     {
-        LineColor line = packet.getLineID();
-        int blockNum = packet.getBlockID();
+        LineColor line = packet.LineID;
+        int blockNum = packet.BlockID;
         
         for (int i=0; i < controllerCount; i++)
         {
@@ -68,7 +123,8 @@ public final class Wayside {
     {
         for (TrackController tc : this.controllers)
         {
-            if (tc.getLine() == packet.getLineID() && tc.containsBlock(packet.getBlockID()))
+            if (tc.getLine() == packet.lineID && (tc.containsBlock(packet.straightBlock) || 
+                    tc.containsBlock(packet.approachBlock) || tc.containsBlock(packet.divergentBlock) ))
             {
                 tc.sendSwitchStateSignal(packet);
                 break;
@@ -76,49 +132,74 @@ public final class Wayside {
         }
     }
     
-    public void setBlockInfoArray(BlockInfoBundle[] blockInfoArray)
+    public void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
     {
-        List<List<BlockInfoBundle>> list;
+        ArrayList<ArrayList<Block>> list;
         list = new ArrayList<>(controllerCount);
         
-        for (BlockInfoBundle b : blockInfoArray)
+        for (Block b : blockArray)
         {
             for (TrackController tc : this.controllers)
             {
-                if (b.getLineID() == tc.getLine() && tc.containsBlock(b.getBlockID()))
+                if (tc.getLine() == line && tc.containsBlock(b.getBlockID()))
                 {
-                    //add block to tc's arraylist
                     list.get(tc.getId()).add(b);
                 }
+                      
             }
         }
+        
         for (TrackController tc : this.controllers)
         {
-            tc.setTrackBlockInfo(list.get(tc.getId()));
+            if (tc.getLine() == line)
+            {
+                tc.setTrackBlockInfo(list.get(tc.getId()));
+            }
         }
+        
     }
     
-    public void setBlockSignalArray(BlockSignalBundle[] blockSignalArray)
+    public ArrayList<Block> getBlockInfoArray(LineColor line)
     {
-        List<List<BlockSignalBundle>> list;
-        list = new ArrayList<>(controllerCount);
+        ArrayList<Block> blockList;
+        blockList = new ArrayList<>();
         
-        for (BlockSignalBundle b : blockSignalArray)
+        for (TrackController tc : this.controllers)
+        {
+            if (tc.getLine() == line)
+            {
+                blockList.addAll(tc.getBlockInfo());
+            }
+        }
+        
+        return blockList;
+    }
+    
+    public void setSwitchArray(List<Switch> switchArray)
+    {
+        List<List<Switch>> list;
+        list = new ArrayList<>(controllerCount);
+        LineColor line = switchArray.get(0).lineID;
+        
+        for (Switch s : switchArray)
         {
             for (TrackController tc : this.controllers)
             {
-                if (b.getLineID() == tc.getLine() && tc.containsBlock(b.getBlockID()))
+                if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock) || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
                 {
-                    //add block to tc's arraylist
-                    list.get(tc.getId()).add(b);
+                    list.get(tc.getId()).add(s);
                 }
+                      
             }
         }
+        
         for (TrackController tc : this.controllers)
         {
-            tc.setTrackSignalInfo(list.get(tc.getId()));
+            if (tc.getLine() == line)
+            {
+                tc.setSwitchInfo(list.get(tc.getId()));
+            }
         }
-        
     }
     
     public ArrayList<BlockSignalBundle> getBlockSignalCommands()

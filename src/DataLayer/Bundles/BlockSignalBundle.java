@@ -19,37 +19,22 @@ import DataLayer.EnumTypes.LineColor;
  * 
  */
 public class BlockSignalBundle extends BlockBundle {
-    private final int authority;
-    private final int destination;
-    private double speed;
+    public final int Authority;
+    public final int Destination;
+    public double Speed;
 
-    public BlockSignalBundle(int authority, int destination, double speed, int blockID, LineColor lineID) {
+    public BlockSignalBundle(int Authority, int Destination, double Speed, int blockID, LineColor lineID) {
         super(blockID, lineID);
-        this.authority = authority;
-        this.destination = destination;
-        this.speed = speed;
+        this.Authority = Authority;
+        this.Destination = Destination;
+        this.Speed = Speed;
     }
-
-    public int getAuthority() {
-        return authority;
-    }
-
-    public int getDestination() {
-        return destination;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    /**
-     * This method is needed because when a signal is sent from CTC to Wayside,
-     * the speed may need to be adjusted to a more safe speed.
-     * 
-     * @param speed 
-     */
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    
+    public BlockSignalBundle(int Authority, int Destination, double Speed, int blockID, LineColor lineID, boolean closed) {
+        super(blockID, lineID, closed);
+        this.Authority = Authority;
+        this.Destination = Destination;
+        this.Speed = Speed;
     }
     
     
