@@ -12,6 +12,7 @@ import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.TrackModel.Switch;
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.Block;
+import DataLayer.TrackModel.TrackModel;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -32,7 +33,7 @@ public final class Wayside {
     //private final LineColor[] lines;
     
     
-    public Wayside()
+    public Wayside(TrackModel track)
     {
        /* int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
         LineColor[] lines = new LineColor[] {LineColor.GREEN, LineColor.GREEN, LineColor.GREEN,
@@ -96,6 +97,10 @@ public final class Wayside {
         {
             //catch error
         }
+        this.setBlockInfoArray(track.theLines.get(0).theBlocks, LineColor.GREEN);
+        this.setBlockInfoArray(track.theLines.get(1).theBlocks, LineColor.RED);
+        this.setSwitchArray(track.theLines.get(0).theSwitches);
+        this.setSwitchArray(track.theLines.get(1).theSwitches);
         
     }
     
