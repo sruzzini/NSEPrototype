@@ -7,6 +7,7 @@ import DataLayer.EnumTypes.*;
 public class TrackModel 
 {
     public final ArrayList<Line> theLines;
+    public final ArrayList<TrainLocation> theTrains;
     private LineColor lineColor;
     
     
@@ -14,6 +15,7 @@ public class TrackModel
     {
         
         theLines = new ArrayList<>();
+        theTrains = new ArrayList<>();
         
     }
     
