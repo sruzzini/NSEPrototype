@@ -45,7 +45,6 @@ public class CTC
      */
     public CTC(int nTrains) 
     {
-        nTrains = 10;
         trains = new TrainsClass[nTrains];
         green = new ArrayList<>();
         red = new ArrayList<>();
@@ -115,7 +114,7 @@ public class CTC
                 line = 0;
             }
             
-            //trainRouteInfo[i] = new BlockSignalBundle(line, Integer.parseInt(trains[i].block), trains[i].speed, trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].line);
+            trainRouteInfo[i] = new BlockSignalBundle(line, Integer.parseInt(trains[i].block), trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].line);
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
