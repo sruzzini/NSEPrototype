@@ -141,7 +141,7 @@ public class Train implements Runnable
             this.commands = this.controller.GetTrainCommand();
             updateModelPhysics(commands);
             try {
-                Thread.sleep(100);
+                Thread.sleep(100); //sleep for .1 seconds
             } catch (InterruptedException ex) {
                 Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
             }
