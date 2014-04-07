@@ -8,6 +8,7 @@ package DataLayer.CTC;
 import DataLayer.Bundles.*;
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.Switch;
+import DataLayer.TrackModel.TrainLocation;
 
 //package Bundles.class.BlockBundle;
 
@@ -25,11 +26,12 @@ import java.util.*;
  */
 public class CTC
 {
-    private ArrayList<String[]> green;
-    private ArrayList<String[]> red;
     
-    private ArrayList<String[]> blockClosings;
     private int closings;
+    private ArrayList<String[]> green;
+    private ArrayList<String[]> red;    
+    private ArrayList<String[]> blockClosings;
+    
     
     private String[] greenSections;
     private String[] redSections;
@@ -37,15 +39,20 @@ public class CTC
     private TrainsClass[] trains;
     private String[] numberTrains;
     private ArrayList<BlockSignalBundle> closures;
-    //private String pathDefine = "YY,K,L,M,N,O,P,Q,N,R,S,T,U,V,W,X,Y,Z,F,E,D,C,B,A,D,E,F,G,H,I,ZZ|J";
     private String[] trackPath = ("YY,K,L,M,N,O,P,Q,N,R,S,T,U,V,W,X,Y,Z,F,E,D,C,B,A,D,E,F,G,H,I,ZZ|J").split(",");
+    
+    private ArrayList<TrainLocation> trainLocations;
+    private ArrayList<Switch> switchPostions;
     private ArrayList<String[]> path;
     /**
      * Creates new form CTCGUI
+     * @param nTrains
      */
     public CTC(int nTrains) 
     {
         trains = new TrainsClass[nTrains];
+        this.trainLocations = new ArrayList<>();
+        switchPostions = new ArrayList<>();
         green = new ArrayList<>();
         red = new ArrayList<>();
         blockClosings = new ArrayList<>();
@@ -101,20 +108,9 @@ public class CTC
     {
         BlockSignalBundle[] trainRouteInfo = new BlockSignalBundle[trains.length]; 
         
-        int line = 0;
-        
         for(int i = 0; i < trains.length; i++)
         {
-            if(blockClosings.get(i)[0].equals("RED"))
-            {
-                line = 1;
-            }
-            else
-            {
-                line = 0;
-            }
-            
-            trainRouteInfo[i] = new BlockSignalBundle(line, Integer.parseInt(trains[i].block), trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].line);
+            trainRouteInfo[i] = new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line);
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
@@ -315,31 +311,28 @@ public class CTC
         return -1;
     }
     
-    public void updateBlockInfo(BlockSignalBundle[] packet, Switch[] switches)
+    public void updateBlockInfo(ArrayList<BlockSignalBundle> blockOccupiences, ArrayList<Switch> newSwitches)
     {
-      for(BlockSignalBundle pack: packet)
+      for(BlockSignalBundle blockInfo: blockOccupiences)
       {
           for(int i = 0; i < blockClosings.size(); i++)
           {
-              if(closures.get(i).BlockID == pack.BlockID)
+              if(closures.get(i).BlockID == blockInfo.BlockID)
               {
-                  if(!pack.Closed)
+                  if(!blockInfo.Closed)
                   {
                       closures.remove(i);
                   }
-                  closures.set(i, pack);
+                  closures.set(i, blockInfo);
               }                     
           }
       }
     }
     
-    //public void updateTrainLocations(TrainLocation[] loc)
-    //{        
-    //    
-    //}
-    
-    //public BlockSignalBundle[] getRouteInfo()
-      
+    public void setTrainLocations(ArrayList<TrainLocation> trainLoc)
+    {
+        this.trainLocations = trainLoc;
+    }      
 }   
  
 
