@@ -121,6 +121,7 @@ public class CTC
     }
     
     
+    
     public int calculateAuthority(TrainsClass train)
     {
         int authority = 0;
