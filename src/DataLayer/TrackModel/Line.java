@@ -1,15 +1,16 @@
 package DataLayer.TrackModel;
 
+import DataLayer.EnumTypes.*;
 import java.util.*;
 
 public class Line 
 {
-    private int lineID;
+    private LineColor lineID;
     private String lineString;
     public ArrayList<Block> theBlocks;
     public ArrayList<Switch> theSwitches;
     
-    public Line(int lineID, String lineString)
+    public Line(LineColor lineID, String lineString)
     {
         this.lineID = lineID;
         this.lineString = lineString;
@@ -35,7 +36,7 @@ public class Line
         return theSwitches.get(switchID - 1);
     }
 
-    public int getLineID() {
+    public LineColor getLineID() {
         return lineID;
     }
 

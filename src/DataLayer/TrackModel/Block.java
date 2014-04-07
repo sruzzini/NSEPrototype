@@ -1,5 +1,7 @@
 package DataLayer.TrackModel;
 
+import DataLayer.EnumTypes.*;
+
 
 public class Block {
     
@@ -14,13 +16,13 @@ public class Block {
     private boolean closed;
     private boolean underground;
     private boolean light;
-    private int lightColor;
+    private LightColor lightColor;
     private boolean rrxing;
-    private int rrxingState;
+    private XingState rrxingState;
     private boolean station;
     private int stationID;
     private String stationString;
-    private int velocity;
+    private double velocity;
     private int authority;
     private int destination;
     private boolean tswitch;
@@ -160,12 +162,12 @@ public class Block {
         this.light = light;
     }
 
-    public int getLightColor() 
+    public LightColor getLightColor() 
     {
         return lightColor;
     }
 
-    public void setLightColor(int lightColor) 
+    public void setLightColor(LightColor lightColor) 
     {
         this.lightColor = lightColor;
     }
@@ -180,12 +182,12 @@ public class Block {
         this.rrxing = rrxing;
     }
 
-    public int getRRXingState() 
+    public XingState getRRXingState() 
     {
         return rrxingState;
     }
 
-    public void setRRXingState(int rrxingState) 
+    public void setRRXingState(XingState rrxingState) 
     {
         this.rrxingState = rrxingState;
     }
@@ -218,12 +220,12 @@ public class Block {
         this.stationID = stationID;
     }
 
-    public int getVelocity() 
+    public double getVelocity() 
     {
         return velocity;
     }
 
-    public void setVelocity(int velocity) 
+    public void setVelocity(double velocity) 
     {
         this.velocity = velocity;
     }

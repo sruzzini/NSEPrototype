@@ -30,7 +30,11 @@ public class BlockInfoBundle extends BlockBundle {
         this.RRXingState = RRXingState;
     }
 
-    
+    public BlockInfoBundle(LightColor LightColor, XingState RRXingState, int BlockID, LineColor LineID, boolean closed) {
+        super(BlockID, LineID, closed);
+        this.LightColor = LightColor;
+        this.RRXingState = RRXingState;
+    }
 
     
     

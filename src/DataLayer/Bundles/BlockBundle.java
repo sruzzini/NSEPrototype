@@ -24,7 +24,11 @@ public abstract class BlockBundle {
         this.LineID = LineID;
         this.Closed = false;
     }
-
-
+    
+    public BlockBundle(int BlockID, LineColor LineID, boolean closed) {
+        this.BlockID = BlockID;
+        this.LineID = LineID;
+        this.Closed = closed;
+    }
     
 }

@@ -29,8 +29,13 @@ public class BlockSignalBundle extends BlockBundle {
         this.Destination = Destination;
         this.Speed = Speed;
     }
-
-   
+    
+    public BlockSignalBundle(int Authority, int Destination, double Speed, int blockID, LineColor lineID, boolean closed) {
+        super(blockID, lineID, closed);
+        this.Authority = Authority;
+        this.Destination = Destination;
+        this.Speed = Speed;
+    }
     
     
     
