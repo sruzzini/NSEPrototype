@@ -15,6 +15,6 @@ package DataLayer.EnumTypes;
  *
  */
 public enum LineColor {
-    RED, GREEN;
+    RED, GREEN, YARD;
     
 }

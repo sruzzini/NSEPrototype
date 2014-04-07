@@ -3,6 +3,7 @@ package DataLayer.TrackModel;
 import DataLayer.Bundles.*;
 import java.util.*;
 import DataLayer.EnumTypes.*;
+import java.io.*;
 
 public class TrackModel 
 {
@@ -16,6 +17,11 @@ public class TrackModel
         
         theLines = new ArrayList<>();
         theTrains = new ArrayList<>();
+        
+    }
+    
+    public void uploadTrackSpec()
+    {
         
     }
     
