@@ -7,6 +7,8 @@
 package DataLayer.Wayside;
 
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.TrackModel.Block;
+import java.util.Hashtable;
 
 /**
  *
@@ -14,7 +16,7 @@ import DataLayer.EnumTypes.LineColor;
  */
 public class PLCGreenTwo extends PLC {
 
-    public PLCGreenTwo(int id, LineColor line, int[] blockNums) {
+    public PLCGreenTwo(int id, LineColor line, Hashtable<Integer, Block> blockNums) {
         super(id, line, blockNums);
     }
     

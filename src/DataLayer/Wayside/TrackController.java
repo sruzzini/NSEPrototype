@@ -48,31 +48,31 @@ public class TrackController {
         
         if (id == 0)
         {
-             this.plcProgram = new PLCGreenOne(id, line, blocksInSector);
+             this.plcProgram = new PLCGreenOne(id, line, blockInfo);
         }
         else if (id == 1)
         {
-            this.plcProgram = new PLCGreenTwo(id, line, blocksInSector);
+            this.plcProgram = new PLCGreenTwo(id, line, blockInfo);
         }
         else if (id == 2)
         {
-            this.plcProgram = new PLCGreenThree(id, line, blocksInSector);
+            this.plcProgram = new PLCGreenThree(id, line, blockInfo);
         }
         else if (id == 3)
         {
-            this.plcProgram = new PLCRedOne(id, line, blocksInSector);
+            this.plcProgram = new PLCRedOne(id, line, blockInfo);
         }
         else if (id == 4)
         {
-            this.plcProgram = new PLCRedTwo(id, line, blocksInSector);
+            this.plcProgram = new PLCRedTwo(id, line, blockInfo);
         }
         else if (id == 5)
         {
-            this.plcProgram = new PLCRedThree(id, line, blocksInSector);
+            this.plcProgram = new PLCRedThree(id, line, blockInfo);
         }
         else
         {
-            this.plcProgram = new PLCGreenOne(id, line, blocksInSector);
+            this.plcProgram = new PLCGreenOne(id, line, blockInfo);
             //this is bad and should not happen. create exception to be thrown
         }
     }

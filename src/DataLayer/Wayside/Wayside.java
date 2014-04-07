@@ -8,6 +8,7 @@ package DataLayer.Wayside;
 
 import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
+import DataLayer.Bundles.DispatchBundle;
 //import DataLayer.Bundles.Switch;
 import DataLayer.TrackModel.Switch;
 import DataLayer.EnumTypes.LineColor;
@@ -135,6 +136,11 @@ public final class Wayside {
                 break;
             }
         }
+    }
+    
+    public void sendDispathSignal(DispatchBundle packet)
+    {
+        
     }
     
     public void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)

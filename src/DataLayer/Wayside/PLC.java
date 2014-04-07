@@ -7,6 +7,9 @@
 package DataLayer.Wayside;
 
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.TrackModel.Block;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  *
@@ -15,12 +18,12 @@ import DataLayer.EnumTypes.LineColor;
 public abstract class PLC {
     private final int id;
     private final LineColor line;
-    private final int[] blockNums;
+    private final Hashtable<Integer, Block> blocks;
 
-    public PLC(int id, LineColor line, int[] blockNums) {
+    public PLC(int id, LineColor line,  Hashtable<Integer, Block> blocks) {
         this.id = id;
         this.line = line;
-        this.blockNums = blockNums;
+        this.blocks = blocks;
     }
     
 
