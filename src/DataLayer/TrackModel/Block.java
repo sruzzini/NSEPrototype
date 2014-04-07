@@ -9,6 +9,7 @@ public class Block {
     private int length;
     private double speedLimit;
     private double elevation;
+    private double cumElev;
     private double gradient;
     private int failureState;
     private boolean occupied;
@@ -29,7 +30,7 @@ public class Block {
     private int tswitchID;
     private BeaconSignal beacon;
     
-    public Block(int blockID, int length, double speedLimit, double elevation, 
+    public Block(int blockID, int length, double speedLimit, double elevation, double cumElev,
             double gradient, boolean underground, boolean light, boolean rrxing,
             boolean station, boolean tswitch)
     {
@@ -37,6 +38,7 @@ public class Block {
         this.length = length;
         this.speedLimit = speedLimit;
         this.elevation = elevation;
+        this.cumElev = cumElev;
         this.gradient = gradient;
         this.underground = underground;
         this.light = light;
@@ -90,6 +92,16 @@ public class Block {
     public void setElevation(double elevation) 
     {
         this.elevation = elevation;
+    }
+
+    public double getCumElev() 
+    {
+        return cumElev;
+    }
+
+    public void setCumElev(double cumElev) 
+    {
+        this.cumElev = cumElev;
     }
 
     public double getGradient() 

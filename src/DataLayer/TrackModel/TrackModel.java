@@ -8,7 +8,7 @@ import java.io.*;
 public class TrackModel 
 {
     public final ArrayList<Line> theLines;
-    public final ArrayList<TrainLocation> theTrains;
+    public ArrayList<TrainLocation> theTrains;
     private LineColor lineColor;
     
     
@@ -16,13 +16,70 @@ public class TrackModel
     {
         
         theLines = new ArrayList<>();
-        theTrains = new ArrayList<>();
+        theLines.add(new Line(LineColor.GREEN));
+        theLines.add(new Line(LineColor.RED));
+        uploadTrackSpec();
         
     }
     
-    public void uploadTrackSpec()
+    public final void uploadTrackSpec()
     {
+        String csvFile = "track.csv";
+	BufferedReader br = null;
+	String line = "";
+	String cvsSplitBy = ",";
         
+        int blockID, length;
+        double speedLimit, elevation, cumElev, gradient;
+        boolean underground, light, rrxing, station, tswitch;
+        
+        try {
+ 
+		br = new BufferedReader(new FileReader(csvFile));
+		while ((line = br.readLine()) != null) {
+                    String[] blockSpec = line.split(cvsSplitBy);
+                    
+                    if (blockSpec[0].equalsIgnoreCase("green"))
+                    {
+                        if (blockSpec[1].equalsIgnoreCase("block"))
+                        {
+                            blockID = Integer.parseInt(blockSpec[2]);
+                            length = Integer.parseInt(blockSpec[3]);
+                            speedLimit = Double.parseDouble(blockSpec[5]);
+                            speedLimit = speedLimit * 1000.0;
+                            speedLimit = speedLimit / 3600.0;
+                            gradient = Double.parseDouble(blockSpec[4]);
+                            station = Boolean.parseBoolean(blockSpec[6]);
+                            rrxing = Boolean.parseBoolean(blockSpec[7]);
+                            light = Boolean.parseBoolean(blockSpec[8]);
+                            Block b = new Block(blockID, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
+                        }
+                    }
+                    else if(blockSpec[0].equalsIgnoreCase("red"))
+                    {
+                        if (blockSpec[1].equalsIgnoreCase("block"))
+                        {
+                            
+                        }
+                    }
+                    
+		}
+ 
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} finally {
+		if (br != null) {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+ 
+	System.out.println("Track Model is done reading spec.");
     }
     
     public void setBlockInfo(BlockInfoBundle b)
