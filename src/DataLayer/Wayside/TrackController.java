@@ -38,7 +38,6 @@ public class TrackController {
         this.id = id;
         this.line = line;
         this.blocksInSector = blocksInSector;
-        this.plcProgram = new PLCGreenOne(id, line, blocksInSector);
         this.commandSignalQueue = new ArrayList<>();
         this.commandSwitchQueue = new ArrayList<>();
         this.commandBlockQueue = new ArrayList<>();
@@ -46,6 +45,36 @@ public class TrackController {
         this.switchInfo = new Hashtable();
         //this.trackBlockInfo = new Hashtable();
         //this.trackSignalInfo = new Hashtable();
+        
+        if (id == 0)
+        {
+             this.plcProgram = new PLCGreenOne(id, line, blocksInSector);
+        }
+        else if (id == 1)
+        {
+            this.plcProgram = new PLCGreenTwo(id, line, blocksInSector);
+        }
+        else if (id == 2)
+        {
+            this.plcProgram = new PLCGreenThree(id, line, blocksInSector);
+        }
+        else if (id == 3)
+        {
+            this.plcProgram = new PLCRedOne(id, line, blocksInSector);
+        }
+        else if (id == 4)
+        {
+            this.plcProgram = new PLCRedTwo(id, line, blocksInSector);
+        }
+        else if (id == 5)
+        {
+            this.plcProgram = new PLCRedThree(id, line, blocksInSector);
+        }
+        else
+        {
+            this.plcProgram = new PLCGreenOne(id, line, blocksInSector);
+            //this is bad and should not happen. create exception to be thrown
+        }
     }
     
     
