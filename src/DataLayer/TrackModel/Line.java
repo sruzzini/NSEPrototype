@@ -6,14 +6,12 @@ import java.util.*;
 public class Line 
 {
     private LineColor lineID;
-    private String lineString;
     public ArrayList<Block> theBlocks;
     public ArrayList<Switch> theSwitches;
     
-    public Line(LineColor lineID, String lineString)
+    public Line(LineColor lineID)
     {
         this.lineID = lineID;
-        this.lineString = lineString;
         theBlocks = new ArrayList<>();
         theSwitches = new ArrayList<>();
     }
@@ -23,7 +21,8 @@ public class Line
         theBlocks.add(b);
     }
 
-    public Block getBlock(int blockID) {
+    public Block getBlock(int blockID) 
+    {
         return theBlocks.get(blockID - 1);
     }
     
@@ -32,17 +31,14 @@ public class Line
         theSwitches.add(s);
     }
     
-    public Switch getSwitch(int switchID) {
+    public Switch getSwitch(int switchID) 
+    {
         return theSwitches.get(switchID - 1);
     }
 
-    public LineColor getLineID() {
+    public LineColor getLineID() 
+    {
         return lineID;
     }
-
-    public String getLineString() {
-        return lineString;
-    }
-    
     
 }
