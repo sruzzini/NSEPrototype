@@ -111,11 +111,11 @@ public class CTC
     
     public ArrayList<BlockSignalBundle> getRouteInfo()//int line, int block, double velocity, int authority, int destination)
     {
-        ArrayList<BlockSignalBundle> trainRouteInfo = new BlockSignalBundle[trains.length]; 
+        ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<BlockSignalBundle>(); 
         
         for(int i = 0; i < trains.length; i++)
         {
-            trainRouteInfo[i] = new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line);
+            trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
@@ -341,7 +341,7 @@ public class CTC
     
     public DispatchBundle getDispatcher()
     {
-        DispatchBundle train;// = new DispatchBundle();
+        DispatchBundle train = null;// = new DispatchBundle();
         
         return train;
     }
