@@ -16,7 +16,6 @@ public class TrackModel
     {
         
         theLines = new ArrayList<>();
-        theTrains = new ArrayList<>();
         theLines.add(new Line(LineColor.GREEN));
         theLines.add(new Line(LineColor.RED));
         uploadTrackSpec();
