@@ -44,6 +44,8 @@ public class TrackController implements Runnable {
         this.commandBlockQueue = new ArrayList<>();
         this.blockInfo = new Hashtable();
         this.switchInfo = new Hashtable();
+        this.blockArray = new ArrayList<>();
+        this.switchArray = new ArrayList<>();
         //this.trackBlockInfo = new Hashtable();
         //this.trackSignalInfo = new Hashtable();
         
@@ -52,10 +54,16 @@ public class TrackController implements Runnable {
     
     public void addBlock(Block b)
     {
+        //System.out.println("We would like to add block with blockID: " + b.getBlockID());
         this.blockArray.add(b);
         this.blockInfo.put(b.getBlockID(), b);
     }
     
+    public void addSwitch(Switch s)
+    {
+        this.switchArray.add(s);
+        this.switchInfo.put(s.switchID, s);
+    }
     public void setPLC()
     {
         if (this.id == 0)

@@ -170,6 +170,7 @@ public final class Wayside {
                 if (tc.getLine() == line && tc.containsBlock(b.getBlockID()))
                 {
                     //list.get(tc.getId()).add(b);
+                   // System.out.println("Adding block with blockID: " + b.getBlockID());
                     tc.addBlock(b);
                 }
                       
@@ -240,29 +241,31 @@ public final class Wayside {
     
     private void setSwitchArray(List<Switch> switchArray)
     {
-        List<List<Switch>> list;
-        list = new ArrayList<>(controllerCount);
-        LineColor line = switchArray.get(0).lineID;
+        /*List<List<Switch>> list;
+        list = new ArrayList<>(controllerCount);*/
+        //LineColor line = switchArray.get(0).lineID;
+        LineColor line;
         
         for (Switch s : switchArray)
         {
+            line = s.lineID;
             for (TrackController tc : this.controllers)
             {
                 if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock) || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
                 {
-                    list.get(tc.getId()).add(s);
+                    tc.addSwitch(s);
                 }
                       
             }
         }
         
-        for (TrackController tc : this.controllers)
+      /*  for (TrackController tc : this.controllers)
         {
             if (tc.getLine() == line)
             {
                 tc.setSwitchInfo((ArrayList<Switch>) list.get(tc.getId()));
             }
-        }
+        }*/
     }
     
     public ArrayList<BlockSignalBundle> getBlockSignalCommands()
