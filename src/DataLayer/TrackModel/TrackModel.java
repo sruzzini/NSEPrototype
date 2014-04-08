@@ -245,7 +245,7 @@ public class TrackModel
         
         TrackSignal t = new TrackSignal(d.Speed, d.Authority, u, dd, g);
         
-        theTrains.get(d.trainID).setTrackSignal(g);
+        theTrains.get(d.trainID).setTrackSignal(t);
     }
     
 }
