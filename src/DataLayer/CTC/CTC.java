@@ -65,7 +65,7 @@ public class CTC
         this.blockClosings = new ArrayList<>();
         this.closures = new ArrayList<>();
         this.RED_ROUTE_AUTHORITY = new int[] {};
-        this.GREEN_ROUTE_AUTHORITY = new int[] {4, 10, 4, 12};
+        this.GREEN_ROUTE_AUTHORITY = new int[] {4, 10, 4, 12, 21, 6, 10, 9, 10};
                
         iniTrack();
         iniTrains();         
@@ -84,7 +84,7 @@ public class CTC
         this.blockClosings = new ArrayList<>();
         this.closures = new ArrayList<>();
         this.RED_ROUTE_AUTHORITY = new int[] {};
-        this.GREEN_ROUTE_AUTHORITY = new int[] {};        
+        this.GREEN_ROUTE_AUTHORITY = new int[] {4, 10, 4, 12, 21, 6, 10, 9, 10};
                
         iniTrack();
         iniTrains();         
@@ -195,6 +195,7 @@ public class CTC
         }
         return authority;
     }
+    
     private void iniTrains()
     {
         numberTrains = new String[trains.length+1];
@@ -253,8 +254,8 @@ public class CTC
         greenSec.add("Section");
         redSec.add("Section");
         
-        String csvFile = "trackInfo.txt";
-	BufferedReader br = null;
+        String csvFile = "trackInfo.csv";
+        BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
         
@@ -271,7 +272,7 @@ public class CTC
                     {
                         redSec.add(block[1]);
                     }
-                    red.add(new String[] {block[1], block[2]});
+                    this.red.add(new String[] {block[1], block[2]});
                 }
                 else
                 {
@@ -359,7 +360,7 @@ public class CTC
             }
             break;
         }        
-        return train;
+        return train;    
     }
 }   
  
