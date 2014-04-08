@@ -24,11 +24,29 @@ public class TrainLocation {
         switch (line)
         {
             case GREEN:
-                currentBlock = 151;
+                currentBlock = 0;
             case RED:
-                currentBlock = 77;
+                currentBlock = 0;
         }
         distanceSoFar = 0.0;
     }
     
+    public void setStartLocation(int line)
+    {
+        prevBlock = 0;
+        distanceSoFar = 0.0;
+        if (line == 0) // green
+        {
+            currentBlock = 151;
+        }
+        else if (line == 1) // red
+        {
+            currentBlock = 77;
+        }
+    }
+    
+    public void updateLocation(double deltaX)
+    {
+        
+    }
 }
