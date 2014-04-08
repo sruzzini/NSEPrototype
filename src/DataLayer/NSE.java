@@ -92,7 +92,7 @@ public class NSE
     //public methods
     public void RunAutomatic()
     {
-        this.isRunning = true;
+        this.isRunning = Boolean.TRUE;
         
         //spawn new thread for each Train
         for(Train train : this.Trains)
