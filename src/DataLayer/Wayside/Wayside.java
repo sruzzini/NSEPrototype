@@ -107,6 +107,17 @@ public final class Wayside {
         
     }
     
+    public void StartSimulation()
+    {
+        //put each tc into a thread and start those bad boys
+        
+    }
+    
+    public void StopSimulation()
+    {
+        
+    }
+    
     public void sendTravelSignal(BlockSignalBundle packet)
     {
         LineColor line = packet.LineID;
