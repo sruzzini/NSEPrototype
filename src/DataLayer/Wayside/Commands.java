@@ -20,6 +20,29 @@ public class Commands {
     public ArrayList<BlockSignalBundle> blockSignalCommands;
     public ArrayList<Switch> switchCommands;
     
+    public Commands()
+    {
+        blockInfoCommands = new ArrayList<>();
+        blockSignalCommands = new ArrayList<>();
+        switchCommands = new ArrayList<>();
+        
+    }
+    
+    public void pushBlockInfoCommand(BlockInfoBundle b)
+    {
+        blockInfoCommands.add(b);
+    }
+    
+    public void pushBlockSignalCommand(BlockSignalBundle b)
+    {
+        blockSignalCommands.add(b);
+    }
+    
+    public void pushSwitchCommand(Switch s)
+    {
+        switchCommands.add(s);
+    }
+    
     public boolean matches(Commands a)
     {
         boolean result = true;

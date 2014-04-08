@@ -10,6 +10,7 @@ import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.Block;
+import DataLayer.TrackModel.Switch;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -18,15 +19,17 @@ import java.util.Hashtable;
  * @author nwhachten
  */
 public abstract class PLC {
-    private final int id;
-    private final LineColor line;
-    private final Hashtable<Integer, Block> blocks;
-    private final ArrayList<Integer> blocksWithCrossing;
+    protected final int id;
+    protected final LineColor line;
+    protected final Hashtable<Integer, Block> blocks;
+    protected final Hashtable<Integer, Switch> switches;
+    protected final ArrayList<Integer> blocksWithCrossing;
 
-    public PLC(int id, LineColor line,  Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray) {
+    public PLC(int id, LineColor line,  Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
         this.id = id;
         this.line = line;
         this.blocks = blocks;
+        this.switches = switches;
         this.blocksWithCrossing = new ArrayList<>();
         
         for (Block b : blockArray)

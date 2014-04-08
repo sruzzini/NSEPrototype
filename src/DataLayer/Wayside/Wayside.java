@@ -198,7 +198,7 @@ public final class Wayside {
         {
             for (Block b : tc.getOccupiedBlocks())
             {
-                currentSignal = new BlockSignalBundle(0,0,0,b.getBlockID(),tc.getLine());
+                currentSignal = new BlockSignalBundle(b.getAuthority(),b.getDestination(),b.getSpeedLimit(),b.getBlockID(),tc.getLine());
                 occupiedBlocks.add(currentSignal);
             }
         }
