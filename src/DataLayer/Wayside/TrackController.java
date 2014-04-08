@@ -32,7 +32,7 @@ public class TrackController {
     private final ArrayList<BlockSignalBundle> commandSignalQueue;
     private final ArrayList<Switch> commandSwitchQueue;
     private final ArrayList<BlockInfoBundle> commandBlockQueue;
-    private final PLC plcProgram;
+    private PLC plcProgram;
 
     public TrackController(int id, LineColor line, int[] blocksInSector)  {
         this.id = id;
@@ -46,10 +46,15 @@ public class TrackController {
         //this.trackBlockInfo = new Hashtable();
         //this.trackSignalInfo = new Hashtable();
         
-        if (id == 0)
+        
+    }
+    
+    public void setPLC()
+    {
+        if (this.id == 0)
         {
-             this.plcProgram = new PLCGreenOne(id, line, blockInfo);
-        }
+             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray);
+        }/*
         else if (id == 1)
         {
             this.plcProgram = new PLCGreenTwo(id, line, blockInfo);
@@ -69,10 +74,10 @@ public class TrackController {
         else if (id == 5)
         {
             this.plcProgram = new PLCRedThree(id, line, blockInfo);
-        }
+        }*/
         else
         {
-            this.plcProgram = new PLCGreenOne(id, line, blockInfo);
+            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray);
             //this is bad and should not happen. create exception to be thrown
         }
     }

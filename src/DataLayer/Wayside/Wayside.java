@@ -103,6 +103,7 @@ public final class Wayside {
         this.setBlockInfoArray(track.theLines.get(1).theBlocks, LineColor.RED);
         this.setSwitchArray(track.theLines.get(0).theSwitches);
         this.setSwitchArray(track.theLines.get(1).theSwitches);
+        this.configurePLCs();
         
     }
     
@@ -144,7 +145,7 @@ public final class Wayside {
         this.track.setDispatchSignal(packet);
     }
     
-    public void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
+    private void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
     {
         ArrayList<ArrayList<Block>> list;
         list = new ArrayList<>(controllerCount);
@@ -203,7 +204,7 @@ public final class Wayside {
         return switchInfo;
     }
     
-    public void setSwitchArray(List<Switch> switchArray)
+    private void setSwitchArray(List<Switch> switchArray)
     {
         List<List<Switch>> list;
         list = new ArrayList<>(controllerCount);
@@ -276,6 +277,14 @@ public final class Wayside {
         }
         
         return commands;
+    }
+    
+    private void configurePLCs()
+    {
+        for (TrackController tc : this.controllers)
+        {
+            tc.setPLC();
+        }
     }
     
    

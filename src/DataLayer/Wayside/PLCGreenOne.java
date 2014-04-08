@@ -8,6 +8,7 @@ package DataLayer.Wayside;
 
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.Block;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
@@ -16,8 +17,8 @@ import java.util.Hashtable;
  */
 public class PLCGreenOne extends PLC {
 
-    public PLCGreenOne(int id, LineColor line, Hashtable<Integer, Block> blockNums) {
-        super(id, line, blockNums);
+    public PLCGreenOne(int id, LineColor line, Hashtable<Integer, Block> blockNums, ArrayList<Block> blockArray) {
+        super(id, line, blockNums, blockArray);
     }
     
     
