@@ -23,6 +23,7 @@ import DataLayer.TrackModel.*;
 import DataLayer.Train.*;
 import DataLayer.Wayside.*;
 import java.util.*;
+import java.util.Calendar;
 
 
 public class NSE 
@@ -39,6 +40,11 @@ public class NSE
     public ArrayList<Train> Trains;
     public int timeMultiplier;
     private Boolean isRunning;
+    
+    private long lastDispatchTime;
+    private final long dispatchIntervalMin = 10;
+    private final long millisInMin = 60000;
+    private final long dispatchInterval = dispatchIntervalMin * millisInMin; // convert minutes to milliseconds 
     
     
     //Constructors
@@ -93,6 +99,7 @@ public class NSE
     public void RunAutomatic()
     {
         this.isRunning = Boolean.TRUE;
+        lastDispatchTime = 0;
         
         //spawn new thread for each Train
         for(Train train : this.Trains)
@@ -105,6 +112,11 @@ public class NSE
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
             //check for 10 min elapsed, if so, dispatch new train
+            if (lastDispatchTime - Calendar.getInstance().getTimeInMillis() > dispatchInterval)
+            {
+                CTCOffice.getDispatcher();
+                lastDispatchTime = Calendar.getInstance().getTimeInMillis();
+            }  
             
             //Get info from Wayside to send ot CTC
             ArrayList<BlockSignalBundle> occInfo = this.Wayside.getOccupancyInfo();
