@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package GUILayer;
+package GUILayer.TrainController;
 
 /**
  *

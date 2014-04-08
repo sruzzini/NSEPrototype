@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="outputsLabel" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="velocityOutputLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="interiorLightsOutputLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="leftDoorOutputLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="rightDoorOutputLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="exteriorLightsOutputLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="sBrakeOutputLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="eBrakeOutputLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="58" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jTextField1" min="-2" pref="56" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="mphLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="sBrakeDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="eBrakeDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="rightDoorDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="leftDoorDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="intLightsDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="extLightsDIsplayBox" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="outputsLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="velocityOutputLabel" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="mphLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="sBrakeOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sBrakeDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="eBrakeOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="eBrakeDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="rightDoorOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rightDoorDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="leftDoorOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="leftDoorDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="interiorLightsOutputLabel" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="intLightsDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="exteriorLightsOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="extLightsDIsplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="outputsLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Outputs"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="velocityOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Velocity"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="rightDoorOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.editors.StringEditor">
+          <SerializedValue value="-84,-19,0,5,116,0,31,68,111,111,114,32,111,112,101,110,47,99,108,111,115,101,32,40,82,105,103,104,116,32,115,105,100,101,41,32,-64,-128"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="eBrakeOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Emergency Brake"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="sBrakeOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Service Brake"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="exteriorLightsOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.editors.StringEditor">
+          <SerializedValue value="-84,-19,0,5,116,0,27,76,105,103,104,116,115,32,111,110,47,111,102,102,32,40,69,120,116,101,114,105,111,114,41,32,-64,-128"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="leftDoorOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.editors.StringEditor">
+          <SerializedValue value="-84,-19,0,5,116,0,30,68,111,111,114,32,111,112,101,110,47,99,108,111,115,101,32,40,76,101,102,116,32,115,105,100,101,41,32,-64,-128"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="interiorLightsOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.editors.StringEditor">
+          <SerializedValue value="-84,-19,0,5,116,0,27,76,105,103,104,116,115,32,111,110,47,111,102,102,32,40,73,110,116,101,114,105,111,114,41,32,-64,-128"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="mphLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="mph"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="sBrakeDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Off"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="eBrakeDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Off"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="rightDoorDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Closed"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="leftDoorDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Closed"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="intLightsDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Off"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="extLightsDIsplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Off"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField1">
+    </Component>
+  </SubComponents>
+</Form>
