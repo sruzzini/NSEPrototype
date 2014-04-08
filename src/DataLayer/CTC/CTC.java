@@ -130,9 +130,7 @@ public class CTC
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
-    
-    
-    
+        
     public int calculateAuthority(int trainID)
     {
         int authority = 0;
@@ -254,7 +252,7 @@ public class CTC
         greenSec.add("Section");
         redSec.add("Section");
         
-        String csvFile = "trackInfo.csv";
+        String csvFile = "trackInfo.txt";
         BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
