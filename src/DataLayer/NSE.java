@@ -112,7 +112,7 @@ public class NSE
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
             //check for 10 min elapsed, if so, dispatch new train
-            if (lastDispatchTime - Calendar.getInstance().getTimeInMillis() > dispatchInterval)
+            if (Calendar.getInstance().getTimeInMillis() - lastDispatchTime > dispatchInterval)
             {
                 CTCOffice.getDispatcher();
                 lastDispatchTime = Calendar.getInstance().getTimeInMillis();
