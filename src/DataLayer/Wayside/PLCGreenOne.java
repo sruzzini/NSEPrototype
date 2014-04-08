@@ -73,7 +73,7 @@ public class PLCGreenOne extends PLC {
                 boolean dir = false;
                 if (switchNeg3.straightBlock == 150) dir = true;
                 c.pushSwitchCommand(new Switch(LineColor.GREEN, switchNeg3.switchID, 
-                        switchNeg3.typeOfSwitch, switchNeg3.approachBlock, switchNeg3.straightBlock, 
+                        switchNeg3.approachBlock, switchNeg3.straightBlock, 
                         switchNeg3.divergentBlock, dir ));
                 //push signal command to increase speed of blocks 149 and 150 to the speed limit
                 c.pushBlockSignalCommand(new BlockSignalBundle(block149.getAuthority(), 
@@ -119,7 +119,7 @@ public class PLCGreenOne extends PLC {
                 boolean dir = false;
                 if (switchNeg2.straightBlock == 1) dir = true;
                 c.pushSwitchCommand(new Switch(switchNeg2.lineID, switchNeg2.switchID, 
-                        switchNeg2.typeOfSwitch, switchNeg2.approachBlock, switchNeg2.straightBlock, 
+                        switchNeg2.approachBlock, switchNeg2.straightBlock, 
                         switchNeg2.divergentBlock, dir));
                 enteringLoop = true;
             }
@@ -143,7 +143,7 @@ public class PLCGreenOne extends PLC {
                 //push switch signal to set switch -2 to point towards block 1
                 boolean dir = false;
                 if (switchNeg2.straightBlock == 1) dir = true;
-                c.pushSwitchCommand(new Switch(switchNeg2.lineID, switchNeg2.switchID, switchNeg2.typeOfSwitch,
+                c.pushSwitchCommand(new Switch(switchNeg2.lineID, switchNeg2.switchID, 
                         switchNeg2.approachBlock, switchNeg2.straightBlock, switchNeg2.divergentBlock, dir));
                 //push signal to block one to tell train to go
                 c.pushBlockSignalCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
