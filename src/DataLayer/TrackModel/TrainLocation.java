@@ -25,17 +25,38 @@ public class TrainLocation {
         this.distanceSoFar = 0.0;
     }
     
-    public void setStartLocation(int line)
+    public void setStartLocation(int lineNum)
     {
         prevBlock = 0;
         distanceSoFar = 0.0;
-        if (line == 0) // green
+        if (lineNum == 0) // green
         {
+            line = LineColor.GREEN;
             currentBlock = 151;
         }
-        else if (line == 1) // red
+        else if (lineNum == 1) // red
         {
+            line = LineColor.RED;
             currentBlock = 77;
+        }
+    }
+    
+    public void updateLocation(int deltaX, int length, int prev, int next)
+    {
+        this.distanceSoFar += deltaX;
+        if(distanceSoFar > length)
+        {
+            distanceSoFar -= length;
+            if(prev == prevBlock)
+            {
+                prevBlock = currentBlock;
+                currentBlock = next;
+            }
+            else if(next == prevBlock)
+            {
+                prevBlock = currentBlock;
+                currentBlock = prev;
+            }
         }
     }
 }
