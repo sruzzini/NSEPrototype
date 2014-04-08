@@ -22,4 +22,11 @@ public class DispatchBundle extends BlockSignalBundle {
         this.toLine = toLine;
     }
     
+    public DispatchBundle(BlockSignalBundle b, int trainID, LineColor toLine)
+    {
+        super(b.Authority, b.Destination, b.Speed, b.BlockID, b.LineID, b.Closed);
+        this.trainID = trainID;
+        this.toLine = toLine;
+    }
+    
 }

@@ -9,6 +9,7 @@ package DataLayer.Wayside;
 import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.EnumTypes.XingState;
 import DataLayer.TrackModel.Block;
 import DataLayer.TrackModel.Switch;
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public abstract class PLC {
         
         Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
         
+        
+        
         return votingResult;
     }
     
@@ -76,6 +79,25 @@ public abstract class PLC {
     {
         ArrayList<BlockInfoBundle> commands;
         commands = new ArrayList<>();
+        
+        Block prev;
+        Block next;
+        Block b;
+        for (int n : this.blocksWithCrossing)
+        {
+            b = this.blocks.get(n);
+            prev = this.blocks.get(b.prev);
+            next = this.blocks.get(b.next);
+            
+            if (b.isOccupied() || prev.isOccupied() || next.isOccupied())
+            {
+                b.setRRXingState(XingState.ACTIVE);
+            }
+            else 
+            {
+                b.setRRXingState(XingState.NOT_ACTIVE);
+            }
+        }
         
         return commands;
     }

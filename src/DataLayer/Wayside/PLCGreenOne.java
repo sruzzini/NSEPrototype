@@ -6,6 +6,7 @@
 
 package DataLayer.Wayside;
 
+import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.Block;
@@ -62,8 +63,8 @@ public class PLCGreenOne extends PLC {
             if (trainsComing > 0)
             {
                 //push signal commands to stop at block 149 and 150
-                c.pushBlockSignalCommand(new BlockSignalBundle(block149.getAuthority(), block149.getDestination(), 0.0, 149, LineColor.GREEN));
-                c.pushBlockSignalCommand(new BlockSignalBundle(block150.getAuthority(), block150.getDestination(), 0.0, 150, LineColor.GREEN));
+                c.pushCommand(new BlockSignalBundle(block149.getAuthority(), block149.getDestination(), 0.0, 149, LineColor.GREEN));
+                c.pushCommand(new BlockSignalBundle(block150.getAuthority(), block150.getDestination(), 0.0, 150, LineColor.GREEN));
                 trainWaitingAt150 = true;
                 trainPassingThru150 = false;
             }
@@ -72,13 +73,13 @@ public class PLCGreenOne extends PLC {
                 //puh switch command to switch -3 to point towards block 150
                 boolean dir = false;
                 if (switchNeg3.straightBlock == 150) dir = true;
-                c.pushSwitchCommand(new Switch(LineColor.GREEN, switchNeg3.switchID, 
+                c.pushCommand(new Switch(LineColor.GREEN, switchNeg3.switchID, 
                         switchNeg3.approachBlock, switchNeg3.straightBlock, 
                         switchNeg3.divergentBlock, dir ));
                 //push signal command to increase speed of blocks 149 and 150 to the speed limit
-                c.pushBlockSignalCommand(new BlockSignalBundle(block149.getAuthority(), 
+                c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
                         block149.getDestination(), block149.getSpeedLimit(), 149, LineColor.GREEN));
-                c.pushBlockSignalCommand(new BlockSignalBundle(block150.getAuthority(), 
+                c.pushCommand(new BlockSignalBundle(block150.getAuthority(), 
                         block150.getDestination(), block150.getSpeedLimit(), 150, LineColor.GREEN));
                 trainWaitingAt150 = false;
                 trainPassingThru150 = true;
@@ -118,7 +119,7 @@ public class PLCGreenOne extends PLC {
                 //push switch signal to set switch -2 towards A
                 boolean dir = false;
                 if (switchNeg2.straightBlock == 1) dir = true;
-                c.pushSwitchCommand(new Switch(switchNeg2.lineID, switchNeg2.switchID, 
+                c.pushCommand(new Switch(switchNeg2.lineID, switchNeg2.switchID, 
                         switchNeg2.approachBlock, switchNeg2.straightBlock, 
                         switchNeg2.divergentBlock, dir));
                 enteringLoop = true;
@@ -143,10 +144,10 @@ public class PLCGreenOne extends PLC {
                 //push switch signal to set switch -2 to point towards block 1
                 boolean dir = false;
                 if (switchNeg2.straightBlock == 1) dir = true;
-                c.pushSwitchCommand(new Switch(switchNeg2.lineID, switchNeg2.switchID, 
+                c.pushCommand(new Switch(switchNeg2.lineID, switchNeg2.switchID, 
                         switchNeg2.approachBlock, switchNeg2.straightBlock, switchNeg2.divergentBlock, dir));
                 //push signal to block one to tell train to go
-                c.pushBlockSignalCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
+                c.pushCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
                         block1.getSpeedLimit(), block1.getBlockID(), LineColor.GREEN));
             }
             else 
@@ -154,9 +155,22 @@ public class PLCGreenOne extends PLC {
                 trainPassingThru1 = false;
                 trainWaitingAt1 = true;
                 //push signal to tell train at block one to stop by zpeed = 0
-                c.pushBlockSignalCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
+                c.pushCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
                         0.0, block1.getBlockID(), LineColor.GREEN));
             }
+        }
+        
+        ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
+        ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
+        
+        for (BlockInfoBundle b : rrCommands)
+        {
+            c.pushCommand(b);
+        }
+        
+        for (BlockSignalBundle b : safetyCommands)
+        {
+            c.pushCommand(b);
         }
         
         

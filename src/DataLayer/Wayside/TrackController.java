@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author nwhachten
  */
-public class TrackController {
+public class TrackController implements Runnable {
     private final int id;
     private final LineColor line;
     private final int[] blocksInSector;
@@ -83,7 +83,31 @@ public class TrackController {
         }
     }
     
-    
+    @Override
+    public void run()
+    {
+        Commands c;// = new Commands();
+        while (true)
+        {
+            c = this.plcProgram.runPLCProgram();
+            for (BlockSignalBundle b : this.commandSignalQueue)
+            {
+                c.pushCommand(b);
+            }
+            for (BlockInfoBundle b : this.commandBlockQueue)
+            {
+                c.pushCommand(b);
+            }
+            for (Switch s : this.commandSwitchQueue)
+            {
+                c.pushCommand(s);
+            }
+            
+            this.emptyCommandQueues();
+            
+            this.processCommands(c);
+        }
+    }
     
     public void sendTravelSignal(BlockSignalBundle packet)
     {
@@ -189,7 +213,20 @@ public class TrackController {
         return occ;
     }
     
+    private void emptyCommandQueues()
+    {
+        this.commandBlockQueue.clear();
+        this.commandSignalQueue.clear();
+        this.commandSwitchQueue.clear();
+    }
     
+    private void processCommands(Commands c)
+    {
+        //loop through the three types of commands
+        //signals - set blocks with matching speed, authority ...
+        //info - set blocks with rrxing and light info
+        //switch - change switches as needed
+    }
     
     
     
