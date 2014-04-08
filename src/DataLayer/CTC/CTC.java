@@ -126,6 +126,7 @@ public class CTC
         
         for(int i = 0; i < trains.length; i++)
         {
+           // System.out.println("train dest: " + trains[i].destination + " train block: " + trains[i].block);
             trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
@@ -202,7 +203,7 @@ public class CTC
         
         for(int i = 0; i < trains.length; i++)
         {
-            trains[i] = new TrainsClass(LineColor.YARD, "0", "", 0 , "0", "");
+            trains[i] = new TrainsClass(LineColor.YARD, "", "0", 0 , "0", "");
             numberTrains[i+1] = Integer.toString(i+1);
             trainInfo[i] = new String[] {Integer.toString(i+1), "", "", "Yard"};
         }
