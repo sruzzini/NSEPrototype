@@ -26,7 +26,7 @@ public class TrackModel
     
     public final void uploadTrackSpec()
     {
-        String csvFile = "track.csv";
+        String csvFile = "src/DataLayer/TrackModel/track.csv";
 	BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
