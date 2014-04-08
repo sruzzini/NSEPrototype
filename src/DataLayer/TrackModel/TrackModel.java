@@ -312,7 +312,8 @@ public class TrackModel
     	    int block = theTrainLocations.get(i).currentBlock;
     	    int prev = theLines.get(lineNum).theBlocks.get(block).getPrev();
     	    int next = theLines.get(lineNum).theBlocks.get(block).getNext();
-    	    theTrainLocations.get(i).updateLocation(deltaX, prev, next);
+    	    int length = theLines.get(lineNum).theBlocks.get(block).getLength();
+    	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next);
     	    
     	    block = theTrainLocations.get(i).currentBlock;
     	    
