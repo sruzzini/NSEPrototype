@@ -30,7 +30,7 @@ public class TrackModel
 	String line = "";
 	String cvsSplitBy = ",";
         
-        int blockID, length, stationID;
+        int blockID, length, stationID, next, prev, approach, divergent, straight;
         double speedLimit, elevation, cumElev, gradient;
         boolean underground, light, rrxing, station, tswitch;
         String stationString;
@@ -43,68 +43,118 @@ public class TrackModel
                     
                     if (blockSpec[0].equalsIgnoreCase("green"))
                     {
-                        if (blockSpec[1].equalsIgnoreCase("block"))
+                        if (blockSpec[1].equalsIgnoreCase("b"))
                         {
                             blockID = Integer.parseInt(blockSpec[2]);
                             length = Integer.parseInt(blockSpec[3]);
-                            speedLimit = Double.parseDouble(blockSpec[5]);
+                            
+                            next = Integer.parseInt(blockSpec[4]);
+                            prev = Integer.parseInt(blockSpec[5]);
+                            if (next < 0 || prev < 0)
+                            {
+                            	tswitch = true;
+                            	light = true;
+                            }
+                            else
+                            {
+                            	tswitch = false;
+                            	light = false;
+                            }
+                            
+                            gradient = Double.parseDouble(blockSpec[6]);
+                            elevation = Double.parseDouble(blockSpec[7]);
+                            cumElev = Double.parseDouble(blockSpec[8]);
+                            
+                            speedLimit = Double.parseDouble(blockSpec[9]);
                             speedLimit = speedLimit * 1000.0;
                             speedLimit = speedLimit / 3600.0;
-                            gradient = Double.parseDouble(blockSpec[4]);
-                            station = Boolean.parseBoolean(blockSpec[6]);
+                            
+                            station = Boolean.parseBoolean(blockSpec[10]);
                             if (station)
                             {
-                                stationID = Integer.parseInt(blockSpec[7]);
-                                stationString = blockSpec[8];
+                                stationID = Integer.parseInt(blockSpec[11]);
+                                stationString = blockSpec[12];
                             }
                             else
                             {
                                 stationID = -1;
-                                stationString = null;
+                                stationString = "";
                             }
-                            underground = Boolean.parseBoolean(blockSpec[9]);
-                            rrxing = Boolean.parseBoolean(blockSpec[10]);
-                            light = Boolean.parseBoolean(blockSpec[11]);
-                            elevation = Double.parseDouble(blockSpec[12]);
-                            cumElev = Double.parseDouble(blockSpec[13]);
-                            tswitch = Boolean.parseBoolean(blockSpec[14]);
+                            
+                            underground = Boolean.parseBoolean(blockSpec[13]);
+                            rrxing = Boolean.parseBoolean(blockSpec[14]);
+
                             Block b = new Block(blockID, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             theLines.get(0).theBlocks.add(b);
                         }
+                        else if(blockSpec[1].equalsIgnoreCase("s"))
+                        {
+                            blockID = Integer.parseInt(blockSpec[2]);
+                            approach = Integer.parseInt(blockSpec[3]);
+                            straight = Integer.parseInt(blockSpec[4]);
+                            divergent = Integer.parseInt(blockSpec[5]);
+                            Switch s = new Switch(LineColor.Green, blockID, approach, straight, divergent, true);
+                            theLines.get(0).theSwitches.add(s);
+                        }
                     }
                     else if(blockSpec[0].equalsIgnoreCase("red"))
                     {
-                        if (blockSpec[1].equalsIgnoreCase("block"))
+                        if (blockSpec[1].equalsIgnoreCase("b"))
                         {
                             blockID = Integer.parseInt(blockSpec[2]);
                             length = Integer.parseInt(blockSpec[3]);
-                            speedLimit = Double.parseDouble(blockSpec[5]);
+                            
+                            next = Integer.parseInt(blockSpec[4]);
+                            prev = Integer.parseInt(blockSpec[5]);
+                            if (next < 0 || prev < 0)
+                            {
+                            	tswitch = true;
+                            	light = true;
+                            }
+                            else
+                            {
+                            	tswitch = false;
+                            	light = false;
+                            }
+                            
+                            gradient = Double.parseDouble(blockSpec[6]);
+                            elevation = Double.parseDouble(blockSpec[7]);
+                            cumElev = Double.parseDouble(blockSpec[8]);
+                            
+                            speedLimit = Double.parseDouble(blockSpec[9]);
                             speedLimit = speedLimit * 1000.0;
                             speedLimit = speedLimit / 3600.0;
-                            gradient = Double.parseDouble(blockSpec[4]);
-                            station = Boolean.parseBoolean(blockSpec[6]);
+                            
+                            station = Boolean.parseBoolean(blockSpec[10]);
                             if (station)
                             {
-                                stationID = Integer.parseInt(blockSpec[7]);
-                                stationString = blockSpec[8];
+                                stationID = Integer.parseInt(blockSpec[11]);
+                                stationString = blockSpec[12];
                             }
                             else
                             {
                                 stationID = -1;
-                                stationString = null;
+                                stationString = "";
                             }
-                            underground = Boolean.parseBoolean(blockSpec[9]);
-                            rrxing = Boolean.parseBoolean(blockSpec[10]);
-                            light = Boolean.parseBoolean(blockSpec[11]);
-                            elevation = Double.parseDouble(blockSpec[12]);
-                            cumElev = Double.parseDouble(blockSpec[13]);
-                            tswitch = Boolean.parseBoolean(blockSpec[14]);
+                            
+                            underground = Boolean.parseBoolean(blockSpec[13]);
+                            rrxing = Boolean.parseBoolean(blockSpec[14]);
+
                             Block b = new Block(blockID, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             theLines.get(1).theBlocks.add(b);
+                        }
+                        else if(blockSpec[1].equalsIgnoreCase("s"))
+                        {
+                            blockID = Integer.parseInt(blockSpec[2]);
+                            approach = Integer.parseInt(blockSpec[3]);
+                            straight = Integer.parseInt(blockSpec[4]);
+                            divergent = Integer.parseInt(blockSpec[5]);
+                            Switch s = new Switch(LineColor.Red, blockID, approach, straight, divergent, true);
+                            theLines.get(1).theSwitches.add(s);
                         }
                     }
                     
