@@ -7,7 +7,8 @@
 package DataLayer.Train.TrainModel;
 
 import java.util.Calendar;
-import DataLayer.Train.ModelPhysics;
+import DataLayer.Train.PhysicsInput;
+import DataLayer.Train.TrainStatus;
 /**
  *
  * @author drewwinfield
@@ -22,11 +23,12 @@ public class PhysicsEngine implements Runnable
     private boolean sBrakeStatus;
     private boolean eBrakeStatus;
     private int time_multiplier;
+    private boolean passengerEBrakeRequest;
     
     private double velocity;
     private double delta_x;
     
-    ModelPhysics modelPhysics;
+    PhysicsInput physicsInput;
     
     private final double passengerMass = 70; // avg weight of a passenger, in kg.  maybe.
     private final double trackCoeffFric = .005; // track's coefficient of friction
@@ -62,9 +64,9 @@ public class PhysicsEngine implements Runnable
         eBrakeFailure = false;
     }
     
-    public PhysicsEngine(ModelPhysics mp)
+    public PhysicsEngine(PhysicsInput mp)
     {
-        modelPhysics = mp;
+        physicsInput = mp;
     }
     // Velocity
     public double getVelocity()
@@ -112,6 +114,17 @@ public class PhysicsEngine implements Runnable
         return eBrakeStatus;
     }
     
+    // Passenger E-brake request
+    public void setPassengerEBrakeRequest(boolean value)
+    {
+        passengerEBrakeRequest = value;
+    }
+    public boolean getPassengerEBrakeRequest()
+    {
+        return passengerEBrakeRequest;
+    }
+    
+    
     // Time multiplier
     public void setTimeMultiplier(int newMultiplier)
     {
@@ -152,7 +165,35 @@ public class PhysicsEngine implements Runnable
     {
         return gradient;
     }
-    //public double get
+    public double getMass()
+    {
+        return mass;
+    }
+    public int computeFailureCode()
+    {
+        int failureCode = 0;
+        if (engineFailure)
+        {
+            failureCode += TrainStatus.ENGINE_FAILURE;
+        }
+        if (sBrakeFailure)
+        {
+            failureCode += TrainStatus.S_BRAKE_FAILURE;
+        }
+        if (eBrakeFailure)
+        {
+            failureCode += TrainStatus.E_BRAKE_FAILURE;
+        }
+        if (signalFailure)
+        {
+            failureCode += TrainStatus.SIGNAL_PICKUP_FAILURE;
+        }
+        return failureCode;
+    }
+    public int getFailureCode()
+    {
+        return computeFailureCode();
+    }
     
     public void run()
     {
@@ -178,22 +219,22 @@ public class PhysicsEngine implements Runnable
     }
     private void getPhysicsInfo()
     {
-        motorPower = modelPhysics.motorPower;
-        sBrakeStatus = modelPhysics.sBrakeStatus;
-        eBrakeStatus = modelPhysics.eBrakeStatus;
-        time_multiplier = modelPhysics.time_multiplier;
-        gradient = modelPhysics.gradient;
-        passengers = passengers + modelPhysics.passengerChange;
+        motorPower = physicsInput.MotorPower;
+        sBrakeStatus = physicsInput.SBrakeStatus;
+        eBrakeStatus = physicsInput.EBrakeStatus;
+        time_multiplier = physicsInput.Time_multiplier;
+        gradient = physicsInput.Gradient;
+        passengers = passengers + physicsInput.PassengerChange;
     }
     private void sendPhysicsInfo()
     {
-        modelPhysics.velocity = velocity;
-        modelPhysics.delta_x = delta_x;
-        modelPhysics.mass = mass;
-        modelPhysics.eBrakeFailure = eBrakeFailure;
-        modelPhysics.sBrakeFailure = sBrakeFailure;
-        modelPhysics.signalFailure = signalFailure;
-        modelPhysics.engineFailure = engineFailure;
+        physicsInput.Velocity = velocity;
+        physicsInput.Delta_x = delta_x;
+        physicsInput.Mass = mass;
+        physicsInput.EBrakeFailure = eBrakeFailure;
+        physicsInput.SBrakeFailure = sBrakeFailure;
+        physicsInput.SignalFailure = signalFailure;
+        physicsInput.EngineFailure = engineFailure;
     }
     //private void
     public void simulate()

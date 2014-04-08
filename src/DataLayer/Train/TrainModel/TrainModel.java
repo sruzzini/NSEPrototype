@@ -5,8 +5,8 @@
  */
 
 package DataLayer.Train.TrainModel;
-import DataLayer.Train.ModelState;
-import DataLayer.Train.ModelPhysics;
+import DataLayer.Train.StateInput;
+import DataLayer.Train.PhysicsInput;
 
 /**
  *
@@ -17,16 +17,86 @@ import DataLayer.Train.ModelPhysics;
 
 public class TrainModel {
         
-    private final ModelState modelState;
-    private final ModelPhysics modelPhysics;
+    private final StateInput stateInput;
+    private final PhysicsInput physicsInput;
     public final TrainState state;
     public final PhysicsEngine physics;
     
-    public TrainModel(ModelPhysics mp, ModelState ms)
+    public TrainModel(PhysicsInput pi, StateInput si)
     {
-        modelPhysics = mp;
-        modelState = ms;
-        state = new TrainState(modelState);
-        physics = new PhysicsEngine(modelPhysics);
+        physicsInput = pi;
+        stateInput = si;
+        state = new TrainState(stateInput);
+        physics = new PhysicsEngine(physicsInput);
+    }
+    
+    public void updateState()
+    {
+        state.updateState();
+    }
+    
+    public void startPhysics()
+    {
+        new Thread(physics).start();
+    }
+    
+    public boolean getSBrakeStatus()
+    {
+        return physics.getServiceBrake();
+    }
+    
+    public boolean getEBrakeStatus()
+    {
+        return physics.getEmergencyBrake();
+    }
+    
+    public boolean getPassengerEBrakeStatus()
+    {
+        return physics.getPassengerEBrakeRequest();
+    }
+    
+    public double getMass()
+    {
+        return physics.getMass();
+    }
+    
+    public int getFailureCode()
+    {
+        return physics.getFailureCode();
+    }
+    
+    public boolean getRightDoorStatus()
+    {
+        return state.getRightDoors();
+    }
+        
+    public boolean getLeftDoorStatus()
+    {
+        return state.getLeftDoors();
+    }
+    
+    public boolean getIntLightStatus()
+    {
+        return state.getInteriorLights();
+    }
+
+    public boolean getExtLightStatus()
+    {
+        return state.getExteriorLights();
+    }
+    
+    public boolean getHeaterStatus()
+    {
+        return state.getHeater();
+    }
+    
+    public String getAnnouncement()
+    {
+        return state.getAnnouncement();
+    }
+    
+    public String getAdvertisement()
+    {
+        return state.getAdvertisement();
     }
 }
