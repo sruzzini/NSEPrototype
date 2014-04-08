@@ -30,7 +30,7 @@ public class TrackModel
 	String line = "";
 	String cvsSplitBy = ",";
         
-        int blockID, length, stationID, next, prev, approach, divergent, straight;
+        int blockID, length, stationID, next, prev, approach, divergent, straight, tswitchID;
         double speedLimit, elevation, cumElev, gradient;
         boolean underground, light, rrxing, station, tswitch;
         String stationString;
@@ -53,11 +53,20 @@ public class TrackModel
                             if (next < 0 || prev < 0)
                             {
                             	tswitch = true;
+                            	if(next < 0)
+                            	{
+                            	    tswitchID = next - (2 * next);
+                            	}
+                            	else if(prev < 0)
+                            	{
+                            	    tswitchID = prev - (2 * prev);
+                            	}
                             	light = true;
                             }
                             else
                             {
                             	tswitch = false;
+                            	tswitchID = -1;
                             	light = false;
                             }
                             
@@ -87,6 +96,7 @@ public class TrackModel
                             Block b = new Block(blockID, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
+                            b.setTswitchID(tswitchID);
                             theLines.get(0).theBlocks.add(b);
                         }
                         else if(blockSpec[1].equalsIgnoreCase("s"))
@@ -111,11 +121,20 @@ public class TrackModel
                             if (next < 0 || prev < 0)
                             {
                             	tswitch = true;
+                            	if(next < 0)
+                            	{
+                            	    tswitchID = next - (2 * next);
+                            	}
+                            	else if(prev < 0)
+                            	{
+                            	    tswitchID = prev - (2 * prev);
+                            	}
                             	light = true;
                             }
                             else
                             {
                             	tswitch = false;
+                            	tswitchID = -1;
                             	light = false;
                             }
                             
@@ -145,6 +164,7 @@ public class TrackModel
                             Block b = new Block(blockID, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
+                            b.setTswitchID(tswitchID);
                             theLines.get(1).theBlocks.add(b);
                         }
                         else if(blockSpec[1].equalsIgnoreCase("s"))
