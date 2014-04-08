@@ -94,10 +94,12 @@ public final class Wayside {
         catch (FileNotFoundException e)
         {
             //catch error
+            e.printStackTrace();
         }
         catch (IOException e1)
         {
             //catch error
+            e1.printStackTrace();
         }
         this.setBlockInfoArray(track.theLines.get(0).theBlocks, LineColor.GREEN);
         this.setBlockInfoArray(track.theLines.get(1).theBlocks, LineColor.RED);
