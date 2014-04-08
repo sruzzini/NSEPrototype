@@ -21,5 +21,13 @@ public class PLCGreenOne extends PLC {
         super(id, line, blockNums, blockArray);
     }
     
+    protected Commands plcProgram()
+    {
+        Commands c;
+        c = new Commands();
+        
+        return c;
+    }
+    
     
 }
