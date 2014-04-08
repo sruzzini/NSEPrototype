@@ -192,6 +192,18 @@ public final class Wayside {
     {
         ArrayList<BlockSignalBundle> occupiedBlocks;
         occupiedBlocks = new ArrayList<>();
+        BlockSignalBundle currentSignal;
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (Block b : tc.getOccupiedBlocks())
+            {
+                currentSignal = new BlockSignalBundle(0,0,0,b.getBlockID(),tc.getLine());
+                occupiedBlocks.add(currentSignal);
+            }
+        }
+        
+        
         
         return occupiedBlocks;
     }
@@ -200,6 +212,14 @@ public final class Wayside {
     {
         ArrayList<Switch> switchInfo;
         switchInfo = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (Switch s : tc.getSwitchInfo())
+            {
+                switchInfo.add(s);
+            }
+        }
         
         return switchInfo;
     }
@@ -226,7 +246,7 @@ public final class Wayside {
         {
             if (tc.getLine() == line)
             {
-                tc.setSwitchInfo(list.get(tc.getId()));
+                tc.setSwitchInfo((ArrayList<Switch>) list.get(tc.getId()));
             }
         }
     }
