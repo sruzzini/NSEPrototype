@@ -48,7 +48,7 @@ public class TrackModel
                         if (blockSpec[1].equalsIgnoreCase("b"))
                         {
                             blockID = Integer.parseInt(blockSpec[2]);
-                            length = Integer.parseInt(blockSpec[3]);
+                            length = Double.parseDouble(blockSpec[3]);
                             
                             next = Integer.parseInt(blockSpec[4]);
                             prev = Integer.parseInt(blockSpec[5]);
@@ -116,7 +116,7 @@ public class TrackModel
                         if (blockSpec[1].equalsIgnoreCase("b"))
                         {
                             blockID = Integer.parseInt(blockSpec[2]);
-                            length = Integer.parseInt(blockSpec[3]);
+                            length = Double.parseDouble(blockSpec[3]);
                             
                             next = Integer.parseInt(blockSpec[4]);
                             prev = Integer.parseInt(blockSpec[5]);
