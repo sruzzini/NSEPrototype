@@ -105,6 +105,9 @@ public class Train implements Runnable
     public void setTrackSignal(TrackSignal s)
     {
         this.trackSignal = s;
+        // gradient
+        physicsInput.Gradient = trackSignal.Gradient;
+        // passengers
     }
     
     public void setBeaconSignal(BeaconSignal s)
@@ -133,8 +136,6 @@ public class Train implements Runnable
         
         // do some additional work here not related to the Train Command
         physicsInput.Time_multiplier = timeMultiplier;
-        // gradient
-        // passengers
     }
     private void translateStateCommand(TrainCommand c)
     { 

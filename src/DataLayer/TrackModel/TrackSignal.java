@@ -15,63 +15,64 @@ package DataLayer.TrackModel;
 
 public class TrackSignal 
 {
-    private double velocityCommand; // meters/sec
-    private int authority;
-    private boolean isUnderground;
-    private String nextDestination;
-    private double gradient;
+    public double VelocityCommand; // meters/sec
+    public int Authority;
+    public boolean IsUnderground;
+    public String NextDestination;
+    public double Gradient;
+    public int DeltaPassengers;
     
     //Constructors
     public TrackSignal()
     {
-        this.velocityCommand = 0;
-        this.authority = 0;
-        this.isUnderground = false;
-        this.nextDestination = null;
-        this.gradient = 0;
+        this.VelocityCommand = 0;
+        this.Authority = 0;
+        this.IsUnderground = false;
+        this.NextDestination = null;
+        this.Gradient = 0;
     }
     
     public TrackSignal(double velocity, int authority, boolean isUnderground, String nextDestination)
     {
-        this.velocityCommand = velocity;
-        this.authority = authority;
-        this.isUnderground = isUnderground;
-        this.nextDestination = nextDestination;
-        this.gradient = 0;
+        this.VelocityCommand = velocity;
+        this.Authority = authority;
+        this.IsUnderground = isUnderground;
+        this.NextDestination = nextDestination;
+        this.Gradient = 0;
     }
     
     public TrackSignal(double velocity, int authority, boolean isUnderground, String nextDestination, double gradient)
     {
-        this.velocityCommand = velocity;
-        this.authority = authority;
-        this.isUnderground = isUnderground;
-        this.nextDestination = nextDestination;
-        this.gradient = gradient;
+        this.VelocityCommand = velocity;
+        this.Authority = authority;
+        this.IsUnderground = isUnderground;
+        this.NextDestination = nextDestination;
+        this.Gradient = gradient;
     }
     
     
     //Getters
     public double getVelocityCommand()
     {
-        return this.velocityCommand;
+        return this.VelocityCommand;
     }
     
     public int getAuthority()
     {
-        return this.authority;
+        return this.Authority;
     }
     
     public boolean getUndergroundStatus()
     {
-        return this.isUnderground;
+        return this.IsUnderground;
     }
     
     public String getNextDestination()
     {
         String s = "**Destination Not Specified**";
-        if (this.nextDestination != null)
+        if (this.NextDestination != null)
         {
-            s = this.nextDestination;
+            s = this.NextDestination;
         }
         return s;
     }
@@ -80,21 +81,21 @@ public class TrackSignal
     //Setters
     public void setVelocityCommand(double x)
     {
-        this.velocityCommand = x;
+        this.VelocityCommand = x;
     }
     
     public void setAuthority(int x)
     {
-        this.authority = x;
+        this.Authority = x;
     }
     
     public void setUndergroundStatus(boolean x)
     {
-        this.isUnderground = x;
+        this.IsUnderground = x;
     }
     
     public void setNextDestination(String x)
     {
-        this.nextDestination = x;
+        this.NextDestination = x;
     }
 }
