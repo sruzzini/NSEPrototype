@@ -138,7 +138,7 @@ public class TrackModel
             case RED:
                 line = 1;
         }
-        int block = b.BlockID - 1;
+        int block = b.BlockID;
         theLines.get(line).theBlocks.get(block).setRRXingState(b.RRXingState);
         theLines.get(line).theBlocks.get(block).setLightColor(b.LightColor);
     }
@@ -153,7 +153,6 @@ public class TrackModel
             case RED:
                 lineNum = 1;
         }
-        block = block - 1;
         XingState s = theLines.get(lineNum).theBlocks.get(block).getRRXingState();
         LightColor l = theLines.get(lineNum).theBlocks.get(block).getLightColor();
         boolean c = theLines.get(lineNum).theBlocks.get(block).isClosed();
@@ -172,7 +171,7 @@ public class TrackModel
             case RED:
                 line = 1;
         }
-        int block = b.BlockID - 1;
+        int block = b.BlockID;
         theLines.get(line).theBlocks.get(block).setAuthority(b.Authority);
         theLines.get(line).theBlocks.get(block).setDestination(b.Destination);
         theLines.get(line).theBlocks.get(block).setVelocity(b.Speed);
@@ -188,7 +187,6 @@ public class TrackModel
             case RED:
                 lineNum = 1;
         }
-        block = block - 1;
         int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
         int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
         double s = theLines.get(lineNum).theBlocks.get(block).getVelocity();
@@ -207,7 +205,6 @@ public class TrackModel
             case RED:
                 lineNum = 1;
         }
-        block = block - 1;
         int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
         int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
         String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
@@ -227,10 +224,10 @@ public class TrackModel
         {
             case GREEN:
                 line = 0;
-                block = 151;
+                block = 152;
             case RED:
                 line = 1;
-                block = 76;
+                block = 77;
         }
         theLines.get(line).theBlocks.get(block).setAuthority(d.Authority);
         theLines.get(line).theBlocks.get(block).setDestination(d.Destination);
