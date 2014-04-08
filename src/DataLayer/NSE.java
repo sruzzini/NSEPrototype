@@ -38,13 +38,13 @@ public class NSE
     public ArrayList<TrainLocation> TrainLocations;
     public ArrayList<Train> Trains;
     public int timeMultiplier;
-    private boolean isRunning;
+    private Boolean isRunning;
     
     
     //Constructors
     public NSE()
     {
-        this.isRunning = false;
+        this.isRunning = new Boolean(false);
         this.timeMultiplier = REAL_TIME;
         this.CTCOffice = new CTC();
         this.Track = new TrackModel();
@@ -54,19 +54,20 @@ public class NSE
         //creates 10 Train Objects and 10 TrainLocations
         for (int i = 0; i < 10; i++)
         {
-            this.Trains.add(new Train(i));
+            this.Trains.add(new Train(i, this.isRunning));
             this.Trains.get(i).setTimeMultiplier(this.timeMultiplier);
-            this.TrainLocations.add(new TrainLocation(LineColor.YARD));
+            this.TrainLocations.add(new TrainLocation());
         }
         
         this.CTCOffice.setTrainLocations(this.TrainLocations); //setting CTC Office's train locations to the newly created locations
-        this.Track.theTrains = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
+        this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
+        this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
         this.timeMultiplier = REAL_TIME;
     }
     
     public NSE(int timeMultiplier, int numberOfTrains)
     {
-        this.isRunning = false;
+        this.isRunning = new Boolean(false);
         this.timeMultiplier = timeMultiplier;
         this.CTCOffice = new CTC(numberOfTrains);
         this.Track = new TrackModel();
@@ -76,13 +77,14 @@ public class NSE
         //creates 10 Train Objects and 10 TrainLocations
         for (int i = 0; i < numberOfTrains; i++)
         {
-            this.Trains.add(new Train(i));
+            this.Trains.add(new Train(i, this.isRunning));
             this.Trains.get(i).setTimeMultiplier(this.timeMultiplier);
-            this.TrainLocations.add(new TrainLocation(LineColor.YARD));
+            this.TrainLocations.add(new TrainLocation());
         }
         
         this.CTCOffice.setTrainLocations(this.TrainLocations); //setting CTC Office's train locations to the newly created locations
-        this.Track.theTrains = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
+        this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
+        this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
         this.timeMultiplier = timeMultiplier;
     }
     
@@ -98,26 +100,28 @@ public class NSE
             new Thread(train).start();
         }
         
-        while(this.isRunning)
+        this.Wayside.StartSimulation(); //Start up the wayside controller
+        
+        while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
             //check for 10 min elapsed, if so, dispatch new train
             
-            //Communicate from CTC to Wayside
+            //Get info from Wayside to send ot CTC
             ArrayList<BlockSignalBundle> occInfo = this.Wayside.getOccupancyInfo();
             ArrayList<Switch> switchInfo = this.Wayside.getSwitchInfo();
+            
+            //Send info from Wayside to CTC
             this.CTCOffice.updateBlockInfo(occInfo, switchInfo);
+            
             
             ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.getRouteInfo();
             for (BlockSignalBundle bundle : toWaysideInfo)
             {
                 this.Wayside.sendTravelSignal(bundle);
             }
-            
-            
-            //Communicate from Wayside to Track
-            
-            
+           
             //Communicate from Track to Trains
+            this.Track.updateTrainLocations();
         }
     }
     

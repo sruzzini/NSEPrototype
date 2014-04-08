@@ -23,6 +23,7 @@ public class Train implements Runnable
 {
     private int iD;
     private int timeMultiplier;
+    private Boolean isRunning;
     private TrainStatus status;
     private TrainCommand commands;
     private PhysicsInput physicsInput;
@@ -36,6 +37,7 @@ public class Train implements Runnable
     //Contructors
     public Train()
     {
+        this.isRunning = new Boolean(false);
         this.iD = 1;
         this.timeMultiplier = 1;
         this.status = new TrainStatus();
@@ -48,8 +50,9 @@ public class Train implements Runnable
         this.model = new TrainModel(this.physicsInput, this.stateInput);
     }
     
-    public Train(int id)
+    public Train(int id, Boolean running)
     {
+        this.isRunning = running;
         this.iD = id;
         this.timeMultiplier = 1;
         this.status = new TrainStatus();
@@ -62,8 +65,9 @@ public class Train implements Runnable
         this.model = new TrainModel(this.physicsInput, this.stateInput);
     }
     
-    public Train(int id, int multiplier, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
+    public Train(int id, int multiplier, Boolean running, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
     {
+        this.isRunning = running;
         this.iD = id;
         this.timeMultiplier = multiplier;
         this.status = status;
@@ -107,6 +111,12 @@ public class Train implements Runnable
     {
         this.beaconSignal = s;
     }
+    
+    public void setIsRunning(Boolean isRunning)
+    {
+        this.isRunning = isRunning;
+    }
+    
     public double getDeltaX()
     {
         double tempDeltaX = 0;
@@ -165,7 +175,7 @@ public class Train implements Runnable
     {
         model.startPhysics();
         
-        while(true)
+        while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
             this.commands = this.controller.GetTrainCommand();
             translateStateCommand(this.commands);
