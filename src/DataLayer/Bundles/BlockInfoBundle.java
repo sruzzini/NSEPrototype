@@ -36,6 +36,19 @@ public class BlockInfoBundle extends BlockBundle {
         this.RRXingState = RRXingState;
     }
 
+    public boolean matches(BlockInfoBundle b)
+    {
+        boolean result = true;
+        
+        if (this.LightColor != b.LightColor || this.RRXingState != b.RRXingState || !super.matches(b))
+        {
+            result = false;
+        }
+        
+        
+        
+        return result;
+    }
     
     
 }

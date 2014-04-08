@@ -31,4 +31,15 @@ public abstract class BlockBundle {
         this.Closed = closed;
     }
     
+    public boolean matches(BlockBundle b)
+    {
+        boolean result = true;
+        if (this.BlockID != b.BlockID || this.LineID != b.LineID || this.Closed != b.Closed)
+        {
+            result = false;
+        }
+        
+        return result;
+    }
+    
 }

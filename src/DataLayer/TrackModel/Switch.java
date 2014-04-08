@@ -29,4 +29,17 @@ public class Switch
     {
         return straight;
     }
+    
+    public boolean matches(Switch s)
+    {
+        boolean result = true;
+        
+        if (this.lineID != s.lineID || this.switchID != s.switchID || this.typeOfSwitch != s.typeOfSwitch || this.approachBlock != s.approachBlock ||
+                this.straightBlock != s.straightBlock || this.divergentBlock != s.divergentBlock || this.straight != s.straight)
+        {
+            result = false;
+        }
+        
+        return false;
+    }
 }

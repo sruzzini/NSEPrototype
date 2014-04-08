@@ -37,6 +37,17 @@ public class BlockSignalBundle extends BlockBundle {
         this.Speed = Speed;
     }
     
+    public boolean matches(BlockSignalBundle b)
+    {
+        boolean result = true;
+        
+        if (this.Authority != b.Authority || this.Destination != b.Authority || this.Speed != b.Speed || !super.matches(b))
+        {
+            result = false;
+        }
+        
+        return result;
+    }
     
     
     
