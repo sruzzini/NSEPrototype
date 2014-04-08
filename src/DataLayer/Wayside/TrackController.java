@@ -54,7 +54,7 @@ public class TrackController {
     {
         if (this.id == 0)
         {
-             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray);
+             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo);
         }/*
         else if (id == 1)
         {
@@ -78,7 +78,7 @@ public class TrackController {
         }*/
         else
         {
-            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray);
+            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo);
             //this is bad and should not happen. create exception to be thrown
         }
     }
