@@ -31,9 +31,9 @@ public class TrackModel
 	String line = "";
 	String cvsSplitBy = ",";
         
-        int blockID, length, stationID, next, prev, approach, divergent, straight;
+        int blockID, stationID, next, prev, approach, divergent, straight;
         int tswitchID = 0;
-        double speedLimit, elevation, cumElev, gradient;
+        double speedLimit, length, elevation, cumElev, gradient;
         boolean underground, light, rrxing, station, tswitch;
         String stationString;
         
@@ -334,7 +334,7 @@ public class TrackModel
     	    int block = theTrainLocations.get(i).currentBlock;
     	    int prev = theLines.get(lineNum).theBlocks.get(block).prev;
     	    int next = theLines.get(lineNum).theBlocks.get(block).next;
-    	    int length = theLines.get(lineNum).theBlocks.get(block).getLength();
+    	    double length = theLines.get(lineNum).theBlocks.get(block).getLength();
     	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next);
     	    
     	    block = theTrainLocations.get(i).currentBlock;

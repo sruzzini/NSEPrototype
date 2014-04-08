@@ -7,7 +7,7 @@ public class Block {
     
     private int blockID;
     public int next, prev;
-    private int length;
+    private double length;
     private double speedLimit;
     private double elevation;
     private double cumElev;
@@ -31,7 +31,7 @@ public class Block {
     private int tswitchID;
     private BeaconSignal beacon;
     
-    public Block(int blockID, int next, int prev, int length, double speedLimit, double elevation, double cumElev,
+    public Block(int blockID, int next, int prev, double length, double speedLimit, double elevation, double cumElev,
             double gradient, boolean underground, boolean light, boolean rrxing,
             boolean station, boolean tswitch)
     {
@@ -62,7 +62,7 @@ public class Block {
         return blockID;
     }
 
-    public int getLength() 
+    public double getLength() 
     {
         return length;
     }
