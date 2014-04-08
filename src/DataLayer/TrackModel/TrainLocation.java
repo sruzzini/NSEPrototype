@@ -18,17 +18,11 @@ public class TrainLocation {
     public int prevBlock;
     public double distanceSoFar;
     
-    public TrainLocation(LineColor line)
+    public TrainLocation()
     {
-        this.line = line;
-        switch (line)
-        {
-            case GREEN:
-                currentBlock = 0;
-            case RED:
-                currentBlock = 0;
-        }
-        distanceSoFar = 0.0;
+        this.line = LineColor.YARD;
+        this.currentBlock = 0;
+        this.distanceSoFar = 0.0;
     }
     
     public void setStartLocation(int line)
@@ -43,10 +37,5 @@ public class TrainLocation {
         {
             currentBlock = 77;
         }
-    }
-    
-    public void updateLocation(double deltaX)
-    {
-        
     }
 }
