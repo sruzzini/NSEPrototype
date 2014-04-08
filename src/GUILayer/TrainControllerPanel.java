@@ -140,6 +140,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
 
         powerOutput_txt.setEditable(false);
         powerOutput_txt.setColumns(20);
+        powerOutput_txt.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
         powerOutput_txt.setRows(1);
         powerOutput_txt.setEnabled(false);
         jScrollPane1.setViewportView(powerOutput_txt);
@@ -223,7 +224,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
                                 .addComponent(extLights_status)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

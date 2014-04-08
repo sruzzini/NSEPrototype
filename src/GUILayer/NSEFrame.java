@@ -141,7 +141,7 @@ public class NSEFrame extends javax.swing.JFrame {
                     .addComponent(pause_button)
                     .addComponent(reset_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
 
