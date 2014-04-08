@@ -295,4 +295,38 @@ public class TrackModel
         theTrains.get(d.trainID).setTrackSignal(t);
     }
     
+    public void updateTrainLocations()
+    {
+    	for(int i = 0; i < theTrainLocations.size(); i++)
+    	{
+    	    int deltaX = theTrains.get(i).getDeltaX();
+    	    LineColor line = theTrainLocations.get(i).line;
+    	    int lineNum = 0;
+            switch (line)
+            {
+                case GREEN:
+                    lineNum = 0;
+                case RED:
+                    lineNum = 1;
+            }
+    	    int block = theTrainLocations.get(i).currentBlock;
+    	    int prev = theLines.get(lineNum).theBlocks.get(block).getPrev();
+    	    int next = theLines.get(lineNum).theBlocks.get(block).getNext();
+    	    theTrainLocations.get(i).updateLocation(deltaX, prev, next);
+    	    
+    	    block = theTrainLocations.get(i).currentBlock;
+    	    
+    	    int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
+            int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
+            String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
+            double s = theLines.get(lineNum).theBlocks.get(block).getVelocity();
+            double g = theLines.get(lineNum).theBlocks.get(block).getGradient();
+            boolean u = theLines.get(lineNum).theBlocks.get(block).isUnderground();
+            TrackSignal t = new TrackSignal(s, a, u, dd, g);
+            
+            theTrains.get(i).setTrackSignal(t);
+    	    
+    	}
+    }
+    
 }
