@@ -62,19 +62,9 @@ public class Block {
         return blockID;
     }
 
-    public void setBlockID(int blockID) 
-    {
-        this.blockID = blockID;
-    }
-
     public int getLength() 
     {
         return length;
-    }
-
-    public void setLength(int length) 
-    {
-        this.length = length;
     }
 
     public double getSpeedLimit() 
@@ -82,19 +72,9 @@ public class Block {
         return speedLimit;
     }
 
-    public void setSpeedLimit(double speedLimit) 
-    {
-        this.speedLimit = speedLimit;
-    }
-
     public double getElevation() 
     {
         return elevation;
-    }
-
-    public void setElevation(double elevation) 
-    {
-        this.elevation = elevation;
     }
 
     public double getCumElev() 
@@ -102,19 +82,9 @@ public class Block {
         return cumElev;
     }
 
-    public void setCumElev(double cumElev) 
-    {
-        this.cumElev = cumElev;
-    }
-
     public double getGradient() 
     {
         return gradient;
-    }
-
-    public void setGradient(double gradient) 
-    {
-        this.gradient = gradient;
     }
 
     public int getFailureState() 
@@ -162,19 +132,9 @@ public class Block {
         return underground;
     }
 
-    public void setUnderground(boolean underground) 
-    {
-        this.underground = underground;
-    }
-
     public boolean hasLight() 
     {
         return light;
-    }
-
-    public void setLight(boolean light) 
-    {
-        this.light = light;
     }
 
     public LightColor getLightColor() 
@@ -192,11 +152,6 @@ public class Block {
         return rrxing;
     }
 
-    public void setRRXing(boolean rrxing) 
-    {
-        this.rrxing = rrxing;
-    }
-
     public XingState getRRXingState() 
     {
         return rrxingState;
@@ -210,11 +165,6 @@ public class Block {
     public boolean hasStation() 
     {
         return station;
-    }
-
-    public void setStation(boolean station) 
-    {
-        this.station = station;
     }
 
     public int getStationID() 
@@ -270,11 +220,6 @@ public class Block {
         return tswitch;
     }
 
-    public void setTswitch(boolean tswitch) 
-    {
-        this.tswitch = tswitch;
-    }
-
     public int getTswitchID() 
     {
         return tswitchID;
@@ -294,6 +239,5 @@ public class Block {
     {
         this.beacon = beacon;
     }
-    
     
 }
