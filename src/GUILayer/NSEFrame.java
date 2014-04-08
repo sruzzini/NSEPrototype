@@ -28,17 +28,118 @@ public class NSEFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        speed_group = new javax.swing.ButtonGroup();
+        wallClock_Radio = new javax.swing.JRadioButton();
+        wallClock10_Radio = new javax.swing.JRadioButton();
+        start_button = new javax.swing.JToggleButton();
+        pause_button = new javax.swing.JButton();
+        reset_button = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        CTC_panel = new javax.swing.JPanel();
+        Waysides_panel = new javax.swing.JPanel();
+        TrackModel_panel = new javax.swing.JPanel();
+        Trains_panel = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        speed_group.add(wallClock_Radio);
+        wallClock_Radio.setText("Wall Clock");
+
+        speed_group.add(wallClock10_Radio);
+        wallClock10_Radio.setText("10x Wall Clock");
+
+        start_button.setText("Start");
+
+        pause_button.setText("Pause");
+
+        reset_button.setText("Reset");
+
+        javax.swing.GroupLayout CTC_panelLayout = new javax.swing.GroupLayout(CTC_panel);
+        CTC_panel.setLayout(CTC_panelLayout);
+        CTC_panelLayout.setHorizontalGroup(
+            CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 921, Short.MAX_VALUE)
+        );
+        CTC_panelLayout.setVerticalGroup(
+            CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 543, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("CTC", CTC_panel);
+
+        javax.swing.GroupLayout Waysides_panelLayout = new javax.swing.GroupLayout(Waysides_panel);
+        Waysides_panel.setLayout(Waysides_panelLayout);
+        Waysides_panelLayout.setHorizontalGroup(
+            Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 921, Short.MAX_VALUE)
+        );
+        Waysides_panelLayout.setVerticalGroup(
+            Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 543, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Waysides", Waysides_panel);
+
+        javax.swing.GroupLayout TrackModel_panelLayout = new javax.swing.GroupLayout(TrackModel_panel);
+        TrackModel_panel.setLayout(TrackModel_panelLayout);
+        TrackModel_panelLayout.setHorizontalGroup(
+            TrackModel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 921, Short.MAX_VALUE)
+        );
+        TrackModel_panelLayout.setVerticalGroup(
+            TrackModel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 543, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Track Model", TrackModel_panel);
+
+        javax.swing.GroupLayout Trains_panelLayout = new javax.swing.GroupLayout(Trains_panel);
+        Trains_panel.setLayout(Trains_panelLayout);
+        Trains_panelLayout.setHorizontalGroup(
+            Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 921, Short.MAX_VALUE)
+        );
+        Trains_panelLayout.setVerticalGroup(
+            Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 543, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Trains", Trains_panel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 852, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(wallClock_Radio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(wallClock10_Radio)
+                        .addGap(18, 18, 18)
+                        .addComponent(start_button)
+                        .addGap(18, 18, 18)
+                        .addComponent(pause_button)
+                        .addGap(18, 18, 18)
+                        .addComponent(reset_button)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(wallClock_Radio)
+                    .addComponent(wallClock10_Radio)
+                    .addComponent(start_button)
+                    .addComponent(pause_button)
+                    .addComponent(reset_button))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -80,5 +181,16 @@ public class NSEFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel CTC_panel;
+    private javax.swing.JPanel TrackModel_panel;
+    private javax.swing.JPanel Trains_panel;
+    private javax.swing.JPanel Waysides_panel;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton pause_button;
+    private javax.swing.JButton reset_button;
+    private javax.swing.ButtonGroup speed_group;
+    private javax.swing.JToggleButton start_button;
+    private javax.swing.JRadioButton wallClock10_Radio;
+    private javax.swing.JRadioButton wallClock_Radio;
     // End of variables declaration//GEN-END:variables
 }
