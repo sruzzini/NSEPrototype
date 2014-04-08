@@ -6,6 +6,7 @@ import DataLayer.EnumTypes.*;
 public class Block {
     
     private int blockID;
+    public int next, prev;
     private int length;
     private double speedLimit;
     private double elevation;
@@ -30,11 +31,13 @@ public class Block {
     private int tswitchID;
     private BeaconSignal beacon;
     
-    public Block(int blockID, int length, double speedLimit, double elevation, double cumElev,
+    public Block(int blockID, int next, int prev, int length, double speedLimit, double elevation, double cumElev,
             double gradient, boolean underground, boolean light, boolean rrxing,
             boolean station, boolean tswitch)
     {
         this.blockID = blockID;
+        this.next = next;
+        this.prev = prev;
         this.length = length;
         this.speedLimit = speedLimit;
         this.elevation = elevation;
