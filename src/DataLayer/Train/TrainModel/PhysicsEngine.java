@@ -351,7 +351,7 @@ public class PhysicsEngine implements Runnable
             }
             
             delta_x = delta_x + velocity * deltaT;
-            System.out.println(delta_x);
+            //System.out.println(delta_x);
             sendPhysicsInfo();
             /*
             if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
