@@ -3,6 +3,7 @@ package DataLayer.TrackModel;
 import DataLayer.Bundles.*;
 import java.util.*;
 import DataLayer.EnumTypes.*;
+import DataLayer.Train.*;
 import java.io.*;
 
 public class TrackModel 
@@ -30,7 +31,8 @@ public class TrackModel
 	String line = "";
 	String cvsSplitBy = ",";
         
-        int blockID, length, stationID, next, prev, approach, divergent, straight, tswitchID;
+        int blockID, length, stationID, next, prev, approach, divergent, straight;
+        int tswitchID = 0;
         double speedLimit, elevation, cumElev, gradient;
         boolean underground, light, rrxing, station, tswitch;
         String stationString;
@@ -93,7 +95,7 @@ public class TrackModel
                             underground = Boolean.parseBoolean(blockSpec[13]);
                             rrxing = Boolean.parseBoolean(blockSpec[14]);
 
-                            Block b = new Block(blockID, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
+                            Block b = new Block(blockID, next, prev, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             b.setTswitchID(tswitchID);
@@ -105,7 +107,7 @@ public class TrackModel
                             approach = Integer.parseInt(blockSpec[3]);
                             straight = Integer.parseInt(blockSpec[4]);
                             divergent = Integer.parseInt(blockSpec[5]);
-                            Switch s = new Switch(LineColor.Green, blockID, approach, straight, divergent, true);
+                            Switch s = new Switch(LineColor.GREEN, blockID, approach, straight, divergent, true);
                             theLines.get(0).theSwitches.add(s);
                         }
                     }
@@ -161,7 +163,7 @@ public class TrackModel
                             underground = Boolean.parseBoolean(blockSpec[13]);
                             rrxing = Boolean.parseBoolean(blockSpec[14]);
 
-                            Block b = new Block(blockID, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
+                            Block b = new Block(blockID, next, prev, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             b.setTswitchID(tswitchID);
@@ -173,7 +175,7 @@ public class TrackModel
                             approach = Integer.parseInt(blockSpec[3]);
                             straight = Integer.parseInt(blockSpec[4]);
                             divergent = Integer.parseInt(blockSpec[5]);
-                            Switch s = new Switch(LineColor.Red, blockID, approach, straight, divergent, true);
+                            Switch s = new Switch(LineColor.RED, blockID, approach, straight, divergent, true);
                             theLines.get(1).theSwitches.add(s);
                         }
                     }
@@ -285,7 +287,7 @@ public class TrackModel
         return t;
     }
     
-    public void setDispatchSignal(DispatchSignal d)
+    public void setDispatchSignal(DispatchBundle d)
     {
     	int line = 0;
     	int block = 0;
@@ -306,9 +308,9 @@ public class TrackModel
         theTrainLocations.get(d.trainID).setStartLocation(line);
         
         boolean u = theLines.get(line).theBlocks.get(block).isUnderground();
-        int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
-        String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
-        double g = theLines.get(lineNum).theBlocks.get(block).getGradient();
+        int dest = theLines.get(line).theBlocks.get(block).getDestination();
+        String dd = theLines.get(line).theBlocks.get(dest).getStationString();
+        double g = theLines.get(line).theBlocks.get(block).getGradient();
         
         TrackSignal t = new TrackSignal(d.Speed, d.Authority, u, dd, g);
         
@@ -319,7 +321,7 @@ public class TrackModel
     {
     	for(int i = 0; i < theTrainLocations.size(); i++)
     	{
-    	    int deltaX = theTrains.get(i).getDeltaX();
+    	    double deltaX = theTrains.get(i).getDeltaX();
     	    LineColor line = theTrainLocations.get(i).line;
     	    int lineNum = 0;
             switch (line)
@@ -330,7 +332,7 @@ public class TrackModel
                     lineNum = 1;
             }
     	    int block = theTrainLocations.get(i).currentBlock;
-    	    int prev = theLines.get(lineNum).theBlocks.get(block).prev();
+    	    int prev = theLines.get(lineNum).theBlocks.get(block).prev;
     	    int next = theLines.get(lineNum).theBlocks.get(block).next;
     	    int length = theLines.get(lineNum).theBlocks.get(block).getLength();
     	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next);
