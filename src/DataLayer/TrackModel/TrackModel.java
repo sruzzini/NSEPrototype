@@ -7,8 +7,9 @@ import java.io.*;
 
 public class TrackModel 
 {
-    public final ArrayList<Line> theLines;
-    public ArrayList<TrainLocation> theTrains;
+    public ArrayList<Line> theLines;
+    public ArrayList<TrainLocation> theTrainLocations;
+    public ArrayList<Train> theTrains;
     private LineColor lineColor;
     
     
@@ -210,8 +211,38 @@ public class TrackModel
         double s = theLines.get(lineNum).theBlocks.get(block).getVelocity();
         double g = theLines.get(lineNum).theBlocks.get(block).getGradient();
         boolean u = theLines.get(lineNum).theBlocks.get(block).isUnderground();
-        TrackSignal t = new TrackSignal(s, a, u, dd);
+        TrackSignal t = new TrackSignal(s, a, u, dd, g);
         return t;
+    }
+    
+    public void setDispatchSignal(DispatchSignal d)
+    {
+    	int line = 0;
+    	int block = 0;
+        lineColor = d.toLine;
+        switch (lineColor)
+        {
+            case GREEN:
+                line = 0;
+                block = 152;
+            case RED:
+                line = 1;
+                block = 77;
+        }
+        theLines.get(line).theBlocks.get(block).setAuthority(d.Authority);
+        theLines.get(line).theBlocks.get(block).setDestination(d.Destination);
+        theLines.get(line).theBlocks.get(block).setVelocity(d.Speed);
+        
+        theTrainLocations.get(d.trainID).setStartLocation(line);
+        
+        boolean u = theLines.get(line).theBlocks.get(block).isUnderground();
+        int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
+        String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
+        double g = theLines.get(lineNum).theBlocks.get(block).getGradient();
+        
+        TrackSignal t = new TrackSignal(d.Speed, d.Authority, u, dd, g);
+        
+        theTrains.get(d.trainID).setTrackSignal(t);
     }
     
 }
