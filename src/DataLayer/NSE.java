@@ -134,6 +134,9 @@ public class NSE
            
             //Communicate from Track to Trains
             this.Track.updateTrainLocations();
+            
+            System.out.println("TRAIN 0 Current Block: " + this.TrainLocations.get(0).currentBlock);
+            System.out.println("TRAIN 0 distance: " + this.TrainLocations.get(0).distanceSoFar);
         }
     }
     
