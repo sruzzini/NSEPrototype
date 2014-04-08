@@ -25,18 +25,16 @@ public class TrainsClass
     {
         block = "";
         authority = 0;
-        speed = 0;
         destination = "";
         section_destination = "";
     }
     
-    public TrainsClass(LineColor l, String s, String b, int a,double sp, String d, String sd)
+    public TrainsClass(LineColor l, String s, String b, int a, String d, String sd)
     {
         line = l;
         block = b;
         section_current = s;
         authority = a;
-        speed = sp;
         destination = d;     
         section_destination = sd;
         
@@ -50,7 +48,14 @@ public class TrainsClass
         }
         else
         {
-            return "GREEN";
+            if(this.line == LineColor.GREEN)
+            {
+                return "GREEN";
+            }
+            else
+            {
+                return "Yard";
+            }
         }        
     }
 }

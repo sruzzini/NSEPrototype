@@ -126,6 +126,7 @@ public class CTC
         
         for(int i = 0; i < trains.length; i++)
         {
+           // System.out.println("train dest: " + trains[i].destination + " train block: " + trains[i].block);
             trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
@@ -202,13 +203,10 @@ public class CTC
         
         for(int i = 0; i < trains.length; i++)
         {
-            trains[i] = new TrainsClass(null, "","Yard", 0, 0.0,"", "");
+            trains[i] = new TrainsClass(LineColor.YARD, "", "0", 0 , "0", "");
             numberTrains[i+1] = Integer.toString(i+1);
             trainInfo[i] = new String[] {Integer.toString(i+1), "", "", "Yard"};
         }
-        //CTCGUI.setTrainLists
-        //routeTrainTrainDrop.setModel(new javax.swing.DefaultComboBoxModel(trainNumbers));
-        //trainLocationTable.setModel(new javax.swing.table.DefaultTableModel(trainInfo,new String [] {"Train", "Line","Section","Block"}));
     }
     
     public String[] returnTrainNumberArray()
@@ -303,45 +301,54 @@ public class CTC
                     e.printStackTrace();
                 }
             }
-	}
-        System.out.println(redSec.size());
+	}        
         greenSections = greenSec.toArray(new String[0]);
-        //System.out.println(greenSections.length);
         redSections = redSec.toArray(new String[0]);
-        System.out.println(redSections.length);
-	System.out.println("Done");
     }
 
-    public int isBlockAlreadyClosed(String block[])
+    //Completed
+    private boolean trainExistsOnBlock(int blockID)
     {
-        for(int i = 0; i < closings;i++)
+        for(TrainLocation train: this.trainLocations)
         {
-            if(blockClosings.get(i)[0].equals(block[0]) && blockClosings.get(i)[1].equals(block[1]))
+            if(train.currentBlock == blockID)
             {
-                return i;
+                return true;
             }
         }
-        return -1;
+        
+        return false;
     }
     
+    //Completed
     public void updateBlockInfo(ArrayList<BlockSignalBundle> blockOccupiences, ArrayList<Switch> newSwitches)
-    {
-      for(BlockSignalBundle blockInfo: blockOccupiences)
-      {
-          for(int i = 0; i < blockClosings.size(); i++)
-          {
-              if(closures.get(i).BlockID == blockInfo.BlockID)
-              {
-                  if(!blockInfo.Closed)
-                  {
-                      closures.remove(i);
-                  }
-                  closures.set(i, blockInfo);
-              }                     
-          }
-      }
+    {        
+        for(BlockSignalBundle blockInfo: blockOccupiences)
+        {
+            if(!this.closures.contains(blockInfo))
+            {
+                if(!trainExistsOnBlock(blockInfo.BlockID) && blockInfo.Closed)
+                {
+                    this.closures.add(blockInfo);
+                }
+            }                                   
+            else
+            {
+                if(!trainExistsOnBlock(blockInfo.BlockID) && blockInfo.Closed)
+                {
+                    this.closures.set(this.closures.indexOf(blockInfo), blockInfo);
+                }
+                else
+                {
+                    this.closures.remove(blockInfo);
+                }
+            }
+        }
+        
+        this.switchPostions = newSwitches;       
     }
     
+    //Completed
     public void setTrainLocations(ArrayList<TrainLocation> trainLocations)
     {
         this.trainLocations = trainLocations;
