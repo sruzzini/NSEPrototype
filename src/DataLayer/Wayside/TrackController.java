@@ -50,6 +50,12 @@ public class TrackController implements Runnable {
         
     }
     
+    public void addBlock(Block b)
+    {
+        this.blockArray.add(b);
+        this.blockInfo.put(b.getBlockID(), b);
+    }
+    
     public void setPLC()
     {
         if (this.id == 0)

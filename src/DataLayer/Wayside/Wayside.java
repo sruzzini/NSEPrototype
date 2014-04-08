@@ -160,8 +160,8 @@ public final class Wayside {
     
     private void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
     {
-        ArrayList<ArrayList<Block>> list;
-        list = new ArrayList<>(controllerCount);
+        /*ArrayList<ArrayList<Block>> list;
+        list = new ArrayList<>(controllerCount);*/
         
         for (Block b : blockArray)
         {
@@ -169,19 +169,20 @@ public final class Wayside {
             {
                 if (tc.getLine() == line && tc.containsBlock(b.getBlockID()))
                 {
-                    list.get(tc.getId()).add(b);
+                    //list.get(tc.getId()).add(b);
+                    tc.addBlock(b);
                 }
                       
             }
         }
-        
+        /*
         for (TrackController tc : this.controllers)
         {
             if (tc.getLine() == line)
             {
                 tc.setTrackBlockInfo(list.get(tc.getId()));
             }
-        }
+        }*/
         
     }
     
