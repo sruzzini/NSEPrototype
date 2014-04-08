@@ -28,17 +28,17 @@ public class Commands {
         
     }
     
-    public void pushBlockInfoCommand(BlockInfoBundle b)
+    public void pushCommand(BlockInfoBundle b)
     {
         blockInfoCommands.add(b);
     }
     
-    public void pushBlockSignalCommand(BlockSignalBundle b)
+    public void pushCommand(BlockSignalBundle b)
     {
         blockSignalCommands.add(b);
     }
     
-    public void pushSwitchCommand(Switch s)
+    public void pushCommand(Switch s)
     {
         switchCommands.add(s);
     }
