@@ -6,17 +6,64 @@
 
 package GUILayer.TrainController;
 
+import DataLayer.Train.TrainController.*;
+import java.text.DecimalFormat;
+
 /**
  *
  * @author domino54
  */
 public class TrainControllerPanel extends javax.swing.JPanel {
 
+    private TrainController controller;
     /**
      * Creates new form TrainControllerPanel
      */
-    public TrainControllerPanel() {
+    public TrainControllerPanel() 
+    {
         initComponents();
+        this.controller = null;
+    }
+    
+    
+    //public methods
+    public void SetTrainController(TrainController c)
+    {
+        this.controller = c;
+        this.UpdateTrainControllerGUI();
+        this.controller.VelocitySetPoint = this.vSetPoint_slide.getValue()/1000;
+        this.controller.DesiredTemperature = convertToCelcius(this.desiredTemp_slide.getValue());
+    }
+    
+    public void UpdateTrainControllerGUI()
+    {
+        //V Set Point
+        int controllerVSet = (int)(this.controller.VelocitySetPoint * 1000);
+        this.vSetPoint_slide.setValue(controllerVSet);
+        double x = convertToMPH(controllerVSet);
+        this.vSetPoint_status.setText("" + Double.parseDouble(new DecimalFormat("##.##").format(x)) + " mph");
+        
+        //Desired Temp
+        this.desiredTemp_slide.setValue(convertToFarenheit(this.controller.DesiredTemperature));
+        this.desiredTemp_status.setText("" + this.desiredTemp_slide.getValue() + " Degrees (F)");
+        
+        //E Brake
+        this.setEBrakeGUI();
+        
+        //S Brake
+        this.setSBrakeGUI();
+        
+        //Int. Lights
+        this.setIntLightsGUI();
+        
+        //Ext. Lights
+        this.setExtLightsGUI();
+        
+        //R Doors
+        this.setRDoorsGUI();
+        
+        //L Doors
+        this.setLDoorsGUI();
     }
 
     /**
@@ -50,100 +97,131 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         rDoors_open = new javax.swing.JToggleButton();
         rDoors_close = new javax.swing.JToggleButton();
-        eBrake_status = new javax.swing.JLabel();
-        sBrake_status = new javax.swing.JLabel();
-        rDoors_status = new javax.swing.JLabel();
-        lDoors_status = new javax.swing.JLabel();
-        intLights_status = new javax.swing.JLabel();
-        extLights_status = new javax.swing.JLabel();
         vSetPoint_status = new javax.swing.JLabel();
         desiredTemp_status = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        powerOutput_txt = new javax.swing.JTextArea();
 
         jLabel1.setText("V Set Point");
 
-        vSetPoint_slide.setMaximum(19440);
+        vSetPoint_slide.setMaximum(19444);
         vSetPoint_slide.setValue(0);
+        vSetPoint_slide.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                vSetPoint_Changed(evt);
+            }
+        });
 
         jLabel2.setText("Desired Temp");
 
         desiredTemp_slide.setMaximum(85);
         desiredTemp_slide.setMinimum(40);
         desiredTemp_slide.setValue(72);
+        desiredTemp_slide.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                desiredTemp_Changed(evt);
+            }
+        });
 
         jLabel3.setText("E. Brake");
 
         eBrake_on.setText("Engage");
+        eBrake_on.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eBrake_onActionPerformed(evt);
+            }
+        });
 
         eBrake_off.setText("Disengage");
+        eBrake_off.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eBrake_offActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("S. Brake");
 
         sBrake_on.setText("Engage");
+        sBrake_on.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sBrake_onActionPerformed(evt);
+            }
+        });
 
         sBrake_off.setText("Disengage");
+        sBrake_off.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sBrake_offActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Int. Lights");
 
         jLabel6.setText("Ext. Lights");
 
         extLights_on.setText("On");
+        extLights_on.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                extLights_onActionPerformed(evt);
+            }
+        });
 
         extLights_off.setText("Off");
+        extLights_off.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                extLights_offActionPerformed(evt);
+            }
+        });
 
         intLights_off.setText("Off");
+        intLights_off.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intLights_offActionPerformed(evt);
+            }
+        });
 
         intLights_on.setText("On");
+        intLights_on.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intLights_onActionPerformed(evt);
+            }
+        });
 
         lDoors_close.setText("Close");
+        lDoors_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lDoors_closeActionPerformed(evt);
+            }
+        });
 
         lDoors_open.setText("Open");
+        lDoors_open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lDoors_openActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("L Doors");
 
         jLabel8.setText("R Doors");
 
         rDoors_open.setText("Open");
+        rDoors_open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rDoors_openActionPerformed(evt);
+            }
+        });
 
         rDoors_close.setText("Close");
-
-        eBrake_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        eBrake_status.setText("AUTO");
-
-        sBrake_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        sBrake_status.setText("AUTO");
-
-        rDoors_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        rDoors_status.setText("AUTO");
-
-        lDoors_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        lDoors_status.setText("AUTO");
-
-        intLights_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        intLights_status.setText("AUTO");
-
-        extLights_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        extLights_status.setText("AUTO");
+        rDoors_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rDoors_closeActionPerformed(evt);
+            }
+        });
 
         vSetPoint_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         vSetPoint_status.setText("0 mph");
 
         desiredTemp_status.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         desiredTemp_status.setText("72 F");
-
-        jLabel9.setText("Power Output");
-
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        powerOutput_txt.setEditable(false);
-        powerOutput_txt.setColumns(20);
-        powerOutput_txt.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        powerOutput_txt.setRows(1);
-        powerOutput_txt.setEnabled(false);
-        jScrollPane1.setViewportView(powerOutput_txt);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -153,78 +231,59 @@ public class TrainControllerPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(intLights_on)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(intLights_off)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(intLights_status))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(vSetPoint_slide, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(desiredTemp_slide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(vSetPoint_status))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(334, 334, 334)
-                                .addComponent(desiredTemp_status)))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rDoors_open)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rDoors_close)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rDoors_status))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lDoors_open)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lDoors_close)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lDoors_status))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eBrake_on)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eBrake_off)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(eBrake_status))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sBrake_on)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sBrake_off)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sBrake_status))))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(intLights_on)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(intLights_off))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(extLights_on)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(extLights_off)
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(extLights_status)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                                .addComponent(vSetPoint_slide, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(desiredTemp_slide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(vSetPoint_status))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(334, 334, 334)
+                        .addComponent(desiredTemp_status))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(extLights_on)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(extLights_off)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rDoors_open)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rDoors_close))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lDoors_open)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lDoors_close))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eBrake_on)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eBrake_off))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sBrake_on)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sBrake_off)))
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,62 +291,368 @@ public class TrainControllerPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(vSetPoint_slide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(vSetPoint_slide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(jLabel1)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(desiredTemp_slide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(desiredTemp_status)))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(eBrake_on)
-                                        .addComponent(eBrake_off)
-                                        .addComponent(eBrake_status)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(desiredTemp_slide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(sBrake_on)
-                                .addComponent(sBrake_off)
-                                .addComponent(sBrake_status)
-                                .addComponent(desiredTemp_status))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(vSetPoint_status)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                                .addComponent(vSetPoint_status)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(intLights_on)
-                            .addComponent(intLights_off)
-                            .addComponent(intLights_status))
+                            .addComponent(intLights_off))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(extLights_on)
-                            .addComponent(extLights_off)
-                            .addComponent(extLights_status)))
+                            .addComponent(extLights_off)))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(eBrake_on)
+                            .addComponent(eBrake_off))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(sBrake_on)
+                            .addComponent(sBrake_off))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(rDoors_open)
-                            .addComponent(rDoors_close)
-                            .addComponent(rDoors_status))
+                            .addComponent(rDoors_close))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(lDoors_open)
-                            .addComponent(lDoors_close)
-                            .addComponent(lDoors_status))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                            .addComponent(lDoors_close))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    //
+    private double convertToCelcius(int f)
+    {
+        double x = (((f - 32) * 5) / 9);
+        return x;
+    }
+    
+    private int convertToFarenheit(double c)
+    {
+        int x = (int)(((c * 9) / 5) + 32);
+        return x;
+    }
+    
+    public static double convertToMPH(double x)
+    {
+        double mps = x / 1000;
+        return mps * 2.23694;
+    }
+    
+    
+    //Event Handlers
+    
+    private void intLights_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intLights_onActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.intLights_on.isSelected();
+        boolean offDepressed = this.intLights_off.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.intLights_off.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_intLights_onActionPerformed
+
+    private void intLights_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intLights_offActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.intLights_on.isSelected();
+        boolean offDepressed = this.intLights_off.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.intLights_on.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_intLights_offActionPerformed
+
+    private void extLights_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extLights_onActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.extLights_on.isSelected();
+        boolean offDepressed = this.extLights_off.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.extLights_off.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_extLights_onActionPerformed
+
+    private void extLights_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extLights_offActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.extLights_on.isSelected();
+        boolean offDepressed = this.extLights_off.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.extLights_on.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_extLights_offActionPerformed
+
+    private void rDoors_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rDoors_openActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.rDoors_open.isSelected();
+        boolean offDepressed = this.rDoors_close.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.rDoors_close.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_rDoors_openActionPerformed
+
+    private void rDoors_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rDoors_closeActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.rDoors_open.isSelected();
+        boolean offDepressed = this.rDoors_close.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.rDoors_open.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_rDoors_closeActionPerformed
+
+    private void lDoors_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lDoors_openActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.lDoors_open.isSelected();
+        boolean offDepressed = this.lDoors_close.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.lDoors_close.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_lDoors_openActionPerformed
+
+    private void lDoors_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lDoors_closeActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.lDoors_open.isSelected();
+        boolean offDepressed = this.lDoors_close.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.lDoors_open.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_lDoors_closeActionPerformed
+
+    private void eBrake_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrake_onActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.eBrake_on.isSelected();
+        boolean offDepressed = this.eBrake_off.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.eBrake_off.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_eBrake_onActionPerformed
+
+    private void eBrake_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrake_offActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.eBrake_on.isSelected();
+        boolean offDepressed = this.eBrake_off.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.eBrake_on.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_eBrake_offActionPerformed
+
+    private void sBrake_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBrake_onActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.sBrake_on.isSelected();
+        boolean offDepressed = this.sBrake_off.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorSBrake = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.sBrake_off.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorSBrake = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorSBrake = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_sBrake_onActionPerformed
+
+    private void sBrake_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBrake_offActionPerformed
+        // TODO add your handling code here:
+        boolean onDepressed = this.sBrake_on.isSelected();
+        boolean offDepressed = this.sBrake_off.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorSBrake = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.sBrake_on.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorSBrake = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorSBrake = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_sBrake_offActionPerformed
+
+    private void vSetPoint_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_vSetPoint_Changed
+        // TODO add your handling code here:
+        double mps = this.vSetPoint_slide.getValue();
+        double x = convertToMPH(mps);
+        this.vSetPoint_status.setText("" + Double.parseDouble(new DecimalFormat("##.##").format(x)) + " mph");
+        this.controller.VelocitySetPoint = mps/1000;
+    }//GEN-LAST:event_vSetPoint_Changed
+
+    private void desiredTemp_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_desiredTemp_Changed
+        // TODO add your handling code here:
+        int degreesF = this.desiredTemp_slide.getValue();
+        this.desiredTemp_status.setText("" + degreesF + " Degrees (F)");
+        this.controller.DesiredTemperature = convertToCelcius(degreesF);
+    }//GEN-LAST:event_desiredTemp_Changed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -295,13 +660,10 @@ public class TrainControllerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel desiredTemp_status;
     private javax.swing.JToggleButton eBrake_off;
     private javax.swing.JToggleButton eBrake_on;
-    private javax.swing.JLabel eBrake_status;
     private javax.swing.JToggleButton extLights_off;
     private javax.swing.JToggleButton extLights_on;
-    private javax.swing.JLabel extLights_status;
     private javax.swing.JToggleButton intLights_off;
     private javax.swing.JToggleButton intLights_on;
-    private javax.swing.JLabel intLights_status;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -310,19 +672,131 @@ public class TrainControllerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton lDoors_close;
     private javax.swing.JToggleButton lDoors_open;
-    private javax.swing.JLabel lDoors_status;
-    private javax.swing.JTextArea powerOutput_txt;
     private javax.swing.JToggleButton rDoors_close;
     private javax.swing.JToggleButton rDoors_open;
-    private javax.swing.JLabel rDoors_status;
     private javax.swing.JToggleButton sBrake_off;
     private javax.swing.JToggleButton sBrake_on;
-    private javax.swing.JLabel sBrake_status;
     private javax.swing.JSlider vSetPoint_slide;
     private javax.swing.JLabel vSetPoint_status;
     // End of variables declaration//GEN-END:variables
+
+    //Initial GUI setters
+    
+    private void setEBrakeGUI()
+    {
+        if (this.controller.OperatorEBrake == TrainController.OperatorInputStatus.ON) //ON
+        {
+            this.eBrake_on.setSelected(true);
+            this.eBrake_off.setSelected(false);
+        }
+        else if (this.controller.OperatorEBrake == TrainController.OperatorInputStatus.OFF) //OFF
+        {
+            this.eBrake_on.setSelected(false);
+            this.eBrake_off.setSelected(true);
+        }
+        else //AUTO
+        {
+            this.eBrake_on.setSelected(false);
+            this.eBrake_off.setSelected(false);
+        }
+    }
+    
+    private void setExtLightsGUI()
+    {
+        if (this.controller.OperatorExtLights == TrainController.OperatorInputStatus.ON) //ON
+        {
+            this.extLights_on.setSelected(true);
+            this.extLights_off.setSelected(false);
+        }
+        else if (this.controller.OperatorExtLights == TrainController.OperatorInputStatus.OFF) //OFF
+        {
+            this.extLights_on.setSelected(false);
+            this.extLights_off.setSelected(true);
+        }
+        else //AUTO
+        {
+            this.extLights_on.setSelected(false);
+            this.extLights_off.setSelected(false);
+        }
+    }
+    
+    private void setIntLightsGUI() 
+    {
+        if (this.controller.OperatorIntLights == TrainController.OperatorInputStatus.ON) //ON
+        {
+            this.intLights_on.setSelected(true);
+            this.intLights_off.setSelected(false);
+        }
+        else if (this.controller.OperatorIntLights == TrainController.OperatorInputStatus.OFF) //OFF
+        {
+            this.intLights_on.setSelected(false);
+            this.intLights_off.setSelected(true);
+        }
+        else //AUTO
+        {
+            this.intLights_on.setSelected(false);
+            this.intLights_off.setSelected(false);
+        }
+    }
+    
+    private void setLDoorsGUI()
+    {
+        if (this.controller.OperatorLeftDoor == TrainController.OperatorInputStatus.ON) //ON
+        {
+            this.lDoors_open.setSelected(true);
+            this.lDoors_close.setSelected(false);
+            
+        }
+        else if (this.controller.OperatorLeftDoor == TrainController.OperatorInputStatus.OFF) //OFF
+        {
+            this.lDoors_open.setSelected(false);
+            this.lDoors_close.setSelected(true);
+        }
+        else //AUTO
+        {
+            this.lDoors_open.setSelected(false);
+            this.lDoors_close.setSelected(false);
+        }
+    }
+    
+    private void setRDoorsGUI()
+    {
+        if (this.controller.OperatorRightDoor == TrainController.OperatorInputStatus.ON) //ON
+        {
+            this.rDoors_open.setSelected(true);
+            this.rDoors_close.setSelected(false);
+            
+        }
+        else if (this.controller.OperatorRightDoor == TrainController.OperatorInputStatus.OFF) //OFF
+        {
+            this.rDoors_open.setSelected(false);
+            this.rDoors_close.setSelected(true);
+        }
+        else //AUTO
+        {
+            this.rDoors_open.setSelected(false);
+            this.rDoors_close.setSelected(false);
+        }
+    }
+    
+    private void setSBrakeGUI()
+    {
+        if (this.controller.OperatorSBrake == TrainController.OperatorInputStatus.ON) //ON
+        {
+            this.sBrake_on.setSelected(true);
+            this.sBrake_off.setSelected(false);
+        }
+        else if (this.controller.OperatorSBrake == TrainController.OperatorInputStatus.OFF) //OFF
+        {
+            this.sBrake_on.setSelected(false);
+            this.sBrake_off.setSelected(true);
+        }
+        else //AUTO
+        {
+            this.sBrake_on.setSelected(false);
+            this.sBrake_off.setSelected(false);
+        }
+    }
 }
