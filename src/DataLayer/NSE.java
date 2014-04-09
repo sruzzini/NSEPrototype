@@ -114,7 +114,7 @@ public class NSE
             //check for 10 min elapsed, if so, dispatch new train
             if ((Calendar.getInstance().getTimeInMillis() - lastDispatchTime) * timeMultiplier > dispatchInterval)
             {
-                CTCOffice.getDispatcher();
+                this.Wayside.sendDispatchSignal(CTCOffice.getDispatcher());
                 lastDispatchTime = Calendar.getInstance().getTimeInMillis();
             }  
             

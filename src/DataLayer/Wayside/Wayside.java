@@ -43,6 +43,7 @@ public final class Wayside {
         //int[][] blockNums = new int[][];
         
         BufferedReader br = null;
+        this.track = track;
         
         try 
         {
@@ -155,6 +156,7 @@ public final class Wayside {
     
     public void sendDispatchSignal(DispatchBundle packet)
     {
+        System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID);
         this.track.setDispatchSignal(packet);
     }
     
