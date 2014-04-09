@@ -30,8 +30,8 @@ public class Train implements Runnable
     private StateInput stateInput;
     private TrackSignal trackSignal;
     private BeaconSignal beaconSignal;
-    private TrainController controller;
-    private TrainModel model;
+    public TrainController controller;
+    public TrainModel model;
     
     
     //Contructors
