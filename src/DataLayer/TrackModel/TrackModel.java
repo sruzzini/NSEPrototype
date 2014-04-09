@@ -315,6 +315,7 @@ public class TrackModel
         int dest = theLines.get(line).theBlocks.get(block).getDestination();
         String dd = theLines.get(line).theBlocks.get(dest).getStationString();
         double g = theLines.get(line).theBlocks.get(block).getGradient();
+        theLines.get(line).theBlocks.get(block).setOccupied(true);
         
         TrackSignal t = new TrackSignal(d.Speed, d.Authority, u, dd, g);
         
@@ -342,7 +343,7 @@ public class TrackModel
     	    {
     	        prev = (-prev) - 1;
     	        Switch aSwitch = theLines.get(lineNum).theSwitches.get(prev);
-    	        if (currentBlock == aSwitch.approachBlock)
+    	        if (block == aSwitch.approachBlock)
     	        {
     	            if (aSwitch.isStraight())
     	            {
@@ -353,7 +354,7 @@ public class TrackModel
     	            	prev = aSwitch.divergentBlock;
     	            }
     	        }
-    	        else if(currentBlock == aSwitch.straightBlock)
+    	        else if(block == aSwitch.straightBlock)
     	        {
     	            prev = aSwitch.approachBlock;
     	            if (!aSwitch.isStraight())
@@ -361,7 +362,7 @@ public class TrackModel
     	            	System.out.println("the switch was in the wrong position");
     	            }
     	        }
-    	        else if(currentBlock == aSwitch.divergentBlock)
+    	        else if(block == aSwitch.divergentBlock)
     	        {
     	            prev = aSwitch.approachBlock;
     	            if (aSwitch.isStraight())
@@ -376,7 +377,7 @@ public class TrackModel
     	    {
     	        next = (-next) - 1;
     	        Switch aSwitch = theLines.get(lineNum).theSwitches.get(next);
-    	        if (currentBlock == aSwitch.approachBlock)
+    	        if (block == aSwitch.approachBlock)
     	        {
     	            if (aSwitch.isStraight())
     	            {
@@ -387,7 +388,7 @@ public class TrackModel
     	            	next = aSwitch.divergentBlock;
     	            }
     	        }
-    	        else if(currentBlock == aSwitch.straightBlock)
+    	        else if(block == aSwitch.straightBlock)
     	        {
     	            next = aSwitch.approachBlock;
     	            if (!aSwitch.isStraight())
@@ -395,7 +396,7 @@ public class TrackModel
     	            	System.out.println("the switch was in the wrong position");
     	            }
     	        }
-    	        else if(currentBlock == aSwitch.divergentBlock)
+    	        else if(block == aSwitch.divergentBlock)
     	        {
     	            next = aSwitch.approachBlock;
     	            if (aSwitch.isStraight())
@@ -408,7 +409,16 @@ public class TrackModel
     	    double length = theLines.get(lineNum).theBlocks.get(block).getLength();
     	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next);
     	    
-    	    block = theTrainLocations.get(i).currentBlock;
+    	    int newCurrentBlock = theTrainLocations.get(i).currentBlock;
+    	    if(block == newCurrentBlock)
+    	    {
+    	    	theLines.get(lineNum).theBlocks.get(block).setOccupied(true);
+    	    }
+    	    else
+    	    {
+    	    	theLines.get(lineNum).theBlocks.get(block).setOccupied(false);
+    	    	theLines.get(lineNum).theBlocks.get(newCurrentBlock).setOccupied(true);
+    	    }
     	    
     	    int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
             int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
