@@ -87,7 +87,7 @@ public class TrackModelPanel extends javax.swing.JFrame {
         lineComboLabel.setText("Line:");
 
         for(int i = 0; i < theTrackModel.theLines.size(); i++) {
-            //lineComboBox.addItem(theTrackModel.theLines.get(i).getLineString());
+            lineComboBox.addItem(theTrackModel.theLines.get(i).getLineString());
         }
         lineComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
