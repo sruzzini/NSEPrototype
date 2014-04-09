@@ -27,6 +27,7 @@ public class TrainsClass
     public TrainsClass()
     {
         this.block = "";
+        this.StopIndex = 0;
         this.authority = 0;
         this.destination = "";
         this.section_destination = "";
