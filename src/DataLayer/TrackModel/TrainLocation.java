@@ -32,7 +32,7 @@ public class TrainLocation {
         if (lineNum == 0) // green
         {
             line = LineColor.GREEN;
-            currentBlock = 151;
+            currentBlock = 152;
         }
         else if (lineNum == 1) // red
         {
