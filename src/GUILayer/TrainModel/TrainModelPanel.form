@@ -18,8 +18,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="tMInput" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="31" max="32767" attributes="0"/>
-              <Component id="tMOutput1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="tMOutput" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -32,7 +32,7 @@
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <Component id="tMOutput1" min="-2" max="-2" attributes="0"/>
+              <Component id="tMOutput" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -41,7 +41,7 @@
   <SubComponents>
     <Component class="GUILayer.TrainModel.TMInput" name="tMInput">
     </Component>
-    <Component class="GUILayer.TrainModel.TMOutput" name="tMOutput1">
+    <Component class="GUILayer.TrainModel.TMOutput" name="tMOutput">
     </Component>
   </SubComponents>
 </Form>
