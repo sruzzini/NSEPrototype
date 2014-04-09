@@ -42,7 +42,7 @@ public class NSEFrame extends javax.swing.JFrame {
         Waysides_panel = new javax.swing.JPanel();
         TrackModel_panel = new javax.swing.JPanel();
         Trains_panel = new javax.swing.JPanel();
-        trainPanel1 = new GUILayer.TrainPanel();
+        trainPanel2 = new GUILayer.TrainPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,7 +66,7 @@ public class NSEFrame extends javax.swing.JFrame {
         );
         CTC_panelLayout.setVerticalGroup(
             CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 506, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("CTC", CTC_panel);
@@ -79,7 +79,7 @@ public class NSEFrame extends javax.swing.JFrame {
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 506, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Waysides", Waysides_panel);
@@ -92,7 +92,7 @@ public class NSEFrame extends javax.swing.JFrame {
         );
         TrackModel_panelLayout.setVerticalGroup(
             TrackModel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 506, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Track Model", TrackModel_panel);
@@ -102,16 +102,14 @@ public class NSEFrame extends javax.swing.JFrame {
         Trains_panelLayout.setHorizontalGroup(
             Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Trains_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(trainPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addComponent(trainPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 208, Short.MAX_VALUE))
         );
         Trains_panelLayout.setVerticalGroup(
             Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Trains_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(trainPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(trainPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Trains", Trains_panel);
@@ -148,8 +146,7 @@ public class NSEFrame extends javax.swing.JFrame {
                     .addComponent(pause_button)
                     .addComponent(reset_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE))
         );
 
         pack();
@@ -206,7 +203,7 @@ public class NSEFrame extends javax.swing.JFrame {
     private javax.swing.JButton reset_button;
     private javax.swing.ButtonGroup speed_group;
     private javax.swing.JToggleButton start_button;
-    private GUILayer.TrainPanel trainPanel1;
+    private GUILayer.TrainPanel trainPanel2;
     private javax.swing.JRadioButton wallClock10_Radio;
     private javax.swing.JRadioButton wallClock_Radio;
     // End of variables declaration//GEN-END:variables

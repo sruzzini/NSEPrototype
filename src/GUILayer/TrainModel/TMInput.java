@@ -106,7 +106,7 @@ public class TMInput extends javax.swing.JPanel {
                     .addComponent(temperatureInputLabel)
                     .addComponent(faultInputLabel)
                     .addComponent(eBrakeRequestLabel))
-                .addGap(54, 54, 54)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(temperatureInputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
