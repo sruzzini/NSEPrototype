@@ -25,12 +25,14 @@ public abstract class PLC {
     protected final Hashtable<Integer, Block> blocks;
     protected final Hashtable<Integer, Switch> switches;
     protected final ArrayList<Integer> blocksWithCrossing;
+    ArrayList<Block> blockArray;
 
     public PLC(int id, LineColor line,  Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
         this.id = id;
         this.line = line;
         this.blocks = blocks;
         this.switches = switches;
+        this.blockArray = blockArray;
         this.blocksWithCrossing = new ArrayList<>();
         
         for (Block b : blockArray)
@@ -109,6 +111,23 @@ public abstract class PLC {
         
         return commands;
     }
+    
+    /*protected ArrayList<BlockSignalBundle> replicateSignals()
+    {
+        ArrayList<BlockSignalBundle> commands;
+        commands = new ArrayList<>();
+        
+        for (Block b : this.blockArray)
+        {
+            if (b.isOccupied())
+            {
+                
+            }
+        }
+        
+        
+        return commands;
+    }*/
     
     protected abstract Commands plcProgram();
     

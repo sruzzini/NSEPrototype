@@ -120,7 +120,10 @@ public class TrackController implements Runnable {
             {
                 c.pushCommand(s);
             }
-            
+            for (BlockSignalBundle b : this.replicateSignals())
+            {
+                c.pushCommand(b);
+            }
             this.processCommands(c);
             
             this.emptyCommandQueues();
@@ -149,6 +152,68 @@ public class TrackController implements Runnable {
         }
         
         this.commandSignalQueue.add(packet);
+        
+    }
+    
+    private ArrayList<BlockSignalBundle> replicateSignals()
+    {
+        ArrayList<BlockSignalBundle> commands;
+        commands = new ArrayList<>();
+        int authority;
+        double speed;
+        int dest;
+        int prev;
+        int next;
+        int switchID;
+        boolean dir;
+        int straightBlock;
+        int divergentBlock;
+        int approachBlock;
+        int nextThruSwitch;
+        Switch s;
+        
+        
+        for (Block b : this.blockArray)
+        {
+            if (b.isOccupied())
+            {
+                authority = b.getAuthority();
+                speed = b.getVelocity();
+                dest = b.getDestination();
+                prev = b.prev;
+                next = b.next;
+                if (next < 0)
+                    switchID = -next;
+                else if (prev < 0)
+                    switchID = -prev;
+                else
+                    switchID = 0;
+                
+                if (switchID != 0) {
+                    s = this.switchInfo.get(switchID);
+                    if (b.getBlockID() == s.approachBlock)
+                    {
+                        if (s.straight)
+                            nextThruSwitch = s.straightBlock;
+                        else
+                            nextThruSwitch = s.divergentBlock;              
+                    }
+                    else
+                        nextThruSwitch = s.approachBlock;
+                    
+                    if (next < 0)
+                        next = nextThruSwitch;
+                    else
+                        prev = nextThruSwitch;
+                    
+                    
+                }
+                commands.add(new BlockSignalBundle(authority, dest, speed, next, LineColor.GREEN));
+                 commands.add(new BlockSignalBundle(authority, dest, speed, prev, LineColor.GREEN));   
+            }
+        }
+        
+        return commands;
         
     }
     

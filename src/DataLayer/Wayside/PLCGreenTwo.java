@@ -6,6 +6,7 @@
 
 package DataLayer.Wayside;
 
+import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.Block;
@@ -26,6 +27,11 @@ public class PLCGreenTwo extends PLC{
 
     public PLCGreenTwo(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
         super(id, line, blocks, blockArray, switches);
+        this.trainsInJ = 0;
+        this.enteringJ = false;
+        this.leavingJ = false;
+        this.stoppingAtJEnd = false;
+        this.holdAtYard = false;
     }
     
     
@@ -159,7 +165,23 @@ public class PLCGreenTwo extends PLC{
             stoppingAtJEnd = false;
         }
         
+        ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
+        ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
+        
+        for (BlockInfoBundle b : rrCommands)
+        {
+            c.pushCommand(b);
+        }
+        
+        for (BlockSignalBundle b : safetyCommands)
+        {
+            c.pushCommand(b);
+        }
+        
+        
         return c;
+        
+        
     
     
     }
