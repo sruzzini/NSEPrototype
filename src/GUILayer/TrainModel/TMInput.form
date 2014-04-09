@@ -16,11 +16,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="temperatureInputLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="faultInputLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="eBrakeRequestLabel" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -33,18 +34,19 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="eBrakeRequestButton" min="-2" max="-2" attributes="0"/>
                           <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                           <Component id="engineFaultInputCheckBox" min="-2" max="-2" attributes="0"/>
                           <Component id="jCheckBox2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jCheckBox3" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
               <Component id="inputsLabel" min="-2" pref="223" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -73,6 +75,11 @@
               <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="eBrakeRequestButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="eBrakeRequestLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -104,6 +111,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Apply"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="temperatureInputApplyButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="degreesFahLabel">
       <Properties>
@@ -128,6 +138,19 @@
     <Component class="javax.swing.JCheckBox" name="jCheckBox3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Emergency Brake Failure"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="eBrakeRequestButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Request"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eBrakeRequestButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="eBrakeRequestLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Passenger EBrake Request"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -35,11 +35,6 @@ public class TMInput extends javax.swing.JPanel {
         trainState = s;
     }
     
-    public void update()
-    {
-        
-    
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,6 +54,8 @@ public class TMInput extends javax.swing.JPanel {
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
+        eBrakeRequestButton = new javax.swing.JToggleButton();
+        eBrakeRequestLabel = new javax.swing.JLabel();
 
         inputsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         inputsLabel.setText("Inputs");
@@ -74,6 +71,11 @@ public class TMInput extends javax.swing.JPanel {
         });
 
         temperatureInputApplyButton.setText("Apply");
+        temperatureInputApplyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                temperatureInputApplyButtonActionPerformed(evt);
+            }
+        });
 
         degreesFahLabel.setText("ºF");
 
@@ -85,6 +87,15 @@ public class TMInput extends javax.swing.JPanel {
 
         jCheckBox3.setText("Emergency Brake Failure");
 
+        eBrakeRequestButton.setText("Request");
+        eBrakeRequestButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eBrakeRequestButtonActionPerformed(evt);
+            }
+        });
+
+        eBrakeRequestLabel.setText("Passenger EBrake Request");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,7 +104,8 @@ public class TMInput extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(temperatureInputLabel)
-                    .addComponent(faultInputLabel))
+                    .addComponent(faultInputLabel)
+                    .addComponent(eBrakeRequestLabel))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -104,14 +116,15 @@ public class TMInput extends javax.swing.JPanel {
                         .addComponent(temperatureInputApplyButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(eBrakeRequestButton)
                             .addComponent(jCheckBox1)
                             .addComponent(engineFaultInputCheckBox)
                             .addComponent(jCheckBox2)
                             .addComponent(jCheckBox3))
-                        .addGap(0, 3, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(96, 96, 96)
                 .addComponent(inputsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -136,6 +149,10 @@ public class TMInput extends javax.swing.JPanel {
                 .addComponent(jCheckBox2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(eBrakeRequestButton)
+                    .addComponent(eBrakeRequestLabel))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -144,9 +161,20 @@ public class TMInput extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_temperatureInputTextFieldActionPerformed
 
+    private void temperatureInputApplyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureInputApplyButtonActionPerformed
+        int newTemp = Integer.parseInt(temperatureInputTextField.getText());
+        trainState.setTemperature(newTemp);
+    }//GEN-LAST:event_temperatureInputApplyButtonActionPerformed
+
+    private void eBrakeRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrakeRequestButtonActionPerformed
+        
+    }//GEN-LAST:event_eBrakeRequestButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel degreesFahLabel;
+    private javax.swing.JToggleButton eBrakeRequestButton;
+    private javax.swing.JLabel eBrakeRequestLabel;
     private javax.swing.JCheckBox engineFaultInputCheckBox;
     private javax.swing.JLabel faultInputLabel;
     private javax.swing.JLabel inputsLabel;
