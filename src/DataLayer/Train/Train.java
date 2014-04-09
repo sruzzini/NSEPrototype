@@ -80,6 +80,11 @@ public class Train implements Runnable
         this.model = new TrainModel(this.physicsInput, this.stateInput);
     }
     
+    public TrackSignal getTrackSignal()
+    {
+        return this.trackSignal;
+    }
+    
     //Public methods
     public double GetDeltaX()
     {

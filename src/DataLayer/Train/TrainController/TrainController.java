@@ -117,6 +117,10 @@ public class TrainController
         this.DesiredTemperature = temp;
     }
     
+    public TrackSignal getTrackSignal()
+    {
+        return this.trackSignal;
+    }
     
     //Public methods
     public TrainCommand GetTrainCommand()

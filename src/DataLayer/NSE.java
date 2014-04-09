@@ -18,7 +18,6 @@ package DataLayer;
 
 import DataLayer.Bundles.*;
 import DataLayer.CTC.*;
-import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.*;
 import DataLayer.Train.*;
 import DataLayer.Train.TrainController.TrainController;
@@ -138,6 +137,13 @@ public class NSE
             //Communicate from Track to Trains
             this.Track.updateTrainLocations();
             
+            System.out.println("TRAIN 0 Current Block: " + this.TrainLocations.get(0).currentBlock);
+            System.out.println("Current Authority: " + this.Track.theLines.get(0).theBlocks.get(this.TrainLocations.get(0).currentBlock).getAuthority());
+            System.out.println("Current Train Controller Authority: " + this.Trains.get(0).controller.getTrackSignal().Authority);
+            System.out.println("Current Train Authority: " + this.Trains.get(0).getTrackSignal().Authority);
+            System.out.println("Current Train Brake" + this.Trains.get(0).GetTrainCommand().ServiceBrakeOn);
+            System.out.println("TRAIN 0 distance: " + this.TrainLocations.get(0).distanceSoFar);
+
         }
     }
     
