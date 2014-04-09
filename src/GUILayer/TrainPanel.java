@@ -6,17 +6,31 @@
 
 package GUILayer;
 
+import DataLayer.Train.*;
+
 /**
  *
  * @author drewwinfield
  */
 public class TrainPanel extends javax.swing.JPanel {
 
+    public Train train;
+    
     /**
      * Creates new form TrainGUI
      */
     public TrainPanel() {
         initComponents();
+        this.train = null;
+    }
+    
+    
+    //public methods
+    public void setTrain(Train t)
+    {
+        this.train = t;
+        this.trainControllerPanel1.controller = t.controller;
+        //this.trainModelPanel2.model = t.model;
     }
 
     /**
