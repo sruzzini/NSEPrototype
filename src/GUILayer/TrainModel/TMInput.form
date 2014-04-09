@@ -35,10 +35,10 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="eBrakeRequestButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                          <Component id="signalFaultInputCheckBox" min="-2" max="-2" attributes="0"/>
                           <Component id="engineFaultInputCheckBox" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBox2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBox3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="sBrakeFaultInputCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="eBrakeFaultInputCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -70,11 +70,11 @@
                   <Component id="engineFaultInputCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+              <Component id="signalFaultInputCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+              <Component id="sBrakeFaultInputCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+              <Component id="eBrakeFaultInputCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="eBrakeRequestButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -124,21 +124,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Engine Failure"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="engineFaultInputCheckBoxActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+    <Component class="javax.swing.JCheckBox" name="signalFaultInputCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Signal Failure"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signalFaultInputCheckBoxActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+    <Component class="javax.swing.JCheckBox" name="sBrakeFaultInputCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Service Brake Failure"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sBrakeFaultInputCheckBoxActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+    <Component class="javax.swing.JCheckBox" name="eBrakeFaultInputCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Emergency Brake Failure"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eBrakeFaultInputCheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="eBrakeRequestButton">
       <Properties>

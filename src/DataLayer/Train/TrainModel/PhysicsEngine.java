@@ -194,7 +194,22 @@ public class PhysicsEngine implements Runnable
     {
         return computeFailureCode();
     }
-    
+    public void setEngineFault(boolean val)
+    {
+        engineFailure = val;
+    }
+    public void setSignalFault(boolean val)
+    {
+        signalFailure = val;
+    }
+    public void setSBrakeFault(boolean val)
+    {
+        sBrakeFailure = val;
+    }
+    public void setEBrakeFault(boolean val)
+    {
+        eBrakeFailure = val;
+    }
     public void run()
     {
         simulate();
