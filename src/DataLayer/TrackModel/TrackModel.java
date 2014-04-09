@@ -292,12 +292,15 @@ public class TrackModel
     	int line = 0;
     	int block = 0;
         lineColor = d.toLine;
-        switch (lineColor)
+        if (lineColor == LineColor.GREEN)
         {
-            case GREEN:
+            
                 line = 0;
                 block = 152;
-            case RED:
+        }
+        else
+        {
+            
                 line = 1;
                 block = 77;
         }
@@ -328,8 +331,10 @@ public class TrackModel
             {
                 case GREEN:
                     lineNum = 0;
+                    break;
                 case RED:
                     lineNum = 1;
+                    break;
             }
     	    int block = theTrainLocations.get(i).currentBlock;
     	    int prev = theLines.get(lineNum).theBlocks.get(block).prev;
