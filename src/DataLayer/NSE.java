@@ -62,7 +62,7 @@ public class NSE
         for (int i = 0; i < 10; i++)
         {
             this.Trains.add(new Train(i, this.isRunning));
-            this.Trains.get(i).setTimeMultiplier(this.timeMultiplier);
+            this.Trains.get(i).SetTimeMultiplier(this.timeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
@@ -85,7 +85,7 @@ public class NSE
         for (int i = 0; i < numberOfTrains; i++)
         {
             this.Trains.add(new Train(i, this.isRunning));
-            this.Trains.get(i).setTimeMultiplier(this.timeMultiplier);
+            this.Trains.get(i).SetTimeMultiplier(this.timeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
