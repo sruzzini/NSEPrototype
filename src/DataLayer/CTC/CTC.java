@@ -37,7 +37,7 @@ public class CTC
     private String[] redSections;
     private String[] numberTrains;
     private String[] trackPath;
-    private TrainsClass[] trains;
+    private ArrayList<TrainsClass> trains;
     private ArrayList<String[]> green;
     private ArrayList<String[]> red;    
     private ArrayList<String[]> blockClosings;    
@@ -45,6 +45,8 @@ public class CTC
     private ArrayList<BlockSignalBundle> closures;    
     private ArrayList<TrainLocation> trainLocations;
     private ArrayList<Switch> switchPostions;
+//    private final ArrayList<String[]> GREEN_NEXT_STATION;
+//    private final ArrayList<String[]> RED_NEXT_STATION;
     
     /**
      * Creates new form CTCGUI
@@ -58,14 +60,16 @@ public class CTC
         this.trainLocations = new ArrayList<>();
         this.switchPostions = new ArrayList<>();
         this.trackPath = ("YY,K,L,M,N,O,P,Q,N,R,S,T,U,V,W,X,Y,Z,F,E,D,C,B,A,D,E,F,G,H,I,ZZ|J").split(",");
-        this.trains = new TrainsClass[nTrains];
+        this.trains = new ArrayList<>();
 
         this.green = new ArrayList<>();
         this.red = new ArrayList<>();
         this.blockClosings = new ArrayList<>();
         this.closures = new ArrayList<>();
         this.RED_ROUTE_AUTHORITY = new int[] {};
-        this.GREEN_ROUTE_AUTHORITY = new int[] {4, 10, 4, 12, 21, 6, 10, 9, 10};
+        this.GREEN_ROUTE_AUTHORITY = new int[] {4, 9, 4, 12, 21, 6, 10, 9, 10};
+        
+        //GREEN_NEXT_STATION = greenStationCreation(); 
                
         iniTrack();
         iniTrains();         
@@ -78,13 +82,13 @@ public class CTC
         this.GREEN_ROUTE_BLOCKS = 150;
         this.RED_ROUTE_BLOCKS = 66;
         this.trackPath = ("YY,K,L,M,N,O,P,Q,N,R,S,T,U,V,W,X,Y,Z,F,E,D,C,B,A,D,E,F,G,H,I,ZZ|J").split(",");
-        this.trains = new TrainsClass[10];
+        this.trains = new ArrayList<>();
         this.green = new ArrayList<>();
         this.red = new ArrayList<>();
         this.blockClosings = new ArrayList<>();
         this.closures = new ArrayList<>();
         this.RED_ROUTE_AUTHORITY = new int[] {};
-        this.GREEN_ROUTE_AUTHORITY = new int[] {4, 10, 4, 12, 21, 6, 10, 9, 10};
+        this.GREEN_ROUTE_AUTHORITY = new int[] {4, 9, 4, 12, 21, 6, 10, 9, 10};
                
         iniTrack();
         iniTrains();         
@@ -122,46 +126,52 @@ public class CTC
     
     public ArrayList<BlockSignalBundle> getRouteInfo()//int line, int block, double velocity, int authority, int destination)
     {
-        ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<BlockSignalBundle>(); 
+        ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<>(); 
         
-        for(int i = 0; i < trains.length; i++)
+        for(TrainsClass get: this.trains)
         {
-           // System.out.println("train dest: " + trains[i].destination + " train block: " + trains[i].block);
-            trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
+           if((get.authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == 0)
+           {
+               BlockSignalBundle newStation = getNextStation(get);
+               //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));               
+           }
+            //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
         }
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
+    }
+    
+    private BlockSignalBundle getNextStation(TrainsClass train)
+    {
+        return null;
+        
     }
         
     public int calculateAuthority(int trainID)
     {
         int authority = 0;
         //String[] path = trackPath.split(",");
-        String destination = this.trains[trainID].destination;
+        String destination = this.trains.get(trainID).destination;
         int i;
         int destinationIndex = -1;
         int currentIndex = -1;
         
           
-        if(this.trains[trainID].section_current.equals(this.trains[trainID].section_destination))
+        if(this.trains.get(trainID).section_current.equals(this.trains.get(trainID).section_destination))
         {
             for(i = 0; i < trackPath.length; i++)
             {
-                if(this.trains[trainID].section_current.equals(trackPath[i]))
+                if(this.trains.get(trainID).section_current.equals(trackPath[i]))
                 {
                     break;
                 }
             }
             
-            for(int j = 0; j < path.get(i).length; j++)
-            {
-                if(path.get(i)[j].equals(this.trains[trainID].block))
-                {
-                    currentIndex = Integer.parseInt(path.get(i)[j]);
+            for (String get : path.get(i)) {
+                if (get.equals(this.trains.get(trainID).block)) {
+                    currentIndex = Integer.parseInt(get);
                 }
-                
-                if(path.get(i)[j].equals(this.trains[trainID].destination))
-                {
-                    destinationIndex = Integer.parseInt(path.get(i)[j]);
+                if (get.equals(this.trains.get(trainID).destination)) {
+                    destinationIndex = Integer.parseInt(get);
                 }               
             }
             
@@ -177,13 +187,13 @@ public class CTC
                 }
                 else
                 {
-                       if(this.trains[trainID].line == LineColor.RED)
+                       if(this.trains.get(trainID).line == LineColor.RED)
                        {
                             return Math.abs(destinationIndex - currentIndex) + this.RED_ROUTE_BLOCKS;
                        }
                        else                            
                        {
-                           if(this.trains[trainID].line == LineColor.GREEN)
+                           if(this.trains.get(trainID).line == LineColor.GREEN)
                            {
                                 return Math.abs(destinationIndex - currentIndex) + this.GREEN_ROUTE_BLOCKS;
                            }
@@ -197,13 +207,13 @@ public class CTC
     
     private void iniTrains()
     {
-        numberTrains = new String[trains.length+1];
-        String[][] trainInfo = new String[trains.length][4];
+        numberTrains = new String[trains.size()+1];
+        String[][] trainInfo = new String[trains.size()][4];
         numberTrains[0] = "Train #";
         
-        for(int i = 0; i < trains.length; i++)
+        for(int i = 0; i < trains.size(); i++)
         {
-            trains[i] = new TrainsClass(LineColor.YARD, "", "0", 0 , "0", "");
+            trains.set(i, new TrainsClass(LineColor.YARD, "", "0", 0 , "0", ""));
             numberTrains[i+1] = Integer.toString(i+1);
             trainInfo[i] = new String[] {Integer.toString(i+1), "", "", "Yard"};
         }
@@ -220,7 +230,7 @@ public class CTC
         
         for(int i  = 0; i < trainInfo.length; i++)
         {
-             trainInfo[i]= new String[] {Integer.toString(i), trains[i].lineColor(), trains[i].section_current, trains[i].block};
+             trainInfo[i]= new String[] {Integer.toString(i), trains.get(i).lineColor(), trains.get(i).section_current, trains.get(i).block};
         }
         
         return trainInfo;
@@ -361,12 +371,19 @@ public class CTC
         {
             if(this.trainLocations.get(i).currentBlock == 0)
             {
-                train = new DispatchBundle(new BlockSignalBundle(4, 65, 70.0,0, LineColor.YARD), i , LineColor.GREEN);
+                train = new DispatchBundle(new BlockSignalBundle(4, 65, (70.0*1000/(3600)),0, LineColor.YARD), i , LineColor.GREEN);
             }
             break;
         }        
         return train;    
     }
+    
+    private ArrayList<String[]> greenStationCreation()
+    {
+        return null;
+    }
 }   
+
+
  
 
