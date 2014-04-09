@@ -103,8 +103,8 @@ public class NSEFrame extends javax.swing.JFrame {
             Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Trains_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(trainPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 883, Short.MAX_VALUE)
-                .addGap(32, 32, 32))
+                .addComponent(trainPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
         Trains_panelLayout.setVerticalGroup(
             Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +148,7 @@ public class NSEFrame extends javax.swing.JFrame {
                     .addComponent(pause_button)
                     .addComponent(reset_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
 
