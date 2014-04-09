@@ -8,13 +8,17 @@ package DataLayer.Wayside;
 
 import DataLayer.Bundles.BlockInfoBundle;
 import DataLayer.Bundles.BlockSignalBundle;
+import DataLayer.EnumTypes.LightColor;
 //import DataLayer.Bundles.Switch;
 import DataLayer.TrackModel.Switch;
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.EnumTypes.XingState;
 import DataLayer.TrackModel.Block;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -69,11 +73,11 @@ public class TrackController implements Runnable {
         if (this.id == 0)
         {
              this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo);
-        }/*
+        }
         else if (id == 1)
         {
-            this.plcProgram = new PLCGreenTwo(id, line, blockInfo);
-        }
+            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo);
+        }/*
         else if (id == 2)
         {
             this.plcProgram = new PLCGreenThree(id, line, blockInfo);
@@ -117,9 +121,16 @@ public class TrackController implements Runnable {
                 c.pushCommand(s);
             }
             
+            this.processCommands(c);
+            
             this.emptyCommandQueues();
             
-            this.processCommands(c);
+            
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TrackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -192,6 +203,7 @@ public class TrackController implements Runnable {
         for (Switch s : info)
         {
             this.switchInfo.put(s.switchID, s);
+            //System.out.println("Setting switch with switch ID: " + s.switchID);
         }
     }
     
@@ -238,8 +250,49 @@ public class TrackController implements Runnable {
     {
         //loop through the three types of commands
         //signals - set blocks with matching speed, authority ...
+        int authority;
+        double speed;
+        int dest;
+        int blockID;
+        Block block;
+        for (BlockSignalBundle bsb : c.blockSignalCommands)
+        {
+            authority = bsb.Authority;
+            speed = bsb.Speed;
+            dest = bsb.Destination;
+            blockID = bsb.BlockID;
+            block = this.blockInfo.get(id);
+            block.setAuthority(authority);
+            block.setVelocity(speed);
+            block.setDestination(dest);
+            
+            
+        }
         //info - set blocks with rrxing and light info
+        LightColor lc;
+        XingState xing;
+        for (BlockInfoBundle bib : c.blockInfoCommands)
+        {
+            lc = bib.LightColor;
+            xing = bib.RRXingState;
+            blockID = bib.BlockID;
+            block = this.blockInfo.get(id);
+            block.setLightColor(lc);
+            block.setRRXingState(xing);
+        }
         //switch - change switches as needed
+        boolean dir;
+        //Switch switch;
+        int switchID;
+        Switch theSwitch;
+        for (Switch s : c.switchCommands)
+        {
+            dir = s.straight;
+            switchID = s.switchID;
+            theSwitch = this.switchInfo.get(switchID);
+            theSwitch.straight = dir;
+            
+        }
     }
     
     

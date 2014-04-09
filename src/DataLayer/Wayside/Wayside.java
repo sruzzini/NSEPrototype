@@ -108,17 +108,34 @@ public final class Wayside {
         this.setSwitchArray(track.theLines.get(1).theSwitches);
         this.configurePLCs();
         
+        
+        
     }
     
     public void StartSimulation()
     {
         //put each tc into a thread and start those bad boys
+        this.startControllers();
         
     }
     
     public void StopSimulation()
     {
         
+    }
+    
+    private void startControllers()
+    {
+       /* for(TrackController tc : this.controllers)
+        {
+            new Thread(tc).start();
+        }*/
+        
+        TrackController tc0 = this.controllers[0];
+        TrackController tc1 = this.controllers[1];
+        
+        new Thread(tc0).start();
+        new Thread(tc1).start();
     }
     
     public void sendTravelSignal(BlockSignalBundle packet)
@@ -256,6 +273,7 @@ public final class Wayside {
                 if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock) || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
                 {
                     tc.addSwitch(s);
+                   // System.out.println("Adding switch with ID: " + s.switchID + " to TC: " + tc.getId());
                 }
                       
             }
