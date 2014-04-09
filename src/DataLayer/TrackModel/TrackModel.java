@@ -202,13 +202,13 @@ public class TrackModel
     public void setBlockInfo(BlockInfoBundle b)
     {
         int line = 0;
-        lineColor = b.LineID;
-        switch (lineColor)
+        if(b.LineID == LineColor.GREEN)
         {
-            case GREEN:
-                line = 0;
-            case RED:
-                line = 1;
+            line = 0;
+        }
+        else if(b.LineID == LineColor.RED)
+        {
+            line = 1;
         }
         int block = b.BlockID;
         theLines.get(line).theBlocks.get(block).setRRXingState(b.RRXingState);
@@ -218,12 +218,13 @@ public class TrackModel
     public BlockInfoBundle getBlockInfoBundle(LineColor line, int block)
     {
         int lineNum = 0;
-        switch (line)
+        if (line == LineColor.GREEN)
         {
-            case GREEN:
-                lineNum = 0;
-            case RED:
-                lineNum = 1;
+            lineNum = 0;
+        }
+        else if(line == LineColor.RED)
+        {
+            lineNum = 1;
         }
         XingState s = theLines.get(lineNum).theBlocks.get(block).getRRXingState();
         LightColor l = theLines.get(lineNum).theBlocks.get(block).getLightColor();
@@ -236,12 +237,13 @@ public class TrackModel
     {
         int line = 0;
         lineColor = b.LineID;
-        switch (lineColor)
+        if(b.LineID == LineColor.GREEN)
         {
-            case GREEN:
-                line = 0;
-            case RED:
-                line = 1;
+            line = 0;
+        }
+        else if(b.LineID == LineColor.RED)
+        {
+            line = 1;
         }
         int block = b.BlockID;
         theLines.get(line).theBlocks.get(block).setAuthority(b.Authority);
@@ -252,12 +254,13 @@ public class TrackModel
     public BlockSignalBundle getBlockSignalBundle(LineColor line, int block) 
     {
         int lineNum = 0;
-        switch (line)
+        if (line == LineColor.GREEN)
         {
-            case GREEN:
-                lineNum = 0;
-            case RED:
-                lineNum = 1;
+            lineNum = 0;
+        }
+        else if(line == LineColor.RED)
+        {
+            lineNum = 1;
         }
         int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
         int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
@@ -270,12 +273,13 @@ public class TrackModel
     public TrackSignal getTrackSignal(LineColor line, int block)
     {
         int lineNum = 0;
-        switch (line)
+        if (line == LineColor.GREEN)
         {
-            case GREEN:
-                lineNum = 0;
-            case RED:
-                lineNum = 1;
+            lineNum = 0;
+        }
+        else if(line == LineColor.RED)
+        {
+            lineNum = 1;
         }
         int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
         int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
@@ -291,18 +295,15 @@ public class TrackModel
     {
     	int line = 0;
     	int block = 0;
-        lineColor = d.toLine;
-        if (lineColor == LineColor.GREEN)
+        if (d.toLine == LineColor.GREEN)
         {
-            
-                line = 0;
-                block = 152;
+            line = 0;
+            block = 152;
         }
-        else
+        else if(d.toLine == LineColor.RED)
         {
-            
-                line = 1;
-                block = 77;
+            line = 1;
+            block = 77;
         }
         theLines.get(line).theBlocks.get(block).setAuthority(d.Authority);
         theLines.get(line).theBlocks.get(block).setDestination(d.Destination);
@@ -327,14 +328,13 @@ public class TrackModel
     	    double deltaX = theTrains.get(i).getDeltaX();
     	    LineColor line = theTrainLocations.get(i).line;
     	    int lineNum = 0;
-            switch (line)
+            if (line == LineColor.GREEN)
             {
-                case GREEN:
-                    lineNum = 0;
-                    break;
-                case RED:
-                    lineNum = 1;
-                    break;
+                lineNum = 0;
+            }
+            else if(line == LineColor.RED)
+            {
+                lineNum = 1;
             }
     	    int block = theTrainLocations.get(i).currentBlock;
     	    int prev = theLines.get(lineNum).theBlocks.get(block).prev;
