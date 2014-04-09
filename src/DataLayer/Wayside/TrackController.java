@@ -261,7 +261,7 @@ public class TrackController implements Runnable {
             speed = bsb.Speed;
             dest = bsb.Destination;
             blockID = bsb.BlockID;
-            block = this.blockInfo.get(id);
+            block = this.blockInfo.get(blockID);
             block.setAuthority(authority);
             block.setVelocity(speed);
             block.setDestination(dest);
@@ -276,7 +276,7 @@ public class TrackController implements Runnable {
             lc = bib.LightColor;
             xing = bib.RRXingState;
             blockID = bib.BlockID;
-            block = this.blockInfo.get(id);
+            block = this.blockInfo.get(blockID);
             block.setLightColor(lc);
             block.setRRXingState(xing);
         }

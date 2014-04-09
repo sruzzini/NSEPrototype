@@ -21,6 +21,7 @@ import DataLayer.CTC.*;
 import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.*;
 import DataLayer.Train.*;
+import DataLayer.Train.TrainController.TrainController;
 import DataLayer.Wayside.*;
 import java.util.*;
 import java.util.Calendar;
@@ -104,6 +105,7 @@ public class NSE
         //spawn new thread for each Train
         for(Train train : this.Trains)
         {
+            train.controller.VelocitySetPoint = TrainController.MAX_TRAIN_SPEED;
             new Thread(train).start();
         }
         
