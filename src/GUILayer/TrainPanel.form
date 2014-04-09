@@ -18,8 +18,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="trainControllerPanel1" max="32767" attributes="0"/>
-                  <Component id="trainModelPanel2" max="32767" attributes="0"/>
+                  <Component id="trainControllerPanel" max="32767" attributes="0"/>
+                  <Component id="trainModelPanel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -29,18 +29,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="trainControllerPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="trainControllerPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="trainModelPanel2" min="-2" pref="287" max="-2" attributes="0"/>
+              <Component id="trainModelPanel" min="-2" pref="287" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="GUILayer.TrainController.TrainControllerPanel" name="trainControllerPanel1">
+    <Component class="GUILayer.TrainController.TrainControllerPanel" name="trainControllerPanel">
     </Component>
-    <Component class="GUILayer.TrainModel.TrainModelPanel" name="trainModelPanel2">
+    <Component class="GUILayer.TrainModel.TrainModelPanel" name="trainModelPanel">
     </Component>
   </SubComponents>
 </Form>

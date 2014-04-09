@@ -6,12 +6,18 @@
 
 package GUILayer.TrainModel;
 
+import DataLayer.Train.TrainModel.PhysicsEngine;
+import DataLayer.Train.TrainModel.TrainState;
+
 /**
  *
  * @author drewwinfield
  */
 public class TMInput extends javax.swing.JPanel {
 
+    private PhysicsEngine physicsEngine;
+    private TrainState trainState;
+    
     /**
      * Creates new form PhysicsDisplay
      */
@@ -19,6 +25,21 @@ public class TMInput extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void setPhysicsEngine(PhysicsEngine e)
+    {
+        physicsEngine = e;
+    }
+    
+    public void setTrainState(TrainState s)
+    {
+        trainState = s;
+    }
+    
+    public void update()
+    {
+        
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

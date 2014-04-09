@@ -28,12 +28,13 @@
                       <Component id="exteriorLightsOutputLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="sBrakeOutputLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="eBrakeOutputLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="heaterOutputLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="58" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jTextField1" min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="velocityDisplayBox" min="-2" pref="56" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="mphLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -42,7 +43,8 @@
                   <Component id="rightDoorDisplayBox" min="-2" max="-2" attributes="0"/>
                   <Component id="leftDoorDisplayBox" min="-2" max="-2" attributes="0"/>
                   <Component id="intLightsDisplayBox" min="-2" max="-2" attributes="0"/>
-                  <Component id="extLightsDIsplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="extLightsDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="heaterDisplayBox" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -50,7 +52,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="outputsLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
@@ -58,7 +60,7 @@
                   <Component id="velocityOutputLabel" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                       <Component id="mphLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="velocityDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -89,9 +91,14 @@
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="exteriorLightsOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="extLightsDIsplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="extLightsDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="heaterDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="heaterOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -175,12 +182,22 @@
         <Property name="text" type="java.lang.String" value="Off"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="extLightsDIsplayBox">
+    <Component class="javax.swing.JTextField" name="extLightsDisplayBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Off"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="velocityDisplayBox">
+    </Component>
+    <Component class="javax.swing.JLabel" name="heaterOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Heater"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="heaterDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Off"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -5,6 +5,7 @@
  */
 
 package GUILayer.TrainModel;
+import DataLayer.Train.TrainModel.*;
 
 /**
  *
@@ -12,6 +13,8 @@ package GUILayer.TrainModel;
  */
 public class TrainModelPanel extends javax.swing.JPanel {
 
+    private TrainModel model;
+    
     /**
      * Creates new form TrainModel
      */
@@ -19,6 +22,17 @@ public class TrainModelPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void setTrainModel(TrainModel m)
+    {
+        model = m;
+        tMOutput.setTrainState(m.state);
+        tMOutput.setPhysicsEngine(m.physics);
+    }
+    
+    public void update()
+    {
+        tMOutput.update();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,8 +42,8 @@ public class TrainModelPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tMOutput1 = new GUILayer.TrainModel.TMOutput();
-        tMInput2 = new GUILayer.TrainModel.TMInput();
+        tMOutput = new GUILayer.TrainModel.TMOutput();
+        tMInput = new GUILayer.TrainModel.TMInput();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -37,24 +51,24 @@ public class TrainModelPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tMInput2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tMInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tMOutput1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tMOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tMInput2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tMOutput1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tMInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tMOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private GUILayer.TrainModel.TMInput tMInput2;
-    private GUILayer.TrainModel.TMOutput tMOutput1;
+    private GUILayer.TrainModel.TMInput tMInput;
+    private GUILayer.TrainModel.TMOutput tMOutput;
     // End of variables declaration//GEN-END:variables
 }

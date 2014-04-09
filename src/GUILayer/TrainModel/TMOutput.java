@@ -5,6 +5,9 @@
  */
 
 package GUILayer.TrainModel;
+import DataLayer.Train.*;
+import DataLayer.Train.TrainModel.*;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -12,13 +15,109 @@ package GUILayer.TrainModel;
  */
 public class TMOutput extends javax.swing.JPanel {
 
+    private PhysicsEngine physicsEngine;
+    private TrainState trainState;
+    private DecimalFormat df;
+    
     /**
      * Creates new form StateDisplay
      */
     public TMOutput() {
         initComponents();
+        df = new DecimalFormat("##.#");
     }
 
+    public void setPhysicsEngine(PhysicsEngine e)
+    {
+        physicsEngine = e;
+    }
+    
+    public void setTrainState(TrainState s)
+    {
+        trainState = s;
+    }
+    
+    public void update()
+    {
+        double velocity = physicsEngine.getVelocity();
+        boolean sBrake = physicsEngine.getServiceBrake();
+        boolean eBrake = physicsEngine.getEmergencyBrake();
+        boolean lDoor = trainState.getLeftDoors();
+        boolean rDoor = trainState.getRightDoors();
+        boolean extLights = trainState.getExteriorLights();
+        boolean intLights = trainState.getInteriorLights();
+        boolean heater = trainState.getHeater();
+        
+        velocity = velocity * 2.23694; // conversion from m/s to mph
+        velocityDisplayBox.setText(df.format(velocity));
+        
+        if (sBrake)
+        {
+            sBrakeDisplayBox.setText("ON");
+        }
+        else
+        {
+            sBrakeDisplayBox.setText("OFF");
+        }
+        
+        if (eBrake)
+        {
+            eBrakeDisplayBox.setText("ON");
+        }
+        else
+        {
+            eBrakeDisplayBox.setText("OFF");
+        }
+         
+        if (lDoor)
+        {
+            leftDoorDisplayBox.setText("OPEN");
+        }
+        else
+        {
+            leftDoorDisplayBox.setText("CLOSED");
+        }
+        
+         
+        if (rDoor)
+        {
+            rightDoorDisplayBox.setText("OPEN");
+        }
+        else
+        {
+            rightDoorDisplayBox.setText("CLOSED");
+        }
+        
+        if (intLights)
+        {
+            intLightsDisplayBox.setText("ON");
+        }
+        else
+        {
+            intLightsDisplayBox.setText("OFF");
+        }
+        
+        if (extLights)
+        {
+            extLightsDisplayBox.setText("ON");
+        }
+        else
+        {
+            extLightsDisplayBox.setText("OFF");
+        }
+
+        if (heater)
+        {
+            heaterDisplayBox.setText("ON");
+        }
+        else
+        {
+            heaterDisplayBox.setText("OFF");
+        }
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,8 +141,10 @@ public class TMOutput extends javax.swing.JPanel {
         rightDoorDisplayBox = new javax.swing.JTextField();
         leftDoorDisplayBox = new javax.swing.JTextField();
         intLightsDisplayBox = new javax.swing.JTextField();
-        extLightsDIsplayBox = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        extLightsDisplayBox = new javax.swing.JTextField();
+        velocityDisplayBox = new javax.swing.JTextField();
+        heaterOutputLabel = new javax.swing.JLabel();
+        heaterDisplayBox = new javax.swing.JTextField();
 
         outputsLabel.setText("Outputs");
 
@@ -73,7 +174,11 @@ public class TMOutput extends javax.swing.JPanel {
 
         intLightsDisplayBox.setText("Off");
 
-        extLightsDIsplayBox.setText("Off");
+        extLightsDisplayBox.setText("Off");
+
+        heaterOutputLabel.setText("Heater");
+
+        heaterDisplayBox.setText("Off");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -90,11 +195,12 @@ public class TMOutput extends javax.swing.JPanel {
                         .addComponent(rightDoorOutputLabel)
                         .addComponent(exteriorLightsOutputLabel)
                         .addComponent(sBrakeOutputLabel)
-                        .addComponent(eBrakeOutputLabel)))
+                        .addComponent(eBrakeOutputLabel)
+                        .addComponent(heaterOutputLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(velocityDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mphLabel))
                     .addComponent(sBrakeDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -102,7 +208,8 @@ public class TMOutput extends javax.swing.JPanel {
                     .addComponent(rightDoorDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(leftDoorDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(intLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(extLightsDIsplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(extLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,7 +222,7 @@ public class TMOutput extends javax.swing.JPanel {
                     .addComponent(velocityOutputLabel)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(mphLabel)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(velocityDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sBrakeOutputLabel)
@@ -139,8 +246,12 @@ public class TMOutput extends javax.swing.JPanel {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exteriorLightsOutputLabel)
-                    .addComponent(extLightsDIsplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(extLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(heaterOutputLabel))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -148,11 +259,12 @@ public class TMOutput extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField eBrakeDisplayBox;
     private javax.swing.JLabel eBrakeOutputLabel;
-    private javax.swing.JTextField extLightsDIsplayBox;
+    private javax.swing.JTextField extLightsDisplayBox;
     private javax.swing.JLabel exteriorLightsOutputLabel;
+    private javax.swing.JTextField heaterDisplayBox;
+    private javax.swing.JLabel heaterOutputLabel;
     private javax.swing.JTextField intLightsDisplayBox;
     private javax.swing.JLabel interiorLightsOutputLabel;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField leftDoorDisplayBox;
     private javax.swing.JLabel leftDoorOutputLabel;
     private javax.swing.JLabel mphLabel;
@@ -161,6 +273,7 @@ public class TMOutput extends javax.swing.JPanel {
     private javax.swing.JLabel rightDoorOutputLabel;
     private javax.swing.JTextField sBrakeDisplayBox;
     private javax.swing.JLabel sBrakeOutputLabel;
+    private javax.swing.JTextField velocityDisplayBox;
     private javax.swing.JLabel velocityOutputLabel;
     // End of variables declaration//GEN-END:variables
 }

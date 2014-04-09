@@ -24,13 +24,12 @@ public class TrainPanel extends javax.swing.JPanel {
         this.train = null;
     }
     
-    
     //public methods
     public void setTrain(Train t)
     {
         this.train = t;
-        this.trainControllerPanel1.controller = t.controller;
-        //this.trainModelPanel2.model = t.model;
+        this.trainControllerPanel.controller = t.controller;
+        this.trainModelPanel.setTrainModel(t.model);
     }
 
     /**
@@ -42,8 +41,8 @@ public class TrainPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        trainControllerPanel1 = new GUILayer.TrainController.TrainControllerPanel();
-        trainModelPanel2 = new GUILayer.TrainModel.TrainModelPanel();
+        trainControllerPanel = new GUILayer.TrainController.TrainControllerPanel();
+        trainModelPanel = new GUILayer.TrainModel.TrainModelPanel();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -51,24 +50,24 @@ public class TrainPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(trainControllerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(trainModelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(trainControllerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(trainModelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(trainControllerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(trainControllerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(trainModelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(trainModelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private GUILayer.TrainController.TrainControllerPanel trainControllerPanel1;
-    private GUILayer.TrainModel.TrainModelPanel trainModelPanel2;
+    private GUILayer.TrainController.TrainControllerPanel trainControllerPanel;
+    private GUILayer.TrainModel.TrainModelPanel trainModelPanel;
     // End of variables declaration//GEN-END:variables
 }
