@@ -420,14 +420,13 @@ public class TrackModel
     	    	theLines.get(lineNum).theBlocks.get(newCurrentBlock).setOccupied(true);
     	    }
     	    
-    	    int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
-            int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
+    	    int a = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getAuthority();
+            int d = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getDestination();
             String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
-            double s = theLines.get(lineNum).theBlocks.get(block).getVelocity();
-            double g = theLines.get(lineNum).theBlocks.get(block).getGradient();
-            boolean u = theLines.get(lineNum).theBlocks.get(block).isUnderground();
+            double s = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getVelocity();
+            double g = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getGradient();
+            boolean u = theLines.get(lineNum).theBlocks.get(newCurrentBlock).isUnderground();
             TrackSignal t = new TrackSignal(s, a, u, dd, g);
-            
             theTrains.get(i).setTrackSignal(t);
     	    
     	}

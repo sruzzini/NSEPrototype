@@ -43,7 +43,7 @@ public class TrainLocation {
     
     public void updateLocation(double deltaX, double length, int prev, int next)
     {
-        this.distanceSoFar += deltaX;
+        distanceSoFar = deltaX + distanceSoFar;
         if(distanceSoFar > length)
         {
             distanceSoFar -= length;
