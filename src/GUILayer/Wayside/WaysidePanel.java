@@ -6,17 +6,26 @@
 
 package GUILayer.Wayside;
 
+import DataLayer.Wayside.TrackController;
+import DataLayer.Wayside.Wayside;
+import java.util.ArrayList;
+
 /**
  *
  * @author domino54
  */
 public class WaysidePanel extends javax.swing.JPanel {
-
+    Wayside wayside;
     /**
      * Creates new form WaysidePanel
      */
     public WaysidePanel() {
         initComponents();
+    }
+    
+    public void setWayside(Wayside wayside)
+    {
+        this.wayside = wayside;
     }
 
     /**
@@ -28,19 +37,208 @@ public class WaysidePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        controllerRadioGroup = new javax.swing.ButtonGroup();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList3 = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jList4 = new javax.swing.JList();
+        tcG1RB = new javax.swing.JRadioButton();
+        tcG2RB = new javax.swing.JRadioButton();
+        tcG3RB = new javax.swing.JRadioButton();
+        fillListsButton = new javax.swing.JButton();
+        switchLabel1 = new javax.swing.JLabel();
+        switchLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jComboBox2 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+
+        jLabel1.setText("Controllers");
+
+        jLabel2.setText("Switches");
+
+        jLabel3.setText("Lights");
+
+        jLabel4.setText("Crossings");
+
+        jList3.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList3);
+
+        jList4.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jList4);
+
+        controllerRadioGroup.add(tcG1RB);
+        tcG1RB.setText("Track Controller Green One");
+
+        controllerRadioGroup.add(tcG2RB);
+        tcG2RB.setText("Track Controller Green Two");
+
+        controllerRadioGroup.add(tcG3RB);
+        tcG3RB.setText("Track Controller Green Three");
+
+        fillListsButton.setText("Populate Lists");
+        fillListsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fillListsButtonActionPerformed(evt);
+            }
+        });
+
+        switchLabel1.setText("jLabel5");
+
+        switchLabel2.setText("jLabel5");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Straight", "Divergent" }));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Straight", "Divergent" }));
+
+        jButton1.setText("Set Switches");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(tcG1RB)
+                    .addComponent(tcG2RB)
+                    .addComponent(tcG3RB)
+                    .addComponent(fillListsButton))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(17, 17, 17))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(switchLabel1)
+                                    .addComponent(switchLabel2))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tcG1RB)
+                            .addComponent(switchLabel1)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tcG2RB)
+                            .addComponent(switchLabel2)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tcG3RB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fillListsButton)
+                            .addComponent(jButton1))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void fillListsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillListsButtonActionPerformed
+        // TODO add your handling code here:
+        int index;
+        String label1, label2;
+        //TrackController controller;
+        //ArrayList<String> switches;
+        
+        if (this.tcG1RB.isSelected())
+        {
+            index = 0;
+            label1 = new String("Switch 1");
+            label2 = new String("Switch 2");
+            
+        }
+        else if (this.tcG2RB.isSelected())
+        {
+            index = 1;
+            label1 = new String("Switch 0");
+            label2 = new String("Switch 3");
+        }
+        else if (this.tcG2RB.isSelected())
+        {
+            index = 2;
+            label1 = new String("Switch 4");
+            label2 = new String("Switch 5");
+        }
+        else
+        {
+            index = 0;
+            label1 = new String("Switch 1");
+            label2 = new String("Switch 2");
+        }
+        
+        //controller = this.wayside.controllers[index];
+        this.switchLabel1.setText(label1);
+        this.switchLabel1.setText(label2);
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_fillListsButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup controllerRadioGroup;
+    private javax.swing.JButton fillListsButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JList jList3;
+    private javax.swing.JList jList4;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel switchLabel1;
+    private javax.swing.JLabel switchLabel2;
+    private javax.swing.JRadioButton tcG1RB;
+    private javax.swing.JRadioButton tcG2RB;
+    private javax.swing.JRadioButton tcG3RB;
     // End of variables declaration//GEN-END:variables
 }
