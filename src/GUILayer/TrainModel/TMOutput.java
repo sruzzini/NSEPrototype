@@ -176,6 +176,8 @@ public class TMOutput extends javax.swing.JPanel {
 
         extLightsDisplayBox.setText("Off");
 
+        velocityDisplayBox.setText("0");
+
         heaterOutputLabel.setText("Heater");
 
         heaterDisplayBox.setText("Off");
