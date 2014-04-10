@@ -570,7 +570,8 @@ public class TrackModelPanel extends javax.swing.JPanel {
         int block = blockComboBox.getSelectedIndex();
         //System.out.println("line = "+line+" block = "+block);
         lengthOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getLength()).toString());
-        speedLimitOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getSpeedLimit()).toString());
+        double speed = theTrackModel.theLines.get(line).theBlocks.get(block).getSpeedLimit() * 2.23694;
+        speedLimitOut.setText(((Double)speed).toString());
         if (theTrackModel.theLines.get(line).theBlocks.get(block).isOccupied())
         {
             occupiedOut.setText("Yes");
@@ -638,7 +639,8 @@ public class TrackModelPanel extends javax.swing.JPanel {
         {
             undergroundOut.setText("No");
         }
-        velocityOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getVelocity()).toString());
+        double velocity = theTrackModel.theLines.get(line).theBlocks.get(block).getVelocity() * 2.23694;
+        velocityOut.setText(((Double)velocity).toString());
         authorityOut.setText(((Integer)theTrackModel.theLines.get(line).theBlocks.get(block).getAuthority()).toString());
         beaconOut.setText("Not yet implemented");
         if (theTrackModel.theLines.get(line).theBlocks.get(block).hasStation())
