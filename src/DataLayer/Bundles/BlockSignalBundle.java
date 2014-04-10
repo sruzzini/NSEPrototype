@@ -46,6 +46,14 @@ public class BlockSignalBundle extends BlockBundle {
         this.Speed = b.getVelocity();
     }
     
+    public BlockSignalBundle(BlockSignalBundle b, int blockID, LineColor lineID)
+    {
+        super(blockID, lineID);
+        this.Authority = b.Authority;
+        this.Destination = b.Destination;
+        this.Speed = b.Speed;
+    }
+    
     public boolean matches(BlockSignalBundle b)
     {
         boolean result = true;
