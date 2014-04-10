@@ -268,7 +268,7 @@ public class CTC
         
         for(int i = 0; i < numberOfTrains; i++)
         {
-            trains.set(i, new TrainsClass(LineColor.YARD, "", "0", 0 , "0", ""));
+            trains.add(i, new TrainsClass(LineColor.YARD, "", "0", 0 , "0", ""));
             numberTrains[i+1] = Integer.toString(i+1);
             trainInfo[i] = new String[] {Integer.toString(i+1), "", "", "Yard"};
         }
