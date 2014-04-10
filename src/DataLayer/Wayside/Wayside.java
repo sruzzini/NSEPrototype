@@ -28,7 +28,7 @@ import java.util.List;
  * @since 2014-04-02
  */
 public final class Wayside {
-    private  TrackController[] controllers;
+    public  TrackController[] controllers;
     private  int controllerCount;
     private TrackModel track;
     //private final int[][] blockNums;
