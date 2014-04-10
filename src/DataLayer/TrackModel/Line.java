@@ -16,6 +16,21 @@ public class Line
         theSwitches = new ArrayList<>();
     }
     
+    public String getLineString()
+    {
+        String temp;
+        if (lineID == LineColor.GREEN)
+        {
+            temp =  "Green";
+        }
+        else
+        {
+            temp = "Red";
+        }
+        
+        return temp;
+    }
+    
     public void addBlock(Block b)
     {
         theBlocks.add(b);
