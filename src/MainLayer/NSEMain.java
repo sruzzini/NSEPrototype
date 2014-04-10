@@ -22,5 +22,6 @@ public class NSEMain
         NSE nse = new NSE(1, 10);
         nse.RunAutomatic();
         gui.SetNSE(nse);
+        gui.SetTrackModel(nse.Track);
     }
 }
