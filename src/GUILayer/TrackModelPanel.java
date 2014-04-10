@@ -160,6 +160,11 @@ public class TrackModelPanel extends javax.swing.JPanel {
                 lineComboBoxItemStateChanged(evt);
             }
         });
+        lineComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lineComboBoxActionPerformed(evt);
+            }
+        });
 
         blockComboLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         blockComboLabel.setText("Block:");
@@ -167,6 +172,11 @@ public class TrackModelPanel extends javax.swing.JPanel {
         blockComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 blockComboBoxItemStateChanged(evt);
+            }
+        });
+        blockComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockComboBoxActionPerformed(evt);
             }
         });
 
@@ -473,12 +483,18 @@ public class TrackModelPanel extends javax.swing.JPanel {
 
     private void lineComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_lineComboBoxItemStateChanged
         // TODO add your handling code here:
-        updateDisplay();
+        if(blockComboBox.getSelectedIndex() >= 0 && lineComboBox.getSelectedIndex() >= 0)
+        {
+            updateDisplay();
+        }
     }//GEN-LAST:event_lineComboBoxItemStateChanged
 
     private void blockComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_blockComboBoxItemStateChanged
         // TODO add your handling code here:
-        updateDisplay();
+        if(blockComboBox.getSelectedIndex() >= 0 && lineComboBox.getSelectedIndex() >= 0)
+        {
+            updateDisplay();
+        }
     }//GEN-LAST:event_blockComboBoxItemStateChanged
 
     private void failureButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failureButton3ActionPerformed
@@ -528,10 +544,27 @@ public class TrackModelPanel extends javax.swing.JPanel {
         updateDisplay();
     }//GEN-LAST:event_failSubmitActionPerformed
 
+    private void lineComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineComboBoxActionPerformed
+        // TODO add your handling code here:
+        if(blockComboBox.getSelectedIndex() >= 0 && lineComboBox.getSelectedIndex() >= 0)
+        {
+            updateDisplay();
+        }
+    }//GEN-LAST:event_lineComboBoxActionPerformed
+
+    private void blockComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockComboBoxActionPerformed
+        // TODO add your handling code here:
+        if(blockComboBox.getSelectedIndex() >= 0 && lineComboBox.getSelectedIndex() >= 0)
+        {
+            updateDisplay();
+        }
+    }//GEN-LAST:event_blockComboBoxActionPerformed
+
     public void updateDisplay()
     {
         int line = lineComboBox.getSelectedIndex();
         int block = blockComboBox.getSelectedIndex();
+        System.out.println("line = "+line+" block = "+block);
         lengthOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getLength()).toString());
         speedLimitOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getSpeedLimit()).toString());
         if (theTrackModel.theLines.get(line).theBlocks.get(block).isOccupied())
