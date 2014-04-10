@@ -7,6 +7,7 @@
 package DataLayer.Bundles;
 
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.TrackModel.Block;
 
 /**
  * This class provides functionality for sending signals to a block.
@@ -35,6 +36,14 @@ public class BlockSignalBundle extends BlockBundle {
         this.Authority = Authority;
         this.Destination = Destination;
         this.Speed = Speed;
+    }
+    
+    public BlockSignalBundle(Block b, int blockID, LineColor lineID)
+    {
+        super(blockID, lineID);
+        this.Authority = b.getAuthority();
+        this.Destination = b.getDestination();
+        this.Speed = b.getVelocity();
     }
     
     public boolean matches(BlockSignalBundle b)
