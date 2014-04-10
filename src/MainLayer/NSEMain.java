@@ -20,9 +20,9 @@ public class NSEMain
         NSEFrame gui = new NSEFrame();
         gui.setVisible(true);
         NSE nse = new NSE(1, 10);
-        gui.UpdateTrainSelectList();
-        nse.RunAutomatic();
         gui.SetNSE(nse);
+        gui.UpdateTrainSelectList();
         gui.SetTrackModel(nse.Track);
+        nse.RunAutomatic();
     }
 }
