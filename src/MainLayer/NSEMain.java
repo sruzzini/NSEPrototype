@@ -18,10 +18,9 @@ public class NSEMain
     public static void main(String args[]) 
     {
         NSEFrame gui = new NSEFrame();
-        gui.setVisible(true);
         NSE nse = new NSE(1, 10);
-        
         nse.RunAutomatic();
-        
+        gui.SetNSE(nse);
+        gui.setVisible(true);
     }
 }
