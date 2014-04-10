@@ -32,6 +32,13 @@ public class TrackModelPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame2 = new javax.swing.JFrame();
+        failSubmit = new javax.swing.JButton();
+        normal = new javax.swing.JRadioButton();
+        rail = new javax.swing.JRadioButton();
+        track = new javax.swing.JRadioButton();
+        power = new javax.swing.JRadioButton();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         lineComboLabel = new javax.swing.JLabel();
         lineComboBox = new javax.swing.JComboBox();
@@ -78,6 +85,58 @@ public class TrackModelPanel extends javax.swing.JFrame {
         switchPosOut = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         failStateOut = new javax.swing.JLabel();
+        failureButton3 = new javax.swing.JButton();
+
+        jFrame2.setMinimumSize(new java.awt.Dimension(400, 160));
+
+        failSubmit.setText("Submit");
+        failSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                failSubmitActionPerformed(evt);
+            }
+        });
+
+        normal.setText("Normal");
+
+        rail.setText("Broken Rail");
+
+        track.setText("Track Circuit Failure");
+
+        power.setText("Power Failure");
+
+        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
+        jFrame2.getContentPane().setLayout(jFrame2Layout);
+        jFrame2Layout.setHorizontalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame2Layout.createSequentialGroup()
+                .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrame2Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rail)
+                            .addComponent(normal)
+                            .addComponent(power)
+                            .addComponent(track)))
+                    .addGroup(jFrame2Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(failSubmit)))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        jFrame2Layout.setVerticalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(normal)
+                .addGap(18, 18, 18)
+                .addComponent(rail)
+                .addGap(18, 18, 18)
+                .addComponent(track)
+                .addGap(18, 18, 18)
+                .addComponent(power)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(failSubmit)
+                .addGap(75, 75, 75))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -308,7 +367,7 @@ public class TrackModelPanel extends javax.swing.JFrame {
                     .addComponent(hasSwitchOut)
                     .addComponent(switchPosOut)
                     .addComponent(failStateOut))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,20 +435,33 @@ public class TrackModelPanel extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
+        failureButton3.setText("Set Failure State");
+        failureButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                failureButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(failureButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(failureButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -404,6 +476,53 @@ public class TrackModelPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
         updateDisplay();
     }//GEN-LAST:event_blockComboBoxItemStateChanged
+
+    private void failureButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failureButton3ActionPerformed
+        // TODO add your handling code here:
+        int line = lineComboBox.getSelectedIndex();
+        int block = blockComboBox.getSelectedIndex();
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 0)
+        {
+            normal.setSelected(true);
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 1)
+        {
+            rail.setSelected(true);
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 2)
+        {
+            track.setSelected(true);
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 3)
+        {
+            power.setSelected(true);
+        }
+        jFrame2.setVisible(true);
+    }//GEN-LAST:event_failureButton3ActionPerformed
+
+    private void failSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failSubmitActionPerformed
+        // TODO add your handling code here:
+        jFrame2.setVisible(false);
+        int line = lineComboBox.getSelectedIndex();
+        int block = blockComboBox.getSelectedIndex();
+        if(normal.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(0);
+        }
+        else if(rail.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(1);
+        }
+        else if(track.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(2);
+        }
+        else if(power.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(3);
+        }
+        updateDisplay();
+    }//GEN-LAST:event_failSubmitActionPerformed
 
     private void updateDisplay()
     {
@@ -536,15 +655,22 @@ public class TrackModelPanel extends javax.swing.JFrame {
     private javax.swing.JLabel beaconOut;
     private javax.swing.JComboBox blockComboBox;
     private javax.swing.JLabel blockComboLabel;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel closedOut;
     private javax.swing.JLabel destinationOut;
     private javax.swing.JLabel elevationOut;
     private javax.swing.JLabel failStateOut;
+    private javax.swing.JButton failSubmit;
+    private javax.swing.JButton failureButton;
+    private javax.swing.JButton failureButton1;
+    private javax.swing.JButton failureButton2;
+    private javax.swing.JButton failureButton3;
     private javax.swing.JLabel gradientOut;
     private javax.swing.JLabel hasLightOut;
     private javax.swing.JLabel hasRRXingOut;
     private javax.swing.JLabel hasStationOut;
     private javax.swing.JLabel hasSwitchOut;
+    private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -571,11 +697,15 @@ public class TrackModelPanel extends javax.swing.JFrame {
     private javax.swing.JLabel lightColorOut;
     private javax.swing.JComboBox lineComboBox;
     private javax.swing.JLabel lineComboLabel;
+    private javax.swing.JRadioButton normal;
     private javax.swing.JLabel occupiedOut;
+    private javax.swing.JRadioButton power;
+    private javax.swing.JRadioButton rail;
     private javax.swing.JLabel rrxingStateOut;
     private javax.swing.JLabel speedLimitOut;
     private javax.swing.JLabel stationIDOut;
     private javax.swing.JLabel switchPosOut;
+    private javax.swing.JRadioButton track;
     private javax.swing.JLabel undergroundOut;
     private javax.swing.JLabel velocityOut;
     // End of variables declaration//GEN-END:variables
