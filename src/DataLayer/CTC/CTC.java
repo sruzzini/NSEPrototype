@@ -140,10 +140,10 @@ public class CTC
     {
         for(int i = 0; i < this.trainLocations.size(); i++)
         {
-            System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
-            System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
-            System.out.println("Trains " + i + " current block: " + this.trainLocations.get(i).prevBlock);
-            if(this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block));
+            //System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
+            //System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
+            //System.out.println("Trains " + i + " current block: " + this.trainLocations.get(i).prevBlock);
+            if(this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block) && this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block));
             {
                 this.trains.get(i).authority--;
                 this.trains.get(i).block = Integer.toString(this.trainLocations.get(i).currentBlock);
