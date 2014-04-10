@@ -8,6 +8,7 @@ package GUILayer;
 import DataLayer.*;
 import DataLayer.TrackModel.*;
 import DataLayer.Train.*;
+import DataLayer.Wayside.Wayside;
 import java.util.Vector;
 
 /**
@@ -38,6 +39,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     public void SetTrackModel(TrackModel t)
     {
         this.trackModelPanel1.setTrack(t);
+    }
+    
+    public void setWayside(Wayside w)
+    {
+        this.waysidePanel1.setWayside(w);
     }
     
     public void UpdateTrainSelectList()
@@ -79,6 +85,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         CTC_panel = new javax.swing.JPanel();
         cTCGUI1 = new GUILayer.CTC.CTCGUI();
         Waysides_panel = new javax.swing.JPanel();
+        waysidePanel1 = new GUILayer.Wayside.WaysidePanel();
         TrackModel_panel = new javax.swing.JPanel();
         trackModelPanel1 = new GUILayer.TrackModelPanel();
         Trains_panel = new javax.swing.JPanel();
@@ -122,11 +129,16 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         Waysides_panel.setLayout(Waysides_panelLayout);
         Waysides_panelLayout.setHorizontalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 876, Short.MAX_VALUE)
+            .addGroup(Waysides_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(222, Short.MAX_VALUE))
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
+            .addGroup(Waysides_panelLayout.createSequentialGroup()
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 183, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Waysides", Waysides_panel);
@@ -301,5 +313,6 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JList trainSelectList;
     private javax.swing.JRadioButton wallClock10_Radio;
     private javax.swing.JRadioButton wallClock_Radio;
+    private GUILayer.Wayside.WaysidePanel waysidePanel1;
     // End of variables declaration//GEN-END:variables
 }

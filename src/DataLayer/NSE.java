@@ -42,7 +42,7 @@ public class NSE implements Runnable
     private Boolean isRunning;
     
     private long lastDispatchTime;
-    private final long dispatchIntervalMin = 10;
+    private final long dispatchIntervalMin = 1;
     private final long millisInMin = 60000;
     private final long dispatchInterval = dispatchIntervalMin * millisInMin; // convert minutes to milliseconds 
     
