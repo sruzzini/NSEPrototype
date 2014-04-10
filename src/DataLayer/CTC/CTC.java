@@ -143,7 +143,7 @@ public class CTC
                 this.trains.get(i).block = Integer.toString(this.trainLocations.get(i).currentBlock);
                 if((this.trains.get(i).section_current = returnSection(this.trains.get(i).line, this.trains.get(i).block)).equals("Not Found"))
                 {
-                    System.out.println("Section Not Found");
+                    System.out.println("Section Not Found: " + this.trains.get(i).block);
                 }
             }
         }
@@ -152,6 +152,7 @@ public class CTC
     
     private String returnSection(LineColor line, String blockID)
     {
+        //System.out.println("Line Color: " + line);
         if(blockID.equals("0"))
         {
             return "";
@@ -160,8 +161,10 @@ public class CTC
         {
             if(line == LineColor.GREEN)
             {
+                
                 for(String[] section: this.green)
                 {
+                    System.out.println(section);
                     if(section[1].equals(blockID))
                     {
                         return(section[0]);
@@ -427,6 +430,7 @@ public class CTC
             if(this.trainLocations.get(i).currentBlock == 0)
             {
                 train = new DispatchBundle(new BlockSignalBundle(4, 65, (70.0*1000/(3600)),0, LineColor.YARD), i , LineColor.GREEN);
+                this.trains.get(i).line = LineColor.GREEN;
             }
             break;
         }        
