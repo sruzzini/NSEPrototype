@@ -142,6 +142,12 @@ public final class Wayside {
     
     public void sendTravelSignal(BlockSignalBundle packet)
     {
+        if (packet == null) 
+        {
+            System.out.println("null sent to sendTravelSignal");
+            return;
+        
+        }
         LineColor line = packet.LineID;
         int blockNum = packet.BlockID;
         
@@ -153,6 +159,8 @@ public final class Wayside {
                 {
                     if (b == blockNum)
                     {
+                       // System.out.println("Sending signal: to block " + packet.BlockID + " to line " + packet.LineID + " with auth " + packet.Authority + " with speed " + packet.Speed + " with dest " + packet.Destination);
+                       // System.out.println("To controller " + i);
                         this.controllers[i].sendTravelSignal(packet);
                     }
                 }
