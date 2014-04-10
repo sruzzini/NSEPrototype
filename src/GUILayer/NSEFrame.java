@@ -75,6 +75,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         reset_button = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         CTC_panel = new javax.swing.JPanel();
+        cTCGUI1 = new GUILayer.CTC.CTCGUI();
         Waysides_panel = new javax.swing.JPanel();
         TrackModel_panel = new javax.swing.JPanel();
         trackModelPanel1 = new GUILayer.TrackModelPanel();
@@ -82,7 +83,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         trainPanel1 = new GUILayer.TrainPanel();
         trainSelectList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        start_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,11 +101,17 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         CTC_panel.setLayout(CTC_panelLayout);
         CTC_panelLayout.setHorizontalGroup(
             CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 856, Short.MAX_VALUE)
+            .addGroup(CTC_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cTCGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         CTC_panelLayout.setVerticalGroup(
             CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGroup(CTC_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cTCGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("CTC", CTC_panel);
@@ -113,11 +120,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         Waysides_panel.setLayout(Waysides_panelLayout);
         Waysides_panelLayout.setHorizontalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 856, Short.MAX_VALUE)
+            .addGap(0, 876, Short.MAX_VALUE)
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 594, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Waysides", Waysides_panel);
@@ -127,7 +134,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         TrackModel_panelLayout.setHorizontalGroup(
             TrackModel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TrackModel_panelLayout.createSequentialGroup()
-                .addContainerGap(162, Short.MAX_VALUE)
+                .addContainerGap(203, Short.MAX_VALUE)
                 .addComponent(trackModelPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(144, 144, 144))
         );
@@ -180,10 +187,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
         jTabbedPane1.addTab("Trains", Trains_panel);
 
-        jButton1.setText("Start");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        start_button.setText("Start");
+        start_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                start_clicked(evt);
+                start_Clicked(evt);
             }
         });
 
@@ -199,9 +206,9 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                         .addComponent(wallClock_Radio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(wallClock10_Radio)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(start_button)
+                        .addGap(2, 2, 2)
                         .addComponent(pause_button)
                         .addGap(12, 12, 12)
                         .addComponent(reset_button)
@@ -216,7 +223,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                     .addComponent(wallClock10_Radio)
                     .addComponent(pause_button)
                     .addComponent(reset_button)
-                    .addComponent(jButton1))
+                    .addComponent(start_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1))
         );
@@ -228,11 +235,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.trainPanel1.setTrain(this.NSEObject.Trains.get(trainSelectList.getSelectedIndex()));
     }//GEN-LAST:event_trainSelectListValueChanged
 
-    private void start_clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_start_clicked
+    private void start_Clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_start_Clicked
         // TODO add your handling code here:
         this.StartClicked = true;
         new Thread(this.NSEObject).start();
-    }//GEN-LAST:event_start_clicked
+    }//GEN-LAST:event_start_Clicked
 
     /**
      * @param args the command line arguments
@@ -280,12 +287,13 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel TrackModel_panel;
     private javax.swing.JPanel Trains_panel;
     private javax.swing.JPanel Waysides_panel;
-    private javax.swing.JButton jButton1;
+    private GUILayer.CTC.CTCGUI cTCGUI1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton pause_button;
     private javax.swing.JButton reset_button;
     private javax.swing.ButtonGroup speed_group;
+    private javax.swing.JButton start_button;
     private GUILayer.TrackModelPanel trackModelPanel1;
     private GUILayer.TrainPanel trainPanel1;
     private javax.swing.JList trainSelectList;

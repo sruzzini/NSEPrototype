@@ -435,7 +435,7 @@ public class CTC
         {
             if(this.trainLocations.get(i).currentBlock == 0)
             {
-                train = new DispatchBundle(new BlockSignalBundle(4, 65, (70.0*1000/(3600)),0, LineColor.YARD), i , LineColor.GREEN);
+                train = new DispatchBundle(new BlockSignalBundle(5, 65, (70.0*1000/(3600)),0, LineColor.YARD), i , LineColor.GREEN);
                 this.trains.get(i).line = LineColor.GREEN;
             }
             break;

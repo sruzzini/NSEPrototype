@@ -95,12 +95,6 @@ public class Train implements Runnable
         double tempDeltaX = 0;
         tempDeltaX =  physicsInput.Delta_x - lastDeltaX;
         lastDeltaX = physicsInput.Delta_x;
-        if (iD == 0)
-        {
-            //System.out.println("Delta x returned: " + tempDeltaX);
-            //System.out.println("Delta x now: " + physicsInput.Delta_x);
-        }
-        
         return tempDeltaX;
     }
     public double getDeltaX()
