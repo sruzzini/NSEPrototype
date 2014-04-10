@@ -122,11 +122,11 @@ public class CTC
         
         for(TrainsClass get: this.trains)
         {
-           System.out.println("CTC Train Authority:" + get.authority); 
-           System.out.println("CTC Train Distance So Far:" + (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar)); 
+           //System.out.println("CTC Train Authority:" + get.authority); 
+           //System.out.println("CTC Train Distance So Far:" + (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar)); 
            if((get.authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == 0 )
            {
-               System.out.println("Sending New Signal");
+               //System.out.println("Sending New Signal");
                trainRouteInfo.add(getNextStation(get));
                this.trains.get(this.trains.indexOf(get)).StopIndex++;
                //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));               
@@ -143,7 +143,7 @@ public class CTC
             //System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
             //System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
             //System.out.println("Trains " + i + " current block: " + this.trainLocations.get(i).prevBlock);
-            if(this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block) && this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block));
+            if(this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block))
             {
                 this.trains.get(i).authority--;
                 this.trains.get(i).block = Integer.toString(this.trainLocations.get(i).currentBlock);
