@@ -239,6 +239,7 @@ public class PhysicsEngine implements Runnable
         eBrakeStatus = physicsInput.EBrakeStatus;
         time_multiplier = physicsInput.Time_multiplier;
         gradient = physicsInput.Gradient;
+        delta_x = physicsInput.Delta_x;
         passengers = passengers + physicsInput.PassengerChange;
     }
     private void sendPhysicsInfo()
@@ -284,6 +285,8 @@ public class PhysicsEngine implements Runnable
         //for (int i = 0; i < 100; i++)
         {
             getPhysicsInfo();
+            //System.out.println("Power: " + motorPower);
+            
             mass = emptyMass + (passengers + crewCount) * passengerMass; // calc mass using passenger count
             
             // calculate fGravity
@@ -366,6 +369,10 @@ public class PhysicsEngine implements Runnable
             }
             
             delta_x = delta_x + velocity * deltaT;
+            if (velocity <= 0)
+            {
+                delta_x = 0;
+            }
             //System.out.println(delta_x);
             sendPhysicsInfo();
             /*

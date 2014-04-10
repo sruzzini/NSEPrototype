@@ -93,6 +93,10 @@ public class Train implements Runnable
         physicsInput.Delta_x = 0;
         return tempDeltaX;
     }
+    public double getDeltaX()
+    {
+        return physicsInput.Delta_x;
+    }
     
     public TrainCommand GetTrainCommand()
     {

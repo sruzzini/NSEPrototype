@@ -21,6 +21,11 @@ public class NSEFrame extends javax.swing.JFrame {
         initComponents();
         this.NSEObject = new NSE(1, 10); //create new NSE object with 10 trains
     }
+    
+    public void UpdateTrainSelectList()
+    {
+        //NSEO
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
