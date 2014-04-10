@@ -7,6 +7,8 @@
 package GUILayer;
 import DataLayer.*;
 import DataLayer.TrackModel.*;
+import DataLayer.Train.*;
+import java.util.Vector;
 
 /**
  *
@@ -35,7 +37,12 @@ public class NSEFrame extends javax.swing.JFrame {
     
     public void UpdateTrainSelectList()
     {
-        //NSEO
+        Vector<String> list = new Vector<String>();
+        for (Train t : NSEObject.Trains)
+        {
+            list.add(t.ToString());
+        }
+        trainSelectList.setListData(list);
     }
 
     /**
