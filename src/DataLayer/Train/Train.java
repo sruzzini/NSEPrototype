@@ -80,53 +80,93 @@ public class Train implements Runnable
         this.model = new TrainModel(this.physicsInput, this.stateInput);
     }
     
-    
-    //Getters and Setters
-    public TrainStatus getTrainStatus()
+    public TrackSignal getTrackSignal()
     {
-        return this.status;
+        return this.trackSignal;
     }
     
-    public TrainCommand getTrainCommand()
-    {
-        return this.commands;
-    }
-    
-    public void setTimeMultiplier(int i)
-    {
-        this.timeMultiplier = i;
-    }
-    
-    public void setTrainStatus(TrainStatus s)
-    {
-        this.status = s;
-    }
-    
-    public void setTrackSignal(TrackSignal s)
-    {
-        this.trackSignal = s;
-        // gradient
-        physicsInput.Gradient = trackSignal.Gradient;
-        // passengers
-    }
-    
-    public void setBeaconSignal(BeaconSignal s)
-    {
-        this.beaconSignal = s;
-    }
-    
-    public void setIsRunning(Boolean isRunning)
-    {
-        this.isRunning = isRunning;
-    }
-    
-    public double getDeltaX()
+    //Public methods
+    public double GetDeltaX()
     {
         double tempDeltaX = 0;
         tempDeltaX =  physicsInput.Delta_x;
         physicsInput.Delta_x = 0;
         return tempDeltaX;
     }
+    public double getDeltaX()
+    {
+        return physicsInput.Delta_x;
+    }
+    
+    public TrainCommand GetTrainCommand()
+    {
+        return this.commands;
+    }
+    
+    public TrainStatus GetTrainStatus()
+    {
+        return this.status;
+    }
+    
+    public void run()
+    {
+        this.Simulate();
+    }
+    
+    public void SetBeaconSignal(BeaconSignal s)
+    {
+        this.beaconSignal = s;
+        this.controller.SetBeaconSignal(this.beaconSignal);
+    }
+    
+    public void SetIsRunning(Boolean isRunning)
+    {
+        this.isRunning = isRunning;
+    }
+    
+    public void SetTimeMultiplier(int i)
+    {
+        this.timeMultiplier = i;
+        this.controller.SetTimeMultiplier(this.timeMultiplier);
+    }
+    
+    public void SetTrackSignal(TrackSignal s)
+    {
+        this.trackSignal = s;
+        this.controller.SetTrackSignal(this.trackSignal);
+        // gradient
+        physicsInput.Gradient = trackSignal.Gradient;
+        // passengers
+    }
+    
+    public void SetTrainStatus(TrainStatus s)
+    {
+        this.status = s;
+        this.controller.SetTrainStatus(this.status);
+    }
+    
+    public void Simulate()
+    {
+        model.startPhysics();
+        
+        while(this.isRunning.booleanValue() == Boolean.TRUE)
+        {
+            this.commands = this.controller.GetTrainCommand();
+            translateStateCommand(this.commands);
+            model.updateState();
+            
+            translatePhysicsCommand(this.commands);
+            try {
+                Thread.sleep(100); //sleep for .1 seconds
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            updateStatus();  // update status object
+        }
+    }
+    
+    
+    
     // Private method
     private void translatePhysicsCommand(TrainCommand c)
     {
@@ -163,32 +203,5 @@ public class Train implements Runnable
         status.setHeaterStatus(model.getHeaterStatus());
         status.setAnnouncement(model.getAnnouncement());
         status.setAdvertisement(model.getAdvertisement());
-    }
-    
-    
-    //Public Methods
-    public void run()
-    {
-        this.simulate();
-    }
-    
-    public void simulate()
-    {
-        model.startPhysics();
-        
-        while(this.isRunning.booleanValue() == Boolean.TRUE)
-        {
-            this.commands = this.controller.GetTrainCommand();
-            translateStateCommand(this.commands);
-            model.updateState();
-            
-            translatePhysicsCommand(this.commands);
-            try {
-                Thread.sleep(100); //sleep for .1 seconds
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            updateStatus();  // update status object
-        }
     }
 }

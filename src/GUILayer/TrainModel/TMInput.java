@@ -51,9 +51,9 @@ public class TMInput extends javax.swing.JPanel {
         temperatureInputApplyButton = new javax.swing.JButton();
         degreesFahLabel = new javax.swing.JLabel();
         engineFaultInputCheckBox = new javax.swing.JCheckBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        signalFaultInputCheckBox = new javax.swing.JCheckBox();
+        sBrakeFaultInputCheckBox = new javax.swing.JCheckBox();
+        eBrakeFaultInputCheckBox = new javax.swing.JCheckBox();
         eBrakeRequestButton = new javax.swing.JToggleButton();
         eBrakeRequestLabel = new javax.swing.JLabel();
 
@@ -80,12 +80,32 @@ public class TMInput extends javax.swing.JPanel {
         degreesFahLabel.setText("ºF");
 
         engineFaultInputCheckBox.setText("Engine Failure");
+        engineFaultInputCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                engineFaultInputCheckBoxActionPerformed(evt);
+            }
+        });
 
-        jCheckBox1.setText("Signal Failure");
+        signalFaultInputCheckBox.setText("Signal Failure");
+        signalFaultInputCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signalFaultInputCheckBoxActionPerformed(evt);
+            }
+        });
 
-        jCheckBox2.setText("Service Brake Failure");
+        sBrakeFaultInputCheckBox.setText("Service Brake Failure");
+        sBrakeFaultInputCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sBrakeFaultInputCheckBoxActionPerformed(evt);
+            }
+        });
 
-        jCheckBox3.setText("Emergency Brake Failure");
+        eBrakeFaultInputCheckBox.setText("Emergency Brake Failure");
+        eBrakeFaultInputCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eBrakeFaultInputCheckBoxActionPerformed(evt);
+            }
+        });
 
         eBrakeRequestButton.setText("Request");
         eBrakeRequestButton.addActionListener(new java.awt.event.ActionListener() {
@@ -117,10 +137,10 @@ public class TMInput extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(eBrakeRequestButton)
-                            .addComponent(jCheckBox1)
+                            .addComponent(signalFaultInputCheckBox)
                             .addComponent(engineFaultInputCheckBox)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox3))
+                            .addComponent(sBrakeFaultInputCheckBox)
+                            .addComponent(eBrakeFaultInputCheckBox))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -144,11 +164,11 @@ public class TMInput extends javax.swing.JPanel {
                     .addComponent(faultInputLabel)
                     .addComponent(engineFaultInputCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(signalFaultInputCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(sBrakeFaultInputCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
+                .addComponent(eBrakeFaultInputCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eBrakeRequestButton)
@@ -167,20 +187,36 @@ public class TMInput extends javax.swing.JPanel {
     }//GEN-LAST:event_temperatureInputApplyButtonActionPerformed
 
     private void eBrakeRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrakeRequestButtonActionPerformed
-        
+        physicsEngine.setPassengerEBrakeRequest(eBrakeRequestButton.isSelected());
     }//GEN-LAST:event_eBrakeRequestButtonActionPerformed
+
+    private void engineFaultInputCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_engineFaultInputCheckBoxActionPerformed
+        physicsEngine.setEngineFault(engineFaultInputCheckBox.isSelected());
+    }//GEN-LAST:event_engineFaultInputCheckBoxActionPerformed
+
+    private void signalFaultInputCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signalFaultInputCheckBoxActionPerformed
+        physicsEngine.setSignalFault(signalFaultInputCheckBox.isSelected());
+    }//GEN-LAST:event_signalFaultInputCheckBoxActionPerformed
+
+    private void sBrakeFaultInputCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBrakeFaultInputCheckBoxActionPerformed
+        physicsEngine.setSBrakeFault(sBrakeFaultInputCheckBox.isSelected());
+    }//GEN-LAST:event_sBrakeFaultInputCheckBoxActionPerformed
+
+    private void eBrakeFaultInputCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrakeFaultInputCheckBoxActionPerformed
+        physicsEngine.setEBrakeFault(eBrakeFaultInputCheckBox.isSelected());
+    }//GEN-LAST:event_eBrakeFaultInputCheckBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel degreesFahLabel;
+    private javax.swing.JCheckBox eBrakeFaultInputCheckBox;
     private javax.swing.JToggleButton eBrakeRequestButton;
     private javax.swing.JLabel eBrakeRequestLabel;
     private javax.swing.JCheckBox engineFaultInputCheckBox;
     private javax.swing.JLabel faultInputLabel;
     private javax.swing.JLabel inputsLabel;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox sBrakeFaultInputCheckBox;
+    private javax.swing.JCheckBox signalFaultInputCheckBox;
     private javax.swing.JButton temperatureInputApplyButton;
     private javax.swing.JLabel temperatureInputLabel;
     private javax.swing.JTextField temperatureInputTextField;

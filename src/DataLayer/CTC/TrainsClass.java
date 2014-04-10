@@ -13,31 +13,39 @@ import DataLayer.EnumTypes.LineColor;
  */
 public class TrainsClass 
 {
+    
     public LineColor line;
-    public String section_current;
-    public String block;
+
     public int authority;
-    public double speed;
-    public String section_destination;
+    public int StopIndex;
+    public String block;
     public String destination; 
+    public String section_current;    
+    public String section_destination;
+    
     
     public TrainsClass()
     {
-        block = "";
-        authority = 0;
-        destination = "";
-        section_destination = "";
+        this.block = "";
+        this.StopIndex = 0;
+        this.authority = 0;
+        this.destination = "";
+        this.section_destination = "";
     }
     
     public TrainsClass(LineColor l, String s, String b, int a, String d, String sd)
     {
-        line = l;
-        block = b;
-        section_current = s;
-        authority = a;
-        destination = d;     
-        section_destination = sd;
-        
+        this.line = l;
+        this.block = b;
+        this.section_current = s;
+        this.authority = a;
+        this.destination = d;     
+        this.section_destination = sd;        
+    }
+    
+    public void setStopIndex(int index)
+    {
+        this.StopIndex = index;
     }
     
     public String lineColor()

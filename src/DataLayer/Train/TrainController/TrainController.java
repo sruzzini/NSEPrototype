@@ -117,23 +117,12 @@ public class TrainController
         this.DesiredTemperature = temp;
     }
     
+    public TrackSignal getTrackSignal()
+    {
+        return this.trackSignal;
+    }
     
     //Public methods
-    public void ReadTrainToControllerBundle(TrainStatus trainS, TrackSignal trackS, BeaconSignal beacon)
-    {
-        this.trainStatus = trainS;
-        this.trackSignal = trackS;
-        if (beacon != null)
-        {
-            this.lastBeacon = beacon;
-        }
-    }
-    
-    public void SetTimeMultiplier(int multiplier)
-    {
-        this.timeMultiplier = multiplier;
-    }
-    
     public TrainCommand GetTrainCommand()
     {
         TrainCommand toReturn;
@@ -171,6 +160,36 @@ public class TrainController
             }
         }
         return toReturn;
+    }
+    
+    public void ReadTrainToControllerBundle(TrainStatus trainS, TrackSignal trackS, BeaconSignal beacon)
+    {
+        this.trainStatus = trainS;
+        this.trackSignal = trackS;
+        if (beacon != null)
+        {
+            this.lastBeacon = beacon;
+        }
+    }
+    
+    public void SetBeaconSignal(BeaconSignal s)
+    {
+        this.lastBeacon = s;
+    }
+    
+    public void SetTimeMultiplier(int multiplier)
+    {
+        this.timeMultiplier = multiplier;
+    }
+    
+    public void SetTrackSignal(TrackSignal s)
+    {
+        this.trackSignal = s;
+    }
+    
+    public void SetTrainStatus(TrainStatus s)
+    {
+        this.trainStatus = s;
     }
     
     

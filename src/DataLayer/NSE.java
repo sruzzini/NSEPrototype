@@ -18,9 +18,9 @@ package DataLayer;
 
 import DataLayer.Bundles.*;
 import DataLayer.CTC.*;
-import DataLayer.EnumTypes.LineColor;
 import DataLayer.TrackModel.*;
 import DataLayer.Train.*;
+import DataLayer.Train.TrainController.TrainController;
 import DataLayer.Wayside.*;
 import java.util.*;
 import java.util.Calendar;
@@ -61,7 +61,7 @@ public class NSE
         for (int i = 0; i < 10; i++)
         {
             this.Trains.add(new Train(i, this.isRunning));
-            this.Trains.get(i).setTimeMultiplier(this.timeMultiplier);
+            this.Trains.get(i).SetTimeMultiplier(this.timeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
@@ -84,7 +84,7 @@ public class NSE
         for (int i = 0; i < numberOfTrains; i++)
         {
             this.Trains.add(new Train(i, this.isRunning));
-            this.Trains.get(i).setTimeMultiplier(this.timeMultiplier);
+            this.Trains.get(i).SetTimeMultiplier(this.timeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
@@ -104,6 +104,8 @@ public class NSE
         //spawn new thread for each Train
         for(Train train : this.Trains)
         {
+            train.controller.VelocitySetPoint = TrainController.MAX_TRAIN_SPEED;
+            train.SetIsRunning(this.isRunning.booleanValue());
             new Thread(train).start();
         }
         
@@ -133,10 +135,20 @@ public class NSE
             }
            
             //Communicate from Track to Trains
+            System.out.println("TRAIN 0 Physics delta x: " + this.Trains.get(0).getDeltaX());
             this.Track.updateTrainLocations();
             
             System.out.println("TRAIN 0 Current Block: " + this.TrainLocations.get(0).currentBlock);
+            System.out.println("Current Authority: " + this.Track.theLines.get(0).theBlocks.get(this.TrainLocations.get(0).currentBlock).getAuthority());
+            System.out.println("Current Train Controller Authority: " + this.Trains.get(0).controller.getTrackSignal().Authority);
+            System.out.println("Current Train Authority: " + this.Trains.get(0).getTrackSignal().Authority);
+            System.out.println("Current Train Brake " + this.Trains.get(0).GetTrainCommand().ServiceBrakeOn);
             System.out.println("TRAIN 0 distance: " + this.TrainLocations.get(0).distanceSoFar);
+            
+            System.out.println("TRAIN 0 Physics model vel: " + this.Trains.get(0).model.physics.getVelocity());
+            System.out.println("TRAIN 0 Physics model power: " + this.Trains.get(0).model.physics.getPower());
+            System.out.println("Current Train Power" + this.Trains.get(0).GetTrainCommand().PowerCommand);
+            //System.out.println("TRAIN 0 Physics delta x: " + this.Trains.get(0).getDeltaX());
         }
     }
     

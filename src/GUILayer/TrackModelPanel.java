@@ -6,6 +6,8 @@
 
 package GUILayer;
 
+import DataLayer.EnumTypes.LightColor;
+import DataLayer.EnumTypes.XingState;
 import DataLayer.TrackModel.*;
 
 /**
@@ -30,26 +32,681 @@ public class TrackModelPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame2 = new javax.swing.JFrame();
+        failSubmit = new javax.swing.JButton();
+        normal = new javax.swing.JRadioButton();
+        rail = new javax.swing.JRadioButton();
+        track = new javax.swing.JRadioButton();
+        power = new javax.swing.JRadioButton();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        jPanel2 = new javax.swing.JPanel();
+        lineComboLabel = new javax.swing.JLabel();
+        lineComboBox = new javax.swing.JComboBox();
+        blockComboLabel = new javax.swing.JLabel();
+        blockComboBox = new javax.swing.JComboBox();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lengthOut = new javax.swing.JLabel();
+        speedLimitOut = new javax.swing.JLabel();
+        occupiedOut = new javax.swing.JLabel();
+        closedOut = new javax.swing.JLabel();
+        hasLightOut = new javax.swing.JLabel();
+        lightColorOut = new javax.swing.JLabel();
+        hasRRXingOut = new javax.swing.JLabel();
+        rrxingStateOut = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        elevationOut = new javax.swing.JLabel();
+        gradientOut = new javax.swing.JLabel();
+        destinationOut = new javax.swing.JLabel();
+        undergroundOut = new javax.swing.JLabel();
+        velocityOut = new javax.swing.JLabel();
+        authorityOut = new javax.swing.JLabel();
+        beaconOut = new javax.swing.JLabel();
+        hasStationOut = new javax.swing.JLabel();
+        stationIDOut = new javax.swing.JLabel();
+        hasSwitchOut = new javax.swing.JLabel();
+        switchPosOut = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        failStateOut = new javax.swing.JLabel();
+        failureButton3 = new javax.swing.JButton();
+
+        jFrame2.setMinimumSize(new java.awt.Dimension(400, 160));
+
+        failSubmit.setText("Submit");
+        failSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                failSubmitActionPerformed(evt);
+            }
+        });
+
+        normal.setText("Normal");
+
+        rail.setText("Broken Rail");
+
+        track.setText("Track Circuit Failure");
+
+        power.setText("Power Failure");
+
+        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
+        jFrame2.getContentPane().setLayout(jFrame2Layout);
+        jFrame2Layout.setHorizontalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame2Layout.createSequentialGroup()
+                .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrame2Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rail)
+                            .addComponent(normal)
+                            .addComponent(power)
+                            .addComponent(track)))
+                    .addGroup(jFrame2Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(failSubmit)))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        jFrame2Layout.setVerticalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(normal)
+                .addGap(18, 18, 18)
+                .addComponent(rail)
+                .addGap(18, 18, 18)
+                .addComponent(track)
+                .addGap(18, 18, 18)
+                .addComponent(power)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(failSubmit)
+                .addGap(75, 75, 75))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Block"));
+
+        lineComboLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        lineComboLabel.setText("Line:");
+
+        for(int i = 0; i < theTrackModel.theLines.size(); i++) {
+            lineComboBox.addItem(theTrackModel.theLines.get(i).getLineString());
+        }
+        lineComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                lineComboBoxItemStateChanged(evt);
+            }
+        });
+
+        blockComboLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        blockComboLabel.setText("Block:");
+
+        for(int i = 0; i < theTrackModel.theLines.get(0).theBlocks.size(); i++) {
+            blockComboBox.addItem(theTrackModel.theLines.get(0).theBlocks.get(i).getBlockID());
+        }
+        updateDisplay();
+        blockComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                blockComboBoxItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(lineComboLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lineComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(124, 124, 124)
+                .addComponent(blockComboLabel)
+                .addGap(18, 18, 18)
+                .addComponent(blockComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lineComboLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lineComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blockComboLabel)
+                    .addComponent(blockComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Block Information"));
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel3.setText("Length (m):");
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel4.setText("Speed Limit:");
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel5.setText("Occupied?:");
+
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel6.setText("Has Light?:");
+
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel7.setText("Closed?:");
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel8.setText("Light Color:");
+
+        jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel9.setText("Has RR Xing?:");
+
+        jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel10.setText("RR Xing State?:");
+
+        lengthOut.setText("jLabel12");
+
+        speedLimitOut.setText("jLabel12");
+
+        occupiedOut.setText("jLabel12");
+
+        closedOut.setText("jLabel12");
+
+        hasLightOut.setText("jLabel12");
+
+        lightColorOut.setText("jLabel12");
+
+        hasRRXingOut.setText("jLabel12");
+
+        rrxingStateOut.setText("jLabel12");
+
+        jLabel20.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel20.setText("Gradient:");
+
+        jLabel21.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel21.setText("Underground?:");
+
+        jLabel22.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel22.setText("Velocity:");
+
+        jLabel23.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel23.setText("Authority:");
+
+        jLabel24.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel24.setText("Destination:");
+
+        jLabel25.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel25.setText("Beacon Signal:");
+
+        jLabel26.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel26.setText("Has Station?:");
+
+        jLabel27.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel27.setText("Station ID:");
+
+        jLabel28.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel28.setText("Elevation:");
+
+        jLabel29.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel29.setText("Has Switch?:");
+
+        jLabel30.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel30.setText("Switch Position:");
+
+        elevationOut.setText("jLabel12");
+
+        gradientOut.setText("jLabel12");
+
+        destinationOut.setText("jLabel12");
+
+        undergroundOut.setText("jLabel12");
+
+        velocityOut.setText("jLabel12");
+
+        authorityOut.setText("jLabel12");
+
+        beaconOut.setText("jLabel12");
+
+        hasStationOut.setText("jLabel12");
+
+        stationIDOut.setText("jLabel12");
+
+        hasSwitchOut.setText("jLabel12");
+
+        switchPosOut.setText("jLabel12");
+
+        jLabel31.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel31.setText("Fail State:");
+
+        failStateOut.setText("jLabel12");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel28)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lengthOut)
+                                    .addComponent(speedLimitOut)
+                                    .addComponent(occupiedOut)
+                                    .addComponent(closedOut)
+                                    .addComponent(hasLightOut)
+                                    .addComponent(lightColorOut)
+                                    .addComponent(hasRRXingOut))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(65, 65, 65)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel21)
+                                                .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING))
+                                            .addComponent(jLabel25)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(elevationOut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel30))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(gradientOut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel31))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(rrxingStateOut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel29)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(destinationOut)
+                    .addComponent(undergroundOut)
+                    .addComponent(velocityOut)
+                    .addComponent(authorityOut)
+                    .addComponent(beaconOut)
+                    .addComponent(hasStationOut)
+                    .addComponent(stationIDOut)
+                    .addComponent(hasSwitchOut)
+                    .addComponent(switchPosOut)
+                    .addComponent(failStateOut))
+                .addContainerGap(124, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lengthOut)
+                    .addComponent(jLabel24)
+                    .addComponent(destinationOut))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(speedLimitOut)
+                    .addComponent(jLabel21)
+                    .addComponent(undergroundOut))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(occupiedOut)
+                    .addComponent(jLabel22)
+                    .addComponent(velocityOut))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(closedOut)
+                    .addComponent(jLabel23)
+                    .addComponent(authorityOut))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(hasLightOut)
+                    .addComponent(jLabel25)
+                    .addComponent(beaconOut))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(lightColorOut)
+                    .addComponent(jLabel26)
+                    .addComponent(hasStationOut))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(hasRRXingOut)
+                    .addComponent(jLabel27)
+                    .addComponent(stationIDOut))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rrxingStateOut)
+                    .addComponent(jLabel29)
+                    .addComponent(hasSwitchOut)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel30)
+                    .addComponent(elevationOut)
+                    .addComponent(switchPosOut))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(gradientOut)
+                    .addComponent(jLabel31)
+                    .addComponent(failStateOut))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        failureButton3.setText("Set Failure State");
+        failureButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                failureButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(failureButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 425, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(failureButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lineComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_lineComboBoxItemStateChanged
+        // TODO add your handling code here:
+        updateDisplay();
+    }//GEN-LAST:event_lineComboBoxItemStateChanged
+
+    private void blockComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_blockComboBoxItemStateChanged
+        // TODO add your handling code here:
+        updateDisplay();
+    }//GEN-LAST:event_blockComboBoxItemStateChanged
+
+    private void failureButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failureButton3ActionPerformed
+        // TODO add your handling code here:
+        int line = lineComboBox.getSelectedIndex();
+        int block = blockComboBox.getSelectedIndex();
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 0)
+        {
+            normal.setSelected(true);
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 1)
+        {
+            rail.setSelected(true);
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 2)
+        {
+            track.setSelected(true);
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 3)
+        {
+            power.setSelected(true);
+        }
+        jFrame2.setVisible(true);
+    }//GEN-LAST:event_failureButton3ActionPerformed
+
+    private void failSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failSubmitActionPerformed
+        // TODO add your handling code here:
+        jFrame2.setVisible(false);
+        int line = lineComboBox.getSelectedIndex();
+        int block = blockComboBox.getSelectedIndex();
+        if(normal.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(0);
+        }
+        else if(rail.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(1);
+        }
+        else if(track.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(2);
+        }
+        else if(power.isSelected())
+        {
+            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(3);
+        }
+        updateDisplay();
+    }//GEN-LAST:event_failSubmitActionPerformed
+
+    private void updateDisplay()
+    {
+        int line = lineComboBox.getSelectedIndex();
+        int block = blockComboBox.getSelectedIndex();
+        lengthOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getLength()).toString());
+        speedLimitOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getSpeedLimit()).toString());
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).isOccupied())
+        {
+            occupiedOut.setText("Yes");
+        }
+        else
+        {
+            occupiedOut.setText("No");
+        }
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).isClosed())
+        {
+            closedOut.setText("Yes");
+        }
+        else
+        {
+            closedOut.setText("No");
+        }
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasLight())
+        {
+            hasLightOut.setText("Yes");
+            if (theTrackModel.theLines.get(line).theBlocks.get(block).getLightColor() == LightColor.RED)
+            {
+                lightColorOut.setText("Red");
+            }
+            else if (theTrackModel.theLines.get(line).theBlocks.get(block).getLightColor() == LightColor.YELLOW)
+            {
+                lightColorOut.setText("Yellow");
+            }
+            else if (theTrackModel.theLines.get(line).theBlocks.get(block).getLightColor() == LightColor.GREEN)
+            {
+                lightColorOut.setText("Green");
+            }
+            
+        }
+        else
+        {
+            hasLightOut.setText("No");
+            lightColorOut.setText("N/A");
+        }
+        
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasRRXing())
+        {
+            hasRRXingOut.setText("Yes");
+            if (theTrackModel.theLines.get(line).theBlocks.get(block).getRRXingState() == XingState.NOT_ACTIVE)
+            {
+                rrxingStateOut.setText("Inactive");
+            }
+            else if (theTrackModel.theLines.get(line).theBlocks.get(block).getRRXingState() == XingState.ACTIVE)
+            {
+                rrxingStateOut.setText("Active");
+            }            
+        }
+        else
+        {
+            hasRRXingOut.setText("No");
+            rrxingStateOut.setText("N/A");
+        }
+        elevationOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getElevation()).toString());
+        gradientOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getGradient()).toString());
+        destinationOut.setText(((Integer)theTrackModel.theLines.get(line).theBlocks.get(block).getDestination()).toString());
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).isUnderground())
+        {
+            undergroundOut.setText("Yes");
+        }
+        else
+        {
+            undergroundOut.setText("No");
+        }
+        velocityOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getVelocity()).toString());
+        authorityOut.setText(((Integer)theTrackModel.theLines.get(line).theBlocks.get(block).getAuthority()).toString());
+        beaconOut.setText("Not yet implemented");
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasStation())
+        {
+            hasStationOut.setText("Yes");
+            stationIDOut.setText(theTrackModel.theLines.get(line).theBlocks.get(block).getStationString());
+        }
+        else
+        {
+            hasStationOut.setText("No");
+            stationIDOut.setText("N/A");
+        }
+        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasTswitch())
+        {
+            hasSwitchOut.setText("Yes");
+            int switchID = theTrackModel.theLines.get(line).theBlocks.get(block).getTswitchID();
+            Switch temp = theTrackModel.theLines.get(line).getSwitch(switchID);
+            if(temp.isStraight())
+            {
+                switchPosOut.setText(temp.approachBlock + " to " + temp.straightBlock);
+            }
+            else
+            {
+                switchPosOut.setText(temp.approachBlock + " to " + temp.divergentBlock);
+            }
+        }
+        else
+        {
+            hasSwitchOut.setText("No");
+            switchPosOut.setText("N/A");
+        }
+        if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 0)
+        {
+            failStateOut.setText("Normal");
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 1)
+        {
+            failStateOut.setText("Broken Rail");
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 2)
+        {
+            failStateOut.setText("Track Circuit Failure");
+        }
+        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 3)
+        {
+            failStateOut.setText("Power Failure");
+        }
+    }
     // My Variable Declarations
     public TrackModel theTrackModel;
     // End of My Variable Declarations
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel authorityOut;
+    private javax.swing.JLabel beaconOut;
+    private javax.swing.JComboBox blockComboBox;
+    private javax.swing.JLabel blockComboLabel;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JLabel closedOut;
+    private javax.swing.JLabel destinationOut;
+    private javax.swing.JLabel elevationOut;
+    private javax.swing.JLabel failStateOut;
+    private javax.swing.JButton failSubmit;
+    private javax.swing.JButton failureButton;
+    private javax.swing.JButton failureButton1;
+    private javax.swing.JButton failureButton2;
+    private javax.swing.JButton failureButton3;
+    private javax.swing.JLabel gradientOut;
+    private javax.swing.JLabel hasLightOut;
+    private javax.swing.JLabel hasRRXingOut;
+    private javax.swing.JLabel hasStationOut;
+    private javax.swing.JLabel hasSwitchOut;
+    private javax.swing.JFrame jFrame2;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lengthOut;
+    private javax.swing.JLabel lightColorOut;
+    private javax.swing.JComboBox lineComboBox;
+    private javax.swing.JLabel lineComboLabel;
+    private javax.swing.JRadioButton normal;
+    private javax.swing.JLabel occupiedOut;
+    private javax.swing.JRadioButton power;
+    private javax.swing.JRadioButton rail;
+    private javax.swing.JLabel rrxingStateOut;
+    private javax.swing.JLabel speedLimitOut;
+    private javax.swing.JLabel stationIDOut;
+    private javax.swing.JLabel switchPosOut;
+    private javax.swing.JRadioButton track;
+    private javax.swing.JLabel undergroundOut;
+    private javax.swing.JLabel velocityOut;
     // End of variables declaration//GEN-END:variables
 }
