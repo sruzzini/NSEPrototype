@@ -175,8 +175,27 @@ public final class Wayside {
     
     public void sendDispatchSignal(DispatchBundle packet)
     {
-        System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID);
+        System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID + " also packet blockid " + packet.BlockID);
         this.track.setDispatchSignal(packet);
+        if (packet.toLine == LineColor.GREEN)
+        {
+            this.sendTravelSignal(new BlockSignalBundle(packet, 152, LineColor.GREEN));
+        }
+        else
+        {
+            this.sendTravelSignal(new BlockSignalBundle(packet, 77, LineColor.RED));
+        }
+        
+        //lineAllGo(packet);
+    }
+    
+    private void lineAllGo(DispatchBundle packet)
+    {
+        for (int i = 62 ; i <= 73; i++)
+        {
+            //sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, i, LineColor.GREEN));
+            this.controllers[1].sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, i, LineColor.GREEN));
+        }
     }
     
     private void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)

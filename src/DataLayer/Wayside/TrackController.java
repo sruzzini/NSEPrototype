@@ -120,21 +120,23 @@ public class TrackController implements Runnable {
             {
                 c.pushCommand(s);
             }
-            for (BlockSignalBundle b : this.replicateSignals())
+            /*for (BlockSignalBundle b : this.replicateSignals())
             {
                 c.pushCommand(b);
-            }
-                
-            this.processCommands(c);
+            }*/
+              
             
             this.emptyCommandQueues();
+            this.processCommands(c);
             
             
-            try {
+            
+            
+            /*try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TrackController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
         }
     }
     
@@ -142,82 +144,48 @@ public class TrackController implements Runnable {
     {
         //do work
         int blockID = packet.BlockID;
+        double speed;
+        int next;
+        Block currentBlock = this.blockInfo.get(packet.BlockID);
+        //System.out.println("BlockSignal: " + packet.BlockID + " " + packet.Authority + " sent to tc: " + this.id + " and current block is: " + currentBlock.getBlockID());
+       // System.out.println("Current block next" + currentBlock.next + " prev " + currentBlock.prev);
         
-        double speedLimit;
-        speedLimit = this.blockInfo.get(blockID).getSpeedLimit();
-        
-        if (packet.Speed > speedLimit)
+        for (int i = 0; i <= packet.Authority; i++)
         {
+           if (packet.Speed > currentBlock.getSpeedLimit())
+            {
             //packet.setSpeed(speedLimit);
-            packet.Speed = speedLimit;
+                speed = currentBlock.getSpeedLimit();
+            } 
+           else
+           {
+               speed = packet.Speed;
+           }
+           
+          // System.out.println("Adding signal to queoe on tc: " + this.id);
+          // System.out.println("Signal\n\tAuthority: " + (packet.Authority -i) + "\n\tDestination: " + packet.Destination + "\n\tSpeed: " + speed + "\n\tID: " + currentBlock.getBlockID() );
+            this.commandSignalQueue.add(new BlockSignalBundle(packet.Authority - i, packet.Destination, speed, currentBlock.getBlockID(), LineColor.GREEN));
+            
+            
+            if (currentBlock.prev < 0)
+                next = this.switchInfo.get(-currentBlock.prev).approachBlock;
+            else
+                next = currentBlock.prev;
+            
+           // System.out.println("About to set current block at id: " + next);
+            
+            currentBlock = this.blockInfo.get(next);  
         }
+                
         
-        this.commandSignalQueue.add(packet);
+        
+        
+        
+        
         
     }
     
-    private ArrayList<BlockSignalBundle> replicateSignals()
-    {
-        ArrayList<BlockSignalBundle> commands;
-        commands = new ArrayList<>();
-        int authority;
-        double speed;
-        int dest;
-        int prev;
-        int next;
-        int switchID;
-        boolean dir;
-        int straightBlock;
-        int divergentBlock;
-        int approachBlock;
-        int nextThruSwitch;
-        Switch s;
-        
-        
-        for (Block b : this.blockArray)
-        {
-            if (b.isOccupied())
-            {
-                authority = b.getAuthority();
-                speed = b.getVelocity();
-                dest = b.getDestination();
-                prev = b.prev;
-                next = b.next;
-                if (next < 0)
-                    switchID = -next;
-                else if (prev < 0)
-                    switchID = -prev;
-                else
-                    switchID = 0;
-                
-                if (switchID != 0) {
-                    s = this.switchInfo.get(switchID);
-                    if (b.getBlockID() == s.approachBlock)
-                    {
-                        if (s.straight)
-                            nextThruSwitch = s.straightBlock;
-                        else
-                            nextThruSwitch = s.divergentBlock;              
-                    }
-                    else
-                        nextThruSwitch = s.approachBlock;
-                    
-                    if (next < 0)
-                        next = nextThruSwitch;
-                    else
-                        prev = nextThruSwitch;
-                    
-                    
-                }
-               // System.out.println("Replicate signal from block id: " + b.getBlockID() + " to blocks with ids " + prev +" " + next);
-                if (next > 0) commands.add(new BlockSignalBundle(authority, dest, speed, next, LineColor.GREEN));
-                if (prev > 0) commands.add(new BlockSignalBundle(authority, dest, speed, prev, LineColor.GREEN));   
-            }
-        }
-        
-        return commands;
-        
-    }
+    
     
     public void sendSwitchStateSignal(Switch packet)
     {
@@ -329,10 +297,14 @@ public class TrackController implements Runnable {
             dest = bsb.Destination;
             blockID = bsb.BlockID;
             block = this.blockInfo.get(blockID);
-           // System.out.println("blockID: " + blockID + " controllerID " + this.id);
+            //System.out.println("blockID: " + blockID + " controllerID " + this.id);
+            //System.out.println("In process commands. set block: " + block.getBlockID() + " with the values a,s,d: " + authority + "," + speed + "," + dest);
+            
             block.setAuthority(authority);
             block.setVelocity(speed);
             block.setDestination(dest);
+            
+            
             
             
         }

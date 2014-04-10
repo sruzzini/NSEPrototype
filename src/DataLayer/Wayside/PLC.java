@@ -46,15 +46,50 @@ public abstract class PLC {
     
     public Commands runPLCProgram()
     {
-        Commands tryOne = plcProgram();
-        Commands tryTwo = plcProgram();
-        Commands tryThree = plcProgram();
+        Commands tryOne = runAllPLCTasks();
+        //Commands tryTwo = runAllPLCTasks();
+        //Commands tryThree = runAllPLCTasks();
         
-        Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
+        //Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
         
         
         
-        return votingResult;
+        //return votingResult;
+        return tryOne;
+    }
+    
+    private Commands runAllPLCTasks()
+    {
+        Commands c;
+        c = plcProgram();
+        
+        
+        /*
+         ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
+         ArrayList<BlockSignalBundle> replicateCommands = this.replicateSignals();
+        //ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
+        
+        for (BlockInfoBundle b : rrCommands)
+        {
+            c.pushCommand(b);
+        }
+        
+        for (BlockSignalBundle b : replicateCommands)
+        {
+            if (!c.containsCommandForBlockID(b.BlockID))
+            {
+                c.pushCommand(b);  
+            }
+            
+        }
+        
+        for (BlockSignalBundle b : safetyCommands)
+        {
+            c.pushCommand(b);
+        }*/
+        
+        return c;
+        
     }
     
     protected Commands commandsFromVote(Commands a, Commands b, Commands c)
@@ -111,24 +146,28 @@ public abstract class PLC {
         
         return commands;
     }
-    
-    /*protected ArrayList<BlockSignalBundle> replicateSignals()
+    /*
+    protected ArrayList<BlockSignalBundle> replicateSignals()
     {
         ArrayList<BlockSignalBundle> commands;
         commands = new ArrayList<>();
+        int next;
+        Block nextBlock;
         
         for (Block b : this.blockArray)
         {
             if (b.isOccupied())
             {
-                
+                next = b.next;
+                //nextBlock = this.blocks.get(next);
+                commands.add(new BlockSignalBundle(b, next, LineColor.GREEN));
             }
         }
         
         
         return commands;
-    }*/
-    
+    }
+    */
     protected abstract Commands plcProgram();
     
 

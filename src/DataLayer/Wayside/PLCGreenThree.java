@@ -160,18 +160,7 @@ public class PLCGreenThree extends PLC{
             }
         }
         
-        ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
-        ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
-        
-        for (BlockInfoBundle b : rrCommands)
-        {
-            c.pushCommand(b);
-        }
-        
-        for (BlockSignalBundle b : safetyCommands)
-        {
-            c.pushCommand(b);
-        }
+       
         
         
         return c;

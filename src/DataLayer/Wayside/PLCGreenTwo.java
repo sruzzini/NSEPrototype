@@ -93,10 +93,10 @@ public class PLCGreenTwo extends PLC{
              if (switch1.straightBlock == 152) dir = true;
              c.pushCommand(new Switch(LineColor.GREEN, switch1.switchID, switch1.approachBlock,
              switch1.straightBlock, switch1.divergentBlock, dir));
-             c.pushCommand( new BlockSignalBundle(block60.getAuthority(), block60.getDestination(),
+             /*c.pushCommand( new BlockSignalBundle(block60.getAuthority(), block60.getDestination(),
                      0.0, block60.getBlockID(), LineColor.GREEN));
              c.pushCommand( new BlockSignalBundle(block61.getAuthority(), block61.getDestination(),
-                     0.0, block61.getBlockID(), LineColor.GREEN));
+                     0.0, block61.getBlockID(), LineColor.GREEN));*/
              stoppingAtJEnd = true;
              holdAtYard = false;
             }
@@ -138,8 +138,8 @@ public class PLCGreenTwo extends PLC{
             }
             else
             {
-                c.pushCommand(new BlockSignalBundle(block61.getAuthority(), block61.getDestination(),
-                    0.0, block61.getBlockID(), LineColor.GREEN));
+               /* c.pushCommand(new BlockSignalBundle(block61.getAuthority(), block61.getDestination(),
+                    0.0, block61.getBlockID(), LineColor.GREEN));*/
             }
         }
                  
@@ -165,18 +165,7 @@ public class PLCGreenTwo extends PLC{
             stoppingAtJEnd = false;
         }
         
-        ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
-        ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
         
-        for (BlockInfoBundle b : rrCommands)
-        {
-            c.pushCommand(b);
-        }
-        
-        for (BlockSignalBundle b : safetyCommands)
-        {
-            c.pushCommand(b);
-        }
         
         
         return c;

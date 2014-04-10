@@ -112,4 +112,18 @@ public class Commands {
         return result;
     }
     
+    public boolean containsCommandForBlockID(int id)
+    {
+        boolean result = false;
+        for (BlockSignalBundle b : this.blockSignalCommands)
+        {
+            if (b.BlockID == id)
+            {
+                result = true;
+                break;
+            }
+        }
+        
+        return result;
+    }
 }
