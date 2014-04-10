@@ -18,7 +18,8 @@ public class TrackModelPanel extends javax.swing.JPanel {
     /**
      * Creates new form TrackModelPanel
      */
-    public TrackModelPanel() {
+    public TrackModelPanel(TrackModel t) {
+        this.theTrackModel = t;
         initComponents();
     }
 
