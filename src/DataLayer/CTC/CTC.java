@@ -35,7 +35,7 @@ public class CTC
     private String[] redSections;
     private String[] numberTrains;
     private String[] trackPath;
-    private ArrayList<TrainsClass> trains;
+    public ArrayList<TrainsClass> trains;
     private ArrayList<String[]> green;
     private ArrayList<String[]> red;    
     private ArrayList<String[]> blockClosings;    
@@ -43,7 +43,7 @@ public class CTC
     private ArrayList<BlockSignalBundle> closures;    
     private ArrayList<TrainLocation> trainLocations;
     private ArrayList<Switch> switchPostions;
-    private final ArrayList<Station> GREEN_NEXT_STATION;
+    public final ArrayList<Station> GREEN_NEXT_STATION;
     private final ArrayList<Station> RED_NEXT_STATION;
     
     /**
@@ -68,7 +68,7 @@ public class CTC
         this.RED_NEXT_STATION = new ArrayList<>();
         
         //GREEN_NEXT_STATION = greenStationCreation(); 
-               
+        setNextStations();       
         iniTrack();
         iniTrains(nTrains);         
     }
@@ -124,7 +124,8 @@ public class CTC
         {
            //System.out.println("CTC Train Authority:" + get.authority); 
            //System.out.println("CTC Train Distance So Far:" + (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar)); 
-           if((get.authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == 0 )
+            //(get.authority == 0)
+           if((get.authority <= 0) && (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == 0 )
            {
                //System.out.println("Sending New Signal");
                trainRouteInfo.add(getNextStation(get));
@@ -198,14 +199,14 @@ public class CTC
     
     private BlockSignalBundle getNextStation(TrainsClass train)
     {
-        String newDestination;
+        int newDestination;
         int newAuthority;
         
         if(LineColor.GREEN == train.line)
         {
             newAuthority = this.GREEN_NEXT_STATION.get(train.StopIndex).AUTHORITY;
-            newDestination = this.GREEN_NEXT_STATION.get(train.StopIndex).NEXTSTATION;
-            return new BlockSignalBundle(newAuthority, Integer.parseInt(newDestination), (70*1000/36000),Integer.parseInt(train.block), train.line);//returnSection(LineColor.GREEN, newDestination))
+            newDestination = this.GREEN_NEXT_STATION.get(train.StopIndex).NEXTBLOCKID;
+            return new BlockSignalBundle(newAuthority, (newDestination), (70*1000/36000),Integer.parseInt(train.block), train.line);//returnSection(LineColor.GREEN, newDestination))
         }
         return null;        
     }
@@ -437,8 +438,9 @@ public class CTC
             {
                 train = new DispatchBundle(new BlockSignalBundle(4, 65, (70.0*1000/(3600)),0, LineColor.YARD), i , LineColor.GREEN);
                 this.trains.get(i).line = LineColor.GREEN;
+                break;
             }
-            break;
+            
         }        
         return train;    
     }
@@ -459,13 +461,13 @@ public class CTC
                 String[] block = line.split(cvsSplitBy);
                 if(block[0].equals("GREEN"))
                 {
-                    this.GREEN_NEXT_STATION.add(new Station(Integer.parseInt(block[3]), Integer.parseInt(block[1]), Integer.parseInt(block[4]), block[2], block[5]));
+                    this.GREEN_NEXT_STATION.add(new Station(Integer.parseInt(block[3].trim()), Integer.parseInt(block[1].trim()), Integer.parseInt(block[4].trim()), block[2], block[5]));
                 }
                 else
                 {
                     if(block[0].equals("RED"))    
                     {
-                        this.RED_NEXT_STATION.add(new Station(Integer.parseInt(block[3]), Integer.parseInt(block[1]), Integer.parseInt(block[4]), block[2], block[5]));
+                        this.RED_NEXT_STATION.add(new Station(Integer.parseInt(block[3].trim()), Integer.parseInt(block[1].trim()), Integer.parseInt(block[4].trim()), block[2], block[5]));
                     }
                 }
                 
