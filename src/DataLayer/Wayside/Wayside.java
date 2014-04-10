@@ -133,9 +133,11 @@ public final class Wayside {
         
         TrackController tc0 = this.controllers[0];
         TrackController tc1 = this.controllers[1];
+        TrackController tc2 = this.controllers[2];
         
         new Thread(tc0).start();
         new Thread(tc1).start();
+        new Thread(tc2).start();
     }
     
     public void sendTravelSignal(BlockSignalBundle packet)

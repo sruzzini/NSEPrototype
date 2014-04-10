@@ -77,11 +77,11 @@ public class TrackController implements Runnable {
         else if (id == 1)
         {
             this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo);
-        }/*
+        }
         else if (id == 2)
         {
-            this.plcProgram = new PLCGreenThree(id, line, blockInfo);
-        }
+            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo);
+        }/*
         else if (id == 3)
         {
             this.plcProgram = new PLCRedOne(id, line, blockInfo);
