@@ -17,6 +17,7 @@ import java.util.Vector;
 public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
     public NSE NSEObject;
+    public boolean StartClicked;
     /**
      * Creates new form NSEFrame
      */
@@ -24,6 +25,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         initComponents();
         this.NSEObject = null; //create new NSE object with 10 trains
         this.wallClock_Radio.setSelected(true);
+        this.StartClicked = false;
     }
     
     public void SetNSE(NSE n)
@@ -69,7 +71,6 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         speed_group = new javax.swing.ButtonGroup();
         wallClock_Radio = new javax.swing.JRadioButton();
         wallClock10_Radio = new javax.swing.JRadioButton();
-        start_button = new javax.swing.JToggleButton();
         pause_button = new javax.swing.JButton();
         reset_button = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -81,6 +82,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         trainPanel1 = new GUILayer.TrainPanel();
         trainSelectList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,8 +91,6 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
         speed_group.add(wallClock10_Radio);
         wallClock10_Radio.setText("10x Wall Clock");
-
-        start_button.setText("Start");
 
         pause_button.setText("Pause");
 
@@ -180,6 +180,13 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
         jTabbedPane1.addTab("Trains", Trains_panel);
 
+        jButton1.setText("Start");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                start_clicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,11 +199,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                         .addComponent(wallClock_Radio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(wallClock10_Radio)
-                        .addGap(18, 18, 18)
-                        .addComponent(start_button)
-                        .addGap(18, 18, 18)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pause_button)
-                        .addGap(18, 18, 18)
+                        .addGap(12, 12, 12)
                         .addComponent(reset_button)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -207,9 +214,9 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(wallClock_Radio)
                     .addComponent(wallClock10_Radio)
-                    .addComponent(start_button)
                     .addComponent(pause_button)
-                    .addComponent(reset_button))
+                    .addComponent(reset_button)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1))
         );
@@ -220,6 +227,12 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private void trainSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_trainSelectListValueChanged
         this.trainPanel1.setTrain(this.NSEObject.Trains.get(trainSelectList.getSelectedIndex()));
     }//GEN-LAST:event_trainSelectListValueChanged
+
+    private void start_clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_start_clicked
+        // TODO add your handling code here:
+        this.StartClicked = true;
+        new Thread(this.NSEObject).start();
+    }//GEN-LAST:event_start_clicked
 
     /**
      * @param args the command line arguments
@@ -267,12 +280,12 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel TrackModel_panel;
     private javax.swing.JPanel Trains_panel;
     private javax.swing.JPanel Waysides_panel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton pause_button;
     private javax.swing.JButton reset_button;
     private javax.swing.ButtonGroup speed_group;
-    private javax.swing.JToggleButton start_button;
     private GUILayer.TrackModelPanel trackModelPanel1;
     private GUILayer.TrainPanel trainPanel1;
     private javax.swing.JList trainSelectList;

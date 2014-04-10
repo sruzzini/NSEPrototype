@@ -26,7 +26,7 @@ import java.util.*;
 import java.util.Calendar;
 
 
-public class NSE 
+public class NSE implements Runnable
 {
     //Constatns
     public static final int REAL_TIME = 1;
@@ -94,6 +94,11 @@ public class NSE
         this.timeMultiplier = timeMultiplier;
     }
     
+    
+    public void run()
+    {
+        this.RunAutomatic();
+    }
     
     //public methods
     public void RunAutomatic()

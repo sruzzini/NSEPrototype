@@ -24,6 +24,5 @@ public class NSEMain
         gui.UpdateTrainSelectList();
         gui.SetTrackModel(nse.Track);
         new Thread(gui).start();
-        nse.RunAutomatic();
     }
 }

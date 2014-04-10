@@ -35,11 +35,11 @@
                       <Component id="wallClock_Radio" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="wallClock10_Radio" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="start_button" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="pause_button" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="reset_button" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -54,9 +54,9 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="wallClock_Radio" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="wallClock10_Radio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="start_button" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="pause_button" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="reset_button" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jTabbedPane1" max="32767" attributes="0"/>
@@ -79,11 +79,6 @@
           <ComponentRef name="speed_group"/>
         </Property>
         <Property name="text" type="java.lang.String" value="10x Wall Clock"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JToggleButton" name="start_button">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Start"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="pause_button">
@@ -245,5 +240,13 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Start"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="start_clicked"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
