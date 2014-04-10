@@ -196,7 +196,7 @@ public class WaysidePanel extends javax.swing.JPanel {
             label1 = new String("Switch 0");
             label2 = new String("Switch 3");
         }
-        else if (this.tcG2RB.isSelected())
+        else if (this.tcG3RB.isSelected())
         {
             index = 2;
             label1 = new String("Switch 4");
@@ -211,7 +211,7 @@ public class WaysidePanel extends javax.swing.JPanel {
         
         //controller = this.wayside.controllers[index];
         this.switchLabel1.setText(label1);
-        this.switchLabel1.setText(label2);
+        this.switchLabel2.setText(label2);
         
         
         
