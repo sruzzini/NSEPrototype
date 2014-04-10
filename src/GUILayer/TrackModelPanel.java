@@ -108,12 +108,16 @@ public class TrackModelPanel extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup2.add(normal);
         normal.setText("Normal");
 
+        buttonGroup2.add(rail);
         rail.setText("Broken Rail");
 
+        buttonGroup2.add(track);
         track.setText("Track Circuit Failure");
 
+        buttonGroup2.add(power);
         power.setText("Power Failure");
 
         javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
