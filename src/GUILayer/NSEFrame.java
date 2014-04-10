@@ -6,6 +6,7 @@
 
 package GUILayer;
 import DataLayer.*;
+import DataLayer.TrackModel.*;
 
 /**
  *
@@ -25,6 +26,11 @@ public class NSEFrame extends javax.swing.JFrame {
     public void SetNSE(NSE n)
     {
         this.NSEObject = n;
+    }
+    
+    public void SetTrackModel(TrackModel t)
+    {
+        this.trackModelPanel1.setTrack(t);
     }
     
     public void UpdateTrainSelectList()
