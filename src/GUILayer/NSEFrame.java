@@ -32,6 +32,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     {
         this.NSEObject = n;
         this.trainPanel1.setTrain(this.NSEObject.Trains.get(0));
+        //this.cTCGUI1.setCTCOffice(this.NSEObject.CTCOffice);
     }
     
     public void SetTrackModel(TrackModel t)
@@ -56,6 +57,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         {
             this.trainPanel1.update(); 
             this.trackModelPanel1.updateDisplay();
+            //this.cTCGUI1.update();
         }
     }
 
