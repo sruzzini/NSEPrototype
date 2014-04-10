@@ -153,7 +153,6 @@ public class NSE
                 System.out.println("TRAIN 0 Physics model vel: " + this.Trains.get(0).model.physics.getVelocity());
                 System.out.println("TRAIN 0 Physics model power: " + this.Trains.get(0).model.physics.getPower());
                 System.out.println("Current Train Power" + this.Trains.get(0).GetTrainCommand().PowerCommand);
-                System.out.println("Delta x according to physics model: " + this.Trains.get(0).model.physics.total_delta_x);
                 lastPrint = Calendar.getInstance().getTimeInMillis();
             }
         }

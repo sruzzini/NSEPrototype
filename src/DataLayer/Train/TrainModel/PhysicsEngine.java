@@ -27,7 +27,6 @@ public class PhysicsEngine implements Runnable
     
     private double velocity;
     private double delta_x;
-    public double total_delta_x;
     
     PhysicsInput physicsInput;
     
@@ -272,7 +271,6 @@ public class PhysicsEngine implements Runnable
         long currTime;
         long lastTime = Calendar.getInstance().getTimeInMillis();
         double deltaT;
-        total_delta_x = 0;
         
         // used for debugging and printing information every 5 sec
         long lastPrint = 0;
@@ -379,11 +377,7 @@ public class PhysicsEngine implements Runnable
             }
             
             delta_x = delta_x + velocity * deltaT;
-            //total_delta_x = total_delta_x + velocity * deltaT;
-            if (velocity <= 0)
-            {
-                delta_x = 0;
-            }
+ 
             //System.out.println(delta_x);
             sendPhysicsInfo();
             /*
