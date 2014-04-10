@@ -226,14 +226,14 @@ public class Tables extends javax.swing.JPanel {
             trainArray[i][2] = trains.get(i).lineColor();
             trainArray[i][3] = trains.get(i).section_current;
             trainArray[i][4] = trains.get(i).block;
-            if(Integer.parseInt(trains.get(i).block)  == (station.get(trains.get(i).StopIndex).BLOCKID))
-            {
-                trainArray[i][5] = (station.get(trains.get(i).StopIndex).STATION);
-            }
-            else
-            {
-                trainArray[i][5] =  "";
-            }
+            //if(Integer.parseInt(trains.get(i).block)  == (station.get(trains.get(i).StopIndex).BLOCKID))
+            //{
+            //    trainArray[i][5] = (station.get(trains.get(i).StopIndex).STATION);
+            //}
+            //else
+            //{
+            //    trainArray[i][5] =  "";
+            //}
         }
         this.trainLocationsTable.setModel(new javax.swing.table.DefaultTableModel(trainArray,new String [] {"Train", "Authority", "Line", "Section", "Block","Station"}));       
     }
@@ -247,14 +247,14 @@ public class Tables extends javax.swing.JPanel {
             trainArray[i][2] = trains.get(i).lineColor();
             trainArray[i][3] = trains.get(i).section_destination;
             trainArray[i][4] = trains.get(i).destination;
-            if(Integer.parseInt(trains.get(i).destination)  == (station.get(trains.get(i).StopIndex).NEXTBLOCKID))
-            {
-                trainArray[i][5] = (station.get(trains.get(i).StopIndex).NEXTSTATION);
-            }
-            else
-            {
-                trainArray[i][5] =  "";
-            }
+            //if(Integer.parseInt(trains.get(i).destination)  == (station.get(trains.get(i).StopIndex).NEXTBLOCKID))
+            //{
+            //    trainArray[i][5] = (station.get(trains.get(i).StopIndex).NEXTSTATION);
+            //}
+            //else
+            //{
+
+            //}
         }
         this.trainLocationsTable.setModel(new javax.swing.table.DefaultTableModel(trainArray,new String [] {"Train", "Line", "Section", "Block","Station"}));       
     }

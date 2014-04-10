@@ -5,6 +5,7 @@
  */
 
 package GUILayer.CTC;
+import DataLayer.CTC.CTC;
 
 /**
  *
@@ -15,10 +16,24 @@ public class CTCGUI extends javax.swing.JPanel {
     /**
      * Creates new form CTCGUI
      */
+    private CTC CTCOffice;
+    
     public CTCGUI() {
         initComponents();
     }
 
+    public void setCTCOffice(CTC c)
+    {
+        this.CTCOffice = c;
+
+    }
+    
+    public void update()
+    {
+        this.tables.SetTrainDestination(this.CTCOffice.trains, this.CTCOffice.GREEN_NEXT_STATION);
+        this.tables.SetTrainLocations(this.CTCOffice.trains, this.CTCOffice.GREEN_NEXT_STATION);   
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
