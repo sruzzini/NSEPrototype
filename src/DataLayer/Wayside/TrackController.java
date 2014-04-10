@@ -124,6 +124,7 @@ public class TrackController implements Runnable {
             {
                 c.pushCommand(b);
             }
+                
             this.processCommands(c);
             
             this.emptyCommandQueues();
@@ -208,8 +209,9 @@ public class TrackController implements Runnable {
                     
                     
                 }
-                commands.add(new BlockSignalBundle(authority, dest, speed, next, LineColor.GREEN));
-                 commands.add(new BlockSignalBundle(authority, dest, speed, prev, LineColor.GREEN));   
+               // System.out.println("Replicate signal from block id: " + b.getBlockID() + " to blocks with ids " + prev +" " + next);
+                if (next > 0) commands.add(new BlockSignalBundle(authority, dest, speed, next, LineColor.GREEN));
+                if (prev > 0) commands.add(new BlockSignalBundle(authority, dest, speed, prev, LineColor.GREEN));   
             }
         }
         
@@ -327,6 +329,7 @@ public class TrackController implements Runnable {
             dest = bsb.Destination;
             blockID = bsb.BlockID;
             block = this.blockInfo.get(blockID);
+           // System.out.println("blockID: " + blockID + " controllerID " + this.id);
             block.setAuthority(authority);
             block.setVelocity(speed);
             block.setDestination(dest);
