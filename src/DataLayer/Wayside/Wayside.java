@@ -175,7 +175,7 @@ public final class Wayside {
     
     public void sendDispatchSignal(DispatchBundle packet)
     {
-        System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID + " also packet blockid " + packet.BlockID);
+        //System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID + " also packet blockid " + packet.BlockID);
         this.track.setDispatchSignal(packet);
         if (packet.toLine == LineColor.GREEN)
         {
