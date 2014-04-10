@@ -70,7 +70,7 @@ public class CTC
         //GREEN_NEXT_STATION = greenStationCreation(); 
                
         iniTrack();
-        iniTrains();         
+        iniTrains(nTrains);         
     }
     
     public CTC() 
@@ -91,7 +91,7 @@ public class CTC
     
         setNextStations();
         iniTrack();
-        iniTrains();         
+        iniTrains(numberOfTrains);         
     }    
 
     public ArrayList<BlockSignalBundle> closeBlocks()
@@ -260,15 +260,15 @@ public class CTC
         return authority;
     }
     
-    private void iniTrains()
+    private void iniTrains(int numberOfTrains)
     {
-        numberTrains = new String[trains.size()+1];
-        String[][] trainInfo = new String[trains.size()][4];
+        numberTrains = new String[numberOfTrains+1];
+        String[][] trainInfo = new String[numberOfTrains][4];
         numberTrains[0] = "Train #";
         
-        for(int i = 0; i < trains.size(); i++)
+        for(int i = 0; i < numberOfTrains; i++)
         {
-            trains.set(i, new TrainsClass(LineColor.YARD, "", "0", 0 , "0", ""));
+            trains.add(i, new TrainsClass(LineColor.YARD, "", "0", 0 , "0", ""));
             numberTrains[i+1] = Integer.toString(i+1);
             trainInfo[i] = new String[] {Integer.toString(i+1), "", "", "Yard"};
         }

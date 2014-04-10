@@ -18,9 +18,21 @@ public class TrackModelPanel extends javax.swing.JPanel {
     /**
      * Creates new form TrackModelPanel
      */
-    public TrackModelPanel(TrackModel t) {
-        this.theTrackModel = t;
+    public TrackModelPanel() {
+        this.theTrackModel = null;
         initComponents();
+    }
+    
+    public void setTrack(TrackModel t)
+    {
+        this.theTrackModel = t;
+        for(int i = 0; i < theTrackModel.theLines.size(); i++) {
+            lineComboBox.addItem(theTrackModel.theLines.get(i).getLineString());
+        }
+        for(int i = 0; i < theTrackModel.theLines.get(0).theBlocks.size(); i++) {
+            blockComboBox.addItem(theTrackModel.theLines.get(0).theBlocks.get(i).getBlockID());
+        }
+        updateDisplay();
     }
 
     /**
@@ -143,9 +155,6 @@ public class TrackModelPanel extends javax.swing.JPanel {
         lineComboLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         lineComboLabel.setText("Line:");
 
-        for(int i = 0; i < theTrackModel.theLines.size(); i++) {
-            lineComboBox.addItem(theTrackModel.theLines.get(i).getLineString());
-        }
         lineComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 lineComboBoxItemStateChanged(evt);
@@ -155,10 +164,6 @@ public class TrackModelPanel extends javax.swing.JPanel {
         blockComboLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         blockComboLabel.setText("Block:");
 
-        for(int i = 0; i < theTrackModel.theLines.get(0).theBlocks.size(); i++) {
-            blockComboBox.addItem(theTrackModel.theLines.get(0).theBlocks.get(i).getBlockID());
-        }
-        updateDisplay();
         blockComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 blockComboBoxItemStateChanged(evt);
@@ -523,7 +528,7 @@ public class TrackModelPanel extends javax.swing.JPanel {
         updateDisplay();
     }//GEN-LAST:event_failSubmitActionPerformed
 
-    private void updateDisplay()
+    public void updateDisplay()
     {
         int line = lineComboBox.getSelectedIndex();
         int block = blockComboBox.getSelectedIndex();

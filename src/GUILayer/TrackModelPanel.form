@@ -185,9 +185,6 @@
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="lineComboBoxItemStateChanged"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int i = 0; i &lt; theTrackModel.theLines.size(); i++) {&#xa;    lineComboBox.addItem(theTrackModel.theLines.get(i).getLineString());&#xa;}"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="blockComboLabel">
           <Properties>
@@ -206,9 +203,6 @@
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="blockComboBoxItemStateChanged"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int i = 0; i &lt; theTrackModel.theLines.get(0).theBlocks.size(); i++) {&#xa;    blockComboBox.addItem(theTrackModel.theLines.get(0).theBlocks.get(i).getBlockID());&#xa;}&#xa;updateDisplay();"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

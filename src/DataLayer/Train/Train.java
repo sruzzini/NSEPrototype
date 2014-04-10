@@ -165,6 +165,10 @@ public class Train implements Runnable
         }
     }
     
+    public String ToString()
+    {
+        return "Train " + Integer.toString(this.iD);
+    }
     
     
     // Private method

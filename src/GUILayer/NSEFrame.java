@@ -19,7 +19,12 @@ public class NSEFrame extends javax.swing.JFrame {
      */
     public NSEFrame() {
         initComponents();
-        this.NSEObject = new NSE(1, 10); //create new NSE object with 10 trains
+        this.NSEObject = null; //create new NSE object with 10 trains
+    }
+    
+    public void SetNSE(NSE n)
+    {
+        this.NSEObject = n;
     }
     
     public void UpdateTrainSelectList()
@@ -46,6 +51,7 @@ public class NSEFrame extends javax.swing.JFrame {
         CTC_panel = new javax.swing.JPanel();
         Waysides_panel = new javax.swing.JPanel();
         TrackModel_panel = new javax.swing.JPanel();
+        trackModelPanel1 = new GUILayer.TrackModelPanel();
         Trains_panel = new javax.swing.JPanel();
         trainPanel1 = new GUILayer.TrainPanel();
         trainSelectList = new javax.swing.JList();
@@ -73,7 +79,7 @@ public class NSEFrame extends javax.swing.JFrame {
         );
         CTC_panelLayout.setVerticalGroup(
             CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 512, Short.MAX_VALUE)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("CTC", CTC_panel);
@@ -86,7 +92,7 @@ public class NSEFrame extends javax.swing.JFrame {
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 512, Short.MAX_VALUE)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Waysides", Waysides_panel);
@@ -95,11 +101,16 @@ public class NSEFrame extends javax.swing.JFrame {
         TrackModel_panel.setLayout(TrackModel_panelLayout);
         TrackModel_panelLayout.setHorizontalGroup(
             TrackModel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 856, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TrackModel_panelLayout.createSequentialGroup()
+                .addContainerGap(162, Short.MAX_VALUE)
+                .addComponent(trackModelPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(144, 144, 144))
         );
         TrackModel_panelLayout.setVerticalGroup(
             TrackModel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 512, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TrackModel_panelLayout.createSequentialGroup()
+                .addComponent(trackModelPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Track Model", TrackModel_panel);
@@ -178,7 +189,7 @@ public class NSEFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         /* Set the Nimbus look and feel 
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -211,10 +222,10 @@ public class NSEFrame extends javax.swing.JFrame {
             }
         });*/
         
-        NSE nse = new NSE(1, 10);
+        /*NSE nse = new NSE(1, 10);
         nse.RunAutomatic();
         
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CTC_panel;
@@ -227,6 +238,7 @@ public class NSEFrame extends javax.swing.JFrame {
     private javax.swing.JButton reset_button;
     private javax.swing.ButtonGroup speed_group;
     private javax.swing.JToggleButton start_button;
+    private GUILayer.TrackModelPanel trackModelPanel1;
     private GUILayer.TrainPanel trainPanel1;
     private javax.swing.JList trainSelectList;
     private javax.swing.JRadioButton wallClock10_Radio;
