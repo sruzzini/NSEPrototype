@@ -13,7 +13,7 @@ import GUILayer.*;
  *
  * @author domino54
  */
-public class NSEMain 
+public class NSEMain
 {
     public static void main(String args[]) 
     {
@@ -23,6 +23,7 @@ public class NSEMain
         gui.SetNSE(nse);
         gui.UpdateTrainSelectList();
         gui.SetTrackModel(nse.Track);
+        new Thread(gui).start();
         nse.RunAutomatic();
     }
 }

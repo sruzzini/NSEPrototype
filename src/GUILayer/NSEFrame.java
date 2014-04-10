@@ -14,7 +14,7 @@ import java.util.Vector;
  *
  * @author domino54
  */
-public class NSEFrame extends javax.swing.JFrame {
+public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
     public NSE NSEObject;
     /**
@@ -43,6 +43,14 @@ public class NSEFrame extends javax.swing.JFrame {
             list.add(t.ToString());
         }
         trainSelectList.setListData(list);
+    }
+    
+    public void run()
+    {
+        while (true)
+        {
+            this.trainPanel1.update(); 
+        }
     }
 
     /**

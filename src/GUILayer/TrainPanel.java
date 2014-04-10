@@ -35,7 +35,7 @@ public class TrainPanel extends javax.swing.JPanel {
     public void update()
     {
         trainModelPanel.update();
-        // trainControllerPanel.update();
+        trainControllerPanel.UpdateTrainControllerGUI();
     }
 
     /**
