@@ -111,6 +111,7 @@ public class NSE
         
         this.Wayside.StartSimulation(); //Start up the wayside controller
         
+        long lastPrint = 0;
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
             //check for 10 min elapsed, if so, dispatch new train
@@ -135,19 +136,26 @@ public class NSE
             }
            
             //Communicate from Track to Trains
-            System.out.println("TRAIN 0 Physics delta x: " + this.Trains.get(0).getDeltaX());
             this.Track.updateTrainLocations();
-            
-            System.out.println("TRAIN 0 Current Block: " + this.TrainLocations.get(0).currentBlock);
-            System.out.println("Current Authority: " + this.Track.theLines.get(0).theBlocks.get(this.TrainLocations.get(0).currentBlock).getAuthority());
-            System.out.println("Current Train Controller Authority: " + this.Trains.get(0).controller.getTrackSignal().Authority);
-            System.out.println("Current Train Authority: " + this.Trains.get(0).getTrackSignal().Authority);
-            System.out.println("Current Train Brake " + this.Trains.get(0).GetTrainCommand().ServiceBrakeOn);
-            System.out.println("TRAIN 0 distance: " + this.TrainLocations.get(0).distanceSoFar);
-            
-            System.out.println("TRAIN 0 Physics model vel: " + this.Trains.get(0).model.physics.getVelocity());
-            System.out.println("TRAIN 0 Physics model power: " + this.Trains.get(0).model.physics.getPower());
-            System.out.println("Current Train Power" + this.Trains.get(0).GetTrainCommand().PowerCommand);
+            long interval = 1000;
+            if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
+            {
+                System.out.println("TRAIN 0 Physics delta x: " + this.Trains.get(0).getDeltaX());
+                //this.Track.updateTrainLocations();
+
+                System.out.println("TRAIN 0 Current Block: " + this.TrainLocations.get(0).currentBlock);
+                System.out.println("Current Authority: " + this.Track.theLines.get(0).theBlocks.get(this.TrainLocations.get(0).currentBlock).getAuthority());
+                System.out.println("Current Train Controller Authority: " + this.Trains.get(0).controller.getTrackSignal().Authority);
+                System.out.println("Current Train Authority: " + this.Trains.get(0).getTrackSignal().Authority);
+                System.out.println("Current Train Brake " + this.Trains.get(0).GetTrainCommand().ServiceBrakeOn);
+                System.out.println("TRAIN 0 distance: " + this.TrainLocations.get(0).distanceSoFar);
+
+                System.out.println("TRAIN 0 Physics model vel: " + this.Trains.get(0).model.physics.getVelocity());
+                System.out.println("TRAIN 0 Physics model power: " + this.Trains.get(0).model.physics.getPower());
+                System.out.println("Current Train Power" + this.Trains.get(0).GetTrainCommand().PowerCommand);
+                System.out.println("Delta x according to physics model: " + this.Trains.get(0).model.physics.total_delta_x);
+                lastPrint = Calendar.getInstance().getTimeInMillis();
+            }
         }
     }
     

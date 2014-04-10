@@ -568,7 +568,7 @@ public class TrackModelPanel extends javax.swing.JPanel {
     {
         int line = lineComboBox.getSelectedIndex();
         int block = blockComboBox.getSelectedIndex();
-        System.out.println("line = "+line+" block = "+block);
+        //System.out.println("line = "+line+" block = "+block);
         lengthOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getLength()).toString());
         speedLimitOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getSpeedLimit()).toString());
         if (theTrackModel.theLines.get(line).theBlocks.get(block).isOccupied())

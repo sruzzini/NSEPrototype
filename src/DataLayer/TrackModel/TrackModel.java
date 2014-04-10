@@ -359,7 +359,7 @@ public class TrackModel
     	            prev = aSwitch.approachBlock;
     	            if (!aSwitch.isStraight())
     	            {
-    	            	System.out.println("the switch was in the wrong position");
+    	            	//System.out.println("the switch was in the wrong position");
     	            }
     	        }
     	        else if(block == aSwitch.divergentBlock)
@@ -367,7 +367,7 @@ public class TrackModel
     	            prev = aSwitch.approachBlock;
     	            if (aSwitch.isStraight())
     	            {
-    	            	System.out.println("the switch was in the wrong position");
+    	            	//System.out.println("the switch was in the wrong position");
     	            }
     	        }
     	        
@@ -393,7 +393,7 @@ public class TrackModel
     	            next = aSwitch.approachBlock;
     	            if (!aSwitch.isStraight())
     	            {
-    	            	System.out.println("the switch was in the wrong position");
+    	            	//System.out.println("the switch was in the wrong position");
     	            }
     	        }
     	        else if(block == aSwitch.divergentBlock)
@@ -401,7 +401,7 @@ public class TrackModel
     	            next = aSwitch.approachBlock;
     	            if (aSwitch.isStraight())
     	            {
-    	            	System.out.println("the switch was in the wrong position");
+    	            	//System.out.println("the switch was in the wrong position");
     	            }
     	        }
     	        

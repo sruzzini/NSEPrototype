@@ -32,6 +32,7 @@ public class Train implements Runnable
     private BeaconSignal beaconSignal;
     public TrainController controller;
     public TrainModel model;
+    private double lastDeltaX;
     
     
     //Contructors
@@ -48,6 +49,7 @@ public class Train implements Runnable
         this.beaconSignal = null;
         this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
         this.model = new TrainModel(this.physicsInput, this.stateInput);
+        lastDeltaX = 0;
     }
     
     public Train(int id, Boolean running)
@@ -63,6 +65,7 @@ public class Train implements Runnable
         this.beaconSignal = null;
         this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
         this.model = new TrainModel(this.physicsInput, this.stateInput);
+        lastDeltaX = 0;
     }
     
     public Train(int id, int multiplier, Boolean running, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
@@ -78,6 +81,7 @@ public class Train implements Runnable
         this.beaconSignal = beacon;
         this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
         this.model = new TrainModel(this.physicsInput, this.stateInput);
+        lastDeltaX = 0;
     }
     
     public TrackSignal getTrackSignal()
@@ -89,8 +93,14 @@ public class Train implements Runnable
     public double GetDeltaX()
     {
         double tempDeltaX = 0;
-        tempDeltaX =  physicsInput.Delta_x;
-        physicsInput.Delta_x = 0;
+        tempDeltaX =  physicsInput.Delta_x - lastDeltaX;
+        lastDeltaX = physicsInput.Delta_x;
+        if (iD == 0)
+        {
+            //System.out.println("Delta x returned: " + tempDeltaX);
+            //System.out.println("Delta x now: " + physicsInput.Delta_x);
+        }
+        
         return tempDeltaX;
     }
     public double getDeltaX()
