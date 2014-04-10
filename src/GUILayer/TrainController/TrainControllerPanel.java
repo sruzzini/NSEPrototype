@@ -124,32 +124,32 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         jLabel3.setText("E. Brake");
 
         eBrake_on.setText("Engage");
-        eBrake_on.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eBrake_onActionPerformed(evt);
+        eBrake_on.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                eBrake_Clicked(evt);
             }
         });
 
         eBrake_off.setText("Disengage");
-        eBrake_off.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eBrake_offActionPerformed(evt);
+        eBrake_off.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                eBrakeOff_Clicked(evt);
             }
         });
 
         jLabel4.setText("S. Brake");
 
         sBrake_on.setText("Engage");
-        sBrake_on.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sBrake_onActionPerformed(evt);
+        sBrake_on.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sBrake_Clicked(evt);
             }
         });
 
         sBrake_off.setText("Disengage");
-        sBrake_off.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sBrake_offActionPerformed(evt);
+        sBrake_off.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sBrakeOff_Clicked(evt);
             }
         });
 
@@ -158,44 +158,44 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         jLabel6.setText("Ext. Lights");
 
         extLights_on.setText("On");
-        extLights_on.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                extLights_onActionPerformed(evt);
+        extLights_on.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                extLights_Clicked(evt);
             }
         });
 
         extLights_off.setText("Off");
-        extLights_off.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                extLights_offActionPerformed(evt);
+        extLights_off.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                extLightsOff_Clicked(evt);
             }
         });
 
         intLights_off.setText("Off");
-        intLights_off.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                intLights_offActionPerformed(evt);
+        intLights_off.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                intLightsOff_Clicked(evt);
             }
         });
 
         intLights_on.setText("On");
-        intLights_on.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                intLights_onActionPerformed(evt);
+        intLights_on.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                intLights_Clicked(evt);
             }
         });
 
         lDoors_close.setText("Close");
-        lDoors_close.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lDoors_closeActionPerformed(evt);
+        lDoors_close.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                lDoorsClose_Clicked(evt);
             }
         });
 
         lDoors_open.setText("Open");
-        lDoors_open.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lDoors_openActionPerformed(evt);
+        lDoors_open.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                lDoors_Clicked(evt);
             }
         });
 
@@ -204,16 +204,16 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         jLabel8.setText("R Doors");
 
         rDoors_open.setText("Open");
-        rDoors_open.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rDoors_openActionPerformed(evt);
+        rDoors_open.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rDoors_Clicked(evt);
             }
         });
 
         rDoors_close.setText("Close");
-        rDoors_close.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rDoors_closeActionPerformed(evt);
+        rDoors_close.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rDoorsClose_Close(evt);
             }
         });
 
@@ -361,193 +361,22 @@ public class TrainControllerPanel extends javax.swing.JPanel {
     }
     
     
-    //Event Handlers
-    
-    private void intLights_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intLights_onActionPerformed
+    private void vSetPoint_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_vSetPoint_Changed
         // TODO add your handling code here:
-        boolean onDepressed = this.intLights_on.isSelected();
-        boolean offDepressed = this.intLights_off.isSelected();
-        
-        if (onDepressed) //On is depressed
-        {
-            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.ON;
-            if (offDepressed) //off is also depressed
-            {
-                this.intLights_off.setSelected(false); //pop off button up
-            }
-        }
-        else if (!onDepressed && offDepressed) //off is selected
-        {
-            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.OFF;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_intLights_onActionPerformed
+        double mps = this.vSetPoint_slide.getValue();
+        double x = convertToMPH(mps);
+        this.vSetPoint_status.setText("" + Double.parseDouble(new DecimalFormat("##.##").format(x)) + " mph");
+        this.controller.VelocitySetPoint = mps/1000;
+    }//GEN-LAST:event_vSetPoint_Changed
 
-    private void intLights_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intLights_offActionPerformed
+    private void desiredTemp_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_desiredTemp_Changed
         // TODO add your handling code here:
-        boolean onDepressed = this.intLights_on.isSelected();
-        boolean offDepressed = this.intLights_off.isSelected();
-        
-        if (offDepressed) //Off is depressed
-        {
-            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.OFF;
-            if (onDepressed) //on is also depressed
-            {
-                this.intLights_on.setSelected(false); //pop on button up
-            }
-        }
-        else if (!offDepressed && onDepressed) //on is selected
-        {
-            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.ON;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_intLights_offActionPerformed
+        int degreesF = this.desiredTemp_slide.getValue();
+        this.desiredTemp_status.setText("" + degreesF + " Degrees (F)");
+        this.controller.DesiredTemperature = convertToCelcius(degreesF);
+    }//GEN-LAST:event_desiredTemp_Changed
 
-    private void extLights_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extLights_onActionPerformed
-        // TODO add your handling code here:
-        boolean onDepressed = this.extLights_on.isSelected();
-        boolean offDepressed = this.extLights_off.isSelected();
-        
-        if (onDepressed) //On is depressed
-        {
-            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.ON;
-            if (offDepressed) //off is also depressed
-            {
-                this.extLights_off.setSelected(false); //pop off button up
-            }
-        }
-        else if (!onDepressed && offDepressed) //off is selected
-        {
-            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.OFF;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_extLights_onActionPerformed
-
-    private void extLights_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extLights_offActionPerformed
-        // TODO add your handling code here:
-        boolean onDepressed = this.extLights_on.isSelected();
-        boolean offDepressed = this.extLights_off.isSelected();
-        
-        if (offDepressed) //Off is depressed
-        {
-            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.OFF;
-            if (onDepressed) //on is also depressed
-            {
-                this.extLights_on.setSelected(false); //pop on button up
-            }
-        }
-        else if (!offDepressed && onDepressed) //on is selected
-        {
-            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.ON;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_extLights_offActionPerformed
-
-    private void rDoors_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rDoors_openActionPerformed
-        // TODO add your handling code here:
-        boolean onDepressed = this.rDoors_open.isSelected();
-        boolean offDepressed = this.rDoors_close.isSelected();
-        
-        if (onDepressed) //On is depressed
-        {
-            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.ON;
-            if (offDepressed) //off is also depressed
-            {
-                this.rDoors_close.setSelected(false); //pop off button up
-            }
-        }
-        else if (!onDepressed && offDepressed) //off is selected
-        {
-            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.OFF;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_rDoors_openActionPerformed
-
-    private void rDoors_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rDoors_closeActionPerformed
-        // TODO add your handling code here:
-        boolean onDepressed = this.rDoors_open.isSelected();
-        boolean offDepressed = this.rDoors_close.isSelected();
-        
-        if (offDepressed) //Off is depressed
-        {
-            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.OFF;
-            if (onDepressed) //on is also depressed
-            {
-                this.rDoors_open.setSelected(false); //pop on button up
-            }
-        }
-        else if (!offDepressed && onDepressed) //on is selected
-        {
-            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.ON;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_rDoors_closeActionPerformed
-
-    private void lDoors_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lDoors_openActionPerformed
-        // TODO add your handling code here:
-        boolean onDepressed = this.lDoors_open.isSelected();
-        boolean offDepressed = this.lDoors_close.isSelected();
-        
-        if (onDepressed) //On is depressed
-        {
-            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.ON;
-            if (offDepressed) //off is also depressed
-            {
-                this.lDoors_close.setSelected(false); //pop off button up
-            }
-        }
-        else if (!onDepressed && offDepressed) //off is selected
-        {
-            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.OFF;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_lDoors_openActionPerformed
-
-    private void lDoors_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lDoors_closeActionPerformed
-        // TODO add your handling code here:
-        boolean onDepressed = this.lDoors_open.isSelected();
-        boolean offDepressed = this.lDoors_close.isSelected();
-        
-        if (offDepressed) //Off is depressed
-        {
-            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.OFF;
-            if (onDepressed) //on is also depressed
-            {
-                this.lDoors_open.setSelected(false); //pop on button up
-            }
-        }
-        else if (!offDepressed && onDepressed) //on is selected
-        {
-            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.ON;
-        }
-        else //nothing is selected
-        {
-            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.AUTO;
-        }
-    }//GEN-LAST:event_lDoors_closeActionPerformed
-
-    private void eBrake_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrake_onActionPerformed
+    private void eBrake_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_eBrake_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.eBrake_on.isSelected();
         boolean offDepressed = this.eBrake_off.isSelected();
@@ -568,9 +397,9 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         {
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.AUTO;
         }
-    }//GEN-LAST:event_eBrake_onActionPerformed
+    }//GEN-LAST:event_eBrake_Clicked
 
-    private void eBrake_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrake_offActionPerformed
+    private void eBrakeOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_eBrakeOff_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.eBrake_on.isSelected();
         boolean offDepressed = this.eBrake_off.isSelected();
@@ -591,9 +420,9 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         {
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.AUTO;
         }
-    }//GEN-LAST:event_eBrake_offActionPerformed
+    }//GEN-LAST:event_eBrakeOff_Clicked
 
-    private void sBrake_onActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBrake_onActionPerformed
+    private void sBrake_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sBrake_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.sBrake_on.isSelected();
         boolean offDepressed = this.sBrake_off.isSelected();
@@ -614,9 +443,9 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         {
             this.controller.OperatorSBrake = TrainController.OperatorInputStatus.AUTO;
         }
-    }//GEN-LAST:event_sBrake_onActionPerformed
+    }//GEN-LAST:event_sBrake_Clicked
 
-    private void sBrake_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBrake_offActionPerformed
+    private void sBrakeOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sBrakeOff_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.sBrake_on.isSelected();
         boolean offDepressed = this.sBrake_off.isSelected();
@@ -637,22 +466,191 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         {
             this.controller.OperatorSBrake = TrainController.OperatorInputStatus.AUTO;
         }
-    }//GEN-LAST:event_sBrake_offActionPerformed
+    }//GEN-LAST:event_sBrakeOff_Clicked
 
-    private void vSetPoint_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_vSetPoint_Changed
+    private void intLights_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_intLights_Clicked
         // TODO add your handling code here:
-        double mps = this.vSetPoint_slide.getValue();
-        double x = convertToMPH(mps);
-        this.vSetPoint_status.setText("" + Double.parseDouble(new DecimalFormat("##.##").format(x)) + " mph");
-        this.controller.VelocitySetPoint = mps/1000;
-    }//GEN-LAST:event_vSetPoint_Changed
+        boolean onDepressed = this.intLights_on.isSelected();
+        boolean offDepressed = this.intLights_off.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.intLights_off.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_intLights_Clicked
 
-    private void desiredTemp_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_desiredTemp_Changed
+    private void intLightsOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_intLightsOff_Clicked
         // TODO add your handling code here:
-        int degreesF = this.desiredTemp_slide.getValue();
-        this.desiredTemp_status.setText("" + degreesF + " Degrees (F)");
-        this.controller.DesiredTemperature = convertToCelcius(degreesF);
-    }//GEN-LAST:event_desiredTemp_Changed
+        boolean onDepressed = this.intLights_on.isSelected();
+        boolean offDepressed = this.intLights_off.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.intLights_on.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorIntLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_intLightsOff_Clicked
+
+    private void extLights_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_extLights_Clicked
+        // TODO add your handling code here:
+        boolean onDepressed = this.extLights_on.isSelected();
+        boolean offDepressed = this.extLights_off.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.extLights_off.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_extLights_Clicked
+
+    private void extLightsOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_extLightsOff_Clicked
+        // TODO add your handling code here:
+        boolean onDepressed = this.extLights_on.isSelected();
+        boolean offDepressed = this.extLights_off.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.extLights_on.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorExtLights = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_extLightsOff_Clicked
+
+    private void lDoors_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lDoors_Clicked
+        // TODO add your handling code here:
+        boolean onDepressed = this.lDoors_open.isSelected();
+        boolean offDepressed = this.lDoors_close.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.lDoors_close.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_lDoors_Clicked
+
+    private void lDoorsClose_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lDoorsClose_Clicked
+        // TODO add your handling code here:
+        boolean onDepressed = this.lDoors_open.isSelected();
+        boolean offDepressed = this.lDoors_close.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.lDoors_open.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_lDoorsClose_Clicked
+
+    private void rDoors_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rDoors_Clicked
+        // TODO add your handling code here:
+        boolean onDepressed = this.rDoors_open.isSelected();
+        boolean offDepressed = this.rDoors_close.isSelected();
+        
+        if (onDepressed) //On is depressed
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.ON;
+            if (offDepressed) //off is also depressed
+            {
+                this.rDoors_close.setSelected(false); //pop off button up
+            }
+        }
+        else if (!onDepressed && offDepressed) //off is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.OFF;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_rDoors_Clicked
+
+    private void rDoorsClose_Close(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rDoorsClose_Close
+        // TODO add your handling code here:
+        boolean onDepressed = this.rDoors_open.isSelected();
+        boolean offDepressed = this.rDoors_close.isSelected();
+        
+        if (offDepressed) //Off is depressed
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.OFF;
+            if (onDepressed) //on is also depressed
+            {
+                this.rDoors_open.setSelected(false); //pop on button up
+            }
+        }
+        else if (!offDepressed && onDepressed) //on is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.ON;
+        }
+        else //nothing is selected
+        {
+            this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.AUTO;
+        }
+    }//GEN-LAST:event_rDoorsClose_Close
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

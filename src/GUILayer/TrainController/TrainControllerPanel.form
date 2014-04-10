@@ -200,7 +200,7 @@
         <Property name="text" type="java.lang.String" value="Engage"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eBrake_onActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="eBrake_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="eBrake_off">
@@ -208,7 +208,7 @@
         <Property name="text" type="java.lang.String" value="Disengage"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eBrake_offActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="eBrakeOff_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -221,7 +221,7 @@
         <Property name="text" type="java.lang.String" value="Engage"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sBrake_onActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sBrake_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="sBrake_off">
@@ -229,7 +229,7 @@
         <Property name="text" type="java.lang.String" value="Disengage"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sBrake_offActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sBrakeOff_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -247,7 +247,7 @@
         <Property name="text" type="java.lang.String" value="On"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="extLights_onActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="extLights_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="extLights_off">
@@ -255,7 +255,7 @@
         <Property name="text" type="java.lang.String" value="Off"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="extLights_offActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="extLightsOff_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="intLights_off">
@@ -263,7 +263,7 @@
         <Property name="text" type="java.lang.String" value="Off"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="intLights_offActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="intLightsOff_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="intLights_on">
@@ -271,7 +271,7 @@
         <Property name="text" type="java.lang.String" value="On"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="intLights_onActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="intLights_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="lDoors_close">
@@ -279,7 +279,7 @@
         <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lDoors_closeActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="lDoorsClose_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="lDoors_open">
@@ -287,7 +287,7 @@
         <Property name="text" type="java.lang.String" value="Open"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lDoors_openActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="lDoors_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -305,7 +305,7 @@
         <Property name="text" type="java.lang.String" value="Open"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rDoors_openActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="rDoors_Clicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="rDoors_close">
@@ -313,7 +313,7 @@
         <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rDoors_closeActionPerformed"/>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="rDoorsClose_Close"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="vSetPoint_status">
