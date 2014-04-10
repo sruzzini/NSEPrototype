@@ -230,7 +230,11 @@
                   <StringArray count="0"/>
                 </Property>
                 <Property name="selectionMode" type="int" value="0"/>
+                <Property name="selectedIndex" type="int" value="0"/>
               </Properties>
+              <Events>
+                <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="trainSelectListValueChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>

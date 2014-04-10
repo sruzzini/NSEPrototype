@@ -27,6 +27,8 @@ public class TrainModelPanel extends javax.swing.JPanel {
         model = m;
         tMOutput.setTrainState(m.state);
         tMOutput.setPhysicsEngine(m.physics);
+        tMInput.setTrainState(m.state);
+        tMInput.setPhysicsEngine(m.physics);
     }
     
     public void update()

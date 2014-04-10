@@ -319,13 +319,21 @@ public class PhysicsEngine implements Runnable
             }   
             // but the brake might be on... if it is, then fEngine becomes fBrake
             // use same variable for simplicity's sake
-            if (sBrakeStatus && !sBrakeFailure)
+            if (eBrakeFailure)
             {
-                fBrake = sBrakeForce;
+                fBrake = 0;
             }
-            else if (eBrakeStatus && !eBrakeFailure)
+            else if (eBrakeStatus)
             {
                 fBrake = eBrakeForce;
+            }
+            else if (sBrakeFailure)
+            {
+                fBrake = 0;
+            }
+            else if (sBrakeStatus)
+            {
+                fBrake = sBrakeForce;
             }
             else 
             {

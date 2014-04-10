@@ -23,6 +23,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     public NSEFrame() {
         initComponents();
         this.NSEObject = null; //create new NSE object with 10 trains
+        this.wallClock_Radio.setSelected(true);
     }
     
     public void SetNSE(NSE n)
@@ -44,6 +45,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             list.add(t.ToString());
         }
         trainSelectList.setListData(list);
+        trainSelectList.setSelectedIndex(0);
     }
     
     public void run()
@@ -51,6 +53,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         while (true)
         {
             this.trainPanel1.update(); 
+            this.trackModelPanel1.updateDisplay();
         }
     }
 
@@ -138,6 +141,12 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         jTabbedPane1.addTab("Track Model", TrackModel_panel);
 
         trainSelectList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        trainSelectList.setSelectedIndex(0);
+        trainSelectList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                trainSelectListValueChanged(evt);
+            }
+        });
 
         jLabel1.setText("Trains");
 
@@ -207,6 +216,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void trainSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_trainSelectListValueChanged
+        this.trainPanel1.setTrain(this.NSEObject.Trains.get(trainSelectList.getSelectedIndex()));
+    }//GEN-LAST:event_trainSelectListValueChanged
 
     /**
      * @param args the command line arguments
