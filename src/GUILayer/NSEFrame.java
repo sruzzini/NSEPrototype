@@ -22,6 +22,11 @@ public class NSEFrame extends javax.swing.JFrame {
         this.NSEObject = null; //create new NSE object with 10 trains
     }
     
+    public void SetNSE(NSE n)
+    {
+        this.NSEObject = n;
+    }
+    
     public void UpdateTrainSelectList()
     {
         //NSEO
