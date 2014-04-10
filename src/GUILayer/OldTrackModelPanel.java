@@ -6,19 +6,20 @@
 
 package GUILayer;
 
-import DataLayer.EnumTypes.*;
+import DataLayer.EnumTypes.LightColor;
+import DataLayer.EnumTypes.XingState;
 import DataLayer.TrackModel.*;
 
 /**
  *
  * @author rmertz92
  */
-public class TrackModelPanel extends javax.swing.JPanel {
+public class OldTrackModelPanel extends javax.swing.JFrame {
 
     /**
      * Creates new form TrackModelPanel
      */
-    public TrackModelPanel() {
+    public OldTrackModelPanel() {
         initComponents();
     }
 
@@ -43,7 +44,6 @@ public class TrackModelPanel extends javax.swing.JPanel {
         lineComboBox = new javax.swing.JComboBox();
         blockComboLabel = new javax.swing.JLabel();
         blockComboBox = new javax.swing.JComboBox();
-        failureButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -85,6 +85,7 @@ public class TrackModelPanel extends javax.swing.JPanel {
         switchPosOut = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         failStateOut = new javax.swing.JLabel();
+        failureButton3 = new javax.swing.JButton();
 
         jFrame2.setMinimumSize(new java.awt.Dimension(400, 160));
 
@@ -137,6 +138,8 @@ public class TrackModelPanel extends javax.swing.JPanel {
                 .addGap(75, 75, 75))
         );
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Block"));
 
         lineComboLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
@@ -177,7 +180,7 @@ public class TrackModelPanel extends javax.swing.JPanel {
                 .addComponent(blockComboLabel)
                 .addGap(18, 18, 18)
                 .addComponent(blockComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,13 +193,6 @@ public class TrackModelPanel extends javax.swing.JPanel {
                     .addComponent(blockComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-
-        failureButton3.setText("Set Failure State");
-        failureButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                failureButton3ActionPerformed(evt);
-            }
-        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Block Information"));
 
@@ -371,7 +367,7 @@ public class TrackModelPanel extends javax.swing.JPanel {
                     .addComponent(hasSwitchOut)
                     .addComponent(switchPosOut)
                     .addComponent(failStateOut))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,19 +435,23 @@ public class TrackModelPanel extends javax.swing.JPanel {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        failureButton3.setText("Set Failure State");
+        failureButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                failureButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(failureButton3)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(failureButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,8 +461,10 @@ public class TrackModelPanel extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(failureButton3)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void lineComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_lineComboBoxItemStateChanged
@@ -659,6 +661,9 @@ public class TrackModelPanel extends javax.swing.JPanel {
     private javax.swing.JLabel elevationOut;
     private javax.swing.JLabel failStateOut;
     private javax.swing.JButton failSubmit;
+    private javax.swing.JButton failureButton;
+    private javax.swing.JButton failureButton1;
+    private javax.swing.JButton failureButton2;
     private javax.swing.JButton failureButton3;
     private javax.swing.JLabel gradientOut;
     private javax.swing.JLabel hasLightOut;
