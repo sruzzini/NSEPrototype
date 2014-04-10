@@ -125,7 +125,7 @@ public class CTC
            //System.out.println("CTC Train Authority:" + get.authority); 
            //System.out.println("CTC Train Distance So Far:" + (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar)); 
             //(get.authority == 0)
-           if((get.authority <= 0) && (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == 0 )
+           if((get.authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == 0 )
            {
                //System.out.println("Sending New Signal");
                trainRouteInfo.add(getNextStation(get));
@@ -134,6 +134,7 @@ public class CTC
            }
             //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
         }
+        //System.out.println(trainRouteInfo.size());
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
     

@@ -41,6 +41,7 @@ public class TrainsClass
         this.authority = a;
         this.destination = d;     
         this.section_destination = sd;        
+        
     }
     
     public void setStopIndex(int index)
