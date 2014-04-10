@@ -28,6 +28,7 @@ public class NSEFrame extends javax.swing.JFrame {
     public void SetNSE(NSE n)
     {
         this.NSEObject = n;
+        this.trainPanel1.setTrain(this.NSEObject.Trains.get(0));
     }
     
     public void SetTrackModel(TrackModel t)

@@ -257,7 +257,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
                         .addComponent(extLights_on)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(extLights_off)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
@@ -283,7 +283,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
                         .addComponent(sBrake_on)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(sBrake_off)))
-                .addGap(57, 57, 57))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,19 +381,20 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         boolean onDepressed = this.eBrake_on.isSelected();
         boolean offDepressed = this.eBrake_off.isSelected();
         
-        if (onDepressed) //On is depressed
+        if (onDepressed && offDepressed) //On is depressed
         {
+            this.eBrake_off.setSelected(!offDepressed); //pop off button up
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.ON;
-            if (offDepressed) //off is also depressed
-            {
-                this.eBrake_off.setSelected(false); //pop off button up
-            }
         }
         else if (!onDepressed && offDepressed) //off is selected
         {
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.OFF;
         }
-        else //nothing is selected
+        else if (onDepressed && !offDepressed) //on selected
+        {
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.ON;
+        }
+        else if (!onDepressed && !offDepressed)
         {
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.AUTO;
         }
@@ -404,19 +405,20 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         boolean onDepressed = this.eBrake_on.isSelected();
         boolean offDepressed = this.eBrake_off.isSelected();
         
-        if (offDepressed) //Off is depressed
+        if (onDepressed && offDepressed) //Of and on is depressed
+        {
+            this.eBrake_on.setSelected(!onDepressed); //pop off button up
+            this.controller.OperatorEBrake = TrainController.OperatorInputStatus.OFF;
+        }
+        else if (!onDepressed && offDepressed) //off is selected
         {
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.OFF;
-            if (onDepressed) //on is also depressed
-            {
-                this.eBrake_on.setSelected(false); //pop on button up
-            }
         }
-        else if (!offDepressed && onDepressed) //on is selected
+        else if (onDepressed && !offDepressed) //on selected
         {
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.ON;
         }
-        else //nothing is selected
+        else if (!onDepressed && !offDepressed)
         {
             this.controller.OperatorEBrake = TrainController.OperatorInputStatus.AUTO;
         }
