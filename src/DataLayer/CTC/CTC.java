@@ -119,21 +119,36 @@ public class CTC
     {
         updateTrainLocations();
         ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<>(); 
+        BlockSignalBundle newRoute;
+        int trainIndex;
         
         for(TrainsClass get: this.trains)
         {
-           //System.out.println("CTC Train Authority:" + get.authority); 
+            trainIndex = this.trains.indexOf(get);
+            if((this.trains.indexOf(get)) == 0)
+            {
+                System.out.println("CTC Train Authority: " + (this.trains.get(this.trains.indexOf(get)).authority)); 
+            }
            //System.out.println("CTC Train Distance So Far:" + (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar)); 
-            //(get.authority == 0)
-           if((get.authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == 0 )
+           //(get.authority == 0)
+           if((get.authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).currentBlock) != (this.trainLocations.get(this.trains.indexOf(get)).prevBlock))
            {
-               //System.out.println("Sending New Signal");
-               trainRouteInfo.add(getNextStation(get));
-               this.trains.get(this.trains.indexOf(get)).StopIndex++;
+                if((this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) - this.trains.get(this.trains.indexOf(get)).DistanceSoFar == 0 && this.trains.get(trainIndex).Idle)
+                {
+                    newRoute = getNextStation(get);
+                    this.trains.get(trainIndex).setIdle(false);
+                    System.out.println("CTC Sending New Signal");
+                    trainRouteInfo.add(newRoute);
+                    System.out.println("CTC New Destination for Train " + trainIndex + ": " + newRoute.Destination);
+                    System.out.println("CTC Train " + trainIndex + " is now Idle.");
+                    this.trains.get(this.trains.indexOf(get)).StopIndex++;
+                    System.out.println("CTC Stop Index for Train " + trainIndex + ": " + this.trains.get(this.trains.indexOf(get)).StopIndex);
+               }
                //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));               
            }
             //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
         }
+        System.out.println("CTC Number of New Signals: " + trainRouteInfo.size());
         //System.out.println(trainRouteInfo.size());
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
@@ -141,12 +156,16 @@ public class CTC
     private void updateTrainLocations()
     {
         for(int i = 0; i < this.trainLocations.size(); i++)
-        {
-            //System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
-            //System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
-            //System.out.println("Trains " + i + " current block: " + this.trainLocations.get(i).prevBlock);
-            if(this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block))
+        {   if(i == 0)
             {
+                System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
+                System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
+                System.out.println("Trains " + i + " current block: " + this.trains.get(i).block);
+                //System.out.println("Trains " + i + " current block: " + this.train.get(i).prevBlock)
+            }
+            if(this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block) && this.trainLocations.get(i).prevBlock != this.trainLocations.get(i).currentBlock)
+            {
+                
                 this.trains.get(i).authority--;
                 this.trains.get(i).block = Integer.toString(this.trainLocations.get(i).currentBlock);
                 if((this.trains.get(i).section_current = returnSection(this.trains.get(i).line, this.trains.get(i).block)).equals("Not Found"))
@@ -154,6 +173,23 @@ public class CTC
                     System.out.println("Section Not Found: " + this.trains.get(i).block);
                 }
             }
+            
+            if(this.trains.get(i).authority == 0)
+            {               
+                this.trains.get(i).block = Integer.toString(this.trainLocations.get(i).currentBlock);
+            }
+            
+            if((this.trainLocations.get(i).distanceSoFar) != this.trains.get(i).DistanceSoFar)
+            {
+                this.trains.get(i).setDistanceSoFar( this.trainLocations.get(i).distanceSoFar);
+                this.trains.get(i).setIdle(false);
+            }
+            else
+            {
+                this.trains.get(i).setIdle(true);
+            }
+            
+            
         }
         
     }
@@ -439,6 +475,7 @@ public class CTC
             {
                 train = new DispatchBundle(new BlockSignalBundle(4, 65, (70.0*1000/(3600)),0, LineColor.YARD), i , LineColor.GREEN);
                 this.trains.get(i).line = LineColor.GREEN;
+                this.trains.get(i).authority = 5;
                 break;
             }
             
