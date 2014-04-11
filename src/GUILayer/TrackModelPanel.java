@@ -134,9 +134,9 @@ public class TrackModelPanel extends javax.swing.JPanel {
                             .addComponent(power)
                             .addComponent(track)))
                     .addGroup(jFrame2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(34, 34, 34)
                         .addComponent(failSubmit)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         jFrame2Layout.setVerticalGroup(
             jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,9 +149,9 @@ public class TrackModelPanel extends javax.swing.JPanel {
                 .addComponent(track)
                 .addGap(18, 18, 18)
                 .addComponent(power)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(failSubmit)
-                .addGap(75, 75, 75))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Block"));

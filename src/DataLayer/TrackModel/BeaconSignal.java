@@ -2,34 +2,26 @@ package DataLayer.TrackModel;
 
 public class BeaconSignal 
 {
-    private int beaconID;
-    private String signal;
+    public String StationName;
+    public boolean StationOnRight;
+    public double Velocity;
     
-    public BeaconSignal(int beaconID, String signal) 
-    {
-        this.beaconID = beaconID;
-        this.signal = signal;
-    }
-
-    public int getBeaconID() 
-    {
-        return beaconID;
-    }
-
-    public void setBeaconID(int beaconID) 
-    {
-        this.beaconID = beaconID;
-    }
-
-    public String getSignal() 
-    {
-        return signal;
-    }
-
-    public void setSignal(String signal) 
-    {
-        this.signal = signal;
-    }
+    public static final double DEFAULT_BEACON_VELOCITY = 15.28;
     
     
+    //Constructors
+    
+    public BeaconSignal()
+    {
+        this.StationName = "";
+        this.Velocity = DEFAULT_BEACON_VELOCITY;
+        this.StationOnRight = true;
+    }
+    
+    public BeaconSignal(String station, boolean stationOnRight) 
+    {
+        this.StationName = station;
+        this.Velocity = DEFAULT_BEACON_VELOCITY;
+        this.StationOnRight = stationOnRight;
+    }
 }
