@@ -6,20 +6,22 @@ public class BeaconSignal
     public boolean StationOnRight;
     public double Velocity;
     
+    public static final double DEFAULT_BEACON_VELOCITY = 15.28;
+    
     
     //Constructors
     
     public BeaconSignal()
     {
         this.StationName = "";
-        this.Velocity = 0;
+        this.Velocity = DEFAULT_BEACON_VELOCITY;
         this.StationOnRight = true;
     }
     
-    public BeaconSignal(String station, double velocity, boolean stationOnRight) 
+    public BeaconSignal(String station, boolean stationOnRight) 
     {
         this.StationName = station;
-        this.Velocity = velocity;
+        this.Velocity = DEFAULT_BEACON_VELOCITY;
         this.StationOnRight = stationOnRight;
     }
 }
