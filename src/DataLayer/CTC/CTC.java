@@ -169,7 +169,7 @@ public class CTC
             {
                 //System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
                 //System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
-                System.out.println("Trains " + i + " current block: " + this.trains.get(i).block);
+                //System.out.println("Trains " + i + " current block: " + this.trains.get(i).block);
                 //System.out.println("Trains " + i + " current block: " + this.train.get(i).prevBlock)
             }
             if(this.trainLocations.get(i).prevBlock == Integer.parseInt(this.trains.get(i).block) && this.trainLocations.get(i).prevBlock != this.trainLocations.get(i).currentBlock)
@@ -179,7 +179,7 @@ public class CTC
                 this.trains.get(i).block = Integer.toString(this.trainLocations.get(i).currentBlock);
                 if((this.trains.get(i).section_current = returnSection(this.trains.get(i).line, this.trains.get(i).block)).equals("Not Found"))
                 {
-                    System.out.println("Section Not Found: " + this.trains.get(i).block);
+                    //System.out.println("Section Not Found: " + this.trains.get(i).block);
                 }
             }
             
@@ -314,7 +314,7 @@ public class CTC
         
         for(int i = 0; i < numberOfTrains; i++)
         {
-            trains.add(i, new TrainsClass(LineColor.YARD, "", "0", 0 , "0", ""));
+            trains.add(new TrainsClass(LineColor.YARD, "", "0", 0 , "0", ""));
             numberTrains[i+1] = Integer.toString(i+1);
             trainInfo[i] = new String[] {Integer.toString(i+1), "", "", "Yard"};
         }
@@ -467,9 +467,11 @@ public class CTC
     
     public DispatchBundle getDispatcher()
     {
+        //System.out.println("The number of trains: " + this.trainLocations.size());
         DispatchBundle train = null;
         for(int i = 0; i < this.trainLocations.size(); i++)
         {
+            //System.out.println("Train " + i + "'s locations: " + this.trainLocations.get(i).currentBlock);
             if(this.trainLocations.get(i).currentBlock == 0)
             {
                 train = new DispatchBundle(new BlockSignalBundle(4, 65, ((double)(70*1000)/(double)(3600)),0, LineColor.YARD), i , LineColor.GREEN);
