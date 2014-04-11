@@ -144,7 +144,7 @@ public final class Wayside {
     {
         if (packet == null) 
         {
-            System.out.println("null sent to sendTravelSignal");
+            //System.out.println("null sent to sendTravelSignal");
             return;
         
         }
