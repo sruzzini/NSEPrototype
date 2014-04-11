@@ -31,6 +31,7 @@ public final class Wayside {
     public  TrackController[] controllers;
     private  int controllerCount;
     private TrackModel track;
+    public static double STOP_SPEED = 15.28;
     //private final int[][] blockNums;
     //private final LineColor[] lines;
     
@@ -184,6 +185,11 @@ public final class Wayside {
     public void sendDispatchSignal(DispatchBundle packet)
     {
         //System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID + " also packet blockid " + packet.BlockID);
+        if (packet == null)
+        {
+            System.out.println("Wayside - sendDispatchBundle - packet is null");
+            return;
+        }
         this.track.setDispatchSignal(packet);
         if (packet.toLine == LineColor.GREEN)
         {

@@ -170,13 +170,15 @@ public class TrackController implements Runnable {
         double speed;
         int next;
         Block currentBlock = this.blockInfo.get(packet.BlockID);
-        System.out.println("BlockSignal: " + packet.BlockID + " " + packet.Authority + " sent to tc: " + this.id + " and current block is: " + currentBlock.getBlockID());
-        System.out.println("Current block next" + currentBlock.next + " prev " + currentBlock.prev);
+        //System.out.println("BlockSignal: " + packet.BlockID + " " + packet.Authority + " sent to tc: " + this.id + " and current block is: " + currentBlock.getBlockID());
+        //System.out.println("Current block next" + currentBlock.next + " prev " + currentBlock.prev);
         
         for (int i = 0; i <= packet.Authority; i++)
         {
-            System.out.println("packet: " + packet.BlockID);
-            System.out.println("current block: " + currentBlock.getBlockID());
+          // System.out.println("packet: " + packet.BlockID);
+          // System.out.println("current block: " + currentBlock.getBlockID());
+          // System.out.println("speed limit: " + currentBlock.getSpeedLimit());
+          // System.out.println("sent speed: " + packet.Speed);
            if (packet.Speed > currentBlock.getSpeedLimit())
             {
             //packet.setSpeed(speedLimit);
@@ -187,11 +189,12 @@ public class TrackController implements Runnable {
                speed = packet.Speed;
            }
            
-          // System.out.println("Adding signal to queoe on tc: " + this.id);
-          // System.out.println("Signal\n\tAuthority: " + (packet.Authority -i) + "\n\tDestination: " + packet.Destination + "\n\tSpeed: " + speed + "\n\tID: " + currentBlock.getBlockID() );
+         // System.out.println("Adding signal to queoe on tc: " + this.id);
+         // System.out.println("Signal\n\tAuthority: " + (packet.Authority -i) + "\n\tDestination: " + packet.Destination + "\n\tSpeed: " + speed + "\n\tID: " + currentBlock.getBlockID() );
             
            commandSignalLock.lock();
                    try {
+                       //System.out.println("adding signal to queue");
            this.commandSignalQueue.add(new BlockSignalBundle(packet.Authority - i, packet.Destination, speed, currentBlock.getBlockID(), LineColor.GREEN));
                    }
                    finally { commandSignalLock.unlock(); }
@@ -203,7 +206,15 @@ public class TrackController implements Runnable {
             
            // System.out.println("About to set current block at id: " + next);
             
-            currentBlock = this.blockInfo.get(next);  
+            if (this.containsBlock(next))
+            {
+                currentBlock = this.blockInfo.get(next); 
+            }
+            else
+            {
+                break;
+            }
+            
         }
                 
         
