@@ -31,9 +31,11 @@
                       <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
                       <Component id="outputsLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="announcementOutputLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="advertisementDisplayBox" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="velocityDisplayBox" min="-2" pref="56" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -46,8 +48,10 @@
                   <Component id="intLightsDisplayBox" min="-2" max="-2" attributes="0"/>
                   <Component id="extLightsDisplayBox" min="-2" max="-2" attributes="0"/>
                   <Component id="heaterDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="advertisementOutputLabel" alignment="0" max="32767" attributes="0"/>
+                  <Component id="announcementDisplayBox" alignment="0" pref="155" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -99,7 +103,17 @@
                   <Component id="heaterDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="heaterOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="13" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="announcementDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="announcementOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="advertisementOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="advertisementDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="10" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -201,6 +215,29 @@
     <Component class="javax.swing.JTextField" name="heaterDisplayBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Off"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="announcementDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;Next station&gt;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="announcementDisplayBoxActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="announcementOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Announcement"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="advertisementOutputLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Advertisement"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="advertisementDisplayBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Advertisement"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -47,6 +47,8 @@ public class TMOutput extends javax.swing.JPanel {
         boolean extLights = trainState.getExteriorLights();
         boolean intLights = trainState.getInteriorLights();
         boolean heater = trainState.getHeater();
+        String advertisement = trainState.getAdvertisement();
+        String announcement = trainState.getAnnouncement();
         
         velocity = velocity * 2.23694; // conversion from m/s to mph
         velocityDisplayBox.setText(df.format(velocity));
@@ -114,6 +116,9 @@ public class TMOutput extends javax.swing.JPanel {
         {
             heaterDisplayBox.setText("OFF");
         }
+        
+        announcementDisplayBox.setText(announcement);
+        advertisementDisplayBox.setText(advertisement);
     }
     
     
@@ -145,6 +150,10 @@ public class TMOutput extends javax.swing.JPanel {
         velocityDisplayBox = new javax.swing.JTextField();
         heaterOutputLabel = new javax.swing.JLabel();
         heaterDisplayBox = new javax.swing.JTextField();
+        announcementDisplayBox = new javax.swing.JTextField();
+        announcementOutputLabel = new javax.swing.JLabel();
+        advertisementOutputLabel = new javax.swing.JTextField();
+        advertisementDisplayBox = new javax.swing.JLabel();
 
         outputsLabel.setText("Outputs");
 
@@ -182,6 +191,19 @@ public class TMOutput extends javax.swing.JPanel {
 
         heaterDisplayBox.setText("Off");
 
+        announcementDisplayBox.setText("<Next station>");
+        announcementDisplayBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                announcementDisplayBoxActionPerformed(evt);
+            }
+        });
+
+        announcementOutputLabel.setText("Announcement");
+
+        advertisementOutputLabel.setText("Advertisement");
+
+        advertisementDisplayBox.setText("Advertisement");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,9 +221,11 @@ public class TMOutput extends javax.swing.JPanel {
                     .addComponent(heaterOutputLabel)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(113, 113, 113)
-                        .addComponent(outputsLabel)))
+                        .addComponent(outputsLabel))
+                    .addComponent(announcementOutputLabel)
+                    .addComponent(advertisementDisplayBox))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(velocityDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -212,8 +236,10 @@ public class TMOutput extends javax.swing.JPanel {
                     .addComponent(leftDoorDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(intLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(extLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(advertisementOutputLabel)
+                    .addComponent(announcementDisplayBox, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,12 +280,28 @@ public class TMOutput extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(heaterOutputLabel))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(announcementDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(announcementOutputLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(advertisementOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(advertisementDisplayBox))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void announcementDisplayBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_announcementDisplayBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_announcementDisplayBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel advertisementDisplayBox;
+    private javax.swing.JTextField advertisementOutputLabel;
+    private javax.swing.JTextField announcementDisplayBox;
+    private javax.swing.JLabel announcementOutputLabel;
     private javax.swing.JTextField eBrakeDisplayBox;
     private javax.swing.JLabel eBrakeOutputLabel;
     private javax.swing.JTextField extLightsDisplayBox;

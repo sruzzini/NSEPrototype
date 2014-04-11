@@ -66,6 +66,10 @@ public class BlockSignalBundle extends BlockBundle {
         return result;
     }
     
+    public String toString()
+    {
+        return "Authority: " + Authority + "\n" + "Speed: " + Speed + "\n";
+    }
     
     
 }
