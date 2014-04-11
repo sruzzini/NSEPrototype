@@ -99,7 +99,8 @@ public class TrackModelPanel extends javax.swing.JPanel {
         jLabel31 = new javax.swing.JLabel();
         failStateOut = new javax.swing.JLabel();
 
-        jFrame2.setMinimumSize(new java.awt.Dimension(400, 160));
+        jFrame2.setMinimumSize(new java.awt.Dimension(191, 235));
+        jFrame2.setSize(new java.awt.Dimension(191, 235));
 
         failSubmit.setText("Submit");
         failSubmit.addActionListener(new java.awt.event.ActionListener() {
@@ -125,18 +126,15 @@ public class TrackModelPanel extends javax.swing.JPanel {
         jFrame2Layout.setHorizontalGroup(
             jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrame2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jFrame2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rail)
-                            .addComponent(normal)
-                            .addComponent(power)
-                            .addComponent(track)))
-                    .addGroup(jFrame2Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(failSubmit)))
-                .addContainerGap(144, Short.MAX_VALUE))
+                    .addComponent(rail)
+                    .addComponent(normal)
+                    .addComponent(track)
+                    .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(failSubmit)
+                        .addComponent(power)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jFrame2Layout.setVerticalGroup(
             jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +149,7 @@ public class TrackModelPanel extends javax.swing.JPanel {
                 .addComponent(power)
                 .addGap(18, 18, 18)
                 .addComponent(failSubmit)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Block"));
