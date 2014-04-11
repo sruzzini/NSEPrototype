@@ -242,7 +242,7 @@ public class CTC
         {
             newAuthority = this.GREEN_NEXT_STATION.get(train.StopIndex).AUTHORITY;
             newDestination = this.GREEN_NEXT_STATION.get(train.StopIndex).NEXTBLOCKID;
-            return new BlockSignalBundle(newAuthority, (newDestination), (70*1000/36000),Integer.parseInt(train.block), train.line);//returnSection(LineColor.GREEN, newDestination))
+            return new BlockSignalBundle(newAuthority, (newDestination), ((double)(70*1000)/(double)(3600)),Integer.parseInt(train.block), train.line);//returnSection(LineColor.GREEN, newDestination))
         }
         return null;        
     }
@@ -472,7 +472,7 @@ public class CTC
         {
             if(this.trainLocations.get(i).currentBlock == 0)
             {
-                train = new DispatchBundle(new BlockSignalBundle(4, 65, (70.0*1000/(3600)),0, LineColor.YARD), i , LineColor.GREEN);
+                train = new DispatchBundle(new BlockSignalBundle(4, 65, ((double)(70*1000)/(double)(3600)),0, LineColor.YARD), i , LineColor.GREEN);
                 this.trains.get(i).line = LineColor.GREEN;
                 this.trains.get(i).authority = 5;
                 break;
