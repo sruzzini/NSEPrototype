@@ -18,10 +18,13 @@ public class TrainsClass
 
     public int authority;
     public int StopIndex;
+    public double DistanceSoFar;
+    public boolean Idle;
     public String block;
     public String destination; 
     public String section_current;    
     public String section_destination;
+    
     
     
     public TrainsClass()
@@ -29,6 +32,7 @@ public class TrainsClass
         this.block = "";
         this.StopIndex = 0;
         this.authority = 0;
+        this.DistanceSoFar = 0;
         this.destination = "";
         this.section_destination = "";
     }
@@ -49,6 +53,15 @@ public class TrainsClass
         this.StopIndex = index;
     }
     
+    public void setDistanceSoFar(double distance)
+    {
+        this.DistanceSoFar = distance;
+    }
+    
+    public void setIdle(boolean Idle)
+    {
+        this.Idle = Idle;
+    }
     public String lineColor()
     {
         if(this.line == LineColor.RED)
