@@ -133,18 +133,27 @@ public class CTC
            //(get.authority == 0)
            if((get.authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).currentBlock) != (this.trainLocations.get(this.trains.indexOf(get)).prevBlock))
            {
-                if((this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) - this.trains.get(this.trains.indexOf(get)).DistanceSoFar == 0 && this.trains.get(trainIndex).Idle)
+                if((this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == this.trains.get(this.trains.indexOf(get)).DistanceSoFar && !this.trains.get(trainIndex).Idle)
                 {
-                    newRoute = getNextStation(get);
-                    this.trains.get(trainIndex).setIdle(false);
-                    System.out.println("CTC Sending New Signal");
-                    trainRouteInfo.add(newRoute);
-                    System.out.println("CTC New Destination for Train " + trainIndex + ": " + newRoute.Destination);
+                    this.trains.get(trainIndex).StopIndex++;
+                    this.trains.get(trainIndex).setIdle(true);
+                    newRoute = getNextStation(this.trains.get(trainIndex));
+                    trainRouteInfo.add(newRoute);                    
+                    
+                    this.trains.get(trainIndex).authority = newRoute.Authority;
+                    this.trains.get(trainIndex).destination = Integer.toString(newRoute.Destination);
+                    this.trains.get(trainIndex).section_destination = this.returnSection(this.trains.get(trainIndex).line, this.trains.get(trainIndex).destination);
+                                        
                     System.out.println("CTC Train " + trainIndex + " is now Idle.");
-                    this.trains.get(this.trains.indexOf(get)).StopIndex++;
-                    System.out.println("CTC Stop Index for Train " + trainIndex + ": " + this.trains.get(this.trains.indexOf(get)).StopIndex);
+                    System.out.println("CTC Sending the new signal to block: " + newRoute.BlockID);
+                    System.out.println("CTC Stop Index for Train " + trainIndex + ": " + this.trains.get(trainIndex).StopIndex);
+                    System.out.println("CTC New Destination for Train " + trainIndex + ": " + newRoute.Destination);
                }
                //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));               
+           }
+           else
+           {
+               this.trains.get(trainIndex).setIdle(false);
            }
             //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
         }
@@ -158,8 +167,8 @@ public class CTC
         for(int i = 0; i < this.trainLocations.size(); i++)
         {   if(i == 0)
             {
-                System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
-                System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
+                //System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
+                //System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
                 System.out.println("Trains " + i + " current block: " + this.trains.get(i).block);
                 //System.out.println("Trains " + i + " current block: " + this.train.get(i).prevBlock)
             }
@@ -179,19 +188,9 @@ public class CTC
                 this.trains.get(i).block = Integer.toString(this.trainLocations.get(i).currentBlock);
             }
             
-            if((this.trainLocations.get(i).distanceSoFar) != this.trains.get(i).DistanceSoFar)
-            {
-                this.trains.get(i).setDistanceSoFar( this.trainLocations.get(i).distanceSoFar);
-                this.trains.get(i).setIdle(false);
-            }
-            else
-            {
-                this.trains.get(i).setIdle(true);
-            }
-            
-            
-        }
-        
+            this.trains.get(i).setDistanceSoFar(this.trainLocations.get(i).distanceSoFar);
+            this.trains.get(i).section_current = this.returnSection(this.trains.get(i).line, this.trains.get(i).block);
+        }        
     }
     
     private String returnSection(LineColor line, String blockID)
