@@ -144,7 +144,8 @@ public class CTC
                     this.trains.get(trainIndex).destination = Integer.toString(newRoute.Destination);
                     this.trains.get(trainIndex).section_destination = this.returnSection(this.trains.get(trainIndex).line, this.trains.get(trainIndex).destination);
                                         
-                    System.out.println("CTC Train " + trainIndex + " is now Idle.");                                        
+                    System.out.println("CTC Train " + trainIndex + " is now Idle.");
+                    System.out.println("CTC Sending the new signal to block: " + newRoute.BlockID);
                     System.out.println("CTC Stop Index for Train " + trainIndex + ": " + this.trains.get(trainIndex).StopIndex);
                     System.out.println("CTC New Destination for Train " + trainIndex + ": " + newRoute.Destination);
                }
@@ -166,8 +167,8 @@ public class CTC
         for(int i = 0; i < this.trainLocations.size(); i++)
         {   if(i == 0)
             {
-                System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
-                System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
+                //System.out.println("Train Location " + i + " previous block: " + this.trainLocations.get(i).prevBlock);
+                //System.out.println("Train Location " + i + " current block: " + this.trainLocations.get(i).currentBlock);
                 System.out.println("Trains " + i + " current block: " + this.trains.get(i).block);
                 //System.out.println("Trains " + i + " current block: " + this.train.get(i).prevBlock)
             }
