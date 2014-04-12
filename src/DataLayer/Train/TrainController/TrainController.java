@@ -168,10 +168,10 @@ public class TrainController
         }
         else //no bundle was chosen, so make a super safe "emergency" bundle
         {
-            toReturn = new TrainCommand(0, false, false, false, false, this.trainStatus.getExteriorLightStatus(), 
-                                                   this.trainStatus.getInteriorLightStatus(), this.trainStatus.getHeaterStatus(),
+            toReturn = new TrainCommand(0, false, false, false, false, this.trainStatus.GetExteriorLightStatus(), 
+                                                   this.trainStatus.GetInteriorLightStatus(), this.trainStatus.GetHeaterStatus(),
                                                    this.trackSignal.getNextDestination());
-            int trainFailure = this.trainStatus.getFailure();
+            int trainFailure = this.trainStatus.GetFailure();
             if (hasSBrakeFailure(trainFailure) && hasEBrakeFailure(trainFailure)) //if both brakes are failed
             {
                 toReturn.EmergencyBrakeOn = false;
@@ -229,7 +229,7 @@ public class TrainController
         {
             this.preparingStop = true;
             //if we're at max weight start engaging the brake now
-            if ((TrainStatus.MAX_TRAIN_MASS - this.trainStatus.getMass()) <= .03) 
+            if ((TrainStatus.MAX_TRAIN_MASS - this.trainStatus.GetMass()) <= .03) 
             {
                 this.engagingStop = true;
             }
@@ -244,7 +244,7 @@ public class TrainController
     private void calculateStopBrakeDelay()
     {
         this.stopBrakeEngageDelay = (((TrainStatus.MAX_TRAIN_MASS / TrainController.SERVICE_BRAKE_FORCE) * Wayside.STOP_SPEED) -
-                                     ((this.trainStatus.getMass() / TrainController.SERVICE_BRAKE_FORCE) * Wayside.STOP_SPEED));
+                                     ((this.trainStatus.GetMass() / TrainController.SERVICE_BRAKE_FORCE) * Wayside.STOP_SPEED));
     }
     
     private TrainCommand calculateTrainCommand()
@@ -253,8 +253,8 @@ public class TrainController
         
         double safeVelocity = 0; //velocity to calculate VError
         double velocityCommand = this.trackSignal.getVelocityCommand(); //vCommand
-        double currTrainVelocity = this.trainStatus.getVelocity(); //curr Velocity
-        int trainFailure = this.trainStatus.getFailure(); //failure
+        double currTrainVelocity = this.trainStatus.GetVelocity(); //curr Velocity
+        int trainFailure = this.trainStatus.GetFailure(); //failure
         
         //Choose safe velocity
         if (trainFailure == 0) //as long as there isn't a failure
@@ -274,7 +274,7 @@ public class TrainController
         }
         
         //check for stopped at station
-        if (this.engagingStop && (this.trainStatus.getVelocity() == 0))
+        if (this.engagingStop && (this.trainStatus.GetVelocity() == 0))
         {
             this.stoppedAtStation = true;
             this.stoppedAtStationTime = System.currentTimeMillis();
@@ -315,8 +315,8 @@ public class TrainController
         if (command.EmergencyBrakeOn ||  //E-Brake On
             command.ServiceBrakeOn ||   //S-Brake On
             (trainFailure != 0) || //There is a failure
-            this.trainStatus.getRightDoorStatus() || //Right Door is open
-            this.trainStatus.getLeftDoorStatus()) //Left Door is open
+            this.trainStatus.GetRightDoorStatus() || //Right Door is open
+            this.trainStatus.GetLeftDoorStatus()) //Left Door is open
         {
             command.PowerCommand = 0.0;
         }
@@ -329,7 +329,7 @@ public class TrainController
         
         command.ExteriorLightsOn = calculateExteriorLights(); //set exterior lights
         
-        command.HeaterOn = (this.trainStatus.getTemperature() < this.DesiredTemperature); //set heater
+        command.HeaterOn = (this.trainStatus.GetTemperature() < this.DesiredTemperature); //set heater
         
         command.Announcement = calculateAnnouncement(); //set announcement
         
@@ -360,7 +360,7 @@ public class TrainController
         boolean eBrakeFailure = hasEBrakeFailure(failure); //check if their is an e-brake failure
         
         if(((this.OperatorEBrake == OperatorInputStatus.ON) && !eBrakeFailure) || //Operator requests EBrake and no EBrake failure
-           (this.trainStatus.getPassengerBrakeRequest() && !eBrakeFailure) || //Passenger requests EBrake and no EBrake failure
+           (this.trainStatus.GetPassengerBrakeRequest() && !eBrakeFailure) || //Passenger requests EBrake and no EBrake failure
            ((failure != 0) && !eBrakeFailure)) //There is some failure and no EBrake failure
         {
             eBrake = true;
@@ -385,7 +385,7 @@ public class TrainController
     {
         boolean lights = false;
         boolean underground = this.trackSignal.getUndergroundStatus();
-        boolean doorsOpen = (this.trainStatus.getLeftDoorStatus() || this.trainStatus.getRightDoorStatus());
+        boolean doorsOpen = (this.trainStatus.GetLeftDoorStatus() || this.trainStatus.GetRightDoorStatus());
         if ((underground && this.OperatorIntLights == OperatorInputStatus.AUTO) || //we're underground and the operator hasn't specified light command
             (doorsOpen) || //doors are open (keep lights on for passengers entering and exiting
             (this.OperatorIntLights == OperatorInputStatus.ON)) //Operator turns the light on
@@ -436,8 +436,8 @@ public class TrainController
         //check for releasing brake after done stopping
         if (this.stoppedAtStation &&  //stopped at a station
             (((System.currentTimeMillis() - this.stoppedAtStationTime) * this.timeMultiplier) >= MILLISECONDS_MINUTE) && //it's been a minute
-            !this.trainStatus.getRightDoorStatus() && //right doors closed
-            !this.trainStatus.getLeftDoorStatus()) //left doors closed
+            !this.trainStatus.GetRightDoorStatus() && //right doors closed
+            !this.trainStatus.GetLeftDoorStatus()) //left doors closed
         {
             sBrake = false;
             this.stoppedAtStation = false;
@@ -452,7 +452,7 @@ public class TrainController
     private boolean checkBundleSafety(TrainCommand command)
     {
         boolean safe = false;
-        int trainFailure = this.trainStatus.getFailure();
+        int trainFailure = this.trainStatus.GetFailure();
         //Power safe
         if (command.PowerCommand <= MAX_TRAIN_MOTOR_POWER && //motor power is not greater than max power
             command.PowerCommand >= 0) //motor power is not negative
@@ -473,8 +473,8 @@ public class TrainController
             }
             else if (command.PowerCommand == 0)//power is 0
             {
-                if ((this.trainStatus.getVelocity() > 0) && (!command.RightDoorsOpen && !command.LeftDoorsOpen) || //train moving and doors closed
-                    (this.trainStatus.getVelocity() == 0))//train is stopped
+                if ((this.trainStatus.GetVelocity() > 0) && (!command.RightDoorsOpen && !command.LeftDoorsOpen) || //train moving and doors closed
+                    (this.trainStatus.GetVelocity() == 0))//train is stopped
                 {
                     if (trainFailure == 0) //no train failure
                     {

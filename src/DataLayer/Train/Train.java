@@ -197,19 +197,19 @@ public class Train implements Runnable
     }
     private void updateStatus()
     {
-        status.setVelocity(physicsInput.Velocity); 
-        status.setMass(model.getMass());
-        status.setTemperature(stateInput.Temperature);
-        status.setFailure(model.getFailureCode());
-        status.setSBrakeStatus(model.getSBrakeStatus());
-        status.setEBrakeStatus(model.getEBrakeStatus());
-        status.setPassengerBrakeRequest(model.getPassengerEBrakeStatus());
-        status.setLeftDoorStatus(model.getLeftDoorStatus());
-        status.setRightDoorStatus(model.getRightDoorStatus());
-        status.setExteriorLightStatus(model.getExtLightStatus());
-        status.setInteriorLightStatus(model.getIntLightStatus());
-        status.setHeaterStatus(model.getHeaterStatus());
-        status.setAnnouncement(model.getAnnouncement());
-        status.setAdvertisement(model.getAdvertisement());
+        status.SetVelocity(physicsInput.Velocity); 
+        status.SetMass(model.getMass());
+        status.SetTemperature(stateInput.Temperature);
+        status.SetFailure(model.getFailureCode());
+        status.SetSBrakeStatus(model.getSBrakeStatus());
+        status.SetEBrakeStatus(model.getEBrakeStatus());
+        status.SetPassengerBrakeRequest(model.getPassengerEBrakeStatus());
+        status.SetLeftDoorStatus(model.getLeftDoorStatus());
+        status.SetRightDoorStatus(model.getRightDoorStatus());
+        status.SetExteriorLightStatus(model.getExtLightStatus());
+        status.SetInteriorLightStatus(model.getIntLightStatus());
+        status.SetHeaterStatus(model.getHeaterStatus());
+        status.SetAnnouncement(model.getAnnouncement());
+        status.SetAdvertisement(model.getAdvertisement());
     }
 }
