@@ -35,23 +35,28 @@
                   <Component id="advertisementDisplayBox" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="velocityDisplayBox" min="-2" pref="56" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="mphLabel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="sBrakeDisplayBox" min="-2" max="-2" attributes="0"/>
-                  <Component id="eBrakeDisplayBox" min="-2" max="-2" attributes="0"/>
-                  <Component id="rightDoorDisplayBox" min="-2" max="-2" attributes="0"/>
-                  <Component id="leftDoorDisplayBox" min="-2" max="-2" attributes="0"/>
-                  <Component id="intLightsDisplayBox" min="-2" max="-2" attributes="0"/>
-                  <Component id="extLightsDisplayBox" min="-2" max="-2" attributes="0"/>
-                  <Component id="heaterDisplayBox" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="advertisementOutputLabel" alignment="0" max="32767" attributes="0"/>
-                  <Component id="announcementDisplayBox" alignment="0" pref="155" max="32767" attributes="0"/>
+                  <Component id="announcementDisplayBox" pref="165" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="velocityDisplayBox" min="-2" pref="56" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="mphLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="sBrakeDisplayBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="eBrakeDisplayBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="rightDoorDisplayBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="leftDoorDisplayBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="intLightsDisplayBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="extLightsDisplayBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="heaterDisplayBox" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

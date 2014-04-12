@@ -21,6 +21,7 @@ public class TrainStatus
     public static final int S_BRAKE_FAILURE = 13;
     
     public static final double EMPTY_TRAIN_MASS = 40.9; //empty train weight (metric Tons)
+    public static final double MAX_TRAIN_MASS = 56.7; //max train weight
     public static final double ROOM_TEMP = 21.1; //70 degrees fahrenheit, in celsius
     
     private double velocity; // meters/sec
