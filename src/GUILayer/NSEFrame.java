@@ -163,6 +163,13 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
         jLabel1.setText("Trains");
 
+        trainSelectList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        trainSelectList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                trainSelectListValueChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout Trains_panelLayout = new javax.swing.GroupLayout(Trains_panel);
         Trains_panel.setLayout(Trains_panelLayout);
         Trains_panelLayout.setHorizontalGroup(
@@ -240,6 +247,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.StartClicked = true;
         new Thread(this.NSEObject).start();
     }//GEN-LAST:event_start_Clicked
+
+    private void trainSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_trainSelectListValueChanged
+        this.trainPanel1.setTrain(this.NSEObject.Trains.get(trainSelectList.getSelectedIndices()[0]));
+    }//GEN-LAST:event_trainSelectListValueChanged
 
     /**
      * @param args the command line arguments

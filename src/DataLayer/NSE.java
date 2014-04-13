@@ -115,7 +115,7 @@ public class NSE implements Runnable
         }
         
         this.Wayside.StartSimulation(); //Start up the wayside controller
-        
+        long interval = 5000;
         long lastPrint = 0;
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
@@ -137,12 +137,16 @@ public class NSE implements Runnable
             ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.getRouteInfo();
             for (BlockSignalBundle bundle : toWaysideInfo)
             {
+                if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
+                {
+                    System.out.println(bundle.BlockID);
+                }
                 this.Wayside.sendTravelSignal(bundle);
             }
-           
+            
             //Communicate from Track to Trains
             this.Track.updateTrainLocations();
-            long interval = 1000;
+            /*
             if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
             {
                 System.out.println("TRAIN 0 Physics delta x: " + this.Trains.get(0).getDeltaX());
@@ -160,6 +164,7 @@ public class NSE implements Runnable
                 System.out.println("Current Train Power" + this.Trains.get(0).GetTrainCommand().PowerCommand);
                 lastPrint = Calendar.getInstance().getTimeInMillis();
             }
+            */
         }
     }
     
