@@ -20,16 +20,18 @@ import DataLayer.Wayside.*;
 //Train Controller Class
 public class TrainController 
 {
-    public static final double STANDARD_SAMPLE_PERIOD = 0.1; //sample period of the train controller
-    private static final double PROPORTIONAL_GAIN = 100000; //Kp
+    //Constants
     private static final double INTEGRAL_GAIN = 27; //Ki
     public static final double MAX_TRAIN_MOTOR_POWER = 120000; //120 KW
     public static final double MAX_TRAIN_SPEED = 19.444; //70 km/hr in m/s
+    public static final double MILLISECONDS_MINUTE = 60000; //number of milliseconds in a minute
     private static final double MIN_VERROR_FOR_S_BRAKE = -.89408; //-5 mph
+    private static final double PROPORTIONAL_GAIN = 100000; //Kp
     public static final double ROOM_TEMP = 21.1; //70 degrees fahrenheit, in celsius
     public static final double SERVICE_BRAKE_FORCE = 61718.7; //force of the service brake
-    public static final double MILLISECONDS_MINUTE = 60000; //number of milliseconds in a minute
+    public static final double STANDARD_SAMPLE_PERIOD = 0.1; //sample period of the train controller
     
+    //Enumerated types
     public enum OperatorInputStatus //status of a user input
     {
         AUTO,  //if AUTO all decisions will be made by the controller
@@ -37,29 +39,30 @@ public class TrainController
         ON  //if ON, will try to turn on if safe to do so
     }
     
-    private final int iD; //id of the controller
-    private boolean engagingStop; //boolean true if sBrake is on going into a station
-    private boolean preparingStop; //boolean true if passed a beacon before station to sop at
-    private boolean stoppedAtStation; //boolean true if train is stopped at a station
-    private int timeMultiplier; //multiplier for time representaiton
-    private long time; //current time
+    //Class variables
+    public double DesiredTemperature; //desired train temperature (celcius)
+    public OperatorInputStatus OperatorEBrake; //emergency brake request status
+    public OperatorInputStatus OperatorExtLights; //exteior light request status
+    public OperatorInputStatus OperatorIntLights; //interior light request status
+    public OperatorInputStatus OperatorLeftDoor; //left door request status
+    public OperatorInputStatus OperatorRightDoor; //right door request status
+    public OperatorInputStatus OperatorSBrake; //service brake request status
+    public double VelocitySetPoint; //Velcotiy set poitn (meters/sec)
     private long beaconSignalReceived; //time the last beacon signal was received
-    private double samplePeriod; //sample period to calculate power
-    private double stopBrakeEngageDelay; //time delay from passing a beacon to engaging the service brake
-    private long stoppedAtStationTime; //time the train first stops at a station
-    private TrainStatus trainStatus; //TrainStatus used to calculate outputs
-    private TrackSignal trackSignal; //TrackSignal used ot calculate outputs
+    private boolean engagingStop; //boolean true if sBrake is on going into a station
+    private final int iD; //id of the controller
     private BeaconSignal lastBeacon; //the last beacon passed
     private double lastIntermediary; //last intermediary value in power calculation
     private double lastVelocityError; //last veloicty error in power calculation
-    public double VelocitySetPoint; //Velcotiy set poitn (meters/sec)
-    public OperatorInputStatus OperatorEBrake; //emergency brake request status
-    public OperatorInputStatus OperatorSBrake; //service brake request status
-    public OperatorInputStatus OperatorLeftDoor; //left door request status
-    public OperatorInputStatus OperatorRightDoor; //right door request status
-    public OperatorInputStatus OperatorExtLights; //exteior light request status
-    public OperatorInputStatus OperatorIntLights; //interior light request status
-    public double DesiredTemperature; //desired train temperature (celcius)
+    private boolean preparingStop; //boolean true if passed a beacon before station to sop at
+    private double samplePeriod; //sample period to calculate power
+    private double stopBrakeEngageDelay; //time delay from passing a beacon to engaging the service brake
+    private boolean stoppedAtStation; //boolean true if train is stopped at a station
+    private long stoppedAtStationTime; //time the train first stops at a station
+    private long time; //current time
+    private int timeMultiplier; //multiplier for time representaiton
+    private TrackSignal trackSignal; //TrackSignal used ot calculate outputs
+    private TrainStatus trainStatus; //TrainStatus used to calculate outputs
     
     
     //Contructors 

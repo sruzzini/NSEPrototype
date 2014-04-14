@@ -109,7 +109,7 @@ public class NSE implements Runnable
         //spawn new thread for each Train
         for(Train train : this.Trains)
         {
-            train.controller.VelocitySetPoint = TrainController.MAX_TRAIN_SPEED;
+            train.Controller.VelocitySetPoint = TrainController.MAX_TRAIN_SPEED;
             train.SetIsRunning(this.isRunning.booleanValue());
             new Thread(train).start();
         }
