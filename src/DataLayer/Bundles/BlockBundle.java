@@ -6,7 +6,7 @@
 
 package DataLayer.Bundles;
 
-import DataLayer.EnumTypes.LineColor;
+import DataLayer.EnumTypes.*;
 
 /**
  *
@@ -16,8 +16,9 @@ import DataLayer.EnumTypes.LineColor;
  */
 public abstract class BlockBundle {
     public final int BlockID;
-    public final LineColor LineID;
     public boolean Closed;
+    public final LineColor LineID;
+    
 
     public BlockBundle(int BlockID, LineColor LineID) {
         this.BlockID = BlockID;

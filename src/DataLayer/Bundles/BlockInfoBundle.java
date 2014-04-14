@@ -6,9 +6,7 @@
 
 package DataLayer.Bundles;
 
-import DataLayer.EnumTypes.LightColor;
-import DataLayer.EnumTypes.LineColor;
-import DataLayer.EnumTypes.XingState;
+import DataLayer.EnumTypes.*;
 
 /**
  * This class contains information pertaining to a block on the track.

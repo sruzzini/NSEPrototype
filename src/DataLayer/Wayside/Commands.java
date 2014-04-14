@@ -6,10 +6,9 @@
 
 package DataLayer.Wayside;
 
-import DataLayer.Bundles.BlockInfoBundle;
-import DataLayer.Bundles.BlockSignalBundle;
-import DataLayer.TrackModel.Switch;
-import java.util.ArrayList;
+import DataLayer.Bundles.*;
+import DataLayer.TrackModel.*;
+import java.util.*;
 
 /**
  *
@@ -28,19 +27,19 @@ public class Commands {
         
     }
     
-    public void pushCommand(BlockInfoBundle b)
+    public boolean containsCommandForBlockID(int id)
     {
-        blockInfoCommands.add(b);
-    }
-    
-    public void pushCommand(BlockSignalBundle b)
-    {
-        blockSignalCommands.add(b);
-    }
-    
-    public void pushCommand(Switch s)
-    {
-        switchCommands.add(s);
+        boolean result = false;
+        for (BlockSignalBundle b : this.blockSignalCommands)
+        {
+            if (b.BlockID == id)
+            {
+                result = true;
+                break;
+            }
+        }
+        
+        return result;
     }
     
     public boolean matches(Commands a)
@@ -112,18 +111,22 @@ public class Commands {
         return result;
     }
     
-    public boolean containsCommandForBlockID(int id)
+    public void pushCommand(BlockInfoBundle b)
     {
-        boolean result = false;
-        for (BlockSignalBundle b : this.blockSignalCommands)
-        {
-            if (b.BlockID == id)
-            {
-                result = true;
-                break;
-            }
-        }
-        
-        return result;
+        blockInfoCommands.add(b);
     }
+    
+    public void pushCommand(BlockSignalBundle b)
+    {
+        blockSignalCommands.add(b);
+    }
+    
+    public void pushCommand(Switch s)
+    {
+        switchCommands.add(s);
+    }
+    
+    
+    
+    
 }

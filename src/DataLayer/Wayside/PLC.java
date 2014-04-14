@@ -6,26 +6,24 @@
 
 package DataLayer.Wayside;
 
-import DataLayer.Bundles.BlockInfoBundle;
-import DataLayer.Bundles.BlockSignalBundle;
-import DataLayer.EnumTypes.LineColor;
-import DataLayer.EnumTypes.XingState;
-import DataLayer.TrackModel.Block;
-import DataLayer.TrackModel.Switch;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import DataLayer.Bundles.*;
+import DataLayer.EnumTypes.*;
+import DataLayer.TrackModel.*;
+import java.util.*;
 
 /**
  *
  * @author nwhachten
+ * @version 1.1
+ * @since 04-04-2014
  */
 public abstract class PLC {
+    protected final  ArrayList<Block> blockArray;
+    protected final Hashtable<Integer, Block> blocks;
+    protected final ArrayList<Integer> blocksWithCrossing;
     protected final int id;
     protected final LineColor line;
-    protected final Hashtable<Integer, Block> blocks;
     protected final Hashtable<Integer, Switch> switches;
-    protected final ArrayList<Integer> blocksWithCrossing;
-    ArrayList<Block> blockArray;
 
     public PLC(int id, LineColor line,  Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
         this.id = id;
@@ -51,65 +49,8 @@ public abstract class PLC {
         Commands tryThree = runAllPLCTasks();
         
         Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
-        
-        
-        
+
         return votingResult;
-       // return tryOne;
-    }
-    
-    private Commands runAllPLCTasks()
-    {
-        Commands c;
-        c = plcProgram();
-        
-        
-        /*
-         ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
-         ArrayList<BlockSignalBundle> replicateCommands = this.replicateSignals();
-        //ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
-        
-        for (BlockInfoBundle b : rrCommands)
-        {
-            c.pushCommand(b);
-        }
-        
-        for (BlockSignalBundle b : replicateCommands)
-        {
-            if (!c.containsCommandForBlockID(b.BlockID))
-            {
-                c.pushCommand(b);  
-            }
-            
-        }
-        
-        for (BlockSignalBundle b : safetyCommands)
-        {
-            c.pushCommand(b);
-        }*/
-        
-        return c;
-        
-    }
-    
-    protected Commands commandsFromVote(Commands a, Commands b, Commands c)
-    {
-        Commands result;
-        
-        if (a.matches(b) || a.matches(c))
-        {
-            result =  a;
-        }
-        else if (b.matches(c))
-        {
-            result =  b;
-        }
-        else
-        {
-            result = null;
-        }
-        
-        return result;
     }
     
     protected ArrayList<BlockInfoBundle> checkRRCrossings()
@@ -146,33 +87,61 @@ public abstract class PLC {
         
         return commands;
     }
-    /*
-    protected ArrayList<BlockSignalBundle> replicateSignals()
+    
+    protected Commands commandsFromVote(Commands a, Commands b, Commands c)
     {
-        ArrayList<BlockSignalBundle> commands;
-        commands = new ArrayList<>();
-        int next;
-        Block nextBlock;
+        Commands result;
         
-        for (Block b : this.blockArray)
+        if (a.matches(b) || a.matches(c))
         {
-            if (b.isOccupied())
-            {
-                next = b.next;
-                //nextBlock = this.blocks.get(next);
-                commands.add(new BlockSignalBundle(b, next, LineColor.GREEN));
-            }
+            result =  a;
+        }
+        else if (b.matches(c))
+        {
+            result =  b;
+        }
+        else
+        {
+            result = null;
         }
         
-        
-        return commands;
+        return result;
     }
-    */
+    
     protected abstract Commands plcProgram();
     
+    private Commands runAllPLCTasks()
+    {
+        Commands c;
+        c = plcProgram();
+        
+        
+        /*
+         ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
+         ArrayList<BlockSignalBundle> replicateCommands = this.replicateSignals();
+        //ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
+        
+        for (BlockInfoBundle b : rrCommands)
+        {
+            c.pushCommand(b);
+        }
+        
+        for (BlockSignalBundle b : replicateCommands)
+        {
+            if (!c.containsCommandForBlockID(b.BlockID))
+            {
+                c.pushCommand(b);  
+            }
+            
+        }
+        
+        for (BlockSignalBundle b : safetyCommands)
+        {
+            c.pushCommand(b);
+        }*/
+        
+        return c;
+        
+    }
 
-    
-    
-    
-    
 }

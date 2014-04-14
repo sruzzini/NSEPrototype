@@ -6,44 +6,40 @@
 
 package DataLayer.Wayside;
 
-import DataLayer.Bundles.BlockInfoBundle;
-import DataLayer.Bundles.BlockSignalBundle;
-import DataLayer.Bundles.DispatchBundle;
-//import DataLayer.Bundles.Switch;
-import DataLayer.TrackModel.Switch;
-import DataLayer.EnumTypes.LineColor;
-import DataLayer.TrackModel.Block;
-import DataLayer.TrackModel.TrackModel;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import DataLayer.Bundles.*;
+import DataLayer.EnumTypes.*;
+import DataLayer.TrackModel.*;
+import java.io.*;
+import java.util.*;
 
 /**
+ * <h1>Wayside</h1>
+ * <p>
+ * The Wayside class acts as a communication helper between the CTC office and the
+ * Track Controllers. It forwards signals from the CTC to the appropriate Track Controller. </p>
+ * <p>
+ * It also provides the means for the NSE simulation to setup and start and pause the 
+ * Track Controllers. </p>
  *
  * @author nwhachten
- * @version 1.0
+ * @version 1.1
  * @since 2014-04-02
  */
-public final class Wayside {
-    public  TrackController[] controllers;
-    private  int controllerCount;
-    private TrackModel track;
+public final class Wayside 
+{
     public static double STOP_SPEED = 15.28;
-    //private final int[][] blockNums;
-    //private final LineColor[] lines;
+    private int controllerCount;
+    private TrackController[] controllers;
+    private final TrackModel track;
     
-    
+    /**
+     * This method is the constructor for the Wayside class. It handles instantiation 
+     * of all Track Controllers 
+     * @param track This is a reference to the TrackModel class that is used in the sim
+     */
     public Wayside(TrackModel track)
-    {
-       /* int[][] blockNums = new int[][]{{0,1},{2,3},{4,5},{5,6},{6,7},{8,9}};
-        LineColor[] lines = new LineColor[] {LineColor.GREEN, LineColor.GREEN, LineColor.GREEN,
-            LineColor.RED, LineColor.RED, LineColor.RED};*/
-        //int[][] blockNums = new int[][];
-        
-        BufferedReader br = null;
+    { 
+        BufferedReader br;
         this.track = track;
         
         try 
@@ -53,11 +49,7 @@ public final class Wayside {
             br = new BufferedReader(new FileReader(fileName));
             
             controllerCount = Integer.parseInt(br.readLine());
-            
-        
             this.controllers = new TrackController[controllerCount];
-            //int[][] blockNums = new int[controllerCount][];
-            //LineColor[] lines = new LineColor[controllerCount];
             
             
             String[] controllerInfo;
@@ -87,10 +79,6 @@ public final class Wayside {
                
                 
             }
-           
-        
-       // this.setBlockInfoArray(blockInfoArray);
-        //this.setBlockSignalArray(blockSignalArray);
         
         }
         catch (FileNotFoundException e)
@@ -113,135 +101,7 @@ public final class Wayside {
         
     }
     
-    public void StartSimulation()
-    {
-        //put each tc into a thread and start those bad boys
-        this.startControllers();
-        
-    }
-    
-    public void StopSimulation()
-    {
-        
-    }
-    
-    private void startControllers()
-    {
-       /* for(TrackController tc : this.controllers)
-        {
-            new Thread(tc).start();
-        }*/
-        
-        TrackController tc0 = this.controllers[0];
-        TrackController tc1 = this.controllers[1];
-        TrackController tc2 = this.controllers[2];
-        
-        new Thread(tc0).start();
-        new Thread(tc1).start();
-        new Thread(tc2).start();
-    }
-    
-    public void sendTravelSignal(BlockSignalBundle packet)
-    {
-        if (packet == null) 
-        {
-            //System.out.println("null sent to sendTravelSignal");
-            return;
-        
-        }
-        LineColor line = packet.LineID;
-        int blockNum = packet.BlockID;
-        
-        for (int i=0; i < controllerCount; i++)
-        {
-            if (controllers[i].getLine() == line)
-            {
-                for (int b : controllers[i].getBlockNums() )
-                {
-                    if (b == blockNum)
-                    {
-                       // System.out.println("Sending signal: to block " + packet.BlockID + " to line " + packet.LineID + " with auth " + packet.Authority + " with speed " + packet.Speed + " with dest " + packet.Destination);
-                       // System.out.println("To controller " + i);
-                        this.controllers[i].sendTravelSignal(packet);
-                    }
-                }
-            }
-        }
-    }
-    
-    public void sendSwitchStateSignal(Switch packet)
-    {
-        for (TrackController tc : this.controllers)
-        {
-            if (tc.getLine() == packet.lineID && (tc.containsBlock(packet.straightBlock) || 
-                    tc.containsBlock(packet.approachBlock) || tc.containsBlock(packet.divergentBlock) ))
-            {
-                tc.sendSwitchStateSignal(packet);
-                break;
-            }
-        }
-    }
-    
-    public void sendDispatchSignal(DispatchBundle packet)
-    {
-        //System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID + " also packet blockid " + packet.BlockID);
-        if (packet == null)
-        {
-            System.out.println("Wayside - sendDispatchBundle - packet is null");
-            return;
-        }
-        this.track.setDispatchSignal(packet);
-        if (packet.toLine == LineColor.GREEN)
-        {
-            this.sendTravelSignal(new BlockSignalBundle(packet, 152, LineColor.GREEN));
-        }
-        else
-        {
-            this.sendTravelSignal(new BlockSignalBundle(packet, 77, LineColor.RED));
-        }
-        
-        //lineAllGo(packet);
-    }
-    
-    private void lineAllGo(DispatchBundle packet)
-    {
-        for (int i = 62 ; i <= 73; i++)
-        {
-            //sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, i, LineColor.GREEN));
-            this.controllers[1].sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, i, LineColor.GREEN));
-        }
-    }
-    
-    private void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
-    {
-        /*ArrayList<ArrayList<Block>> list;
-        list = new ArrayList<>(controllerCount);*/
-        
-        for (Block b : blockArray)
-        {
-            for (TrackController tc : this.controllers)
-            {
-                if (tc.getLine() == line && tc.containsBlock(b.getBlockID()))
-                {
-                    //list.get(tc.getId()).add(b);
-                   // System.out.println("Adding block with blockID: " + b.getBlockID());
-                    tc.addBlock(b);
-                }
-                      
-            }
-        }
-        /*
-        for (TrackController tc : this.controllers)
-        {
-            if (tc.getLine() == line)
-            {
-                tc.setTrackBlockInfo(list.get(tc.getId()));
-            }
-        }*/
-        
-    }
-    
-    public ArrayList<Block> getBlockInfoArray(LineColor line)
+   /* public ArrayList<Block> getBlockInfoArray(LineColor line)
     {
         ArrayList<Block> blockList;
         blockList = new ArrayList<>();
@@ -255,8 +115,46 @@ public final class Wayside {
         }
         
         return blockList;
-    }
+    }*/
     
+   /* public ArrayList<BlockInfoBundle> getBlockInfoCommands()
+    {
+        ArrayList<BlockInfoBundle> commands;
+        commands = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (BlockInfoBundle c : tc.getCommandBlockQueue())
+            {
+                commands.add(c);
+            }
+        }
+        
+        return commands;
+    }*/
+    
+   /* public ArrayList<BlockSignalBundle> getBlockSignalCommands()
+    {
+        ArrayList<BlockSignalBundle> commands;
+        commands = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (BlockSignalBundle c : tc.getCommandSignalQueue())
+            {
+                commands.add(c);
+            }
+        }
+        
+        return commands;
+    }*/
+    
+    /**
+     * This method returns an array of signals indicating which blocks are currently
+     * being observed as occupied.
+     * @return ArrayList<BlockSignalBundle> This returns an array containing info for all occupied
+     * blocks in the track model.
+     */
     public ArrayList<BlockSignalBundle> getOccupancyInfo()
     {
         ArrayList<BlockSignalBundle> occupiedBlocks;
@@ -271,11 +169,26 @@ public final class Wayside {
                 occupiedBlocks.add(currentSignal);
             }
         }
-        
-        
-        
+
         return occupiedBlocks;
     }
+    
+    /*
+    public ArrayList<Switch> getSwitchCommands()
+    {
+        ArrayList<Switch> commands;
+        commands = new ArrayList<>();
+        
+        for (TrackController tc : this.controllers)
+        {
+            for (Switch c : tc.getCommandSwitchQueue())
+            {
+                commands.add(c);
+            }
+        }
+        
+        return commands;
+    }*/
     
     public ArrayList<Switch> getSwitchInfo()
     {
@@ -293,82 +206,76 @@ public final class Wayside {
         return switchInfo;
     }
     
-    private void setSwitchArray(List<Switch> switchArray)
+    public void sendDispatchSignal(DispatchBundle packet)
     {
-        /*List<List<Switch>> list;
-        list = new ArrayList<>(controllerCount);*/
-        //LineColor line = switchArray.get(0).lineID;
-        LineColor line;
-        
-        for (Switch s : switchArray)
+        //System.out.println("Go you damn train! To line: " + packet.toLine + " train ID: " + packet.trainID + " also packet blockid " + packet.BlockID);
+        if (packet == null)
         {
-            line = s.lineID;
-            for (TrackController tc : this.controllers)
+            System.out.println("Wayside - sendDispatchBundle - packet is null");
+            return;
+        }
+        this.track.setDispatchSignal(packet.copy());
+        if (packet.toLine == LineColor.GREEN)
+        {
+            this.sendTravelSignal(new BlockSignalBundle(packet, 152, LineColor.GREEN));
+        }
+        else
+        {
+            this.sendTravelSignal(new BlockSignalBundle(packet, 77, LineColor.RED));
+        }
+    }
+    
+    public void sendSwitchStateSignal(Switch packet)
+    {
+        for (TrackController tc : this.controllers)
+        {
+            if (tc.getLine() == packet.lineID && (tc.containsBlock(packet.straightBlock) || 
+                    tc.containsBlock(packet.approachBlock) || tc.containsBlock(packet.divergentBlock) ))
             {
-                if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock) || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
+                tc.sendSwitchStateSignal(new Switch(packet.lineID, packet.switchID, packet.approachBlock, packet.straightBlock, packet.divergentBlock, packet.straight));
+                break;
+            }
+        }
+    }
+    
+    public void sendTravelSignal(BlockSignalBundle packet)
+    {
+        if (packet == null) 
+        {
+            System.out.println("Wayside - sendTravelSignal - packet is null");
+            return;
+        
+        }
+        LineColor line = packet.LineID;
+        int blockNum = packet.BlockID;
+        
+        for (int i=0; i < controllerCount; i++)
+        {
+            if (controllers[i].getLine() == line)
+            {
+                for (int b : controllers[i].getBlockNums() )
                 {
-                    tc.addSwitch(s);
-                   // System.out.println("Adding switch with ID: " + s.switchID + " to TC: " + tc.getId());
+                    if (b == blockNum)
+                    {
+                       // System.out.println("Sending signal: to block " + packet.BlockID + " to line " + packet.LineID + " with auth " + packet.Authority + " with speed " + packet.Speed + " with dest " + packet.Destination);
+                       // System.out.println("To controller " + i);
+                        this.controllers[i].sendTravelSignal(packet.copy());
+                    }
                 }
-                      
             }
         }
-        
-      /*  for (TrackController tc : this.controllers)
-        {
-            if (tc.getLine() == line)
-            {
-                tc.setSwitchInfo((ArrayList<Switch>) list.get(tc.getId()));
-            }
-        }*/
     }
     
-    public ArrayList<BlockSignalBundle> getBlockSignalCommands()
+    public void StartSimulation()
     {
-        ArrayList<BlockSignalBundle> commands;
-        commands = new ArrayList<>();
+        //put each tc into a thread and start those bad boys
+        this.startControllers();
         
-        for (TrackController tc : this.controllers)
-        {
-            for (BlockSignalBundle c : tc.getCommandSignalQueue())
-            {
-                commands.add(c);
-            }
-        }
-        
-        return commands;
     }
     
-    public ArrayList<BlockInfoBundle> getBlockInfoCommands()
+    public void StopSimulation()
     {
-        ArrayList<BlockInfoBundle> commands;
-        commands = new ArrayList<>();
         
-        for (TrackController tc : this.controllers)
-        {
-            for (BlockInfoBundle c : tc.getCommandBlockQueue())
-            {
-                commands.add(c);
-            }
-        }
-        
-        return commands;
-    }
-    
-    public ArrayList<Switch> getSwitchCommands()
-    {
-        ArrayList<Switch> commands;
-        commands = new ArrayList<>();
-        
-        for (TrackController tc : this.controllers)
-        {
-            for (Switch c : tc.getCommandSwitchQueue())
-            {
-                commands.add(c);
-            }
-        }
-        
-        return commands;
     }
     
     private void configurePLCs()
@@ -379,8 +286,50 @@ public final class Wayside {
         }
     }
     
-   
+    private void setBlockInfoArray(ArrayList<Block> blockArray, LineColor line)
+    {
+        
+        for (Block b : blockArray)
+        {
+            for (TrackController tc : this.controllers)
+            {
+                if (tc.getLine() == line && tc.containsBlock(b.getBlockID()))
+                {
+                    tc.addBlock(b);
+                }
+                      
+            }
+        }    
+    }
     
+    private void setSwitchArray(List<Switch> switchArray)
+    {
+        LineColor line;
+        
+        for (Switch s : switchArray)
+        {
+            line = s.lineID;
+            for (TrackController tc : this.controllers)
+            {
+                if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock) || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
+                {
+                    tc.addSwitch(s);
+                }
+                      
+            }
+        }
+    }
     
+    private void startControllers()
+    {
+        
+        TrackController tc0 = this.controllers[0];
+        TrackController tc1 = this.controllers[1];
+        TrackController tc2 = this.controllers[2];
+        
+        new Thread(tc0).start();
+        new Thread(tc1).start();
+        new Thread(tc2).start();
+    }
     
 }

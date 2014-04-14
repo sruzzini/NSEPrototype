@@ -6,28 +6,26 @@
 
 package DataLayer.Wayside;
 
-import DataLayer.Bundles.BlockInfoBundle;
-import DataLayer.Bundles.BlockSignalBundle;
-import DataLayer.EnumTypes.LineColor;
-import DataLayer.TrackModel.Block;
-import DataLayer.TrackModel.Switch;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import DataLayer.Bundles.*;
+import DataLayer.EnumTypes.*;
+import DataLayer.TrackModel.*;
+import java.util.*;
 
 /**
  *
  * @author nwhachten
  */
 public class PLCGreenThree extends PLC{
-    int trainsInLoop;
-    int trainsAway;
-    int trainsComing;
-    boolean enteringLoop;
-    boolean trainExiting;
-    boolean trainWaitingAt76;
-    boolean trainPassingThru76;
-    boolean trainWaitingAt100;
-    boolean trainPassingThru100;
+    private boolean enteringLoop;
+    private int trainsAway;
+    private int trainsComing;
+    private boolean trainExiting;
+    private int trainsInLoop;
+    private boolean trainPassingThru100;
+    private boolean trainPassingThru76;
+    private boolean trainWaitingAt100;
+    private boolean trainWaitingAt76;
+
 
     public PLCGreenThree(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
         super(id, line, blocks, blockArray, switches);
