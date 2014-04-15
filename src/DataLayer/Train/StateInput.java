@@ -11,15 +11,16 @@ package DataLayer.Train;
  * @author drewwinfield
  */
 public class StateInput {
-    public boolean RightDoors;
-    public boolean LeftDoors;
-    public boolean IntLights;
-    public boolean ExtLights;
-    public int Temperature;
-    public boolean Heater;
-    public String Announcement;
-    public String Advertisement;
     
+    public String Advertisement;
+    public String Announcement;
+    public boolean ExtLights;
+    public boolean Heater;
+    public boolean IntLights;
+    public boolean LeftDoors;
+    public boolean RightDoors;
+    public int Temperature;
+
     public StateInput()
     {
         RightDoors = false;
