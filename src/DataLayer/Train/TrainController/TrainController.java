@@ -11,6 +11,7 @@
  *****************************************************************************/
 
 package DataLayer.Train.TrainController;
+import DataLayer.SystemTime;
 import DataLayer.TrackModel.TrackSignal;
 import DataLayer.TrackModel.BeaconSignal;
 import DataLayer.Train.*;
@@ -59,8 +60,8 @@ public class TrainController
     private double samplePeriod; //sample period to calculate power
     private double stopBrakeEngageDelay; //time delay from passing a beacon to engaging the service brake
     private boolean stoppedAtStation; //boolean true if train is stopped at a station
-    private long stoppedAtStationTime; //time the train first stops at a station
-    private long time; //current time
+    private SystemTime stoppedAtStationTime; //time the train first stops at a station
+    private SystemTime time; //current time
     private int timeMultiplier; //multiplier for time representaiton
     private TrackSignal trackSignal; //TrackSignal used ot calculate outputs
     private TrainStatus trainStatus; //TrainStatus used to calculate outputs
@@ -75,8 +76,8 @@ public class TrainController
         this.stoppedAtStation = false;
         this.timeMultiplier = 1;
         this.beaconSignalReceived = 0;
-        this.stoppedAtStationTime = 0;
-        this.time = System.currentTimeMillis();
+        this.stoppedAtStationTime = new SystemTime();
+        this.time = new SystemTime();
         this.stopBrakeEngageDelay = 0;
         this.samplePeriod = TrainController.STANDARD_SAMPLE_PERIOD;
         this.trainStatus = new TrainStatus();
@@ -94,7 +95,7 @@ public class TrainController
         this.DesiredTemperature = TrainController.ROOM_TEMP;
     }
     
-    public TrainController(int multiplier, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
+    public TrainController(int multiplier, SystemTime time, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
     {
         this.iD = 0;
         this.engagingStop = false;
@@ -102,9 +103,9 @@ public class TrainController
         this.stoppedAtStation = false;
         this.timeMultiplier = multiplier;
         this.beaconSignalReceived = 0;
-        this.time = System.currentTimeMillis();
+        this.time = time;
         this.stopBrakeEngageDelay = 0;
-        this.stoppedAtStationTime = 0;
+        this.stoppedAtStationTime = new SystemTime();
         this.samplePeriod = TrainController.STANDARD_SAMPLE_PERIOD;
         this.trainStatus = status;
         this.trackSignal = signal;
@@ -121,7 +122,7 @@ public class TrainController
         this.DesiredTemperature = TrainController.ROOM_TEMP;
     }
     
-    public TrainController(int id, int multiplier, double period, TrainStatus t, TrackSignal s, double velocity,
+    public TrainController(int id, int multiplier, SystemTime time, double period, TrainStatus t, TrackSignal s, double velocity,
                            OperatorInputStatus ebrake, OperatorInputStatus sbrake, OperatorInputStatus elights, 
                            OperatorInputStatus ilights, OperatorInputStatus ldoor, OperatorInputStatus rdoor, double temp)
     {
@@ -131,9 +132,9 @@ public class TrainController
         this.stoppedAtStation = false;
         this.timeMultiplier = multiplier;
         this.beaconSignalReceived = 0;
-        this.time = System.currentTimeMillis();
+        this.time = time;
         this.stopBrakeEngageDelay = 0;
-        this.stoppedAtStationTime = 0;
+        this.stoppedAtStationTime = new SystemTime();
         this.samplePeriod = period;
         this.trainStatus = t;
         this.trackSignal = s;
@@ -229,6 +230,15 @@ public class TrainController
         this.calculateStop();
     }
     
+    /* SetTime(SystemTime time) sets the time of the controller
+     * Parameters:
+     *     SystemTime time - time to set
+    */
+    public void SetTime(SystemTime time)
+    {
+        this.time = time;
+    }
+    
     /* SetTimeMultiplier(int multiplier) sets the time multiplier of the controller
      * Parameters:
      *     int multiplier - multiplier to set
@@ -306,8 +316,10 @@ public class TrainController
     {
         boolean lights = false;
         boolean underground = this.trackSignal.getUndergroundStatus();
-        if ((underground && this.OperatorExtLights == OperatorInputStatus.AUTO) || //we're underground and the operator hasn't specified light command
-            (this.OperatorExtLights == OperatorInputStatus.ON)) //Operator turns the light on
+        if ((this.OperatorExtLights == OperatorInputStatus.ON) || //operator turns the lights on
+            (underground && this.OperatorExtLights == OperatorInputStatus.AUTO) || //we're underground and the operator hasn't specified light command
+            (this.time.Hour >= 17 && this.OperatorExtLights == OperatorInputStatus.AUTO) || //it's 5pm or after
+            (this.time.Hour < 8 && this.OperatorExtLights == OperatorInputStatus.AUTO)) //it's before 8am
         {
             lights = true;
         }
@@ -322,9 +334,11 @@ public class TrainController
         boolean lights = false;
         boolean underground = this.trackSignal.getUndergroundStatus();
         boolean doorsOpen = (this.trainStatus.GetLeftDoorStatus() || this.trainStatus.GetRightDoorStatus());
-        if ((underground && this.OperatorIntLights == OperatorInputStatus.AUTO) || //we're underground and the operator hasn't specified light command
+        if ((this.OperatorIntLights == OperatorInputStatus.ON) || //Operator turns the light on
+            (underground && this.OperatorIntLights == OperatorInputStatus.AUTO) || //we're underground and the operator hasn't specified light command
             (doorsOpen) || //doors are open (keep lights on for passengers entering and exiting
-            (this.OperatorIntLights == OperatorInputStatus.ON)) //Operator turns the light on
+            (this.time.Hour >= 17 && this.OperatorExtLights == OperatorInputStatus.AUTO) || //it's 5pm or after
+            (this.time.Hour < 8 && this.OperatorExtLights == OperatorInputStatus.AUTO)) //it's before 8am
         {
             lights = true;
         }
@@ -340,7 +354,7 @@ public class TrainController
     {
         boolean door = false;
         if ((vCurr == 0) && (this.OperatorLeftDoor == OperatorInputStatus.ON) ||  //Train is stopped and conductor has left door input on
-            (this.stoppedAtStation && !this.lastBeacon.StationOnRight && (((System.currentTimeMillis() - this.stoppedAtStationTime) * this.timeMultiplier) >= MILLISECONDS_MINUTE))) //stopped and station on the left
+            (this.stoppedAtStation && !this.lastBeacon.StationOnRight && (this.time.SecondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) //stopped and station on the left and it's not been a minute
         {
             door = true;
         }
@@ -356,7 +370,7 @@ public class TrainController
     {
         boolean door = false;
         if ((vCurr == 0) && (this.OperatorRightDoor == OperatorInputStatus.ON) || //Train is stopped and conductor has right door input on
-            (this.stoppedAtStation && this.lastBeacon.StationOnRight && (((System.currentTimeMillis() - this.stoppedAtStationTime) * this.timeMultiplier) >= MILLISECONDS_MINUTE))) // stopped and station on the right
+            (this.stoppedAtStation && this.lastBeacon.StationOnRight && (this.time.SecondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) // stopped and station on the right and it's not been a minute
         {
             door = true;
         }
@@ -389,7 +403,7 @@ public class TrainController
         
         //check for releasing brake after done stopping
         if (this.stoppedAtStation &&  //stopped at a station
-            (((System.currentTimeMillis() - this.stoppedAtStationTime) * this.timeMultiplier) >= MILLISECONDS_MINUTE) && //it's been a minute
+            (this.time.SecondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been a minute
             !this.trainStatus.GetRightDoorStatus() && //right doors closed
             !this.trainStatus.GetLeftDoorStatus()) //left doors closed
         {
@@ -469,7 +483,7 @@ public class TrainController
         if (this.engagingStop && (this.trainStatus.GetVelocity() == 0))
         {
             this.stoppedAtStation = true;
-            this.stoppedAtStationTime = System.currentTimeMillis();
+            this.stoppedAtStationTime = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier);
         }
         
         //calculate power output

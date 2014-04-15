@@ -12,6 +12,7 @@
  *****************************************************************************/
 
 package DataLayer.Train;
+import DataLayer.SystemTime;
 import DataLayer.TrackModel.*;
 import DataLayer.Train.TrainModel.*;
 import DataLayer.Train.TrainController.*;
@@ -32,6 +33,7 @@ public class Train implements Runnable
     private PhysicsInput physicsInput; //physics commands
     private StateInput stateInput; //state commands
     private TrainStatus status; //current status of the train (calculated by model)
+    private SystemTime time;
     private int timeMultiplier; //time multiplier of a train
     private TrackSignal trackSignal; //signal from the current track block
     
@@ -42,45 +44,48 @@ public class Train implements Runnable
         this.isRunning = new Boolean(false);
         this.iD = 1;
         this.timeMultiplier = 1;
+        this.time = new SystemTime();
         this.status = new TrainStatus();
         this.commands = new TrainCommand();
         this.physicsInput = new PhysicsInput();
         this.stateInput = new StateInput();
         this.trackSignal = new TrackSignal();
         this.beaconSignal = null;
-        this.Controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
+        this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
         this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
     }
     
-    public Train(int id, Boolean running)
+    public Train(int id, Boolean running, SystemTime time)
     {
         this.isRunning = running;
         this.iD = id;
         this.timeMultiplier = 1;
+        this.time = time;
         this.status = new TrainStatus();
         this.commands = new TrainCommand();
         this.physicsInput = new PhysicsInput();
         this.stateInput = new StateInput();
         this.trackSignal = new TrackSignal();
         this.beaconSignal = null;
-        this.Controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
+        this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
         this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
     }
     
-    public Train(int id, int multiplier, Boolean running, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
+    public Train(int id, int multiplier, SystemTime time, Boolean running, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
     {
         this.isRunning = running;
         this.iD = id;
         this.timeMultiplier = multiplier;
+        this.time = time;
         this.status = status;
         this.commands = new TrainCommand();
         this.physicsInput = new PhysicsInput();
         this.stateInput = new StateInput();
         this.trackSignal = signal;
         this.beaconSignal = beacon;
-        this.Controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
+        this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
         this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
     }
@@ -146,8 +151,9 @@ public class Train implements Runnable
     */
     public void SetTimeMultiplier(int i)
     {
-        this.timeMultiplier = i;
-        this.Controller.SetTimeMultiplier(this.timeMultiplier);
+        this.timeMultiplier = i; //sets train time multiplier
+        this.Controller.SetTimeMultiplier(this.timeMultiplier); //sets time multiplier for the controller
+        this.Model.physics.setTimeMultiplier(this.timeMultiplier); //sets time multiplier for physics engine in the model
     }
     
     /* SetTrackSignal(TrackSignal s) sets the track signal of the train
