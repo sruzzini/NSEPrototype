@@ -23,6 +23,7 @@ public class NSEMain
         gui.SetNSE(nse);
         gui.UpdateTrainSelectList();
         gui.SetTrackModel(nse.Track);
+        gui.SetWayside(nse.Wayside);
         new Thread(gui).start();
     }
 }
