@@ -21,15 +21,16 @@ import DataLayer.Wayside.*;
 public class TrainController 
 {
     //Constants
-    private static final double INTEGRAL_GAIN = 27; //Ki
     public static final double MAX_TRAIN_MOTOR_POWER = 120000; //120 KW
     public static final double MAX_TRAIN_SPEED = 19.444; //70 km/hr in m/s
     public static final double MILLISECONDS_MINUTE = 60000; //number of milliseconds in a minute
-    private static final double MIN_VERROR_FOR_S_BRAKE = -.89408; //-5 mph
-    private static final double PROPORTIONAL_GAIN = 100000; //Kp
     public static final double ROOM_TEMP = 21.1; //70 degrees fahrenheit, in celsius
     public static final double SERVICE_BRAKE_FORCE = 61718.7; //force of the service brake
     public static final double STANDARD_SAMPLE_PERIOD = 0.1; //sample period of the train controller
+    private static final double BEACON_DISTANCE_FROM_STATION = 173.35; //distance for beacon from station (meters)
+    private static final double INTEGRAL_GAIN = 27; //Ki
+    private static final double MIN_VERROR_FOR_S_BRAKE = -.89408; //-5 mph
+    private static final double PROPORTIONAL_GAIN = 100000; //Kp
     
     //Enumerated types
     public enum OperatorInputStatus //status of a user input
@@ -425,8 +426,10 @@ public class TrainController
     // calculateStopBrakeDelay() calculates the delay to engage the service brake when stopping
     private void calculateStopBrakeDelay()
     {
-        this.stopBrakeEngageDelay = (((TrainStatus.MAX_TRAIN_MASS / TrainController.SERVICE_BRAKE_FORCE) * Wayside.STOP_SPEED) -
-                                     ((this.trainStatus.GetMass() / TrainController.SERVICE_BRAKE_FORCE) * Wayside.STOP_SPEED));
+        double stopTime = ((this.trainStatus.GetMass() * this.trainStatus.GetVelocity()) / TrainController.SERVICE_BRAKE_FORCE); //calculate time it takes to stop the train now
+        double stopDistance = ((this.trainStatus.GetVelocity() / 2) * stopTime); //distance it takes to stop
+        double distanceUntilEngagingStop = (TrainController.BEACON_DISTANCE_FROM_STATION - stopDistance);
+        this.stopBrakeEngageDelay = (distanceUntilEngagingStop / this.trainStatus.GetVelocity()); //calculate time until getting to brake engage point
     }
     
     /* calculateTrainCommand() calculates a command ot send to the train
@@ -444,7 +447,11 @@ public class TrainController
         //Choose safe velocity
         if (trainFailure == 0) //as long as there isn't a failure
         {
-            if (this.VelocitySetPoint < velocityCommand) //if Vsetpoint is less than Vcommand, that is the safe speed
+            if (this.preparingStop && !this.engagingStop) //if passed a beacon and preparing to stop make sure the safe velocity is the current velocity for accurate stop at station
+            {
+                safeVelocity = currTrainVelocity;
+            }
+            else if (this.VelocitySetPoint < velocityCommand) //if Vsetpoint is less than Vcommand, that is the safe speed
             {
                 safeVelocity = this.VelocitySetPoint;
             } 
