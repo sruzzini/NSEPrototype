@@ -96,9 +96,31 @@ public final class Wayside
         this.setSwitchArray(track.theLines.get(0).theSwitches);
         this.setSwitchArray(track.theLines.get(1).theSwitches);
         this.configurePLCs();
+  
+    }
+    
+    public TrackController getController(int n)
+    {
+        return this.controllers[n];
+    }
+    
+    public String[] getControllerNames()
+    {
+        String[] names = new String[controllerCount];
+        int i = 0;
+        
+        for (TrackController tc : this.controllers)
+        {
+            names[i++] = tc.toString();
+        }
         
         
-        
+        return names;
+    }
+    
+    public TrackController[] getControllers()
+    {
+        return this.controllers;
     }
     
    /* public ArrayList<Block> getBlockInfoArray(LineColor line)
@@ -238,14 +260,15 @@ public final class Wayside
         }
     }
     
-    public void sendTravelSignal(BlockSignalBundle packet)
+   /* public void sendTravelSignal(BlockSignalBundle sentPacket)
     {
-        if (packet == null) 
+        if (sentPacket == null) 
         {
             System.out.println("Wayside - sendTravelSignal - packet is null");
             return;
         
         }
+        BlockSignalBundle packet = sentPacket.copy();
         LineColor line = packet.LineID;
         int blockNum = packet.BlockID;
         
@@ -264,6 +287,74 @@ public final class Wayside
                 }
             }
         }
+    }*/
+    
+    public void sendTravelSignal(ArrayList<BlockSignalBundle> signal)
+    {
+        for (BlockSignalBundle packet : signal)
+        {
+            if (packet == null)
+            {
+                System.out.println("Wayside - sendTravelSignal array version - packet is null");
+            }
+            
+            LineColor line = packet.LineID;
+            int blockNum = packet.BlockID;
+            BlockSignalBundle returnedBundle;
+            
+           // System.out.println("Wayside - sendTravelSignal array version - received travel signal for block " + blockNum + " and authority " + packet.Authority);
+            
+            
+            for (TrackController tc : this.controllers)
+            {
+                if (tc.getLine() == line)
+                {
+                    if (tc.containsBlock(blockNum))
+                    {
+                        tc.sendTravelSignal2(packet.copy());
+                    }
+                }
+            }
+        }
+    }
+    
+    public void sendTravelSignal(BlockSignalBundle packet)
+    {
+        if (packet == null)
+        {
+            System.out.println("Wayside - sendTravelSignal - packet is null");
+        }
+        else
+        {
+            
+            LineColor line = packet.LineID;
+            int blockNum = packet.BlockID;
+            BlockSignalBundle returnedBundle;
+            
+            //System.out.println("Wayside - sendTravelSignal - received travel signal for block " + blockNum + " and authority " + packet.Authority);
+            
+            
+            for (TrackController tc : this.controllers)
+            {
+                if (tc.getLine() == line)
+                {
+                    if (tc.containsBlock(blockNum))
+                    {
+                        returnedBundle = tc.sendTravelSignal(packet.copy());
+                        if (returnedBundle == null)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            this.sendTravelSignal(returnedBundle);
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
     }
     
     public void StartSimulation()

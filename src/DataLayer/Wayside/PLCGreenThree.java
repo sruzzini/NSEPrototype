@@ -78,7 +78,7 @@ public class PLCGreenThree extends PLC{
                // c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
                 //        block149.getDestination(), block149.getSpeedLimit(), 149, LineColor.GREEN));
                 c.pushCommand(new BlockSignalBundle(block76.getAuthority(), 
-                        block76.getDestination(), block76.getSpeedLimit(), 150, LineColor.GREEN));
+                        block76.getDestination(), block76.getSpeedLimit(), block76.getBlockID(), LineColor.GREEN));
                 trainWaitingAt76 = false;
                 trainPassingThru76 = true;
             }
@@ -116,7 +116,7 @@ public class PLCGreenThree extends PLC{
             {
                 //push switch signal to set switch -2 towards A
                 boolean dir = false;
-                if (switch6.straightBlock == 1) dir = true;
+                if (switch6.straightBlock == 86) dir = true;
                 c.pushCommand(new Switch(switch6.lineID, switch6.switchID, 
                         switch6.approachBlock, switch6.straightBlock, 
                         switch6.divergentBlock, dir));
@@ -141,7 +141,7 @@ public class PLCGreenThree extends PLC{
                 trainWaitingAt100 = false;
                 //push switch signal to set switch -2 to point towards block 1
                 boolean dir = false;
-                if (switch6.straightBlock == 1) dir = true;
+                if (switch6.straightBlock == 100) dir = true;
                 c.pushCommand(new Switch(switch6.lineID, switch6.switchID, 
                         switch6.approachBlock, switch6.straightBlock, switch6.divergentBlock, dir));
                 //push signal to block one to tell train to go
