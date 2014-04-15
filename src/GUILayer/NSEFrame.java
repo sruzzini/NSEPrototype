@@ -41,9 +41,9 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.trackModelPanel1.setTrack(t);
     }
     
-    public void setWayside(Wayside w)
+    public void SetWayside(Wayside w)
     {
-        this.waysidePanel1.setWayside(w);
+       this.waysidePanel1.setWayside(w);
     }
     
     public void UpdateTrainSelectList()
@@ -131,14 +131,14 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+                .addContainerGap())
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 154, Short.MAX_VALUE))
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Waysides", Waysides_panel);
