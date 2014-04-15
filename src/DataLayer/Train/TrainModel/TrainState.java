@@ -59,7 +59,6 @@ public class TrainState {
             setAdvertisement(newAd);
             adTimer = Calendar.getInstance().getTimeInMillis();
         }
-    
     }
     public String getAdvertisement()
     {
@@ -94,7 +93,6 @@ public class TrainState {
     {
         return temperature;
     }
-    
     public void setAnnouncement(String newAnnouncement)
     {
         announcement = newAnnouncement;
@@ -124,12 +122,10 @@ public class TrainState {
     {
         rightDoors = state;
     }
-
     public void setTemperature(int newTemp)
     {
         temperature = newTemp;
     }    
-    
     public void updateState()
     {
         rightDoors = stateInput.RightDoors;
