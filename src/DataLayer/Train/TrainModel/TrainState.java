@@ -6,6 +6,8 @@
 
 package DataLayer.Train.TrainModel;
 import DataLayer.Train.StateInput;
+import java.util.Calendar;
+import java.util.Random;
 
 /**
  *
@@ -14,7 +16,11 @@ import DataLayer.Train.StateInput;
 public class TrainState {
     
     private String announcement;
+    private String[] actions = {"Buy", "Sell"};
+    private String[] things = {"Cars", "Stocks", "Houses", "Cows"};
     private String advertisement;
+    private long adTimer;
+    private long adInterval = 30 * 1000;
     private boolean extLights;
     private boolean heater;
     private boolean leftDoors;
@@ -33,7 +39,8 @@ public class TrainState {
         heater = false;
         temperature = 65;
         advertisement = "";
-        
+        adTimer = 0;
+        generateAd();
     }
     
     // unless we have a train state thread doing the updating, pretty sure 
@@ -42,8 +49,21 @@ public class TrainState {
     {
         stateInput = ms;
     }
+    public void generateAd()
+    {
+        String newAd;
+        Random r = new Random(Calendar.getInstance().getTimeInMillis());
+        if (Calendar.getInstance().getTimeInMillis() > adTimer + adInterval)
+        {
+            newAd = actions[r.nextInt(actions.length)] + " " + things[r.nextInt(things.length)] + " Now!";
+            setAdvertisement(newAd);
+            adTimer = Calendar.getInstance().getTimeInMillis();
+        }
+    
+    }
     public String getAdvertisement()
     {
+        generateAd();
         return advertisement;
     }
     public String getAnnouncement()
@@ -118,7 +138,7 @@ public class TrainState {
         extLights = stateInput.ExtLights;
         announcement = stateInput.Announcement;
         heater = stateInput.Heater;
-        advertisement = stateInput.Advertisement; 
+        stateInput.Advertisement = advertisement; 
         stateInput.Temperature = temperature;
     }
 }
