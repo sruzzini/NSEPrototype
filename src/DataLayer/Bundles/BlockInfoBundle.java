@@ -48,5 +48,11 @@ public class BlockInfoBundle extends BlockBundle {
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "BlockInfoBundle - Block: " + this.BlockID + "  Line: " + this.LineID + "  Light: " + this.LightColor + "  Xing: " + this.RRXingState + "\n";
+    }
+    
     
 }
