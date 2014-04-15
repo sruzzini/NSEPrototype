@@ -51,6 +51,11 @@ public class TMOutput extends javax.swing.JPanel {
         String announcement = trainState.getAnnouncement();
         
         velocity = velocity * 2.23694; // conversion from m/s to mph
+        // correct for rounding error
+        if (velocity > 43.5)
+        {
+            velocity = 43.5;
+        }
         velocityDisplayBox.setText(df.format(velocity));
         
         if (sBrake)
@@ -152,8 +157,8 @@ public class TMOutput extends javax.swing.JPanel {
         heaterDisplayBox = new javax.swing.JTextField();
         announcementDisplayBox = new javax.swing.JTextField();
         announcementOutputLabel = new javax.swing.JLabel();
-        advertisementOutputLabel = new javax.swing.JTextField();
-        advertisementDisplayBox = new javax.swing.JLabel();
+        advertisementDisplayBox = new javax.swing.JTextField();
+        advertisementOutputLabel = new javax.swing.JLabel();
 
         outputsLabel.setText("Outputs");
 
@@ -200,9 +205,9 @@ public class TMOutput extends javax.swing.JPanel {
 
         announcementOutputLabel.setText("Announcement");
 
-        advertisementOutputLabel.setText("Advertisement");
-
         advertisementDisplayBox.setText("Advertisement");
+
+        advertisementOutputLabel.setText("Advertisement");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -223,10 +228,10 @@ public class TMOutput extends javax.swing.JPanel {
                         .addGap(113, 113, 113)
                         .addComponent(outputsLabel))
                     .addComponent(announcementOutputLabel)
-                    .addComponent(advertisementDisplayBox))
+                    .addComponent(advertisementOutputLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(advertisementOutputLabel)
+                    .addComponent(advertisementDisplayBox)
                     .addComponent(announcementDisplayBox, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,8 +294,8 @@ public class TMOutput extends javax.swing.JPanel {
                     .addComponent(announcementOutputLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(advertisementOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(advertisementDisplayBox))
+                    .addComponent(advertisementDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(advertisementOutputLabel))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -301,8 +306,8 @@ public class TMOutput extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel advertisementDisplayBox;
-    private javax.swing.JTextField advertisementOutputLabel;
+    private javax.swing.JTextField advertisementDisplayBox;
+    private javax.swing.JLabel advertisementOutputLabel;
     private javax.swing.JTextField announcementDisplayBox;
     private javax.swing.JLabel announcementOutputLabel;
     private javax.swing.JTextField eBrakeDisplayBox;

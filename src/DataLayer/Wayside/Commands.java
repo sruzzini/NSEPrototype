@@ -117,15 +117,18 @@ public class Commands {
         
         for (BlockSignalBundle b : this.blockSignalCommands)
         {
-            s += "Signal Command - block: " + b.BlockID + " authority: " + b.Authority + " speed: " + b.Authority + " destination: " + b.Destination + "\n";
+            //s += "Signal Command - block: " + b.BlockID + " authority: " + b.Authority + " speed: " + b.Authority + " destination: " + b.Destination + "\n";
+            s += b.toString();
         }
         for (BlockInfoBundle b : this.blockInfoCommands)
         {
-            s += "Info Command - block: " + b.BlockID + " light color: " + b.LightColor + " crossing state: " + b.RRXingState + "\n";
+            //s += "Info Command - block: " + b.BlockID + " light color: " + b.LightColor + " crossing state: " + b.RRXingState + "\n";
+            s += b.toString();
         }
         for (Switch sw : this.switchCommands)
         {
             s += "Switch Command - switch: " + (sw.switchID -1) + " straight block: " + sw.straightBlock + " divergent block: " + sw.divergentBlock + " is straight: " + sw.straight + "\n";
+            //s += sw.toString();
         }
         
         

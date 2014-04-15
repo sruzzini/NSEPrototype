@@ -16,40 +16,33 @@ import DataLayer.Train.TrainStatus;
 public class PhysicsEngine implements Runnable 
 {
     
-    private double motorPower;
-    private int passengers;
-    private double mass;
-    private double gradient;
-    private boolean sBrakeStatus;
-    private boolean eBrakeStatus;
-    private int time_multiplier;
-    private boolean passengerEBrakeRequest;
-    
-    private double velocity;
-    private double delta_x;
-    
-    PhysicsInput physicsInput;
-    
-    private final double passengerMass = 70; // avg weight of a passenger, in kg.  maybe.
-    private final double trackCoeffFric = .005; // track's coefficient of friction
-    private final double g = 9.8; // accel due to gravity, in m/s^2
-    
-    private final double maxSpeed = 19.44; // in m/s
-    private final int maxPassengers = 222; // max number of persons on train
     private final int crewCount = 5;
+    private double delta_x;
+    private boolean  eBrakeFailure;
+    private boolean eBrakeStatus;
     private final double emptyMass = 40900; // in kg
+    private boolean engineFailure;
     private final double fullMass = 56700; // in kg
-    
+    private final double g = 9.8; // accel due to gravity, in m/s^2
+    private double gradient;
+    private double mass;
+    private final int maxPassengers = 222; // max number of persons on train
+    private final double maxSpeed = 19.44; // in m/s
+    private double motorPower;
+    private boolean passengerEBrakeRequest;
+    private final double passengerMass = 70; // avg weight of a passenger, in kg.  maybe.
+    private int passengers;
+    PhysicsInput physicsInput;
+    private boolean  sBrakeFailure;
+    private boolean sBrakeStatus;
+    private boolean signalFailure;
+    private int time_multiplier;
+    private final double trackCoeffFric = .005; // track's coefficient of friction
     private final double twoThirdLoadMaxAccel = .5; // train's max accel at 2/3 load, in m/s^2
     private final double twoThirdLoadSBrakeAccel = 1.2; // magnitude of service brake decel at 2/3 load, in m/s^2
     private final double twoThirdLoadEBrakeAccel = 2.73; // magnitude of emergency brake decel at 2/3 load, in m/s^2
-    
-    private boolean engineFailure;
-    private boolean signalFailure;
-    private boolean  sBrakeFailure;
-    private boolean  eBrakeFailure;
-    
-    
+    private double velocity;
+
     public PhysicsEngine()
     {
         motorPower = 0; // in watts
@@ -68,107 +61,7 @@ public class PhysicsEngine implements Runnable
     {
         physicsInput = mp;
     }
-    // Velocity
-    public double getVelocity()
-    {
-        return velocity;
-    }   
-    // Power
-    public void setPower(double power)
-    {
-        if (power > 120000)
-        {
-            motorPower = 120000;
-        }
-        else if (power < 0)
-        {
-            motorPower = 0;
-        }
-        else
-        {
-            motorPower = power;
-        }
-    }
-    public double getPower()
-    {
-        return motorPower;
-    }
-    
-    // Service brake
-    public void setServiceBrake(boolean value)
-    {
-        sBrakeStatus = value;
-    }
-    public boolean getServiceBrake()
-    {
-        return sBrakeStatus;
-    }
-    
-    // Emergency brake
-    public void setEmergencyBrake(boolean value)
-    {
-        eBrakeStatus = value;
-    }
-    public boolean getEmergencyBrake()
-    {
-        return eBrakeStatus;
-    }
-    
-    // Passenger E-brake request
-    public void setPassengerEBrakeRequest(boolean value)
-    {
-        passengerEBrakeRequest = value;
-    }
-    public boolean getPassengerEBrakeRequest()
-    {
-        return passengerEBrakeRequest;
-    }
-    
-    
-    // Time multiplier
-    public void setTimeMultiplier(int newMultiplier)
-    {
-        time_multiplier = newMultiplier;
-    }
-    public int getTimeMultiplier()
-    {
-        return time_multiplier;
-    }
-    
-    // passengers
-    public void setPassengers(int number)
-    {
-        if (passengers + number < 0)
-        {
-            passengers = 0;
-        }
-        else if (passengers + number > maxPassengers)
-        {
-            passengers = maxPassengers;
-        }
-        else
-        {
-            passengers = passengers + number;
-        }
-    }
-    public int getPassengers()
-    {
-        return passengers;
-    }
-    
-    // gradient
-    public void setGradient(double newGradient)
-    {
-        gradient = newGradient;
-    }
-    public double getGradients()
-    {
-        return gradient;
-    }
-    public double getMass()
-    {
-        return mass;
-    }
+
     public int computeFailureCode()
     {
         int failureCode = 0;
@@ -190,29 +83,147 @@ public class PhysicsEngine implements Runnable
         }
         return failureCode;
     }
+    public boolean getEmergencyBrake()
+    {
+        return eBrakeStatus;
+    }
     public int getFailureCode()
     {
         return computeFailureCode();
     }
-    public void setEngineFault(boolean val)
+    public double getGradient()
     {
-        engineFailure = val;
+        return gradient;
     }
-    public void setSignalFault(boolean val)
+    public double getMass()
     {
-        signalFailure = val;
+        return mass;
     }
-    public void setSBrakeFault(boolean val)
+    public boolean getPassengerEBrakeRequest()
     {
-        sBrakeFailure = val;
+        return passengerEBrakeRequest;
+    }
+    public int getPassengers()
+    {
+        return passengers;
+    }
+    private void getPhysicsInfo()
+    {
+        motorPower = physicsInput.MotorPower;
+        sBrakeStatus = physicsInput.SBrakeStatus;
+        eBrakeStatus = physicsInput.EBrakeStatus;
+        time_multiplier = physicsInput.Time_multiplier;
+        gradient = physicsInput.Gradient;
+        delta_x = physicsInput.Delta_x;
+        passengers = passengers + physicsInput.PassengerChange;
+    }
+    public double getPower()
+    {
+        return motorPower;
+    }
+    public boolean getServiceBrake()
+    {
+        return sBrakeStatus;
+    }
+    public int getTimeMultiplier()
+    {
+        return time_multiplier;
+    }
+    public double getVelocity()
+    {
+        return velocity;
+    }   
+    private void sendPhysicsInfo()
+    {
+        physicsInput.Velocity = velocity;
+        physicsInput.Delta_x = delta_x;
+        physicsInput.Mass = mass;
+        physicsInput.EBrakeFailure = eBrakeFailure;
+        physicsInput.SBrakeFailure = sBrakeFailure;
+        physicsInput.SignalFailure = signalFailure;
+        physicsInput.EngineFailure = engineFailure;
+    }
+    public void setGradient(double newGradient)
+    {
+        gradient = newGradient;
+    }
+    public void setEmergencyBrake(boolean value)
+    {
+        eBrakeStatus = value;
     }
     public void setEBrakeFault(boolean val)
     {
         eBrakeFailure = val;
     }
+    public void setEngineFault(boolean val)
+    {
+        engineFailure = val;
+    }
+
+    public void setPassengerEBrakeRequest(boolean value)
+    {
+        passengerEBrakeRequest = value;
+    }
+    
+    public void setPassengers(int number)
+    {
+        if (passengers + number < 0)
+        {
+            passengers = 0;
+        }
+        else if (passengers + number > maxPassengers)
+        {
+            passengers = maxPassengers;
+        }
+        else
+        {
+            passengers = passengers + number;
+        }
+    }
+    
+    public void setPower(double power)
+    {
+        if (power > 120000)
+        {
+            motorPower = 120000;
+        }
+        else if (power < 0)
+        {
+            motorPower = 0;
+        }
+        else
+        {
+            motorPower = power;
+        }
+    }
+
+    public void setSBrakeFault(boolean val)
+    {
+        sBrakeFailure = val;
+    }
+    public void setServiceBrake(boolean value)
+    {
+        sBrakeStatus = value;
+    }
+    public void setSignalFault(boolean val)
+    {
+        signalFailure = val;
+    }
+    public void setTimeMultiplier(int newMultiplier)
+    {
+        time_multiplier = newMultiplier;
+    }
+    
     public void run()
     {
         simulate();
+    }
+
+    private double calcEBrakeForce()
+    {
+        double twoThirdLoadMass = (fullMass - emptyMass) * (2.0/3.0) + emptyMass;
+        double eBrakeForce = twoThirdLoadMass * twoThirdLoadEBrakeAccel;
+        return eBrakeForce;
     }
     private double calcMaxEngineForce()
     {
@@ -226,34 +237,7 @@ public class PhysicsEngine implements Runnable
         double sBrakeForce = twoThirdLoadMass * twoThirdLoadSBrakeAccel;
         return sBrakeForce;
     }
-    private double calcEBrakeForce()
-    {
-        double twoThirdLoadMass = (fullMass - emptyMass) * (2.0/3.0) + emptyMass;
-        double eBrakeForce = twoThirdLoadMass * twoThirdLoadEBrakeAccel;
-        return eBrakeForce;
-    }
-    private void getPhysicsInfo()
-    {
-        motorPower = physicsInput.MotorPower;
-        sBrakeStatus = physicsInput.SBrakeStatus;
-        eBrakeStatus = physicsInput.EBrakeStatus;
-        time_multiplier = physicsInput.Time_multiplier;
-        gradient = physicsInput.Gradient;
-        delta_x = physicsInput.Delta_x;
-        passengers = passengers + physicsInput.PassengerChange;
-    }
-    private void sendPhysicsInfo()
-    {
-        physicsInput.Velocity = velocity;
-        physicsInput.Delta_x = delta_x;
-        physicsInput.Mass = mass;
-        physicsInput.EBrakeFailure = eBrakeFailure;
-        physicsInput.SBrakeFailure = sBrakeFailure;
-        physicsInput.SignalFailure = signalFailure;
-        physicsInput.EngineFailure = engineFailure;
-    }
-    //private void
-    public void simulate()
+    private void simulate()
     {
         // F_engine + F_friction + F_mg / m = a
         // a * delta_t = v        
@@ -401,5 +385,4 @@ public class PhysicsEngine implements Runnable
      
         
     }
-    
 }

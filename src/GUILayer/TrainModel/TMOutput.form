@@ -32,11 +32,11 @@
                       <Component id="outputsLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="announcementOutputLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="advertisementDisplayBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="advertisementOutputLabel" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="advertisementOutputLabel" alignment="0" max="32767" attributes="0"/>
+                  <Component id="advertisementDisplayBox" alignment="0" max="32767" attributes="0"/>
                   <Component id="announcementDisplayBox" pref="165" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -115,8 +115,8 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="advertisementOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="advertisementDisplayBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="advertisementOutputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="10" max="32767" attributes="0"/>
           </Group>
@@ -235,12 +235,12 @@
         <Property name="text" type="java.lang.String" value="Announcement"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="advertisementOutputLabel">
+    <Component class="javax.swing.JTextField" name="advertisementDisplayBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Advertisement"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="advertisementDisplayBox">
+    <Component class="javax.swing.JLabel" name="advertisementOutputLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Advertisement"/>
       </Properties>

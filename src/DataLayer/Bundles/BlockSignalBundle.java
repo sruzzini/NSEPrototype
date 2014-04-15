@@ -74,7 +74,7 @@ public class BlockSignalBundle extends BlockBundle {
     @Override
     public String toString()
     {
-        return "Authority: " + Authority + "\n" + "Speed: " + Speed + "\n";
+        return "BlockSignalBundle - Block: " + this.BlockID + "  Line: " + this.LineID + "  Authority: " + this.Authority  + "  Speed: " + this.Speed + "\n";
     }
     
     
