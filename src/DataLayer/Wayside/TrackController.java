@@ -112,10 +112,42 @@ public class TrackController implements Runnable {
             }
                 
         }
-        
-        
+
         return trains;
         
+    }
+    
+    public void emptyCommandQueues()
+    {
+        commandBlockLock.lock();
+        try 
+        {
+            this.commandBlockQueue.clear();
+        }
+        finally 
+        { 
+            commandBlockLock.unlock(); 
+        }
+        
+        commandSignalLock.lock();
+        try 
+        {
+            this.commandSignalQueue.clear();
+        }
+        finally 
+        { 
+            commandSignalLock.unlock(); 
+        }
+        
+        commandSwitchLock.lock();
+        try 
+        {
+            this.commandSwitchQueue.clear();
+        }
+        finally 
+        {   
+            commandSwitchLock.unlock(); 
+        }
     }
     
     public ArrayList<Block> getBlockInfo()
@@ -336,6 +368,14 @@ public class TrackController implements Runnable {
 
     }
     
+    public void sendTravelSignal(ArrayList<BlockSignalBundle> route)
+    {
+        for (BlockSignalBundle b : route)
+        {
+            this.sendTravelSignal2(b);
+        }
+    }
+    
     public void sendTravelSignal2(BlockSignalBundle packet)
     {
         int blockNum = packet.BlockID;
@@ -346,7 +386,7 @@ public class TrackController implements Runnable {
             waitSignalLock.lock();
             try 
             {
-            this.commandSignalWaitQueue.add(packet.copy());
+                this.commandSignalWaitQueue.add(packet.copy());
             }
             finally
             {
@@ -366,9 +406,9 @@ public class TrackController implements Runnable {
                 {
                     speed = packet.Speed;
                 }
-            BlockSignalBundle copiedPacket = packet.copy();
-            copiedPacket.Speed = speed;
-            this.commandSignalQueue.add(copiedPacket);
+                BlockSignalBundle copiedPacket = packet.copy();
+                copiedPacket.Speed = speed;
+                this.commandSignalQueue.add(copiedPacket);
             }
             finally
             {
@@ -466,38 +506,7 @@ public class TrackController implements Runnable {
         return "Track Controller " + this.line + "" + this.id;
     }
  
-    public void emptyCommandQueues()
-    {
-        commandBlockLock.lock();
-        try 
-        {
-            this.commandBlockQueue.clear();
-        }
-        finally 
-        { 
-            commandBlockLock.unlock(); 
-        }
-        
-        commandSignalLock.lock();
-        try 
-        {
-            this.commandSignalQueue.clear();
-        }
-        finally 
-        { 
-            commandSignalLock.unlock(); 
-        }
-        
-        commandSwitchLock.lock();
-        try 
-        {
-            this.commandSwitchQueue.clear();
-        }
-        finally 
-        {   
-            commandSwitchLock.unlock(); 
-        }
-    }
+    
     
     private void processCommands(Commands c)
     {
