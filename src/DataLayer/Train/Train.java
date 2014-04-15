@@ -187,7 +187,7 @@ public class Train implements Runnable
             
             translatePhysicsCommand(this.commands);
             try {
-                Thread.sleep(100); //sleep for .1 seconds
+                Thread.sleep(100 / this.timeMultiplier); //sleep for .1 seconds
             } catch (InterruptedException ex) {
                 Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
             }
