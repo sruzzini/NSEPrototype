@@ -13,15 +13,15 @@ import DataLayer.Train.StateInput;
  */
 public class TrainState {
     
-    private boolean rightDoors;
+    private String announcement;
+    private String advertisement;
+    private boolean extLights;
+    private boolean heater;
     private boolean leftDoors;
     private boolean intLights;
-    private boolean extLights;
-    private String announcement;
-    private boolean heater;
-    private int temperature;
+    private boolean rightDoors;
     private StateInput stateInput;
-    private String advertisement;
+    private int temperature;
     
     public TrainState()
     {
@@ -42,79 +42,73 @@ public class TrainState {
     {
         stateInput = ms;
     }
-    
-    // right doors
-    public void setRightDoors(boolean state)
+    public String getAdvertisement()
     {
-        rightDoors = state;
-    }
-    public boolean getRightDoors()
-    {
-        return rightDoors;
-    }
-    // left doors
-    public void setLeftDoors(boolean state)
-    {
-        leftDoors = state;
-    }
-    public boolean getLeftDoors()
-    {
-        return leftDoors;
-    }
-    // interior lights
-    public void setInteriorLights(boolean state)
-    {
-        intLights = state;
-    }
-    public boolean getInteriorLights()
-    {
-        return intLights;
-    }
-    // exterior lights
-    public void setExteriorLights(boolean state)
-    {
-        extLights = state;
-    }
-    public boolean getExteriorLights()
-    {
-        return extLights;
-    }
-    // announcement
-    public void setAnnouncement(String newAnnouncement)
-    {
-        announcement = newAnnouncement;
+        return advertisement;
     }
     public String getAnnouncement()
     {
         return announcement;
     }
-    // heater
-    public void setHeater(boolean state)
+    public boolean getExteriorLights()
     {
-        heater = state;
+        return extLights;
     }
     public boolean getHeater()
     {
         return heater;
     }
-    // temperature
-    public void setTemperature(int newTemp)
+    public boolean getInteriorLights()
     {
-        temperature = newTemp;
+        return intLights;
+    }
+    public boolean getLeftDoors()
+    {
+        return leftDoors;
+    }
+    public boolean getRightDoors()
+    {
+        return rightDoors;
     }
     public int getTemperature()
     {
         return temperature;
     }
-    // advertisement
+    
+    public void setAnnouncement(String newAnnouncement)
+    {
+        announcement = newAnnouncement;
+    }  
     public void setAdvertisement(String newAdvertisement)
     {
         advertisement = newAdvertisement;
     }
-    public String getAdvertisement()
+    public void setExteriorLights(boolean state)
     {
-        return advertisement;
+        extLights = state;
     }
+    public void setHeater(boolean state)
+    {
+        heater = state;
+    }
+    public void setInteriorLights(boolean state)
+    {
+        intLights = state;
+    }
+    public void setLeftDoors(boolean state)
+    {
+        leftDoors = state;
+    }
+    // right doors
+    public void setRightDoors(boolean state)
+    {
+        rightDoors = state;
+    }
+
+    public void setTemperature(int newTemp)
+    {
+        temperature = newTemp;
+    }    
     
     public void updateState()
     {
