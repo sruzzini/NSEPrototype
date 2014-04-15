@@ -127,17 +127,17 @@ public class TrackController implements Runnable {
         return blocksInSector;
     }
     
-    /*public ArrayList<BlockInfoBundle> getCommandBlockQueue() {
+    public ArrayList<BlockInfoBundle> getCommandBlockQueue() {
         return commandBlockQueue;
-    }*/
+    }
     
-    /*public ArrayList<BlockSignalBundle> getCommandSignalQueue() {
+    public ArrayList<BlockSignalBundle> getCommandSignalQueue() {
         return commandSignalQueue;
-    }*/
+    }
     
-   /* public ArrayList<Switch> getCommandSwitchQueue() {
+    public ArrayList<Switch> getCommandSwitchQueue() {
         return commandSwitchQueue;
-    }*/
+    }
     
     public Hashtable<Integer, Block> getBlockTable()
     {
@@ -340,6 +340,7 @@ public class TrackController implements Runnable {
     {
         int blockNum = packet.BlockID;
         Block block = this.blockInfo.get(blockNum);
+        double speed;
         if (block.isOccupied())
         {
             waitSignalLock.lock();
@@ -357,7 +358,17 @@ public class TrackController implements Runnable {
             commandSignalLock.lock();
             try
             {
-            this.commandSignalQueue.add(packet.copy());
+                if (packet.Speed > block.getSpeedLimit())
+                {
+                    speed = block.getSpeedLimit();
+                }
+                else
+                {
+                    speed = packet.Speed;
+                }
+            BlockSignalBundle copiedPacket = packet.copy();
+            copiedPacket.Speed = speed;
+            this.commandSignalQueue.add(copiedPacket);
             }
             finally
             {
@@ -455,7 +466,7 @@ public class TrackController implements Runnable {
         return "Track Controller " + this.line + "" + this.id;
     }
  
-    private void emptyCommandQueues()
+    public void emptyCommandQueues()
     {
         commandBlockLock.lock();
         try 

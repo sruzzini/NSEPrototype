@@ -6,12 +6,14 @@
 
 package GUILayer.Wayside;
 
+import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.TrackModel.Block;
 import DataLayer.TrackModel.Switch;
 import DataLayer.Wayside.Commands;
 import DataLayer.Wayside.TrackController;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -239,9 +241,35 @@ public class PLCTestPanel extends javax.swing.JPanel {
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
         // TODO add your handling code here:
         //this will take the inputted occupancies and run the plc program based on these
+        
         int[] selectedIndicies = this.blockOccList.getSelectedIndices();
         int[] selectedBlocks = new int[selectedIndicies.length];
         int k=0;
+        String display;
+        int blockNum, authority, destination;
+        double speed;
+        BlockSignalBundle signal;
+        
+        if (this.sendSignalCheckBox.isSelected())
+        {
+            try 
+            {
+            blockNum = this.controller.getBlockNums()[this.blockSelectComboBox.getSelectedIndex()];
+            speed = Double.parseDouble(this.inputSpeedText.getText());
+            authority = Integer.parseInt(this.inputSpeedText.getText());
+            destination = Integer.parseInt(this.inputDestinationText.getText());
+            if (speed < 0 || authority < 0 || destination < 0)
+            {
+                throw new NumberFormatException();
+            }
+            signal = new BlockSignalBundle(authority, destination, speed, blockNum, this.controller.getLine());
+            this.controller.sendTravelSignal2(signal);
+            }
+            catch (NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(null, "Incorrect input format. Please enter correct input.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
         
         for (int n : selectedIndicies)
         {
@@ -256,7 +284,18 @@ public class PLCTestPanel extends javax.swing.JPanel {
         
         Commands results = this.controller.plcProgram.runPLCProgram();
         
-        this.commandsOutput.setText(results.toString());
+        display = results.toString();
+        
+        for (BlockSignalBundle b : this.controller.getCommandSignalQueue())
+        {
+            display += b.toString();
+        }
+        
+        this.controller.emptyCommandQueues();
+        
+        this.commandsOutput.setText(display);
+        
+        
     }//GEN-LAST:event_runButtonActionPerformed
 
 
