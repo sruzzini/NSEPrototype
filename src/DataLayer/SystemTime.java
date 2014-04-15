@@ -108,7 +108,22 @@ public class SystemTime implements Runnable
     */
     public String ToString()
     {
-        return (Hour + " : " + Minute + " : " + Second);
+        String hour = "" + this.Hour;
+        String minute = "" + this.Minute;
+        String second = "" + this.Second;
+        if (this.Hour < 10)
+        {
+            hour = "0" + hour;
+        }
+        if (this.Minute < 10)
+        {
+            minute = "0" + minute;
+        }
+        if (this.Second < 10)
+        {
+            second = "0" + second;
+        }
+        return (hour + " : " + minute + " : " + second);
     }
     
     /* secondTick() increments the system time by 1 second

@@ -36,6 +36,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         //this.cTCGUI1.setCTCOffice(this.NSEObject.CTCOffice);
     }
     
+    public void SetSystemTime(String s)
+    {
+        this.systemTime_txt.setText(s);
+    }
+    
     public void SetTrackModel(TrackModel t)
     {
         this.trackModelPanel1.setTrack(t);
@@ -93,6 +98,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         trainPanel1 = new GUILayer.TrainPanel();
         trainSelectList = new javax.swing.JList();
         start_button = new javax.swing.JButton();
+        systemTime_txt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,7 +143,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -204,6 +210,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        systemTime_txt.setText("12 : 00 : 00");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,7 +219,9 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(wallClock_Radio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,8 +231,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                         .addGap(2, 2, 2)
                         .addComponent(pause_button)
                         .addGap(12, 12, 12)
-                        .addComponent(reset_button)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(reset_button)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(systemTime_txt)
+                        .addGap(25, 25, 25))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,7 +245,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                     .addComponent(wallClock10_Radio)
                     .addComponent(pause_button)
                     .addComponent(reset_button)
-                    .addComponent(start_button))
+                    .addComponent(start_button)
+                    .addComponent(systemTime_txt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -305,6 +318,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton reset_button;
     private javax.swing.ButtonGroup speed_group;
     private javax.swing.JButton start_button;
+    private javax.swing.JLabel systemTime_txt;
     private GUILayer.TrackModelPanel trackModelPanel1;
     private GUILayer.TrainPanel trainPanel1;
     private javax.swing.JList trainSelectList;

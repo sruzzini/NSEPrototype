@@ -22,6 +22,7 @@ import DataLayer.TrackModel.*;
 import DataLayer.Train.*;
 import DataLayer.Train.TrainController.TrainController;
 import DataLayer.Wayside.*;
+import GUILayer.NSEFrame;
 import java.util.*;
 import java.util.Calendar;
 
@@ -43,6 +44,7 @@ public class NSE implements Runnable
     public ArrayList<TrainLocation> TrainLocations;
     public ArrayList<Train> Trains;
     public Wayside Wayside;
+    private NSEFrame nseGUI;
     private Boolean isRunning;
     private long lastDispatchTime;
     
@@ -70,6 +72,7 @@ public class NSE implements Runnable
         this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
         this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
         this.TimeMultiplier = REAL_TIME;
+        this.nseGUI = null;
     }
     
     public NSE(int timeMultiplier, int numberOfTrains)
@@ -94,6 +97,7 @@ public class NSE implements Runnable
         this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
         this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
         this.TimeMultiplier = timeMultiplier;
+        this.nseGUI = null;
     }
     
     // run() used to implement Runnable.  Calls "RunAutomatic()"
@@ -124,6 +128,12 @@ public class NSE implements Runnable
         long lastPrint = 0;
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
+            //Set time
+            if(this.nseGUI != null)
+            {
+                this.nseGUI.SetSystemTime(this.Time.ToString());
+            }
+            
             //check for 10 min elapsed, if so, dispatch new train
             if ((Calendar.getInstance().getTimeInMillis() - lastDispatchTime) * TimeMultiplier > dispatchInterval)
             {
@@ -191,6 +201,11 @@ public class NSE implements Runnable
         {
             //do shit
         }
+    }
+    
+    public void SetGUI(NSEFrame gui)
+    {
+        this.nseGUI = gui;
     }
     
     /* SetTimeMultiplier(int multiplier) sets the NSE's time multiplier
