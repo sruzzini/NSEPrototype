@@ -135,6 +135,7 @@ public class CTC
                     this.trains.get(trainIndex).SectionDestination = this.returnStationBlock(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
  
                     trainRouteInfo = this.calculateAuthority(trainIndex, this.trains.get(trainIndex).line);
+                    //System.out.println(trainRouteInfo.size());
                     break;
                     //System.out.println("CTC Train " + trainIndex + " is now Idle.");
                     //System.out.println("CTC Sending the new signal to block: " + newRoute.BlockID);
@@ -280,14 +281,17 @@ public class CTC
         {
             for(int i = 0; i < path.size(); i++)
             {
-                System.out.println(path.get(i).toString());
+                //System.out.println(path.get(i).toString());
                 if(Integer.parseInt(train.BlockCurrent) == path.get(i))
                 {
+                    //System.out.println("CTC Train's Current Block: " + path.get(i).toString());
                     if(i > 0 && train.PreviousBlock == path.get(i-1))
                     {
+                        //System.out.println("CTC Train's Previous Block: " + path.get(i-1).toString());
                         for(int j = 0; j < path.size(); j++)
-                        {
-                            if(Integer.parseInt(train.BlockDestination) == path.get(i))
+                        {                            
+                            //System.out.println("Train's Destination Block : " + (train.BlockDestination) + " | Checking Block: " + path.get(j));
+                            if(Integer.parseInt(train.BlockDestination) == path.get(j))
                             {
                                 if((j-i) > 0)
                                 {
@@ -310,7 +314,7 @@ public class CTC
                                 }                                
                                 break;
                             }
-                            break;
+                            
                         }
                     }
                     else if(i == path.size()-1)
@@ -564,11 +568,7 @@ public class CTC
                 this.trains.get(i).Authority = 5;
                 this.trains.get(i).BlockDestination = Integer.toString(this.GREEN_NEXT_STATION.get(0).NEXTBLOCKID);
                 this.trains.get(i).StationDestination = this.GREEN_NEXT_STATION.get(0).NEXTSTATION;
-                //System.out.println("CTC Next Station: " + this.GREEN_NEXT_STATION.get(0).NEXTSTATION);
                 this.trains.get(i).SectionDestination = this.returnSection(this.trains.get(i).line,Integer.toString(this.GREEN_NEXT_STATION.get(0).NEXTBLOCKID));
-                //System.out.println("Block Destination: " + this.trains.get(i).BlockDestination);
-                //System.out.println("Block Current: " + this.trains.get(i).BlockCurrent);
-                //System.out.println("Route Length: " + this.calculateAuthority(i, LineColor.GREEN).size());
                 break;
             }
             
@@ -590,7 +590,7 @@ public class CTC
             { 
                 // use comma as separator
                 String[] block = line.split(cvsSplitBy);
-                System.out.println(line);
+                //System.out.println(line);
                 if(block[0].equals("GREEN"))
                 {
                     this.GREEN_NEXT_STATION.add(new Station(Integer.parseInt(block[3].trim()), Integer.parseInt(block[1].trim()), Integer.parseInt(block[4].trim()), block[2], block[5]));
