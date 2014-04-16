@@ -58,7 +58,7 @@ public class SystemTime implements Runnable
     */
     public void run()
     {
-        while(true)
+        while(this.multiplier > 0)
         {
             //Sleep for 1 second
             try {
@@ -73,7 +73,7 @@ public class SystemTime implements Runnable
     /* Seconds() returns the number of seconds that have elapsed since 00 : 00 ; 00
      * Returns - int, number of seconds elapsed
     */
-    public int Seconds()
+    public int getSeconds()
     {
         return ((SECONDS_IN_HOUR * this.Hour) + (SECONDS_IN_MINUTE * this.Minute) + this.Second);
     }
@@ -83,10 +83,10 @@ public class SystemTime implements Runnable
      *     SystemTime t - time to calculate from
      * Returns - int, (this.Time - t.Time)
     */
-    public int SecondsSince(SystemTime t)
+    public int secondsSince(SystemTime t)
     {
-        int tSeconds = t.Seconds();
-        int currSeconds = this.Seconds();
+        int tSeconds = t.getSeconds();
+        int currSeconds = this.getSeconds();
         if (currSeconds < tSeconds)
         {
             currSeconds = currSeconds + SystemTime.SECONDS_IN_DAY;
@@ -98,7 +98,7 @@ public class SystemTime implements Runnable
      * Parameters:
      *     int m - new multiplier
     */
-    public void SetMultiplier(int m)
+    public void setMultiplier(int m)
     {
         this.multiplier = m;
     }
@@ -106,7 +106,7 @@ public class SystemTime implements Runnable
     /* ToString() returns a string representation of the time in 24 hour time
      * Returns - String, represented in 24 hour time
     */
-    public String ToString()
+    public String toString()
     {
         String hour = "" + this.Hour;
         String minute = "" + this.Minute;

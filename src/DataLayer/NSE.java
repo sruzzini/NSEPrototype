@@ -103,11 +103,11 @@ public class NSE implements Runnable
     // run() used to implement Runnable.  Calls "RunAutomatic()"
     public void run()
     {
-        this.RunAutomatic();
+        this.runAutomatic();
     }
     
     //RunAutomatic() runs NSE simulation in automatic mode
-    public void RunAutomatic()
+    public void runAutomatic()
     {
         this.isRunning = Boolean.TRUE;
         lastDispatchTime = 0;
@@ -131,7 +131,7 @@ public class NSE implements Runnable
             //Set time
             if(this.nseGUI != null)
             {
-                this.nseGUI.SetSystemTime(this.Time.ToString());
+                this.nseGUI.setSystemTime(this.Time.toString());
             }
             
             //check for 10 min elapsed, if so, dispatch new train
@@ -184,7 +184,7 @@ public class NSE implements Runnable
     }
     
     //RunManual() runs the NSE simulation in manual mode
-    public void RunManual()
+    public void runManual()
     {
         this.isRunning = true;
         
@@ -203,7 +203,7 @@ public class NSE implements Runnable
         }
     }
     
-    public void SetGUI(NSEFrame gui)
+    public void setGUI(NSEFrame gui)
     {
         this.nseGUI = gui;
     }
@@ -212,10 +212,10 @@ public class NSE implements Runnable
      * Parameters:
      *     int multiplier - new time multiplier
     */
-    public void SetTimeMultiplier(int multiplier)
+    public void setTimeMultiplier(int multiplier)
     {
         this.TimeMultiplier = multiplier; //set new time multiplier
-        this.Time.SetMultiplier(multiplier); //set time multiplier for the syste time
+        this.Time.setMultiplier(multiplier); //set time multiplier for the syste time
         
         //set time multiplier for each train
         for (Train train : this.Trains)

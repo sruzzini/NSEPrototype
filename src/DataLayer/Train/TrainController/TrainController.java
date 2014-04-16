@@ -354,7 +354,7 @@ public class TrainController
     {
         boolean door = false;
         if ((vCurr == 0) && (this.OperatorLeftDoor == OperatorInputStatus.ON) ||  //Train is stopped and conductor has left door input on
-            (this.stoppedAtStation && !this.lastBeacon.StationOnRight && (this.time.SecondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) //stopped and station on the left and it's not been a minute
+            (this.stoppedAtStation && !this.lastBeacon.StationOnRight && (this.time.secondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) //stopped and station on the left and it's not been a minute
         {
             door = true;
         }
@@ -370,7 +370,7 @@ public class TrainController
     {
         boolean door = false;
         if ((vCurr == 0) && (this.OperatorRightDoor == OperatorInputStatus.ON) || //Train is stopped and conductor has right door input on
-            (this.stoppedAtStation && this.lastBeacon.StationOnRight && (this.time.SecondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) // stopped and station on the right and it's not been a minute
+            (this.stoppedAtStation && this.lastBeacon.StationOnRight && (this.time.secondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) // stopped and station on the right and it's not been a minute
         {
             door = true;
         }
@@ -403,7 +403,7 @@ public class TrainController
         
         //check for releasing brake after done stopping
         if (this.stoppedAtStation &&  //stopped at a station
-            (this.time.SecondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been a minute
+            (this.time.secondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been a minute
             !this.trainStatus.GetRightDoorStatus() && //right doors closed
             !this.trainStatus.GetLeftDoorStatus()) //left doors closed
         {

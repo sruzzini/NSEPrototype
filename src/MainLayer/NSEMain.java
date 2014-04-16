@@ -26,11 +26,11 @@ public class NSEMain
         NSEFrame gui = new NSEFrame();
         gui.setVisible(true);
         NSE nse = new NSE(1, 10);
-        nse.SetGUI(gui);
-        gui.SetNSE(nse);
-        gui.UpdateTrainSelectList();
-        gui.SetTrackModel(nse.Track);
-        gui.SetWayside(nse.Wayside);
+        nse.setGUI(gui);
+        gui.setNSE(nse);
+        gui.updateTrainSelectList();
+        gui.setTrackModel(nse.Track);
+        gui.setWayside(nse.Wayside);
         new Thread(gui).start();
     }
 }
