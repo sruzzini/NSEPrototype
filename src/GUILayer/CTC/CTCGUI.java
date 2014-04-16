@@ -5,7 +5,11 @@
  */
 
 package GUILayer.CTC;
+import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.CTC.CTC;
+import DataLayer.CTC.TrainsClass;
+import DataLayer.EnumTypes.LineColor;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,20 +22,22 @@ public class CTCGUI extends javax.swing.JPanel {
      */
     private CTC CTCOffice;
     
-    public CTCGUI() {
+    public CTCGUI() 
+    {
         initComponents();
+        this.trainDestinationTable.setAutoCreateColumnsFromModel(false); 
+        this.trainLocationsTable.setAutoCreateColumnsFromModel(false);
     }
 
     public void setCTCOffice(CTC c)
     {
         this.CTCOffice = c;
-
     }
     
     public void update()
     {
-        this.tables.SetTrainDestination(this.CTCOffice.trains, this.CTCOffice.GREEN_NEXT_STATION);
-        this.tables.SetTrainLocations(this.CTCOffice.trains, this.CTCOffice.GREEN_NEXT_STATION);   
+        this.SetTrainDestination();
+        this.SetTrainLocations();   
     }
     
     /**
@@ -43,35 +49,803 @@ public class CTCGUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        manualOptions = new GUILayer.CTC.Manual();
-        tables = new GUILayer.CTC.Tables();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        trainLocationsTable = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        trainDestinationTable = new javax.swing.JTable();
+        trainDestinationLabel = new javax.swing.JLabel();
+        switchPositionsLabel = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        switchPositionsTable = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        blockClosingsTable = new javax.swing.JTable();
+        blockClosingsLabel = new javax.swing.JLabel();
+        trainLocationsLabel = new javax.swing.JLabel();
+        blockClosingsPanel = new javax.swing.JPanel();
+        blockClosingsLineDrop = new javax.swing.JComboBox();
+        blockClosingsSectionDrop = new javax.swing.JComboBox();
+        blockClosingsBlockDrop = new javax.swing.JComboBox();
+        blockClosingsCloseRadio = new javax.swing.JRadioButton();
+        blockClosingsOpenRadio = new javax.swing.JRadioButton();
+        blockClosingsSubmitButton = new javax.swing.JButton();
+        blockClosingsLabel1 = new javax.swing.JLabel();
+        routeTrainsPanel = new javax.swing.JPanel();
+        routeTrainsLabel = new javax.swing.JLabel();
+        routeTrainAuthorityLabel = new javax.swing.JLabel();
+        routeTrainAuthorityValueLabel = new javax.swing.JLabel();
+        routeTrainSpeedText = new javax.swing.JTextField();
+        routeTrainsBlockDrop = new javax.swing.JComboBox();
+        routeTrainsTrainDrop = new javax.swing.JComboBox();
+        routeTrainsLineDrop = new javax.swing.JComboBox();
+        routeTrainsSectionDrop = new javax.swing.JComboBox();
+        routeTrainSubmitButton = new javax.swing.JButton();
+        routeTrainsSpeedLabel = new javax.swing.JLabel();
+        switchPositionsPanel = new javax.swing.JPanel();
+        switchPositionSubmitButton = new javax.swing.JButton();
+        switchPositionLineDrop = new javax.swing.JComboBox();
+        switchPositionSwitchesDrop = new javax.swing.JComboBox();
+        switchPositionsDivergentRadio = new javax.swing.JRadioButton();
+        switchPositionLabel = new javax.swing.JLabel();
+        switchPositionsStraightRadio = new javax.swing.JRadioButton();
+
+        trainLocationsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Train", "Authority", "Line", "Section", "Block", "Station"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(trainLocationsTable);
+
+        trainDestinationTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Train", "Line", "Section", "Block", "Station"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(trainDestinationTable);
+
+        trainDestinationLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        trainDestinationLabel.setText("Train Destination");
+
+        switchPositionsLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        switchPositionsLabel.setText("Switch Positions");
+
+        switchPositionsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Line", "Switch ID", "Block:Block", "Position"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(switchPositionsTable);
+
+        blockClosingsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Line", "Block ID"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(blockClosingsTable);
+
+        blockClosingsLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        blockClosingsLabel.setText("Block Closings");
+
+        trainLocationsLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        trainLocationsLabel.setText("Train Locations");
+
+        blockClosingsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        blockClosingsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "Green", "Red" }));
+        blockClosingsLineDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockClosingsLineDropActionPerformed(evt);
+            }
+        });
+
+        blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Section" }));
+
+        blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Block #" }));
+
+        blockClosingsCloseRadio.setText("Close");
+
+        blockClosingsOpenRadio.setText("Open");
+
+        blockClosingsSubmitButton.setText("Submit");
+
+        blockClosingsLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        blockClosingsLabel1.setText("Block Closings");
+
+        javax.swing.GroupLayout blockClosingsPanelLayout = new javax.swing.GroupLayout(blockClosingsPanel);
+        blockClosingsPanel.setLayout(blockClosingsPanelLayout);
+        blockClosingsPanelLayout.setHorizontalGroup(
+            blockClosingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(blockClosingsPanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(blockClosingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(blockClosingsPanelLayout.createSequentialGroup()
+                        .addGroup(blockClosingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(blockClosingsOpenRadio)
+                            .addComponent(blockClosingsLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(blockClosingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(blockClosingsCloseRadio)
+                            .addComponent(blockClosingsSectionDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22))
+                    .addGroup(blockClosingsPanelLayout.createSequentialGroup()
+                        .addComponent(blockClosingsBlockDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, blockClosingsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(blockClosingsLabel1)
+                .addGap(58, 58, 58))
+            .addGroup(blockClosingsPanelLayout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addComponent(blockClosingsSubmitButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        blockClosingsPanelLayout.setVerticalGroup(
+            blockClosingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(blockClosingsPanelLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(blockClosingsLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(blockClosingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(blockClosingsSectionDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blockClosingsLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(blockClosingsBlockDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(blockClosingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(blockClosingsOpenRadio)
+                    .addComponent(blockClosingsCloseRadio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(blockClosingsSubmitButton)
+                .addGap(5, 5, 5))
+        );
+
+        routeTrainsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        routeTrainsLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        routeTrainsLabel.setText("Route Trains");
+
+        routeTrainAuthorityLabel.setText("Authority:");
+
+        routeTrainAuthorityValueLabel.setText("0");
+
+        routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Block #" }));
+
+        routeTrainsTrainDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Train #" }));
+        routeTrainsTrainDrop.setToolTipText("");
+        routeTrainsTrainDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                routeTrainsTrainDropActionPerformed(evt);
+            }
+        });
+
+        routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line" }));
+
+        routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Section" }));
+
+        routeTrainSubmitButton.setText("Submit");
+
+        routeTrainsSpeedLabel.setText("Speed:");
+        routeTrainsSpeedLabel.setToolTipText("");
+
+        javax.swing.GroupLayout routeTrainsPanelLayout = new javax.swing.GroupLayout(routeTrainsPanel);
+        routeTrainsPanel.setLayout(routeTrainsPanelLayout);
+        routeTrainsPanelLayout.setHorizontalGroup(
+            routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, routeTrainsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(routeTrainsSectionDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(routeTrainsTrainDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(routeTrainsLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(routeTrainsBlockDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32))
+            .addGroup(routeTrainsPanelLayout.createSequentialGroup()
+                .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(routeTrainsPanelLayout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(routeTrainsPanelLayout.createSequentialGroup()
+                                .addComponent(routeTrainsSpeedLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(routeTrainSpeedText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(routeTrainsPanelLayout.createSequentialGroup()
+                                .addComponent(routeTrainAuthorityLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(routeTrainAuthorityValueLabel))))
+                    .addGroup(routeTrainsPanelLayout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(routeTrainsLabel))
+                    .addGroup(routeTrainsPanelLayout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(routeTrainSubmitButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        routeTrainsPanelLayout.setVerticalGroup(
+            routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(routeTrainsPanelLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(routeTrainsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(routeTrainsTrainDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(routeTrainsLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(routeTrainsSectionDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(routeTrainsBlockDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(routeTrainAuthorityValueLabel)
+                    .addComponent(routeTrainAuthorityLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(routeTrainsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(routeTrainSpeedText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(routeTrainsSpeedLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addComponent(routeTrainSubmitButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        switchPositionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        switchPositionSubmitButton.setText("Submit");
+
+        switchPositionLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "Gree", "Red" }));
+        switchPositionLineDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                switchPositionLineDropActionPerformed(evt);
+            }
+        });
+
+        switchPositionSwitchesDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Switches" }));
+
+        switchPositionsDivergentRadio.setText("Divergent");
+        switchPositionsDivergentRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                switchPositionsDivergentRadioActionPerformed(evt);
+            }
+        });
+
+        switchPositionLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        switchPositionLabel.setText("Switch Positions");
+
+        switchPositionsStraightRadio.setText("Straight");
+
+        javax.swing.GroupLayout switchPositionsPanelLayout = new javax.swing.GroupLayout(switchPositionsPanel);
+        switchPositionsPanel.setLayout(switchPositionsPanelLayout);
+        switchPositionsPanelLayout.setHorizontalGroup(
+            switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, switchPositionsPanelLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(switchPositionsDivergentRadio)
+                    .addComponent(switchPositionLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(switchPositionSwitchesDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(switchPositionsStraightRadio))
+                .addGap(33, 33, 33))
+            .addGroup(switchPositionsPanelLayout.createSequentialGroup()
+                .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(switchPositionsPanelLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(switchPositionLabel))
+                    .addGroup(switchPositionsPanelLayout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(switchPositionSubmitButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        switchPositionsPanelLayout.setVerticalGroup(
+            switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, switchPositionsPanelLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(switchPositionLabel)
+                .addGap(18, 18, 18)
+                .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(switchPositionLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(switchPositionSwitchesDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(switchPositionsDivergentRadio)
+                    .addComponent(switchPositionsStraightRadio))
+                .addGap(18, 18, 18)
+                .addComponent(switchPositionSubmitButton)
+                .addGap(5, 5, 5))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(tables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(switchPositionsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(blockClosingsLabel)
+                        .addGap(62, 62, 62))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(trainLocationsLabel)
+                                .addGap(250, 250, 250))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(trainDestinationLabel)
+                                .addGap(242, 242, 242)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(manualOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(switchPositionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(routeTrainsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(blockClosingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(manualOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(tables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(blockClosingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(routeTrainsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(switchPositionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(trainLocationsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(trainDestinationLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(switchPositionsLabel)
+                            .addComponent(blockClosingsLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(13, 13, 13))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void blockClosingsLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingsLineDropActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_blockClosingsLineDropActionPerformed
 
+    private void routeTrainsTrainDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainsTrainDropActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_routeTrainsTrainDropActionPerformed
+
+    private void switchPositionLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionLineDropActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_switchPositionLineDropActionPerformed
+
+    private void switchPositionsDivergentRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionsDivergentRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_switchPositionsDivergentRadioActionPerformed
+
+        private void blockClosingLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingLineDropActionPerformed
+        // TODO add your handling code here:
+        String x = String.valueOf(this.blockClosingsLineDrop.getSelectedItem());
+        if(x.equals("RED"))
+        {
+          //this.blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(redSections));  
+        }
+        else
+        {
+          //this.blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(greenSections));    
+        }
+        
+        //blockClosingSectionDrop.setModel(new DefaultComboBoxModel(greenSections));
+    }//GEN-LAST:event_blockClosingLineDropActionPerformed
+    
+    private void blockClosingSectionDropActionPerformed(java.awt.event.ActionEvent evt) 
+    {                                                     
+        ArrayList<String> blocks = new ArrayList<>();
+        blocks.add("Block #");
+        
+        String line = String.valueOf(this.blockClosingsLineDrop.getSelectedItem());
+        String section = String.valueOf(this.blockClosingsSectionDrop.getSelectedItem()).toUpperCase();
+        if(line.toUpperCase().equals("RED"))
+        {
+            for(String[] s: this.CTCOffice.red)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }            
+            this.blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));  
+        }
+        else
+        {
+            for(String[] s: this.CTCOffice.green)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }            
+            this.blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));
+        }
+    }
+    private void blockClosingBlockDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingBlockDropActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_blockClosingBlockDropActionPerformed
+
+     public void routeTrainSubmitButtonActionPerformed(java.awt.event.ActionEvent evt)
+     {
+        LineColor lineDestination;
+        int trainID = Integer.parseInt(String.valueOf(routeTrainsTrainDrop.getSelectedItem()));
+        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem()).toUpperCase();
+        if(line.equals("RED"))
+        {
+            lineDestination = LineColor.RED;
+        }
+        else if(line.equals("GREEN"))
+        {
+            lineDestination = LineColor.RED;
+        }        
+        else
+        {
+            lineDestination = LineColor.YARD;
+        }
+        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
+        String block = String.valueOf(routeTrainsBlockDrop.getSelectedItem()).toUpperCase();
+        
+        this.CTCOffice.trains.set(trainID, new TrainsClass(lineDestination, this.CTCOffice.trains.get(trainID).SectionCurrent,  this.CTCOffice.trains.get(trainID).BlockCurrent, this.CTCOffice.calculateAuthority(trainID,this.CTCOffice.trains.get(trainID).line).size(),block, section));
+     }
+    
+    private void blockClosingSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingSubmitButtonActionPerformed
+        // TODO add your handling code here:
+        
+        int index;
+        String line = String.valueOf(blockClosingsLineDrop.getSelectedItem()).toUpperCase();
+        String section = String.valueOf(blockClosingsSectionDrop.getSelectedItem()).toUpperCase();
+        String block = String.valueOf(blockClosingsBlockDrop.getSelectedItem()).toUpperCase();
+        
+        
+        
+        
+        System.out.println(line + ", " + section + ", " + block + " | Open: " + blockClosingsOpenRadio.isSelected());
+        if(blockClosingsOpenRadio.isSelected() || blockClosingsCloseRadio.isSelected() && (!section.equals("SECTION") && !line.equals("LINE") && !block.equals("BLOCK #")))
+        {
+            index = this.CTCOffice.containsClosings(this.lineEnum(line), Integer.parseInt(block));
+            if(blockClosingsCloseRadio.isSelected())
+            {
+                if(index == -1)
+                {
+                    this.CTCOffice.BlockClosings.add(new BlockSignalBundle(0, 0, 0.0, Integer.parseInt(block), this.lineEnum(line), true));
+                    String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
+                    
+                    if(this.CTCOffice.BlockClosings.size() > 0)
+                    {
+                        for(int i = 0; i < blocks.length-1; i++)
+                        {
+                            blocks[i] = new String[]{line, block};
+                        }
+                    }                
+                    
+                    blockClosingsTable.setModel(new javax.swing.table.DefaultTableModel(blocks,new String [] {"Line", "Block"}));
+                    System.out.println("Added, new blockClosing size:" + this.CTCOffice.BlockClosings.size());
+                }
+            }
+            else if(blockClosingsOpenRadio.isSelected())
+            {
+                if(index != -1)
+                {
+                    //blockClosings.remove(new String[] {line,block});
+                    //System.out.println(blockClosings.removeAll(new String[] {line,block}));
+                    this.CTCOffice.BlockClosings.remove(index);
+                    
+                    //System.out.println(blocks.length);
+                    String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
+                    
+                    if(this.CTCOffice.BlockClosings.size() > 0)
+                    {
+                        
+                        for(int i = 0; i < blocks.length; i++)
+                        {
+                            blocks[i] = new String[]{this.lineString(this.CTCOffice.BlockClosings.get(i).LineID), Integer.toString(this.CTCOffice.BlockClosings.get(i).BlockID)};
+                        }
+                    }
+                    
+                    blockClosingsTable.setModel(new javax.swing.table.DefaultTableModel(blocks,new String [] {"Line", "Block"}));            
+                    //System.out.println("Removed, new blockClosing size:" + blockClosings.size() + " | Number of Closings: " + closings);
+                }
+            }
+        }
+        //for(String[] s: blockClosings)
+        //{
+        //    System.out.println(s[0] + " " + s[1]);
+        //}
+    }//GEN-LAST:event_blockClosingSubmitButtonActionPerformed
+
+    private void changeSwitchPositionLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSwitchPositionLineDropActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_changeSwitchPositionLineDropActionPerformed
+
+    private void blockClosingsCloseRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingCloseRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_blockClosingCloseRadioActionPerformed
+
+    private void routeTrainsBlockDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainBlockDropActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_routeTrainBlockDropActionPerformed
+
+    private void routeTrainsSectionDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainSectionDropActionPerformed
+        // TODO add your handling code here:
+        ArrayList<String> blocks = new ArrayList<>();
+        blocks.add("Block #");
+        
+        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem());
+        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
+        if(line.toUpperCase().equals("RED"))
+        {
+            for(String[] s: this.CTCOffice.red)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }            
+            this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));  
+        }
+        else
+        {
+            for(String[] s: this.CTCOffice.green)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }            
+            this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));
+        }
+    }//GEN-LAST:event_routeTrainSectionDropActionPerformed
+
+    private void systemAutomaticRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_systemAutomaticRadioActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_systemAutomaticRadioActionPerformed
+
+    private void routeTrainLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainLineDropActionPerformed
+        // TODO add your handling code here:
+        String x = String.valueOf(routeTrainsLineDrop.getSelectedItem());
+        if(x.equals("RED"))
+        {
+          routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(this.CTCOffice.redSections));  
+        }
+        else
+        {
+          routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(this.CTCOffice.greenSections));    
+        }
+    }//GEN-LAST:event_routeTrainLineDropActionPerformed
+
+    private void routeTrainTrainDropActionPerformed( java.awt.event.ActionEvent evt)
+    {
+        String x = String.valueOf(this.routeTrainsTrainDrop.getSelectedItem());
+        if(this.CTCOffice.trains.get(Integer.parseInt(x)).BlockCurrent.equals("Yard"))
+        {
+          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Line", "RED","GREEN"}));  
+        }
+        else
+        {
+          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {this.CTCOffice.trains.get(Integer.parseInt(x)).line.toString()}));    
+        }        
+    }
+    
+    public void setClosures()
+    {
+        String line ;
+        for(int i = 0; i < this.CTCOffice.BlockClosings.size(); i++)
+        {
+            if(this.CTCOffice.BlockClosings.get(i).LineID == LineColor.GREEN)
+            {
+                line = "GREEN";
+            }
+            else if(this.CTCOffice.BlockClosings.get(i).LineID == LineColor.RED)
+            {
+                line = "RED";
+            }
+            else
+            {
+                line = "Yard";
+            }
+            
+            this.trainLocationsTable.setValueAt(line, i, 0);
+            this.trainLocationsTable.setValueAt(this.CTCOffice.BlockClosings.get(i).BlockID, i, 1);            
+        }
+    }
+    
+    public void SetTrainLocations()
+    {
+        for(int i = 0; i <this.CTCOffice.trains.size(); i++)
+        {
+            this.trainLocationsTable.setValueAt(Integer.toString(i), i, 0);
+            this.trainLocationsTable.setValueAt(Integer.toString(this.CTCOffice.trains.get(i).Authority), i, 1);
+            this.trainLocationsTable.setValueAt(this.CTCOffice.trains.get(i).lineColor(), i, 2);
+            this.trainLocationsTable.setValueAt(this.CTCOffice.trains.get(i).SectionCurrent, i, 3);
+            this.trainLocationsTable.setValueAt(this.CTCOffice.trains.get(i).BlockCurrent, i, 4);
+            this.trainLocationsTable.setValueAt(this.CTCOffice.trains.get(i).StationCurrent, i, 5);            
+        }
+    }
+    
+    public void SetTrainDestination()
+    {
+        for(int i = 0; i <this.CTCOffice.trains.size(); i++)
+        {
+            this.trainDestinationTable.setValueAt(Integer.toString(i), i, 0);
+            this.trainDestinationTable.setValueAt(this.CTCOffice.trains.get(i).lineColor(), i , 1);
+            this.trainDestinationTable.setValueAt(this.CTCOffice.trains.get(i).SectionDestination, i, 2);
+            this.trainDestinationTable.setValueAt(this.CTCOffice.trains.get(i).BlockDestination, i, 3);
+            this.trainDestinationTable.setValueAt(this.CTCOffice.trains.get(i).StationDestination, i, 4);            
+        }
+    }
+    /**
+     * @param args the command line arguments
+     */
+
+    private String lineString(LineColor line)
+    {
+        if(line == LineColor.GREEN)
+        {
+            return "GREEN";
+        }
+        else if(line == LineColor.RED)
+        {
+            return "RED";
+        }
+        else
+        {
+            return "Yard";
+        }
+    
+    }
+    
+    private LineColor lineEnum(String line)
+    {
+        if(("GREEN").equals(line.toUpperCase()))
+        {
+            return LineColor.GREEN;
+        }
+        if(("RED").equals(line.toUpperCase()))
+        {
+            return LineColor.RED;
+        }
+        else
+        {
+            return LineColor.YARD;
+        }
+    
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private GUILayer.CTC.Manual manualOptions;
-    private GUILayer.CTC.Tables tables;
+    private javax.swing.JComboBox blockClosingsBlockDrop;
+    private javax.swing.JRadioButton blockClosingsCloseRadio;
+    private javax.swing.JLabel blockClosingsLabel;
+    private javax.swing.JLabel blockClosingsLabel1;
+    private javax.swing.JComboBox blockClosingsLineDrop;
+    private javax.swing.JRadioButton blockClosingsOpenRadio;
+    private javax.swing.JPanel blockClosingsPanel;
+    private javax.swing.JComboBox blockClosingsSectionDrop;
+    private javax.swing.JButton blockClosingsSubmitButton;
+    private javax.swing.JTable blockClosingsTable;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel routeTrainAuthorityLabel;
+    private javax.swing.JLabel routeTrainAuthorityValueLabel;
+    private javax.swing.JTextField routeTrainSpeedText;
+    private javax.swing.JButton routeTrainSubmitButton;
+    private javax.swing.JComboBox routeTrainsBlockDrop;
+    private javax.swing.JLabel routeTrainsLabel;
+    private javax.swing.JComboBox routeTrainsLineDrop;
+    private javax.swing.JPanel routeTrainsPanel;
+    private javax.swing.JComboBox routeTrainsSectionDrop;
+    private javax.swing.JLabel routeTrainsSpeedLabel;
+    private javax.swing.JComboBox routeTrainsTrainDrop;
+    private javax.swing.JLabel switchPositionLabel;
+    private javax.swing.JComboBox switchPositionLineDrop;
+    private javax.swing.JButton switchPositionSubmitButton;
+    private javax.swing.JComboBox switchPositionSwitchesDrop;
+    private javax.swing.JRadioButton switchPositionsDivergentRadio;
+    private javax.swing.JLabel switchPositionsLabel;
+    private javax.swing.JPanel switchPositionsPanel;
+    private javax.swing.JRadioButton switchPositionsStraightRadio;
+    private javax.swing.JTable switchPositionsTable;
+    private javax.swing.JLabel trainDestinationLabel;
+    private javax.swing.JTable trainDestinationTable;
+    private javax.swing.JLabel trainLocationsLabel;
+    private javax.swing.JTable trainLocationsTable;
     // End of variables declaration//GEN-END:variables
 }

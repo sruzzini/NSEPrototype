@@ -20,6 +20,8 @@ public class Tables extends javax.swing.JPanel {
     public Tables() 
     {
         initComponents();
+        this.trainDestinationTable.setAutoCreateColumnsFromModel(false); 
+        this.trainLocationsTable.setAutoCreateColumnsFromModel(false);
         
     }
 
@@ -216,47 +218,30 @@ public class Tables extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void SetTrainLocations(ArrayList<TrainsClass> trains, ArrayList<Station> station)
+    public void SetTrainLocations(ArrayList<TrainsClass> trains)
     {
-        String[][] trainArray = new String[trains.size()][5];
-        for(int i = 0; i <trainArray.length; i++)
+        for(int i = 0; i <trains.size(); i++)
         {
-            trainArray[i][0] = Integer.toString(i+1);
-            trainArray[i][1] = Integer.toString(trains.get(i).authority);
-            trainArray[i][2] = trains.get(i).lineColor();
-            trainArray[i][3] = trains.get(i).section_current;
-            trainArray[i][4] = trains.get(i).block;
-            //if(Integer.parseInt(trains.get(i).block)  == (station.get(trains.get(i).StopIndex).BLOCKID))
-            //{
-            //    trainArray[i][5] = (station.get(trains.get(i).StopIndex).STATION);
-            //}
-            //else
-            //{
-            //    trainArray[i][5] =  "";
-            //}
+            this.trainLocationsTable.setValueAt(Integer.toString(i), i, 0);
+            this.trainLocationsTable.setValueAt(Integer.toString(trains.get(i).Authority), i, 1);
+            this.trainLocationsTable.setValueAt(trains.get(i).lineColor(), i, 2);
+            this.trainLocationsTable.setValueAt(trains.get(i).SectionCurrent, i, 3);
+            this.trainLocationsTable.setValueAt(trains.get(i).BlockCurrent, i, 4);
+            this.trainLocationsTable.setValueAt(trains.get(i).StationCurrent, i, 5);
+            
         }
-        this.trainLocationsTable.setModel(new javax.swing.table.DefaultTableModel(trainArray,new String [] {"Train", "Authority", "Line", "Section", "Block","Station"}));       
     }
     
-    public void SetTrainDestination(ArrayList<TrainsClass> trains, ArrayList<Station> station)
+    public void SetTrainDestination(ArrayList<TrainsClass> trains)
     {
-        String[][] trainArray = new String[trains.size()][5];
-        for(int i = 0; i <trainArray.length; i++)
+        for(int i = 0; i <trains.size(); i++)
         {
-            trainArray[i][0] = Integer.toString(i+1);
-            trainArray[i][2] = trains.get(i).lineColor();
-            trainArray[i][3] = trains.get(i).section_destination;
-            trainArray[i][4] = trains.get(i).destination;
-            //if(Integer.parseInt(trains.get(i).destination)  == (station.get(trains.get(i).StopIndex).NEXTBLOCKID))
-            //{
-            //    trainArray[i][5] = (station.get(trains.get(i).StopIndex).NEXTSTATION);
-            //}
-            //else
-            //{
-
-            //}
+            this.trainDestinationTable.setValueAt(Integer.toString(i), i, 0);
+            this.trainDestinationTable.setValueAt(trains.get(i).lineColor(), i , 1);
+            this.trainDestinationTable.setValueAt(trains.get(i).SectionDestination, i, 2);
+            this.trainDestinationTable.setValueAt(trains.get(i).BlockDestination, i, 3);
+            this.trainDestinationTable.setValueAt(trains.get(i).StationDestination, i, 4);            
         }
-        this.trainLocationsTable.setModel(new javax.swing.table.DefaultTableModel(trainArray,new String [] {"Train", "Line", "Section", "Block","Station"}));       
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
