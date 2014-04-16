@@ -16,36 +16,38 @@ public class TrainsClass
     
     public LineColor line;
 
-    public int authority;
+    public int Authority;
     public int StopIndex;
-    public double DistanceSoFar;
+    public int PreviousBlock;
     public boolean Idle;
-    public String block;
-    public String destination; 
-    public String section_current;    
-    public String section_destination;
+    public double DistanceSoFar;
     
+    public String BlockCurrent;    
+    public String SectionCurrent;
+    public String BlockDestination; 
+    public String SectionDestination;
     
-    
+    public String StationCurrent;
+    public String StationDestination;
+        
     public TrainsClass()
     {
-        this.block = "";
+        this.BlockCurrent = "";
         this.StopIndex = 0;
-        this.authority = 0;
+        this.Authority = 0;
         this.DistanceSoFar = 0;
-        this.destination = "";
-        this.section_destination = "";
+        this.BlockDestination = "";
+        this.SectionDestination = "";
     }
     
     public TrainsClass(LineColor l, String s, String b, int a, String d, String sd)
     {
         this.line = l;
-        this.block = b;
-        this.section_current = s;
-        this.authority = a;
-        this.destination = d;     
-        this.section_destination = sd;        
-        
+        this.BlockCurrent = b;
+        this.SectionCurrent = s;
+        this.Authority = a;
+        this.BlockDestination = d;     
+        this.SectionDestination = sd;                
     }
     
     public void setStopIndex(int index)
@@ -56,6 +58,21 @@ public class TrainsClass
     public void setDistanceSoFar(double distance)
     {
         this.DistanceSoFar = distance;
+    }
+    
+    public void setCurrentStation(String station)
+    {
+        this.StationCurrent = station;
+    }
+    
+    public void setDestinationStation(String station)
+    {
+        this.StationDestination = station;
+    }
+    
+    public void setPreviousBlock(int block)
+    {
+        this.PreviousBlock = block;
     }
     
     public void setIdle(boolean Idle)

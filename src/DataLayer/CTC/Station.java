@@ -23,8 +23,8 @@ public class Station
         this.AUTHORITY = a;
         this.BLOCKID = b;
         this.NEXTBLOCKID = nb; 
-        this.NEXTSTATION = s;
-        this.STATION = ns;
+        this.NEXTSTATION = ns;
+        this.STATION = s;
     }
     
 }
