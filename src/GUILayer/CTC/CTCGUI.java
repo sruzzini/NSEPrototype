@@ -21,10 +21,12 @@ public class CTCGUI extends javax.swing.JPanel {
      * Creates new form CTCGUI
      */
     private CTC CTCOffice;
+    private ArrayList<String> trainNumbers;
     
     public CTCGUI() 
     {
         initComponents();
+        trainNumbers = new ArrayList<>();
         this.trainDestinationTable.setAutoCreateColumnsFromModel(false); 
         this.trainLocationsTable.setAutoCreateColumnsFromModel(false);
     }
@@ -37,7 +39,21 @@ public class CTCGUI extends javax.swing.JPanel {
     public void update()
     {
         this.SetTrainDestination();
-        this.SetTrainLocations();   
+        this.SetTrainLocations();
+        this.updateTrainNumbers();
+        
+    }
+    
+    private void updateTrainNumbers()
+    {
+        for(int i = 0; i <= this.CTCOffice.trains.size(); i++)
+        {
+            this.trainNumbers.add(Integer.toString(i));
+        }
+        
+        trainNumbers = new ArrayList<>();
+        this.routeTrainsTrainDrop.setModel(new javax.swing.DefaultComboBoxModel(this.trainNumbers.toArray(new String[0])));
+        
     }
     
     /**
