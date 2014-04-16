@@ -100,7 +100,7 @@ public class TrainStatus
     /* GetAnouncement() returns the anouncement of the Train
      * Returns - String, anouncement
     */
-    public String GetAnnouncement()
+    public String getAnnouncement()
     {
         String s = this.announcement;
         if (s == null)
@@ -113,7 +113,7 @@ public class TrainStatus
     /* GetAdvertisement() returns the advertisement of the Train
      * Returns - String, advertisement
     */
-    public String GetAdvertisement()
+    public String getAdvertisement()
     {
         String s = this.advertisement;
         if (s == null)
@@ -126,7 +126,7 @@ public class TrainStatus
     /* GetEBrakeStatus() returns the status of the emergency brake
      * Returns - boolean, true if engaged, false if disengaged
     */
-    public boolean GetEBrakeStatus()
+    public boolean getEBrakeStatus()
     {
         return this.eBrakeStatus;
     }
@@ -134,7 +134,7 @@ public class TrainStatus
     /* GetExteriorLightStatus() returns the status of the exterior lights
      * Returns - boolean, true if on, false if off
     */
-    public boolean GetExteriorLightStatus()
+    public boolean getExteriorLightStatus()
     {
         return this.extLightStatus;
     }
@@ -142,7 +142,7 @@ public class TrainStatus
     /* GetFailure() returns the failure of the train
      * Returns - int, number of the failure
     */
-    public int GetFailure()
+    public int getFailure()
     {
         return this.failure;
     }
@@ -150,7 +150,7 @@ public class TrainStatus
     /* GetHeaterStatus() returns the status of the Train's heater
      * Returns - boolean, true if on, false if off
     */
-    public boolean GetHeaterStatus()
+    public boolean getHeaterStatus()
     {
         return this.heaterStatus;
     }
@@ -158,7 +158,7 @@ public class TrainStatus
     /* GetInteriorLightStatus() returns the status of the interior lights
      * Returns - boolean, true if on, false if off
     */
-    public boolean GetInteriorLightStatus()
+    public boolean getInteriorLightStatus()
     {
         return this.intLightStatus;
     }
@@ -166,7 +166,7 @@ public class TrainStatus
     /* GetLeftDoorStatus() reutrns the status of the left doors
      * Returns - boolean, true if open, false if closed
     */
-    public boolean GetLeftDoorStatus()
+    public boolean getLeftDoorStatus()
     {
         return this.lDoorStatus;
     }
@@ -174,7 +174,7 @@ public class TrainStatus
     /* GetMass() returns the mass of the train including passengers
      * Returns - double 
     */
-    public double GetMass()
+    public double getMass()
     {
         return this.mass;
     }
@@ -182,7 +182,7 @@ public class TrainStatus
     /* GetPassengerBrakeRequest() returns the status of the passegner brake request
      * Returns - boolean, true if brake requested, false if not
     */
-    public boolean GetPassengerBrakeRequest()
+    public boolean getPassengerBrakeRequest()
     {
         return this.passengerEBrakeRequest;
     }
@@ -190,7 +190,7 @@ public class TrainStatus
     /* GetRightDoorStatus() returns the status of the right doors
      * Returns - boolean, true if open, false if closed
     */
-    public boolean GetRightDoorStatus()
+    public boolean getRightDoorStatus()
     {
         return this.rDoorStatus;
     }
@@ -198,7 +198,7 @@ public class TrainStatus
     /* GetSBrakeStatus() gets the status of the service brake
      * Returns - boolean, ture if engaged, fals eif disengaged
     */
-    public boolean GetSBrakeStatus()
+    public boolean getSBrakeStatus()
     {
         return this.sBrakeStatus;
     }
@@ -206,7 +206,7 @@ public class TrainStatus
     /* GetTemperature() gets the temperature inside train
      * Returns - double (in celcius)
     */
-    public double GetTemperature()
+    public double getTemperature()
     {
         return this.temperature;
     }
@@ -214,7 +214,7 @@ public class TrainStatus
     /* GetVelocity() gets the current velocity of the train
      * Returns - double
     */
-    public double GetVelocity()
+    public double getVelocity()
     {
         return this.velocity;
     }
@@ -223,7 +223,7 @@ public class TrainStatus
      * Parementers:
      *   String x - anouncement to set
     */
-    public void SetAnnouncement(String x)
+    public void setAnnouncement(String x)
     {
         this.announcement = x;
     }
@@ -232,7 +232,7 @@ public class TrainStatus
      * Parementers:
      *   String x - advertisement to set
     */
-    public void SetAdvertisement(String x)
+    public void setAdvertisement(String x)
     {
         this.advertisement = x;
     }
@@ -241,7 +241,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - brake status
     */
-    public void SetEBrakeStatus(boolean x)
+    public void setEBrakeStatus(boolean x)
     {
         this.eBrakeStatus = x;
     }
@@ -250,7 +250,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - light status
     */
-    public void SetExteriorLightStatus(boolean x)
+    public void setExteriorLightStatus(boolean x)
     {
         this.extLightStatus = x;
     }
@@ -259,7 +259,7 @@ public class TrainStatus
      * Parementers:
      *   int x - failure number
     */
-    public void SetFailure(int x)
+    public void setFailure(int x)
     {
         this.failure = x;
     }
@@ -268,7 +268,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - heater status
     */
-    public void SetHeaterStatus(boolean x)
+    public void setHeaterStatus(boolean x)
     {
         this.heaterStatus = x;
     }
@@ -277,7 +277,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - light status
     */
-    public void SetInteriorLightStatus(boolean x)
+    public void setInteriorLightStatus(boolean x)
     {
         this.intLightStatus = x;
     }
@@ -286,7 +286,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - door status
     */
-    public void SetLeftDoorStatus(boolean x)
+    public void setLeftDoorStatus(boolean x)
     {
         this.lDoorStatus = x;
     }
@@ -295,7 +295,7 @@ public class TrainStatus
      * Parementers:
      *   double x - train mass
     */
-    public void SetMass(double x)
+    public void setMass(double x)
     {
         this.mass = x;
     }
@@ -304,7 +304,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - request status
     */
-    public void SetPassengerBrakeRequest(boolean x)
+    public void setPassengerBrakeRequest(boolean x)
     {
         this.passengerEBrakeRequest = x;
     }
@@ -313,7 +313,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - brake status
     */
-    public void SetSBrakeStatus(boolean x)
+    public void setSBrakeStatus(boolean x)
     {
         this.sBrakeStatus = x;
     }
@@ -322,7 +322,7 @@ public class TrainStatus
      * Parementers:
      *   boolean x - door status
     */
-    public void SetRightDoorStatus(boolean x)
+    public void setRightDoorStatus(boolean x)
     {
         this.rDoorStatus = x;
     }
@@ -331,7 +331,7 @@ public class TrainStatus
      * Parementers:
      *   double x - temperature (in celcius)
     */
-    public void SetTemperature(double x)
+    public void setTemperature(double x)
     {
         this.temperature = x;
     }
@@ -340,7 +340,7 @@ public class TrainStatus
      * Parementers:
      *   double x - velocity (meter/sec.)
     */
-    public void SetVelocity(double x)
+    public void setVelocity(double x)
     {
         this.velocity = x;
     }

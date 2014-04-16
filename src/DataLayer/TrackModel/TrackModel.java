@@ -319,14 +319,14 @@ public class TrackModel
         
         TrackSignal t = new TrackSignal(d.Speed, d.Authority, u, dd, g);
         
-        theTrains.get(d.trainID).SetTrackSignal(t);
+        theTrains.get(d.trainID).setTrackSignal(t);
     }
     
     public void updateTrainLocations()
     {
     	for(int i = 0; i < theTrainLocations.size(); i++)
     	{
-    	    double deltaX = theTrains.get(i).GetDeltaX();
+    	    double deltaX = theTrains.get(i).getDeltaX();
     	    LineColor line = theTrainLocations.get(i).line;
     	    int lineNum = 0;
             if (line == LineColor.GREEN)
@@ -430,7 +430,7 @@ public class TrackModel
             double g = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getGradient();
             boolean u = theLines.get(lineNum).theBlocks.get(newCurrentBlock).isUnderground();
             TrackSignal t = new TrackSignal(s, a, u, dd, g);
-            theTrains.get(i).SetTrackSignal(t);
+            theTrains.get(i).setTrackSignal(t);
     	    
     	}
     }

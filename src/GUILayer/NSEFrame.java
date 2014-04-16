@@ -94,7 +94,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         Vector<String> list = new Vector<String>();
         for (Train t : NSEObject.Trains)
         {
-            list.add(t.ToString());
+            list.add(t.toString());
         }
         trainSelectList.setListData(list);
         trainSelectList.setSelectedIndex(0);

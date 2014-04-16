@@ -64,7 +64,7 @@ public class NSE implements Runnable
         for (int i = 0; i < 10; i++)
         {
             this.Trains.add(new Train(i, this.isRunning, this.Time));
-            this.Trains.get(i).SetTimeMultiplier(this.TimeMultiplier);
+            this.Trains.get(i).setTimeMultiplier(this.TimeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
@@ -89,7 +89,7 @@ public class NSE implements Runnable
         for (int i = 0; i < numberOfTrains; i++)
         {
             this.Trains.add(new Train(i, this.isRunning, this.Time));
-            this.Trains.get(i).SetTimeMultiplier(this.TimeMultiplier);
+            this.Trains.get(i).setTimeMultiplier(this.TimeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
@@ -119,7 +119,7 @@ public class NSE implements Runnable
         for(Train train : this.Trains)
         {
             train.Controller.VelocitySetPoint = TrainController.MAX_TRAIN_SPEED;
-            train.SetIsRunning(this.isRunning.booleanValue());
+            train.setIsRunning(this.isRunning.booleanValue());
             new Thread(train).start();
         }
         
@@ -220,7 +220,7 @@ public class NSE implements Runnable
         //set time multiplier for each train
         for (Train train : this.Trains)
         {
-            train.SetTimeMultiplier(multiplier);
+            train.setTimeMultiplier(multiplier);
         }
     }
 }

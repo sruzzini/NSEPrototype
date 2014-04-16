@@ -95,7 +95,7 @@ public class Train implements Runnable
     /* GetDeltaX() gets distance travelled since last request
      * Returns - double, meters travelled
     */
-    public double GetDeltaX()
+    public double getDeltaX()
     {
         double tempDeltaX = 0;
         tempDeltaX =  physicsInput.Delta_x - lastDeltaX;
@@ -106,7 +106,7 @@ public class Train implements Runnable
     /* GetTrainCommand() gets a train command from the controller
      * Returns - TrainCommand object
     */
-    public TrainCommand GetTrainCommand()
+    public TrainCommand getTrainCommand()
     {
         return this.commands;
     }
@@ -114,7 +114,7 @@ public class Train implements Runnable
     /* GetTrainStatus() gets the status of the train from the model
      * Returns - TrainStatus object
     */
-    public TrainStatus GetTrainStatus()
+    public TrainStatus getTrainStatus()
     {
         return this.status;
     }
@@ -123,24 +123,24 @@ public class Train implements Runnable
     */
     public void run()
     {
-        this.Simulate();
+        this.simulate();
     }
     
     /* SetBeaconSignal(BeaconSignal s) sets the beacon of the train
      * Parameters:
      *     BeaconSignal s - sets train's beacon signal to "s"
     */
-    public void SetBeaconSignal(BeaconSignal s)
+    public void setBeaconSignal(BeaconSignal s)
     {
         this.beaconSignal = s;
-        this.Controller.SetBeaconSignal(this.beaconSignal);
+        this.Controller.setBeaconSignal(this.beaconSignal);
     }
     
     /* SetIsRunning(Boolean isRunning) sets isRunning of the train
      * Parameters:
      *     Boolean isRunning - sets train's isRunning to "isRunning"
     */
-    public void SetIsRunning(Boolean isRunning)
+    public void setIsRunning(Boolean isRunning)
     {
         this.isRunning = isRunning;
     }
@@ -149,10 +149,10 @@ public class Train implements Runnable
      * Parameters:
      *     int i - sets train's time multiplier to "i"
     */
-    public void SetTimeMultiplier(int i)
+    public void setTimeMultiplier(int i)
     {
         this.timeMultiplier = i; //sets train time multiplier
-        this.Controller.SetTimeMultiplier(this.timeMultiplier); //sets time multiplier for the controller
+        this.Controller.setTimeMultiplier(this.timeMultiplier); //sets time multiplier for the controller
         this.Model.physics.setTimeMultiplier(this.timeMultiplier); //sets time multiplier for physics engine in the model
     }
     
@@ -160,10 +160,10 @@ public class Train implements Runnable
      * Parameters:
      *     TrackSignal s - sets teh train's track signal to "s"
     */
-    public void SetTrackSignal(TrackSignal s)
+    public void setTrackSignal(TrackSignal s)
     {
         this.trackSignal = s;
-        this.Controller.SetTrackSignal(this.trackSignal);
+        this.Controller.setTrackSignal(this.trackSignal);
         // gradient
         physicsInput.Gradient = trackSignal.Gradient;
         // passengers
@@ -173,21 +173,21 @@ public class Train implements Runnable
      * Parameters:
      *     TrainStatus s - sets the train's status to "s"
     */
-    public void SetTrainStatus(TrainStatus s)
+    public void setTrainStatus(TrainStatus s)
     {
         this.status = s;
-        this.Controller.SetTrainStatus(this.status);
+        this.Controller.setTrainStatus(this.status);
     }
     
     /* Simulate() called by "run()".  Performs simulation on train object
     */
-    public void Simulate()
+    public void simulate()
     {
         Model.startPhysics();
         
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
-            this.commands = this.Controller.GetTrainCommand();
+            this.commands = this.Controller.getTrainCommand();
             translateStateCommand(this.commands);
             Model.updateState();
             
@@ -204,7 +204,7 @@ public class Train implements Runnable
     /* ToString() returns the Trains name
      * Returns - String ("Train " + this.iD)
     */
-    public String ToString()
+    public String toString()
     {
         return "Train " + Integer.toString(this.iD);
     }
@@ -244,19 +244,19 @@ public class Train implements Runnable
     */
     private void updateStatus()
     {
-        status.SetVelocity(physicsInput.Velocity); 
-        status.SetMass(Model.getMass());
-        status.SetTemperature(stateInput.Temperature);
-        status.SetFailure(Model.getFailureCode());
-        status.SetSBrakeStatus(Model.getSBrakeStatus());
-        status.SetEBrakeStatus(Model.getEBrakeStatus());
-        status.SetPassengerBrakeRequest(Model.getPassengerEBrakeStatus());
-        status.SetLeftDoorStatus(Model.getLeftDoorStatus());
-        status.SetRightDoorStatus(Model.getRightDoorStatus());
-        status.SetExteriorLightStatus(Model.getExtLightStatus());
-        status.SetInteriorLightStatus(Model.getIntLightStatus());
-        status.SetHeaterStatus(Model.getHeaterStatus());
-        status.SetAnnouncement(Model.getAnnouncement());
-        status.SetAdvertisement(Model.getAdvertisement());
+        status.setVelocity(physicsInput.Velocity); 
+        status.setMass(Model.getMass());
+        status.setTemperature(stateInput.Temperature);
+        status.setFailure(Model.getFailureCode());
+        status.setSBrakeStatus(Model.getSBrakeStatus());
+        status.setEBrakeStatus(Model.getEBrakeStatus());
+        status.setPassengerBrakeRequest(Model.getPassengerEBrakeStatus());
+        status.setLeftDoorStatus(Model.getLeftDoorStatus());
+        status.setRightDoorStatus(Model.getRightDoorStatus());
+        status.setExteriorLightStatus(Model.getExtLightStatus());
+        status.setInteriorLightStatus(Model.getIntLightStatus());
+        status.setHeaterStatus(Model.getHeaterStatus());
+        status.setAnnouncement(Model.getAnnouncement());
+        status.setAdvertisement(Model.getAdvertisement());
     }
 }
