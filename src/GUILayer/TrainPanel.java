@@ -29,12 +29,12 @@ public class TrainPanel extends javax.swing.JPanel {
     {
         this.train = t;
         this.trainControllerPanel.SetTrainController(t.Controller);
-        this.trainModelPanel.setTrainModel(t.Model);
+        this.trainModelPanel.SetTrainModel(t.Model);
     }
     
     public void update()
     {
-        trainModelPanel.update();
+        trainModelPanel.Update();
         trainControllerPanel.UpdateTrainControllerGUI();
     }
 

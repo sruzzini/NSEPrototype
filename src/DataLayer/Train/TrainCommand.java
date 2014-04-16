@@ -14,15 +14,15 @@ package DataLayer.Train;
 
 public class TrainCommand 
 {
-    public double PowerCommand;
-    public boolean ServiceBrakeOn;
-    public boolean EmergencyBrakeOn;
-    public boolean LeftDoorsOpen;
-    public boolean RightDoorsOpen;
-    public boolean ExteriorLightsOn;
-    public boolean InteriorLightsOn;
-    public boolean HeaterOn;
-    public String Announcement;
+    public double PowerCommand; //power in kilowatts
+    public boolean ServiceBrakeOn; //true if brake should be on
+    public boolean EmergencyBrakeOn; //true if brake should be on
+    public boolean LeftDoorsOpen; //true if doors should be open
+    public boolean RightDoorsOpen; //true if doors should be open
+    public boolean ExteriorLightsOn; //true if lights should be on
+    public boolean InteriorLightsOn; //true if lights should be on
+    public boolean HeaterOn; //true if heater should be on
+    public String Announcement; //string with announcement
     
     
     public TrainCommand()

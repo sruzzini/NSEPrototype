@@ -19,9 +19,9 @@ import java.util.logging.Logger;
 
 public class SystemTime implements Runnable
 {
-    public static final int SECONDS_IN_DAY = 86400;
-    public static final int SECONDS_IN_HOUR = 3600;
-    public static final int SECONDS_IN_MINUTE = 60;
+    public static final int SECONDS_IN_DAY = 86400; //number of seconds in a day
+    public static final int SECONDS_IN_HOUR = 3600; //number of seconds in an hour
+    public static final int SECONDS_IN_MINUTE = 60; //number of seconds in a minute
     
     public int Hour; //24 hour time (0-23)
     public int Minute; //60 minutes in an hour (0-59)

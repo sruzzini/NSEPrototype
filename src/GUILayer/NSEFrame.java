@@ -1,8 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * NSEFrame class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Nathan Hachten
+ *  Michael Kudlaty
+ *  Ryan Mertz
+ *  Stephen Ruzzini
+ *  Drew Winfield
+ *
+ *****************************************************************************/
 
 package GUILayer;
 import DataLayer.*;
@@ -11,17 +21,11 @@ import DataLayer.Train.*;
 import DataLayer.Wayside.Wayside;
 import java.util.Vector;
 
-/**
- *
- * @author domino54
- */
 public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
-    public NSE NSEObject;
-    public boolean StartClicked;
-    /**
-     * Creates new form NSEFrame
-     */
+    public NSE NSEObject; //NSE object bound to the gui
+    public boolean StartClicked; //true if start was clicked
+    
     public NSEFrame() {
         initComponents();
         this.NSEObject = null; //create new NSE object with 10 trains
@@ -29,6 +33,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.StartClicked = false;
     }
     
+    /* SetNSE(NSE n) sets the nse object bound to the gui
+     * Paramters:
+     *     NSE n - NSE object to set
+    */
     public void SetNSE(NSE n)
     {
         this.NSEObject = n;
@@ -36,21 +44,35 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         //this.cTCGUI1.setCTCOffice(this.NSEObject.CTCOffice);
     }
     
+    /* SetSystemTime(String s) sets teh systemTime_txt label to the string
+     * Parameters:
+     *     String s - time to set to systemTime_txt
+    */
     public void SetSystemTime(String s)
     {
         this.systemTime_txt.setText(s);
     }
     
+    /* SetTrackModel(TrackModel t) sets TrackModel object to trackmodel panel
+     * Paramters:
+     *     TrackModel t - TrackModel object to be bound
+    */
     public void SetTrackModel(TrackModel t)
     {
         this.trackModelPanel1.setTrack(t);
     }
     
+    /* SetWayside(Wayside w) sets the Wayside object to wayside panel
+     * Parameters:
+     *     Wayside w - Wayside object to be bound
+    */
     public void SetWayside(Wayside w)
     {
        this.waysidePanel1.setWayside(w);
     }
     
+    /* UpdateTrainSelectList() updates the train list on the train panel
+    */
     public void UpdateTrainSelectList()
     {
         Vector<String> list = new Vector<String>();
@@ -62,6 +84,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         trainSelectList.setSelectedIndex(0);
     }
     
+    /* run() used to implement Runnable.
+    */
     public void run()
     {
         while (true)
@@ -265,46 +289,6 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.trainPanel1.setTrain(this.NSEObject.Trains.get(trainSelectList.getSelectedIndices()[0]));
     }//GEN-LAST:event_trainSelectListValueChanged
 
-    /**
-     * @param args the command line arguments
-     */
-    /*public static void main(String args[]) {
-        /* Set the Nimbus look and feel 
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        /*
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        */
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NSEFrame().setVisible(true);
-            }
-        });*/
-        
-        /*NSE nse = new NSE(1, 10);
-        nse.RunAutomatic();
-        
-    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CTC_panel;
