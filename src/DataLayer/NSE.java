@@ -102,6 +102,34 @@ public class NSE implements Runnable
         this.TimeMultiplier = timeMultiplier;
         this.nseGUI = null;
     }
+    // reset() restores NSE to default settings
+    public void reset()
+    {
+        this.IsAutomatic = true;
+        this.isRunning = new Boolean(false);
+        this.TimeMultiplier = REAL_TIME;
+        this.Time = new SystemTime(this.TimeMultiplier);
+        this.CTCOffice = new CTC();
+        this.Track = new TrackModel();
+        this.Wayside = new Wayside(this.Track);
+        this.TrainLocations = new ArrayList<TrainLocation>();
+        this.Trains = new ArrayList<Train>();
+        //creates 10 Train Objects and 10 TrainLocations
+        for (int i = 0; i < 10; i++)
+        {
+            this.Trains.add(new Train(i, this.isRunning, this.Time));
+            this.Trains.get(i).setTimeMultiplier(this.TimeMultiplier);
+            this.TrainLocations.add(new TrainLocation());
+        }
+        
+        this.CTCOffice.setTrainLocations(this.TrainLocations); //setting CTC Office's train locations to the newly created locations
+        this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
+        this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
+        this.TimeMultiplier = REAL_TIME;
+        
+        this.nseGUI.setNSE(this);
+        this.nseGUI.setSystemTime(Time.toString());
+    }
     
     // run() used to implement Runnable.  Calls "RunAutomatic()"
     public void run()

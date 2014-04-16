@@ -158,6 +158,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         });
 
         reset_button.setText("Reset");
+        reset_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reset_buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout CTC_panelLayout = new javax.swing.GroupLayout(CTC_panel);
         CTC_panel.setLayout(CTC_panelLayout);
@@ -181,9 +186,9 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         Waysides_panelLayout.setHorizontalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(39, 39, 39)
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,24 +231,27 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         Trains_panelLayout.setHorizontalGroup(
             Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Trains_panelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addComponent(trainPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(trainSelectList, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(Trains_panelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)))
+                .addGap(27, 27, 27))
         );
         Trains_panelLayout.setVerticalGroup(
             Trains_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Trains_panelLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+            .addGroup(Trains_panelLayout.createSequentialGroup()
+                .addComponent(trainPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
+            .addGroup(Trains_panelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(trainSelectList, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(Trains_panelLayout.createSequentialGroup()
-                .addComponent(trainPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Trains", Trains_panel);
@@ -339,6 +347,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             new Thread(this.NSEObject).start();
         }
         this.start_button.setEnabled(false);
+        this.reset_button.setEnabled(false);
     }//GEN-LAST:event_start_Clicked
 
     private void trainSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_trainSelectListValueChanged
@@ -373,6 +382,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             this.NSEObject.setTimeMultiplier(0);
         }
         this.start_button.setEnabled(true);
+        this.reset_button.setEnabled(true);
     }//GEN-LAST:event_pause_clicked
 
     private void automatic_Clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_automatic_Clicked
@@ -396,6 +406,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             this.NSEObject.IsAutomatic = false;
         }
     }//GEN-LAST:event_manual_Clicked
+
+    private void reset_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_buttonActionPerformed
+        NSEObject.reset();
+    }//GEN-LAST:event_reset_buttonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
