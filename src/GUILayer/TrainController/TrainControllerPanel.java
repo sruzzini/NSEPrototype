@@ -15,10 +15,9 @@ import java.text.DecimalFormat;
  */
 public class TrainControllerPanel extends javax.swing.JPanel {
 
-    private TrainController controller;
-    /**
-     * Creates new form TrainControllerPanel
-     */
+    private TrainController controller; //TrainController that gui is boud to
+    
+    
     public TrainControllerPanel() 
     {
         initComponents();
@@ -26,7 +25,10 @@ public class TrainControllerPanel extends javax.swing.JPanel {
     }
     
     
-    //public methods
+    /* SetTrainCOntroller(TrainController c) sets the controller bound to the gui
+     * Paramters:
+     *     TrainController c - controller to bind to the gui
+    */
     public void SetTrainController(TrainController c)
     {
         this.controller = c;
@@ -35,12 +37,14 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         this.controller.DesiredTemperature = convertToCelcius(this.desiredTemp_slide.getValue());
     }
     
+    /* UpdateTrainControllerGUI() updates all aspects of the gui
+    */
     public void UpdateTrainControllerGUI()
     {
         //V Set Point
         int controllerVSet = (int)(this.controller.VelocitySetPoint * 1000);
         this.vSetPoint_slide.setValue(controllerVSet);
-        double x = convertToMPH(controllerVSet);
+        double x = ConvertToMPH(controllerVSet);
         this.vSetPoint_status.setText("" + Double.parseDouble(new DecimalFormat("##.##").format(x)) + " mph");
         
         //Desired Temp
@@ -341,34 +345,27 @@ public class TrainControllerPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    //
-    private double convertToCelcius(int f)
-    {
-        double x = (((f - 32) * 5) / 9);
-        return x;
-    }
-    
-    private int convertToFarenheit(double c)
-    {
-        int x = (int)(((c * 9) / 5) + 32);
-        return x;
-    }
-    
-    public static double convertToMPH(double x)
+    /* ConvertToMPH(double x) converts meters/sec to mph
+     * Paramters:
+     *     double x - speed in meters/sec
+     * Returns - double, speed in mph
+    */
+    public static double ConvertToMPH(double x)
     {
         double mps = x / 1000;
         return mps * 2.23694;
     }
     
-    
+    //Fired when the Velocity Setpoint slider is changed
     private void vSetPoint_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_vSetPoint_Changed
         // TODO add your handling code here:
         double mps = this.vSetPoint_slide.getValue();
-        double x = convertToMPH(mps);
+        double x = ConvertToMPH(mps);
         this.vSetPoint_status.setText("" + Double.parseDouble(new DecimalFormat("##.##").format(x)) + " mph");
         this.controller.VelocitySetPoint = mps/1000;
     }//GEN-LAST:event_vSetPoint_Changed
 
+    //Fired when the Desired Temperature slider is changed
     private void desiredTemp_Changed(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_desiredTemp_Changed
         // TODO add your handling code here:
         int degreesF = this.desiredTemp_slide.getValue();
@@ -376,6 +373,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         this.controller.DesiredTemperature = convertToCelcius(degreesF);
     }//GEN-LAST:event_desiredTemp_Changed
 
+    //Fired when the E Brake Engage is Clicked
     private void eBrake_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_eBrake_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.eBrake_on.isSelected();
@@ -400,6 +398,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_eBrake_Clicked
 
+    //Fired when the E Brake Disengage is clicked
     private void eBrakeOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_eBrakeOff_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.eBrake_on.isSelected();
@@ -424,6 +423,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_eBrakeOff_Clicked
 
+    //Fired when the S Brake Engage is clicked
     private void sBrake_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sBrake_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.sBrake_on.isSelected();
@@ -447,6 +447,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sBrake_Clicked
 
+    //Fired when teh S Brake Disengage is clicked
     private void sBrakeOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sBrakeOff_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.sBrake_on.isSelected();
@@ -470,6 +471,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sBrakeOff_Clicked
 
+    //Fired when the Interior Lights on is clicked
     private void intLights_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_intLights_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.intLights_on.isSelected();
@@ -493,6 +495,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_intLights_Clicked
 
+    //Fired when the Interior Lights off is clicked
     private void intLightsOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_intLightsOff_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.intLights_on.isSelected();
@@ -516,6 +519,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_intLightsOff_Clicked
 
+    //Fired when the Exterior Lights on is clicked
     private void extLights_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_extLights_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.extLights_on.isSelected();
@@ -539,6 +543,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_extLights_Clicked
 
+    //Fired when the Exterior Lights off is clicked
     private void extLightsOff_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_extLightsOff_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.extLights_on.isSelected();
@@ -562,6 +567,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_extLightsOff_Clicked
 
+    //Fired when the Left Doors open is clicked
     private void lDoors_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lDoors_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.lDoors_open.isSelected();
@@ -585,6 +591,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lDoors_Clicked
 
+    //Fired when the Left Doors close is clicked
     private void lDoorsClose_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lDoorsClose_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.lDoors_open.isSelected();
@@ -608,6 +615,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lDoorsClose_Clicked
 
+    //Fired when the Right Doors open is clicked
     private void rDoors_Clicked(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rDoors_Clicked
         // TODO add your handling code here:
         boolean onDepressed = this.rDoors_open.isSelected();
@@ -631,6 +639,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_rDoors_Clicked
 
+    //FIred when the Right Doors close is clicked
     private void rDoorsClose_Close(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rDoorsClose_Close
         // TODO add your handling code here:
         boolean onDepressed = this.rDoors_open.isSelected();
@@ -681,9 +690,30 @@ public class TrainControllerPanel extends javax.swing.JPanel {
     private javax.swing.JSlider vSetPoint_slide;
     private javax.swing.JLabel vSetPoint_status;
     // End of variables declaration//GEN-END:variables
-
-    //Initial GUI setters
     
+    /* convertToCelcius(int f) converts farenheit to celcius
+     * Parameters:
+     *     int f - temp in farenheit
+     * Returns - double, temp in celcius
+    */
+    private double convertToCelcius(int f)
+    {
+        double x = (((f - 32) * 5) / 9);
+        return x;
+    }
+    
+    /* converToFarenheit(double c) converts celcius to farenheit
+     * Parameters:
+     *     double c - temp in celcius
+     * Returns - int, temp in farenheit
+    */
+    private int convertToFarenheit(double c)
+    {
+        int x = (int)(((c * 9) / 5) + 32);
+        return x;
+    }
+    
+    //setEBrakeGUI() sets the E brake buttons based on the controller
     private void setEBrakeGUI()
     {
         if (this.controller.OperatorEBrake == TrainController.OperatorInputStatus.ON) //ON
@@ -703,6 +733,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }
     
+    //setExtLightsGUI() sets the Exterior lights buttons based on the controller
     private void setExtLightsGUI()
     {
         if (this.controller.OperatorExtLights == TrainController.OperatorInputStatus.ON) //ON
@@ -722,6 +753,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }
     
+    //setIntLightsGUI() sets the Interior lights buttons based on the controller
     private void setIntLightsGUI() 
     {
         if (this.controller.OperatorIntLights == TrainController.OperatorInputStatus.ON) //ON
@@ -741,6 +773,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }
     
+    //setLDoorsGUI() sets the Left Doors buttons based on the controller
     private void setLDoorsGUI()
     {
         if (this.controller.OperatorLeftDoor == TrainController.OperatorInputStatus.ON) //ON
@@ -761,6 +794,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }
     
+    //setRDoorsGUI() sets the Right Doors buttons based on the controller
     private void setRDoorsGUI()
     {
         if (this.controller.OperatorRightDoor == TrainController.OperatorInputStatus.ON) //ON
@@ -781,6 +815,7 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         }
     }
     
+    //setSBrakeGUI() sets the S brake buttons based on the controller
     private void setSBrakeGUI()
     {
         if (this.controller.OperatorSBrake == TrainController.OperatorInputStatus.ON) //ON

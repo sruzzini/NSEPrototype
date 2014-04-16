@@ -6,28 +6,26 @@
 
 package DataLayer.Wayside;
 
-import DataLayer.Bundles.BlockInfoBundle;
-import DataLayer.Bundles.BlockSignalBundle;
-import DataLayer.EnumTypes.LineColor;
-import DataLayer.TrackModel.Block;
-import DataLayer.TrackModel.Switch;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import DataLayer.Bundles.*;
+import DataLayer.EnumTypes.*;
+import DataLayer.TrackModel.*;
+import java.util.*;
 
 /**
  *
  * @author nwhachten
  */
 public class PLCGreenThree extends PLC{
-    int trainsInLoop;
-    int trainsAway;
-    int trainsComing;
-    boolean enteringLoop;
-    boolean trainExiting;
-    boolean trainWaitingAt76;
-    boolean trainPassingThru76;
-    boolean trainWaitingAt100;
-    boolean trainPassingThru100;
+    private boolean enteringLoop;
+    private int trainsAway;
+    private int trainsComing;
+    private boolean trainExiting;
+    private int trainsInLoop;
+    private boolean trainPassingThru100;
+    private boolean trainPassingThru76;
+    private boolean trainWaitingAt100;
+    private boolean trainWaitingAt76;
+
 
     public PLCGreenThree(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
         super(id, line, blocks, blockArray, switches);
@@ -80,7 +78,7 @@ public class PLCGreenThree extends PLC{
                // c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
                 //        block149.getDestination(), block149.getSpeedLimit(), 149, LineColor.GREEN));
                 c.pushCommand(new BlockSignalBundle(block76.getAuthority(), 
-                        block76.getDestination(), block76.getSpeedLimit(), 150, LineColor.GREEN));
+                        block76.getDestination(), block76.getSpeedLimit(), block76.getBlockID(), LineColor.GREEN));
                 trainWaitingAt76 = false;
                 trainPassingThru76 = true;
             }
@@ -118,7 +116,7 @@ public class PLCGreenThree extends PLC{
             {
                 //push switch signal to set switch -2 towards A
                 boolean dir = false;
-                if (switch6.straightBlock == 1) dir = true;
+                if (switch6.straightBlock == 86) dir = true;
                 c.pushCommand(new Switch(switch6.lineID, switch6.switchID, 
                         switch6.approachBlock, switch6.straightBlock, 
                         switch6.divergentBlock, dir));
@@ -143,7 +141,7 @@ public class PLCGreenThree extends PLC{
                 trainWaitingAt100 = false;
                 //push switch signal to set switch -2 to point towards block 1
                 boolean dir = false;
-                if (switch6.straightBlock == 1) dir = true;
+                if (switch6.straightBlock == 100) dir = true;
                 c.pushCommand(new Switch(switch6.lineID, switch6.switchID, 
                         switch6.approachBlock, switch6.straightBlock, switch6.divergentBlock, dir));
                 //push signal to block one to tell train to go

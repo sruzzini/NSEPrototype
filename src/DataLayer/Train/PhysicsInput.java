@@ -12,22 +12,19 @@ package DataLayer.Train;
  */
 public class PhysicsInput {
     
-    // Consumed by PhysicsEngine
-    public double MotorPower;
-    public boolean SBrakeStatus;
-    public boolean EBrakeStatus;
-    public int Time_multiplier;
-    public int PassengerChange;
-    public double Gradient;
-    
-    // Produced by PhysicsEngine
-    public boolean EngineFailure;
-    public boolean SignalFailure;
-    public boolean  SBrakeFailure;
-    public boolean  EBrakeFailure;
     public double Delta_x;
-    public double Velocity;
+    public boolean  EBrakeFailure;
+    public boolean EBrakeStatus;
+    public boolean EngineFailure;
+    public double Gradient;
     public double Mass;
+    public double MotorPower;
+    public int PassengerChange;
+    public boolean  SBrakeFailure;
+    public boolean SBrakeStatus;
+    public boolean SignalFailure;
+    public int Time_multiplier;
+    public double Velocity;
     
     public PhysicsInput()
     {

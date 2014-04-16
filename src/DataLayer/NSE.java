@@ -22,6 +22,7 @@ import DataLayer.TrackModel.*;
 import DataLayer.Train.*;
 import DataLayer.Train.TrainController.TrainController;
 import DataLayer.Wayside.*;
+import GUILayer.NSEFrame;
 import java.util.*;
 import java.util.Calendar;
 
@@ -29,29 +30,31 @@ import java.util.Calendar;
 public class NSE implements Runnable
 {
     //Constatns
-    public static final int REAL_TIME = 1;
-    public static final int SPEED_UP_10X = 10;
+    public static final int REAL_TIME = 1; //multiplier for real time
+    public static final int SPEED_UP_10X = 10; //multiplier for 10x real time
+    private static final long dispatchIntervalMin = 1; //dispatch interval
+    private static final long millisInMin = 60000; //number of milliseconds in a minute
+    private static final long dispatchInterval = dispatchIntervalMin * millisInMin; // convert minutes to milliseconds 
     
     //Class variables
     public CTC CTCOffice;
+    public SystemTime Time;
+    public int TimeMultiplier;
     public TrackModel Track;
-    public Wayside Wayside;
     public ArrayList<TrainLocation> TrainLocations;
     public ArrayList<Train> Trains;
-    public int timeMultiplier;
+    public Wayside Wayside;
+    private NSEFrame nseGUI;
     private Boolean isRunning;
-    
     private long lastDispatchTime;
-    private final long dispatchIntervalMin = 1;
-    private final long millisInMin = 60000;
-    private final long dispatchInterval = dispatchIntervalMin * millisInMin; // convert minutes to milliseconds 
     
     
     //Constructors
     public NSE()
     {
         this.isRunning = new Boolean(false);
-        this.timeMultiplier = REAL_TIME;
+        this.TimeMultiplier = REAL_TIME;
+        this.Time = new SystemTime(this.TimeMultiplier);
         this.CTCOffice = new CTC();
         this.Track = new TrackModel();
         this.Wayside = new Wayside(this.Track);
@@ -60,21 +63,23 @@ public class NSE implements Runnable
         //creates 10 Train Objects and 10 TrainLocations
         for (int i = 0; i < 10; i++)
         {
-            this.Trains.add(new Train(i, this.isRunning));
-            this.Trains.get(i).SetTimeMultiplier(this.timeMultiplier);
+            this.Trains.add(new Train(i, this.isRunning, this.Time));
+            this.Trains.get(i).SetTimeMultiplier(this.TimeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
         this.CTCOffice.setTrainLocations(this.TrainLocations); //setting CTC Office's train locations to the newly created locations
         this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
         this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
-        this.timeMultiplier = REAL_TIME;
+        this.TimeMultiplier = REAL_TIME;
+        this.nseGUI = null;
     }
     
     public NSE(int timeMultiplier, int numberOfTrains)
     {
         this.isRunning = new Boolean(false);
-        this.timeMultiplier = timeMultiplier;
+        this.TimeMultiplier = timeMultiplier;
+        this.Time = new SystemTime(this.TimeMultiplier);
         this.CTCOffice = new CTC(numberOfTrains);
         this.Track = new TrackModel();
         this.Wayside = new Wayside(this.Track);
@@ -83,44 +88,54 @@ public class NSE implements Runnable
         //creates 10 Train Objects and 10 TrainLocations
         for (int i = 0; i < numberOfTrains; i++)
         {
-            this.Trains.add(new Train(i, this.isRunning));
-            this.Trains.get(i).SetTimeMultiplier(this.timeMultiplier);
+            this.Trains.add(new Train(i, this.isRunning, this.Time));
+            this.Trains.get(i).SetTimeMultiplier(this.TimeMultiplier);
             this.TrainLocations.add(new TrainLocation());
         }
         
         this.CTCOffice.setTrainLocations(this.TrainLocations); //setting CTC Office's train locations to the newly created locations
         this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
         this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
-        this.timeMultiplier = timeMultiplier;
+        this.TimeMultiplier = timeMultiplier;
+        this.nseGUI = null;
     }
     
-    
+    // run() used to implement Runnable.  Calls "RunAutomatic()"
     public void run()
     {
         this.RunAutomatic();
     }
     
-    //public methods
+    //RunAutomatic() runs NSE simulation in automatic mode
     public void RunAutomatic()
     {
         this.isRunning = Boolean.TRUE;
         lastDispatchTime = 0;
         
+        //spawn new thread for the SystemTime
+        new Thread(this.Time).start();
+        
         //spawn new thread for each Train
         for(Train train : this.Trains)
         {
-            train.controller.VelocitySetPoint = TrainController.MAX_TRAIN_SPEED;
+            train.Controller.VelocitySetPoint = TrainController.MAX_TRAIN_SPEED;
             train.SetIsRunning(this.isRunning.booleanValue());
             new Thread(train).start();
         }
         
         this.Wayside.StartSimulation(); //Start up the wayside controller
-        
+        long interval = 5000;
         long lastPrint = 0;
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
+            //Set time
+            if(this.nseGUI != null)
+            {
+                this.nseGUI.SetSystemTime(this.Time.ToString());
+            }
+            
             //check for 10 min elapsed, if so, dispatch new train
-            if ((Calendar.getInstance().getTimeInMillis() - lastDispatchTime) * timeMultiplier > dispatchInterval)
+            if ((Calendar.getInstance().getTimeInMillis() - lastDispatchTime) * TimeMultiplier > dispatchInterval)
             {
                 this.Wayside.sendDispatchSignal(CTCOffice.getDispatcher());
                 lastDispatchTime = Calendar.getInstance().getTimeInMillis();
@@ -137,12 +152,16 @@ public class NSE implements Runnable
             ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.getRouteInfo();
             for (BlockSignalBundle bundle : toWaysideInfo)
             {
+                if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
+                {
+                    System.out.println(bundle.BlockID);
+                }
                 this.Wayside.sendTravelSignal(bundle);
             }
-           
+            
             //Communicate from Track to Trains
             this.Track.updateTrainLocations();
-            long interval = 1000;
+            /*
             if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
             {
                 System.out.println("TRAIN 0 Physics delta x: " + this.Trains.get(0).getDeltaX());
@@ -160,13 +179,17 @@ public class NSE implements Runnable
                 System.out.println("Current Train Power" + this.Trains.get(0).GetTrainCommand().PowerCommand);
                 lastPrint = Calendar.getInstance().getTimeInMillis();
             }
+            */
         }
     }
     
-    
+    //RunManual() runs the NSE simulation in manual mode
     public void RunManual()
     {
         this.isRunning = true;
+        
+        //spawn new thread for the system time
+        new Thread(this.Time).start();
         
         //spawn new thread for each Train
         for(Train train : this.Trains)
@@ -177,6 +200,27 @@ public class NSE implements Runnable
         while(this.isRunning)
         {
             //do shit
+        }
+    }
+    
+    public void SetGUI(NSEFrame gui)
+    {
+        this.nseGUI = gui;
+    }
+    
+    /* SetTimeMultiplier(int multiplier) sets the NSE's time multiplier
+     * Parameters:
+     *     int multiplier - new time multiplier
+    */
+    public void SetTimeMultiplier(int multiplier)
+    {
+        this.TimeMultiplier = multiplier; //set new time multiplier
+        this.Time.SetMultiplier(multiplier); //set time multiplier for the syste time
+        
+        //set time multiplier for each train
+        for (Train train : this.Trains)
+        {
+            train.SetTimeMultiplier(multiplier);
         }
     }
 }

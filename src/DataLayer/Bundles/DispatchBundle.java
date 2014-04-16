@@ -6,7 +6,7 @@
 
 package DataLayer.Bundles;
 
-import DataLayer.EnumTypes.LineColor;
+import DataLayer.EnumTypes.*;
 
 /**
  *
@@ -27,6 +27,11 @@ public class DispatchBundle extends BlockSignalBundle {
         super(b.Authority, b.Destination, b.Speed, b.BlockID, b.LineID, b.Closed);
         this.trainID = trainID;
         this.toLine = toLine;
+    }
+    
+    public DispatchBundle copy()
+    {
+        return new DispatchBundle(this.trainID, this.toLine, this.Authority, this.Destination, this.Speed, this.BlockID, this.LineID, this.Closed);
     }
     
 }

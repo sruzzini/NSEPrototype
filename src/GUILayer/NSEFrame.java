@@ -1,8 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * NSEFrame class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Nathan Hachten
+ *  Michael Kudlaty
+ *  Ryan Mertz
+ *  Stephen Ruzzini
+ *  Drew Winfield
+ *
+ *****************************************************************************/
 
 package GUILayer;
 import DataLayer.*;
@@ -11,17 +21,11 @@ import DataLayer.Train.*;
 import DataLayer.Wayside.Wayside;
 import java.util.Vector;
 
-/**
- *
- * @author domino54
- */
 public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
-    public NSE NSEObject;
-    public boolean StartClicked;
-    /**
-     * Creates new form NSEFrame
-     */
+    public NSE NSEObject; //NSE object bound to the gui
+    public boolean StartClicked; //true if start was clicked
+    
     public NSEFrame() {
         initComponents();
         this.NSEObject = null; //create new NSE object with 10 trains
@@ -29,6 +33,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.StartClicked = false;
     }
     
+    /* SetNSE(NSE n) sets the nse object bound to the gui
+     * Paramters:
+     *     NSE n - NSE object to set
+    */
     public void SetNSE(NSE n)
     {
         this.NSEObject = n;
@@ -36,16 +44,35 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.cTCGUI1.setCTCOffice(this.NSEObject.CTCOffice);
     }
     
+    /* SetSystemTime(String s) sets teh systemTime_txt label to the string
+     * Parameters:
+     *     String s - time to set to systemTime_txt
+    */
+    public void SetSystemTime(String s)
+    {
+        this.systemTime_txt.setText(s);
+    }
+    
+    /* SetTrackModel(TrackModel t) sets TrackModel object to trackmodel panel
+     * Paramters:
+     *     TrackModel t - TrackModel object to be bound
+    */
     public void SetTrackModel(TrackModel t)
     {
         this.trackModelPanel1.setTrack(t);
     }
     
-    public void setWayside(Wayside w)
+    /* SetWayside(Wayside w) sets the Wayside object to wayside panel
+     * Parameters:
+     *     Wayside w - Wayside object to be bound
+    */
+    public void SetWayside(Wayside w)
     {
-        this.waysidePanel1.setWayside(w);
+       this.waysidePanel1.setWayside(w);
     }
     
+    /* UpdateTrainSelectList() updates the train list on the train panel
+    */
     public void UpdateTrainSelectList()
     {
         Vector<String> list = new Vector<String>();
@@ -57,6 +84,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         trainSelectList.setSelectedIndex(0);
     }
     
+    /* run() used to implement Runnable.
+    */
     public void run()
     {
         while (true)
@@ -93,6 +122,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         trainPanel1 = new GUILayer.TrainPanel();
         trainSelectList = new javax.swing.JList();
         start_button = new javax.swing.JButton();
+        systemTime_txt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,14 +161,14 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+                .addContainerGap())
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 154, Short.MAX_VALUE))
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Waysides", Waysides_panel);
@@ -162,6 +192,13 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         jTabbedPane1.addTab("Track Model", TrackModel_panel);
 
         jLabel1.setText("Trains");
+
+        trainSelectList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        trainSelectList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                trainSelectListValueChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout Trains_panelLayout = new javax.swing.GroupLayout(Trains_panel);
         Trains_panel.setLayout(Trains_panelLayout);
@@ -197,6 +234,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        systemTime_txt.setText("12 : 00 : 00");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -204,7 +243,9 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(wallClock_Radio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,8 +255,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                         .addGap(2, 2, 2)
                         .addComponent(pause_button)
                         .addGap(12, 12, 12)
-                        .addComponent(reset_button)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(reset_button)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(systemTime_txt)
+                        .addGap(25, 25, 25))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +269,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                     .addComponent(wallClock10_Radio)
                     .addComponent(pause_button)
                     .addComponent(reset_button)
-                    .addComponent(start_button))
+                    .addComponent(start_button)
+                    .addComponent(systemTime_txt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -241,46 +285,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         new Thread(this.NSEObject).start();
     }//GEN-LAST:event_start_Clicked
 
-    /**
-     * @param args the command line arguments
-     */
-    /*public static void main(String args[]) {
-        /* Set the Nimbus look and feel 
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        /*
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NSEFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        */
+    private void trainSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_trainSelectListValueChanged
+        this.trainPanel1.setTrain(this.NSEObject.Trains.get(trainSelectList.getSelectedIndices()[0]));
+    }//GEN-LAST:event_trainSelectListValueChanged
 
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NSEFrame().setVisible(true);
-            }
-        });*/
-        
-        /*NSE nse = new NSE(1, 10);
-        nse.RunAutomatic();
-        
-    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CTC_panel;
@@ -294,6 +302,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton reset_button;
     private javax.swing.ButtonGroup speed_group;
     private javax.swing.JButton start_button;
+    private javax.swing.JLabel systemTime_txt;
     private GUILayer.TrackModelPanel trackModelPanel1;
     private GUILayer.TrainPanel trainPanel1;
     private javax.swing.JList trainSelectList;

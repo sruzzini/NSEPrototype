@@ -6,9 +6,7 @@
 
 package DataLayer.Bundles;
 
-import DataLayer.EnumTypes.LightColor;
-import DataLayer.EnumTypes.LineColor;
-import DataLayer.EnumTypes.XingState;
+import DataLayer.EnumTypes.*;
 
 /**
  * This class contains information pertaining to a block on the track.
@@ -48,6 +46,12 @@ public class BlockInfoBundle extends BlockBundle {
         
         
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "BlockInfoBundle - Block: " + this.BlockID + "  Line: " + this.LineID + "  Light: " + this.LightColor + "  Xing: " + this.RRXingState + "\n";
     }
     
     

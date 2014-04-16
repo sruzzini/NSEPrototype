@@ -6,24 +6,21 @@
 
 package DataLayer.Wayside;
 
-import DataLayer.Bundles.BlockInfoBundle;
-import DataLayer.Bundles.BlockSignalBundle;
-import DataLayer.EnumTypes.LineColor;
-import DataLayer.TrackModel.Block;
-import DataLayer.TrackModel.Switch;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import DataLayer.Bundles.*;
+import DataLayer.EnumTypes.*;
+import DataLayer.TrackModel.*;
+import java.util.*;
 
 /**
  *
  * @author nwhachten
  */
 public class PLCGreenTwo extends PLC{
-    private int trainsInJ;
     private boolean enteringJ;
+    private boolean holdAtYard;
     private boolean leavingJ;
     private boolean stoppingAtJEnd;
-    private boolean holdAtYard;
+    private int trainsInJ;
 
     public PLCGreenTwo(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
         super(id, line, blocks, blockArray, switches);
@@ -34,8 +31,6 @@ public class PLCGreenTwo extends PLC{
         this.holdAtYard = false;
     }
     
-    
-
     @Override
     protected Commands plcProgram() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

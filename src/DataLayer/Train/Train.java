@@ -12,6 +12,7 @@
  *****************************************************************************/
 
 package DataLayer.Train;
+import DataLayer.SystemTime;
 import DataLayer.TrackModel.*;
 import DataLayer.Train.TrainModel.*;
 import DataLayer.Train.TrainController.*;
@@ -21,18 +22,20 @@ import java.util.logging.Logger;
 
 public class Train implements Runnable
 {
-    private int iD;
-    private int timeMultiplier;
-    private Boolean isRunning;
-    private TrainStatus status;
-    private TrainCommand commands;
-    private PhysicsInput physicsInput;
-    private StateInput stateInput;
-    private TrackSignal trackSignal;
-    private BeaconSignal beaconSignal;
-    public TrainController controller;
-    public TrainModel model;
-    private double lastDeltaX;
+    //Class Variables
+    public TrainController Controller; //controller that sends commands
+    public TrainModel Model; //model that acts on commands sent by controller
+    private BeaconSignal beaconSignal; //signal from the last beacon passed
+    private TrainCommand commands; //commands sent to the train by controller
+    private int iD; //ID of a train
+    private Boolean isRunning; //set to true if it is running
+    private double lastDeltaX; //meters travelled since last request
+    private PhysicsInput physicsInput; //physics commands
+    private StateInput stateInput; //state commands
+    private TrainStatus status; //current status of the train (calculated by model)
+    private SystemTime time;
+    private int timeMultiplier; //time multiplier of a train
+    private TrackSignal trackSignal; //signal from the current track block
     
     
     //Contructors
@@ -41,55 +44,57 @@ public class Train implements Runnable
         this.isRunning = new Boolean(false);
         this.iD = 1;
         this.timeMultiplier = 1;
+        this.time = new SystemTime();
         this.status = new TrainStatus();
         this.commands = new TrainCommand();
         this.physicsInput = new PhysicsInput();
         this.stateInput = new StateInput();
         this.trackSignal = new TrackSignal();
         this.beaconSignal = null;
-        this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
-        this.model = new TrainModel(this.physicsInput, this.stateInput);
+        this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
+        this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
     }
     
-    public Train(int id, Boolean running)
+    public Train(int id, Boolean running, SystemTime time)
     {
         this.isRunning = running;
         this.iD = id;
         this.timeMultiplier = 1;
+        this.time = time;
         this.status = new TrainStatus();
         this.commands = new TrainCommand();
         this.physicsInput = new PhysicsInput();
         this.stateInput = new StateInput();
         this.trackSignal = new TrackSignal();
         this.beaconSignal = null;
-        this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
-        this.model = new TrainModel(this.physicsInput, this.stateInput);
+        this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
+        this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
     }
     
-    public Train(int id, int multiplier, Boolean running, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
+    public Train(int id, int multiplier, SystemTime time, Boolean running, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
     {
         this.isRunning = running;
         this.iD = id;
         this.timeMultiplier = multiplier;
+        this.time = time;
         this.status = status;
         this.commands = new TrainCommand();
         this.physicsInput = new PhysicsInput();
         this.stateInput = new StateInput();
         this.trackSignal = signal;
         this.beaconSignal = beacon;
-        this.controller = new TrainController(this.timeMultiplier, this.status, this.trackSignal, this.beaconSignal);
-        this.model = new TrainModel(this.physicsInput, this.stateInput);
+        this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
+        this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
     }
     
-    public TrackSignal getTrackSignal()
-    {
-        return this.trackSignal;
-    }
     
     //Public methods
+    /* GetDeltaX() gets distance travelled since last request
+     * Returns - double, meters travelled
+    */
     public double GetDeltaX()
     {
         double tempDeltaX = 0;
@@ -97,71 +102,98 @@ public class Train implements Runnable
         lastDeltaX = physicsInput.Delta_x;
         return tempDeltaX;
     }
-    public double getDeltaX()
-    {
-        return physicsInput.Delta_x;
-    }
     
+    /* GetTrainCommand() gets a train command from the controller
+     * Returns - TrainCommand object
+    */
     public TrainCommand GetTrainCommand()
     {
         return this.commands;
     }
     
+    /* GetTrainStatus() gets the status of the train from the model
+     * Returns - TrainStatus object
+    */
     public TrainStatus GetTrainStatus()
     {
         return this.status;
     }
     
+    /* run() used to implement Runnable.  Calls "Simulate()"
+    */
     public void run()
     {
         this.Simulate();
     }
     
+    /* SetBeaconSignal(BeaconSignal s) sets the beacon of the train
+     * Parameters:
+     *     BeaconSignal s - sets train's beacon signal to "s"
+    */
     public void SetBeaconSignal(BeaconSignal s)
     {
         this.beaconSignal = s;
-        this.controller.SetBeaconSignal(this.beaconSignal);
+        this.Controller.SetBeaconSignal(this.beaconSignal);
     }
     
+    /* SetIsRunning(Boolean isRunning) sets isRunning of the train
+     * Parameters:
+     *     Boolean isRunning - sets train's isRunning to "isRunning"
+    */
     public void SetIsRunning(Boolean isRunning)
     {
         this.isRunning = isRunning;
     }
     
+    /* SetTimeMultiplier(int i) sets the time multiplier of the train
+     * Parameters:
+     *     int i - sets train's time multiplier to "i"
+    */
     public void SetTimeMultiplier(int i)
     {
-        this.timeMultiplier = i;
-        this.controller.SetTimeMultiplier(this.timeMultiplier);
+        this.timeMultiplier = i; //sets train time multiplier
+        this.Controller.SetTimeMultiplier(this.timeMultiplier); //sets time multiplier for the controller
+        this.Model.physics.setTimeMultiplier(this.timeMultiplier); //sets time multiplier for physics engine in the model
     }
     
+    /* SetTrackSignal(TrackSignal s) sets the track signal of the train
+     * Parameters:
+     *     TrackSignal s - sets teh train's track signal to "s"
+    */
     public void SetTrackSignal(TrackSignal s)
     {
         this.trackSignal = s;
-        this.controller.SetTrackSignal(this.trackSignal);
+        this.Controller.SetTrackSignal(this.trackSignal);
         // gradient
         physicsInput.Gradient = trackSignal.Gradient;
         // passengers
     }
     
+    /* SetTrainStatus(TrainStatus s) sets the status of the train
+     * Parameters:
+     *     TrainStatus s - sets the train's status to "s"
+    */
     public void SetTrainStatus(TrainStatus s)
     {
         this.status = s;
-        this.controller.SetTrainStatus(this.status);
+        this.Controller.SetTrainStatus(this.status);
     }
     
+    /* Simulate() called by "run()".  Performs simulation on train object
+    */
     public void Simulate()
     {
-        model.startPhysics();
+        Model.startPhysics();
         
         while(this.isRunning.booleanValue() == Boolean.TRUE)
         {
-            this.commands = this.controller.GetTrainCommand();
+            this.commands = this.Controller.GetTrainCommand();
             translateStateCommand(this.commands);
-            model.updateState();
+            Model.updateState();
             
             translatePhysicsCommand(this.commands);
             try {
-                Thread.sleep(100); //sleep for .1 seconds
+                Thread.sleep(100 / this.timeMultiplier); //sleep for .1 seconds
             } catch (InterruptedException ex) {
                 Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -169,13 +201,20 @@ public class Train implements Runnable
         }
     }
     
+    /* ToString() returns the Trains name
+     * Returns - String ("Train " + this.iD)
+    */
     public String ToString()
     {
         return "Train " + Integer.toString(this.iD);
     }
     
     
-    // Private method
+    // Private methods
+    /* translatePhysicsCommand(TrainCommand c) sets physics input from train command
+     * Parameters:
+     *     TrainCommand c - sets the train's physics input from "c"
+    */
     private void translatePhysicsCommand(TrainCommand c)
     {
         physicsInput.MotorPower = c.PowerCommand;
@@ -185,6 +224,11 @@ public class Train implements Runnable
         // do some additional work here not related to the Train Command
         physicsInput.Time_multiplier = timeMultiplier;
     }
+    
+    /* translateStateCommand(TrainCommand c) sets state input from train command
+     * Parameters:
+     *     TrainCommand c - sets the train's state input from "c"
+    */
     private void translateStateCommand(TrainCommand c)
     { 
         stateInput.RightDoors = c.RightDoorsOpen;
@@ -195,21 +239,24 @@ public class Train implements Runnable
         stateInput.Announcement = c.Announcement;
         //stateInput.advertisement = c.advertisement;
     }
+    
+    /* updateStatus() updates the status object of the train
+    */
     private void updateStatus()
     {
         status.SetVelocity(physicsInput.Velocity); 
-        status.SetMass(model.getMass());
+        status.SetMass(Model.getMass());
         status.SetTemperature(stateInput.Temperature);
-        status.SetFailure(model.getFailureCode());
-        status.SetSBrakeStatus(model.getSBrakeStatus());
-        status.SetEBrakeStatus(model.getEBrakeStatus());
-        status.SetPassengerBrakeRequest(model.getPassengerEBrakeStatus());
-        status.SetLeftDoorStatus(model.getLeftDoorStatus());
-        status.SetRightDoorStatus(model.getRightDoorStatus());
-        status.SetExteriorLightStatus(model.getExtLightStatus());
-        status.SetInteriorLightStatus(model.getIntLightStatus());
-        status.SetHeaterStatus(model.getHeaterStatus());
-        status.SetAnnouncement(model.getAnnouncement());
-        status.SetAdvertisement(model.getAdvertisement());
+        status.SetFailure(Model.getFailureCode());
+        status.SetSBrakeStatus(Model.getSBrakeStatus());
+        status.SetEBrakeStatus(Model.getEBrakeStatus());
+        status.SetPassengerBrakeRequest(Model.getPassengerEBrakeStatus());
+        status.SetLeftDoorStatus(Model.getLeftDoorStatus());
+        status.SetRightDoorStatus(Model.getRightDoorStatus());
+        status.SetExteriorLightStatus(Model.getExtLightStatus());
+        status.SetInteriorLightStatus(Model.getIntLightStatus());
+        status.SetHeaterStatus(Model.getHeaterStatus());
+        status.SetAnnouncement(Model.getAnnouncement());
+        status.SetAdvertisement(Model.getAdvertisement());
     }
 }

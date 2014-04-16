@@ -182,8 +182,9 @@ public class TMInput extends javax.swing.JPanel {
     }//GEN-LAST:event_temperatureInputTextFieldActionPerformed
 
     private void temperatureInputApplyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureInputApplyButtonActionPerformed
-        int newTemp = Integer.parseInt(temperatureInputTextField.getText());
-        trainState.setTemperature(newTemp);
+        double newTemp = Double.parseDouble(temperatureInputTextField.getText());
+        newTemp = ((newTemp - 32) * 5) / 9;
+        trainState.setTemperature((int) newTemp);
     }//GEN-LAST:event_temperatureInputApplyButtonActionPerformed
 
     private void eBrakeRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eBrakeRequestButtonActionPerformed
