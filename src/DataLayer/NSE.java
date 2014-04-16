@@ -33,12 +33,13 @@ public class NSE implements Runnable
     public static final int REAL_TIME = 1; //multiplier for real time
     public static final int SPEED_UP_10X = 10; //multiplier for 10x real time
     private static final long dispatchIntervalMin = 1; //dispatch interval
-    private static final long millisInMin = 60000; //number of milliseconds in a minute
-    private static final long dispatchInterval = dispatchIntervalMin * millisInMin; // convert minutes to milliseconds 
+    private static final long secondsInMin = 60; //number of milliseconds in a minute
+    private static final long dispatchInterval = dispatchIntervalMin * secondsInMin; // convert minutes to milliseconds 
     
     //Class variables
     public CTC CTCOffice;
     public boolean IsAutomatic;
+    public Boolean isRunning;
     public SystemTime Time;
     public int TimeMultiplier;
     public TrackModel Track;
@@ -46,8 +47,7 @@ public class NSE implements Runnable
     public ArrayList<Train> Trains;
     public Wayside Wayside;
     private NSEFrame nseGUI;
-    private Boolean isRunning;
-    private long lastDispatchTime;
+    private SystemTime lastDispatchTime;
     
     
     //Constructors
@@ -113,7 +113,7 @@ public class NSE implements Runnable
     public void runAutomatic()
     {
         this.isRunning = Boolean.TRUE;
-        lastDispatchTime = 0;
+        lastDispatchTime = new SystemTime(-1, -1, -1, 1); //set lastDispatch to invalid number (so immediate dispatch in auto mode)
         
         //spawn new thread for the SystemTime
         new Thread(this.Time).start();
@@ -141,10 +141,11 @@ public class NSE implements Runnable
             if (this.IsAutomatic) //running in manual mode
             {
                 //check for 10 min elapsed, if so, dispatch new train
-                if ((Calendar.getInstance().getTimeInMillis() - lastDispatchTime) * TimeMultiplier > dispatchInterval) 
+                if ((this.lastDispatchTime.Hour == -1) || //the simulation just started
+                    (this.Time.secondsSince(this.lastDispatchTime) >= dispatchInterval)) //it's been 10 minutes
                 {
                     this.Wayside.sendDispatchSignal(CTCOffice.getDispatcher());
-                    lastDispatchTime = Calendar.getInstance().getTimeInMillis();
+                    this.lastDispatchTime = new SystemTime(this.Time.Hour, this.Time.Minute, this.Time.Second, this.TimeMultiplier);
                 }
             }
             else

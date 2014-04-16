@@ -58,15 +58,24 @@ public class SystemTime implements Runnable
     */
     public void run()
     {
-        while(this.multiplier > 0)
+        while(true)
         {
             //Sleep for 1 second
-            try {
-                Thread.sleep(1000 / this.multiplier);
-            } catch (InterruptedException ex) {
+            try 
+            {
+                if (this.multiplier > 0)
+                {
+                    Thread.sleep(1000 / this.multiplier);
+                }
+            } 
+            catch (InterruptedException ex) 
+            {
                 Logger.getLogger(SystemTime.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.secondTick();
+            if (this.multiplier > 0)
+            {
+                this.secondTick();
+            }
         }
     }
     

@@ -110,6 +110,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private void initComponents() {
 
         speed_group = new javax.swing.ButtonGroup();
+        mode_group = new javax.swing.ButtonGroup();
         wallClock_Radio = new javax.swing.JRadioButton();
         wallClock10_Radio = new javax.swing.JRadioButton();
         pause_button = new javax.swing.JButton();
@@ -127,10 +128,13 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         trainSelectList = new javax.swing.JList();
         start_button = new javax.swing.JButton();
         systemTime_txt = new javax.swing.JLabel();
+        manual_radio = new javax.swing.JRadioButton();
+        automatic_radio = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         speed_group.add(wallClock_Radio);
+        wallClock_Radio.setSelected(true);
         wallClock_Radio.setText("Wall Clock");
         wallClock_Radio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -147,6 +151,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         });
 
         pause_button.setText("Pause");
+        pause_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pause_clicked(evt);
+            }
+        });
 
         reset_button.setText("Reset");
 
@@ -250,6 +259,23 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
         systemTime_txt.setText("12 : 00 : 00");
 
+        mode_group.add(manual_radio);
+        manual_radio.setText("Manual");
+        manual_radio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manual_Clicked(evt);
+            }
+        });
+
+        mode_group.add(automatic_radio);
+        automatic_radio.setSelected(true);
+        automatic_radio.setText("Automatic");
+        automatic_radio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                automatic_Clicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -270,6 +296,10 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                         .addComponent(pause_button)
                         .addGap(12, 12, 12)
                         .addComponent(reset_button)
+                        .addGap(18, 18, 18)
+                        .addComponent(manual_radio)
+                        .addGap(18, 18, 18)
+                        .addComponent(automatic_radio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(systemTime_txt)
                         .addGap(25, 25, 25))))
@@ -284,7 +314,9 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                     .addComponent(pause_button)
                     .addComponent(reset_button)
                     .addComponent(start_button)
-                    .addComponent(systemTime_txt))
+                    .addComponent(systemTime_txt)
+                    .addComponent(manual_radio)
+                    .addComponent(automatic_radio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -296,7 +328,19 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private void start_Clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_start_Clicked
         // TODO add your handling code here:
         this.StartClicked = true;
-        new Thread(this.NSEObject).start();
+        if (this.wallClock_Radio.isSelected()) //selected wall clock speed
+        {
+            this.NSEObject.setTimeMultiplier(1);
+        }
+        else //selected 10x multiplier
+        {
+            this.NSEObject.setTimeMultiplier(10);
+        }
+        if (!this.NSEObject.isRunning.booleanValue()) //if we havent started simulating, start
+        {
+            new Thread(this.NSEObject).start();
+        }
+        this.start_button.setEnabled(false);
     }//GEN-LAST:event_start_Clicked
 
     private void trainSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_trainSelectListValueChanged
@@ -325,15 +369,48 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_wallClock_RadioMouseClicked
 
+    private void pause_clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pause_clicked
+        if (this.NSEObject.isRunning.booleanValue()) //if the 
+        {
+            this.NSEObject.setTimeMultiplier(0);
+        }
+        this.start_button.setEnabled(true);
+    }//GEN-LAST:event_pause_clicked
+
+    private void automatic_Clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_automatic_Clicked
+        if (this.automatic_radio.isSelected()) //selected automatic
+        {
+            this.NSEObject.IsAutomatic = true;
+        }
+        else //manual mode selected
+        {
+            this.NSEObject.IsAutomatic = false;
+        }
+    }//GEN-LAST:event_automatic_Clicked
+
+    private void manual_Clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manual_Clicked
+        if (this.automatic_radio.isSelected()) //selected automatic
+        {
+            this.NSEObject.IsAutomatic = true;
+        }
+        else //manual mode selected
+        {
+            this.NSEObject.IsAutomatic = false;
+        }
+    }//GEN-LAST:event_manual_Clicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CTC_panel;
     private javax.swing.JPanel TrackModel_panel;
     private javax.swing.JPanel Trains_panel;
     private javax.swing.JPanel Waysides_panel;
+    private javax.swing.JRadioButton automatic_radio;
     private GUILayer.CTC.CTCGUI cTCGUI1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JRadioButton manual_radio;
+    private javax.swing.ButtonGroup mode_group;
     private javax.swing.JButton pause_button;
     private javax.swing.JButton reset_button;
     private javax.swing.ButtonGroup speed_group;
