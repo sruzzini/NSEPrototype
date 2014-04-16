@@ -79,6 +79,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Wall Clock"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="wallClock_RadioMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="wallClock10_Radio">
       <Properties>
@@ -87,6 +90,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="10x Wall Clock"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="timeMultiplier_Clicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="pause_button">
       <Properties>

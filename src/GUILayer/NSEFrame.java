@@ -132,9 +132,19 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
 
         speed_group.add(wallClock_Radio);
         wallClock_Radio.setText("Wall Clock");
+        wallClock_Radio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                wallClock_RadioMouseClicked(evt);
+            }
+        });
 
         speed_group.add(wallClock10_Radio);
         wallClock10_Radio.setText("10x Wall Clock");
+        wallClock10_Radio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                timeMultiplier_Clicked(evt);
+            }
+        });
 
         pause_button.setText("Pause");
 
@@ -292,6 +302,28 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private void trainSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_trainSelectListValueChanged
         this.trainPanel1.setTrain(this.NSEObject.Trains.get(trainSelectList.getSelectedIndices()[0]));
     }//GEN-LAST:event_trainSelectListValueChanged
+
+    private void timeMultiplier_Clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timeMultiplier_Clicked
+        if (this.wallClock_Radio.isSelected()) //selected wall clock speed
+        {
+            this.NSEObject.setTimeMultiplier(1);
+        }
+        else //selected 10x multiplier
+        {
+            this.NSEObject.setTimeMultiplier(10);
+        }
+    }//GEN-LAST:event_timeMultiplier_Clicked
+
+    private void wallClock_RadioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallClock_RadioMouseClicked
+        if (this.wallClock_Radio.isSelected()) //selected wall clock speed
+        {
+            this.NSEObject.setTimeMultiplier(1);
+        }
+        else //selected 10x multiplier
+        {
+            this.NSEObject.setTimeMultiplier(10);
+        }
+    }//GEN-LAST:event_wallClock_RadioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

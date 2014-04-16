@@ -38,6 +38,7 @@ public class NSE implements Runnable
     
     //Class variables
     public CTC CTCOffice;
+    public boolean IsAutomatic;
     public SystemTime Time;
     public int TimeMultiplier;
     public TrackModel Track;
@@ -52,6 +53,7 @@ public class NSE implements Runnable
     //Constructors
     public NSE()
     {
+        this.IsAutomatic = true;
         this.isRunning = new Boolean(false);
         this.TimeMultiplier = REAL_TIME;
         this.Time = new SystemTime(this.TimeMultiplier);
@@ -77,6 +79,7 @@ public class NSE implements Runnable
     
     public NSE(int timeMultiplier, int numberOfTrains)
     {
+        this.IsAutomatic = true;
         this.isRunning = new Boolean(false);
         this.TimeMultiplier = timeMultiplier;
         this.Time = new SystemTime(this.TimeMultiplier);
@@ -134,12 +137,25 @@ public class NSE implements Runnable
                 this.nseGUI.setSystemTime(this.Time.toString());
             }
             
-            //check for 10 min elapsed, if so, dispatch new train
-            if ((Calendar.getInstance().getTimeInMillis() - lastDispatchTime) * TimeMultiplier > dispatchInterval)
+            //dispatch a train?
+            if (this.IsAutomatic) //running in manual mode
             {
-                this.Wayside.sendDispatchSignal(CTCOffice.getDispatcher());
-                lastDispatchTime = Calendar.getInstance().getTimeInMillis();
-            }  
+                //check for 10 min elapsed, if so, dispatch new train
+                if ((Calendar.getInstance().getTimeInMillis() - lastDispatchTime) * TimeMultiplier > dispatchInterval) 
+                {
+                    this.Wayside.sendDispatchSignal(CTCOffice.getDispatcher());
+                    lastDispatchTime = Calendar.getInstance().getTimeInMillis();
+                }
+            }
+            else
+            {
+                //check for dispatching a train
+                
+                //check for block closings
+                
+                //check for switch positions
+                
+            }
             
             //Get info from Wayside to send ot CTC
             ArrayList<BlockSignalBundle> occInfo = this.Wayside.getOccupancyInfo();
@@ -183,26 +199,10 @@ public class NSE implements Runnable
         }
     }
     
-    //RunManual() runs the NSE simulation in manual mode
-    public void runManual()
-    {
-        this.isRunning = true;
-        
-        //spawn new thread for the system time
-        new Thread(this.Time).start();
-        
-        //spawn new thread for each Train
-        for(Train train : this.Trains)
-        {
-            new Thread(train).start();
-        }
-        
-        while(this.isRunning)
-        {
-            //do shit
-        }
-    }
-    
+    /* setGUI(NSEFrame gui) sets a gui to the NSE object
+     * Parameters:
+     *     NSEFrame gui - gui bound to NSE
+    */
     public void setGUI(NSEFrame gui)
     {
         this.nseGUI = gui;

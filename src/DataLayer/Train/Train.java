@@ -152,6 +152,7 @@ public class Train implements Runnable
     public void setTimeMultiplier(int i)
     {
         this.timeMultiplier = i; //sets train time multiplier
+        this.time.setMultiplier(i);
         this.Controller.setTimeMultiplier(this.timeMultiplier); //sets time multiplier for the controller
         this.Model.physics.setTimeMultiplier(this.timeMultiplier); //sets time multiplier for physics engine in the model
     }
@@ -193,7 +194,10 @@ public class Train implements Runnable
             
             translatePhysicsCommand(this.commands);
             try {
-                Thread.sleep(100 / this.timeMultiplier); //sleep for .1 seconds
+                if (this.timeMultiplier > 0) //check to make sure time multiplier is not zero
+                {
+                    Thread.sleep(100 / this.timeMultiplier); //sleep for .1 seconds
+                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
             }
