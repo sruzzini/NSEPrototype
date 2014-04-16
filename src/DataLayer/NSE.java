@@ -141,6 +141,7 @@ public class NSE implements Runnable
             if (this.IsAutomatic) //running in manual mode
             {
                 //check for 10 min elapsed, if so, dispatch new train
+                
                 if ((this.lastDispatchTime.Hour == -1) || //the simulation just started
                     (this.Time.secondsSince(this.lastDispatchTime) >= dispatchInterval)) //it's been 10 minutes
                 {
@@ -169,10 +170,6 @@ public class NSE implements Runnable
             ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.getRouteInfo();
             for (BlockSignalBundle bundle : toWaysideInfo)
             {
-                if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
-                {
-                    System.out.println(bundle.BlockID);
-                }
                 this.Wayside.sendTravelSignal(bundle);
             }
             

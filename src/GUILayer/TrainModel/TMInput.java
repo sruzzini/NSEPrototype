@@ -183,7 +183,7 @@ public class TMInput extends javax.swing.JPanel {
 
     private void temperatureInputApplyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureInputApplyButtonActionPerformed
         double newTemp = Double.parseDouble(temperatureInputTextField.getText());
-        newTemp = ((newTemp - 32) * 5) / 9;
+        newTemp = ((newTemp - 32) * 5) / 9; // convert to degrees Celcius
         trainState.setTemperature((int) newTemp);
     }//GEN-LAST:event_temperatureInputApplyButtonActionPerformed
 

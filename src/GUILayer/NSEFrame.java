@@ -164,16 +164,14 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         CTC_panelLayout.setHorizontalGroup(
             CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CTC_panelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(cTCGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 33, Short.MAX_VALUE))
         );
         CTC_panelLayout.setVerticalGroup(
             CTC_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CTC_panelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(cTCGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("CTC", CTC_panel);
@@ -184,13 +182,13 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
                 .addContainerGap())
         );
         Waysides_panelLayout.setVerticalGroup(
             Waysides_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Waysides_panelLayout.createSequentialGroup()
-                .addComponent(waysidePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, Short.MAX_VALUE)
+                .addComponent(waysidePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -201,7 +199,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         TrackModel_panelLayout.setHorizontalGroup(
             TrackModel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TrackModel_panelLayout.createSequentialGroup()
-                .addContainerGap(198, Short.MAX_VALUE)
+                .addContainerGap(268, Short.MAX_VALUE)
                 .addComponent(trackModelPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(144, 144, 144))
         );
@@ -284,8 +282,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jTabbedPane1)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(wallClock_Radio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -318,8 +316,8 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                     .addComponent(manual_radio)
                     .addComponent(automatic_radio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
 
         pack();
