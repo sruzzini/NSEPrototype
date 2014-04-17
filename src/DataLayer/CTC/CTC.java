@@ -134,6 +134,56 @@ public class CTC
                     this.trains.get(trainIndex).SectionDestination = this.returnSection(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
                     this.trains.get(trainIndex).SectionDestination = this.returnStationBlock(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
  
+                    //trainRouteInfo = this.calculateAuthority(trainIndex, this.trains.get(trainIndex).line);
+                    //System.out.println(trainRouteInfo.size());
+                    //break;
+                    //System.out.println("CTC Train " + trainIndex + " is now Idle.");
+                    //System.out.println("CTC Sending the new signal to block: " + newRoute.BlockID);
+                    //System.out.println("CTC Stop Index for Train " + trainIndex + ": " + this.trains.get(trainIndex).StopIndex);
+                    //System.out.println("CTC New Destination for Train " + trainIndex + ": " + newRoute.Destination);
+               }
+               //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));               
+           }
+           else
+           {
+               this.trains.get(trainIndex).setIdle(false);
+           }
+            //trainRouteInfo.add(new BlockSignalBundle(trains[i].authority, Integer.parseInt(trains[i].destination), trains[i].speed, Integer.parseInt(trains[i].block), trains[i].line));
+        }
+        //System.out.println("CTC Number of New Signals: " + trainRouteInfo.size());
+        //System.out.println(trainRouteInfo.size());
+        return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
+    }
+
+    public ArrayList<BlockSignalBundle> getRouteInfoNew()//int line, int block, double velocity, int authority, int destination)
+    {
+        updateTrainLocations();
+        ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<>(); 
+        BlockSignalBundle newRoute;
+        int trainIndex;
+        
+        for(TrainsClass get: this.trains)
+        {
+            trainIndex = this.trains.indexOf(get);
+            if((this.trains.indexOf(get)) == 0)
+            {
+                //System.out.println("CTC Train Authority: " + (this.trains.get(trainIndex).Authority)); 
+            }
+
+           if((get.Authority == 0) && (this.trainLocations.get(this.trains.indexOf(get)).currentBlock) != (this.trainLocations.get(this.trains.indexOf(get)).prevBlock))
+           {
+                if((this.trainLocations.get(this.trains.indexOf(get)).distanceSoFar) == this.trains.get(this.trains.indexOf(get)).DistanceSoFar && !this.trains.get(trainIndex).Idle)
+                {
+                    this.trains.get(trainIndex).StopIndex++;
+                    this.trains.get(trainIndex).setIdle(true);
+                    newRoute = getNextStation(this.trains.get(trainIndex));
+                    //trainRouteInfo.add(newRoute);                    
+                    
+                    this.trains.get(trainIndex).Authority = newRoute.Authority;
+                    this.trains.get(trainIndex).BlockDestination = Integer.toString(newRoute.Destination);
+                    this.trains.get(trainIndex).SectionDestination = this.returnSection(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
+                    this.trains.get(trainIndex).SectionDestination = this.returnStationBlock(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
+ 
                     trainRouteInfo = this.calculateAuthority(trainIndex, this.trains.get(trainIndex).line);
                     //System.out.println(trainRouteInfo.size());
                     break;
@@ -154,6 +204,7 @@ public class CTC
         //System.out.println(trainRouteInfo.size());
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
+        
     
     private void updateTrainLocations()
     {
