@@ -105,7 +105,7 @@ public class CTC
     }    
 
     //update the local train locations, block signals, switches positions    
-    public ArrayList<BlockSignalBundle> getRouteInfo()//int line, int block, double velocity, int authority, int destination)
+    public ArrayList<BlockSignalBundle> getRouteInfoOld()//int line, int block, double velocity, int authority, int destination)
     {
         updateTrainLocations();
         ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<>(); 
@@ -155,7 +155,7 @@ public class CTC
         return trainRouteInfo;//new BlockSignalBundle(line, block, velocity, authority, destination);
     }
 
-    public ArrayList<BlockSignalBundle> getRouteInfoNew()//int line, int block, double velocity, int authority, int destination)
+    public ArrayList<BlockSignalBundle> getRouteInfo()//int line, int block, double velocity, int authority, int destination)
     {
         updateTrainLocations();
         ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<>(); 
@@ -182,7 +182,7 @@ public class CTC
                     this.trains.get(trainIndex).Authority = newRoute.Authority;
                     this.trains.get(trainIndex).BlockDestination = Integer.toString(newRoute.Destination);
                     this.trains.get(trainIndex).SectionDestination = this.returnSection(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
-                    this.trains.get(trainIndex).SectionDestination = this.returnStationBlock(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
+                    this.trains.get(trainIndex).StationDestination = this.returnStationBlock(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
  
                     trainRouteInfo = this.calculateAuthority(trainIndex, this.trains.get(trainIndex).line);
                     //System.out.println(trainRouteInfo.size());
@@ -346,9 +346,11 @@ public class CTC
                             {
                                 if((j-i) > 0)
                                 {
-                                    for(int k = i; k <= j; k++)
+                                    System.out.println("CTC Destination Block Index: " + j + " | Current Block Index: " + i);
+                                    for(int k = 0; k <= j-i; k++)
                                     {
-                                        route.add(new BlockSignalBundle(j-i-k, Integer.parseInt(train.BlockDestination), (double)((double)70*1000)/(3600), path.get(k), train.line));
+                                        System.out.println("CTC Block: " + path.get(i+k) + " | Train's Authority: " + (j-i-k));
+                                        route.add(new BlockSignalBundle(j-i-k, Integer.parseInt(train.BlockDestination), (double)((double)70*1000)/(3600), path.get(i+k), train.line));
                                     }                                        
                                 }
                                 else
