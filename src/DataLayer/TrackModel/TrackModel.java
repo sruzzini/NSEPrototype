@@ -413,6 +413,10 @@ public class TrackModel
     	    if(block == newCurrentBlock)
     	    {
     	    	theLines.get(lineNum).theBlocks.get(block).setOccupied(true);
+                if(theTrainLocations.get(i).distanceSoFar > 32.2)
+                {
+                    theLines.get(lineNum).theBlocks.get(block).setOccupied(false);
+                }
     	    }
     	    else
     	    {
