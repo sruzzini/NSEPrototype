@@ -38,10 +38,13 @@ public class CTC
     public ArrayList<String[]> red;        
     private ArrayList<String[]> path;
     
-    private ArrayList<Switch> switchPostions;
+    public ArrayList<BlockSignalBundle> closureBundle;
     private ArrayList<TrainLocation> trainLocations;
+    
+    public ArrayList<Switch> switchPostions;
     public ArrayList<BlockSignalBundle> BlockClosings;    
         
+    
     public ArrayList<TrainsClass> trains;
     public final ArrayList<Station> GREEN_NEXT_STATION;
     public final ArrayList<Station> RED_NEXT_STATION;
@@ -51,15 +54,14 @@ public class CTC
      * @param nTrains
      */
     public CTC(int nTrains) 
-    {
-        
-        
+    {      
         this.numberOfTrains = nTrains;
         this.RED_ROUTE_BLOCKS = 66;
         this.GREEN_ROUTE_BLOCKS = 150;
         
         this.trainLocations = new ArrayList<>();
         this.switchPostions = new ArrayList<>();
+        this.closureBundle = new ArrayList<>();
         
         this.greenPath = new ArrayList<>();
         this.redPath = new ArrayList<>();
@@ -87,6 +89,7 @@ public class CTC
 
         this.greenPath = new ArrayList<>();
         this.redPath = new ArrayList<>();
+        this.closureBundle = new ArrayList<>();
         
         this.red = new ArrayList<>();
         this.green = new ArrayList<>();
@@ -184,7 +187,7 @@ public class CTC
                     this.trains.get(trainIndex).SectionDestination = this.returnSection(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
                     this.trains.get(trainIndex).StationDestination = this.returnStationBlock(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
  
-                    trainRouteInfo = this.calculateAuthority(trainIndex, this.trains.get(trainIndex).line);
+                    trainRouteInfo = this.calculateAuthority(this.trains.get(trainIndex), this.trains.get(trainIndex).line);
                     //System.out.println(trainRouteInfo.size());
                     break;
                     //System.out.println("CTC Train " + trainIndex + " is now Idle.");
@@ -235,7 +238,7 @@ public class CTC
         }        
     }
     
-    private String returnSection(LineColor line, String blockID)
+    public String returnSection(LineColor line, String blockID)
     {
         //System.out.println("Line Color: " + line);
         if(blockID.equals("0"))
@@ -295,10 +298,10 @@ public class CTC
         
     }
         
-    public ArrayList<BlockSignalBundle> calculateAuthority(int trainID, LineColor line)
+    public ArrayList<BlockSignalBundle> calculateAuthority(TrainsClass train, LineColor line)
     {
         ArrayList<BlockSignalBundle> route = new ArrayList<>();        
-        TrainsClass train = this.trains.get(trainID);
+        
         ArrayList<Integer> path;
         
         if(line == LineColor.GREEN)
@@ -322,11 +325,15 @@ public class CTC
                 {
                     for(int k = 0; k <= j; k++)
                     {
-                        route.add(new BlockSignalBundle(j+1, Integer.parseInt(train.BlockDestination), (double)((double)70*1000)/(3600), path.get(k), train.line));
+                        route.add(new BlockSignalBundle(j-k-1, Integer.parseInt(train.BlockDestination), (double)((double)70*1000)/(3600), path.get(k), train.line));
                     }
                     break;
                 }
             }
+        }
+        else if(Integer.parseInt(train.BlockCurrent) == Integer.parseInt(train.BlockDestination))
+        {
+                    
         }
         else
         {
@@ -336,7 +343,8 @@ public class CTC
                 if(Integer.parseInt(train.BlockCurrent) == path.get(i))
                 {
                     //System.out.println("CTC Train's Current Block: " + path.get(i).toString());
-                    if(i > 0 && train.PreviousBlock == path.get(i-1))
+                    //System.out.println("CTC Train's Acutal Previous  block" + path.get(i).);
+                    if(i > 0 && train.PreviousBlock == path.get(i-1) || train.PreviousBlock == 0)
                     {
                         //System.out.println("CTC Train's Previous Block: " + path.get(i-1).toString());
                         for(int j = 0; j < path.size(); j++)
@@ -346,7 +354,7 @@ public class CTC
                             {
                                 if((j-i) > 0)
                                 {
-                                    System.out.println("CTC Destination Block Index: " + j + " | Current Block Index: " + i);
+                                    //System.out.println("CTC Destination Block Index: " + j + " | Current Block Index: " + i);
                                     for(int k = 0; k <= j-i; k++)
                                     {
                                         System.out.println("CTC Block: " + path.get(i+k) + " | Train's Authority: " + (j-i-k));
@@ -355,6 +363,7 @@ public class CTC
                                 }
                                 else
                                 {
+                                    
                                     for(int k = i; k <= greenPath.size()-1; k++)
                                     {
                                         route.add(new BlockSignalBundle(150-k+j, Integer.parseInt(train.BlockDestination), (double)((double)70*1000)/(3600), path.get(k), train.line));
@@ -562,7 +571,8 @@ public class CTC
     
     //Completed
     public void updateBlockInfo(ArrayList<BlockSignalBundle> blockOccupiences, ArrayList<Switch> newSwitches)
-    {        
+    {   
+        
         int blockIndex;
         
         for(BlockSignalBundle blockInfo: blockOccupiences)
@@ -586,8 +596,22 @@ public class CTC
         }
         
         this.switchPostions = newSwitches;       
+        this.sortSwitchPosition();
     }
     
+    public ArrayList<BlockSignalBundle> setClosing()
+    {
+        ArrayList<BlockSignalBundle> newSignal = new ArrayList<>();
+        if(this.closureBundle.size() == 1)
+        {
+            
+            newSignal.add(this.closureBundle.get(0));
+            this.closureBundle.clear();
+        }
+        
+        return newSignal;
+    }
+           
     public int containsClosings(LineColor line, int blockID)
     {
         for(int i = 0; i < this.BlockClosings.size(); i++)
@@ -627,6 +651,17 @@ public class CTC
             
         }        
         return train;    
+    }
+    
+    private void sortSwitchPosition()
+    {
+        for(int i = 0; i < this.switchPostions.size(); i++)
+        {
+            for(int j = 0; j < this.switchPostions.size(); j++)
+            {
+                
+            }
+        }
     }
     
     private void setNextStations()
@@ -683,7 +718,7 @@ public class CTC
         
     }
     
-    private String returnStationBlock(LineColor line, String blockID)
+    public String returnStationBlock(LineColor line, String blockID)
     {
         String station = "";
         switch(line)
