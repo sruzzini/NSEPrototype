@@ -26,33 +26,39 @@ public class CTCGUI extends javax.swing.JPanel {
     public CTCGUI() 
     {
         initComponents();
-        trainNumbers = new ArrayList<>();
+        trainNumbers = new ArrayList<>();        
         this.trainDestinationTable.setAutoCreateColumnsFromModel(false); 
         this.trainLocationsTable.setAutoCreateColumnsFromModel(false);
+        //this.blockClosingsTable.setAutoCreateColumnsFromModel(false);
     }
 
     public void setCTCOffice(CTC c)
     {
         this.CTCOffice = c;
+        this.updateTrainNumbers();
     }
     
     public void update()
     {
         this.SetTrainDestination();
         this.SetTrainLocations();
-        this.updateTrainNumbers();
+        this.SetSwitchPositions();
+        //this.updateTrainNumbers();
         
     }
     
     private void updateTrainNumbers()
     {
+        this.trainNumbers.add("Train #");
+        //System.out.println("CTC Number of Trains: " + this.CTCOffice.trains.size());
         for(int i = 0; i <= this.CTCOffice.trains.size(); i++)
         {
             this.trainNumbers.add(Integer.toString(i));
         }
+        //System.out.println("CTC Number of Trains: " + this.trainNumbers.size());
         
-        trainNumbers = new ArrayList<>();
         this.routeTrainsTrainDrop.setModel(new javax.swing.DefaultComboBoxModel(this.trainNumbers.toArray(new String[0])));
+        trainNumbers = new ArrayList<>();
         
     }
     
@@ -65,6 +71,8 @@ public class CTCGUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        switchPositionsRadioGroup = new javax.swing.ButtonGroup();
+        blockClosingsRadioGroup = new javax.swing.ButtonGroup();
         jScrollPane2 = new javax.swing.JScrollPane();
         trainLocationsTable = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -98,7 +106,7 @@ public class CTCGUI extends javax.swing.JPanel {
         routeTrainsSpeedLabel = new javax.swing.JLabel();
         switchPositionsPanel = new javax.swing.JPanel();
         switchPositionSubmitButton = new javax.swing.JButton();
-        switchPositionLineDrop = new javax.swing.JComboBox();
+        switchPositionsLineDrop = new javax.swing.JComboBox();
         switchPositionSwitchesDrop = new javax.swing.JComboBox();
         switchPositionsDivergentRadio = new javax.swing.JRadioButton();
         switchPositionLabel = new javax.swing.JLabel();
@@ -174,11 +182,6 @@ public class CTCGUI extends javax.swing.JPanel {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -229,14 +232,26 @@ public class CTCGUI extends javax.swing.JPanel {
         });
 
         blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Section" }));
+        blockClosingsSectionDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockClosingsSectionDropActionPerformed(evt);
+            }
+        });
 
         blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Block #" }));
 
+        blockClosingsRadioGroup.add(blockClosingsCloseRadio);
         blockClosingsCloseRadio.setText("Close");
 
+        blockClosingsRadioGroup.add(blockClosingsOpenRadio);
         blockClosingsOpenRadio.setText("Open");
 
         blockClosingsSubmitButton.setText("Submit");
+        blockClosingsSubmitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockClosingsSubmitButtonActionPerformed(evt);
+            }
+        });
 
         blockClosingsLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         blockClosingsLabel1.setText("Block Closings");
@@ -299,6 +314,11 @@ public class CTCGUI extends javax.swing.JPanel {
         routeTrainAuthorityValueLabel.setText("0");
 
         routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Block #" }));
+        routeTrainsBlockDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                routeTrainsBlockDropActionPerformed(evt);
+            }
+        });
 
         routeTrainsTrainDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Train #" }));
         routeTrainsTrainDrop.setToolTipText("");
@@ -309,8 +329,18 @@ public class CTCGUI extends javax.swing.JPanel {
         });
 
         routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line" }));
+        routeTrainsLineDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                routeTrainsLineDropActionPerformed(evt);
+            }
+        });
 
         routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Section" }));
+        routeTrainsSectionDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                routeTrainsSectionDropActionPerformed(evt);
+            }
+        });
 
         routeTrainSubmitButton.setText("Submit");
 
@@ -381,16 +411,22 @@ public class CTCGUI extends javax.swing.JPanel {
         switchPositionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         switchPositionSubmitButton.setText("Submit");
-
-        switchPositionLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "Gree", "Red" }));
-        switchPositionLineDrop.addActionListener(new java.awt.event.ActionListener() {
+        switchPositionSubmitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                switchPositionLineDropActionPerformed(evt);
+                switchPositionSubmitButtonActionPerformed(evt);
+            }
+        });
+
+        switchPositionsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "GREEN", "RED" }));
+        switchPositionsLineDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                switchPositionsLineDropActionPerformed(evt);
             }
         });
 
         switchPositionSwitchesDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Switches" }));
 
+        switchPositionsRadioGroup.add(switchPositionsDivergentRadio);
         switchPositionsDivergentRadio.setText("Divergent");
         switchPositionsDivergentRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,6 +437,7 @@ public class CTCGUI extends javax.swing.JPanel {
         switchPositionLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         switchPositionLabel.setText("Switch Positions");
 
+        switchPositionsRadioGroup.add(switchPositionsStraightRadio);
         switchPositionsStraightRadio.setText("Straight");
 
         javax.swing.GroupLayout switchPositionsPanelLayout = new javax.swing.GroupLayout(switchPositionsPanel);
@@ -411,7 +448,7 @@ public class CTCGUI extends javax.swing.JPanel {
                 .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(switchPositionsDivergentRadio)
-                    .addComponent(switchPositionLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(switchPositionsLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(switchPositionSwitchesDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,7 +471,7 @@ public class CTCGUI extends javax.swing.JPanel {
                 .addComponent(switchPositionLabel)
                 .addGap(18, 18, 18)
                 .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(switchPositionLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(switchPositionsLineDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(switchPositionSwitchesDrop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(switchPositionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -511,66 +548,60 @@ public class CTCGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blockClosingsLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingsLineDropActionPerformed
-        // TODO add your handling code here:
+        String x = String.valueOf(this.blockClosingsLineDrop.getSelectedItem());
+        if(x.equals("RED"))
+        {
+          this.blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(this.CTCOffice.redSections));  
+        }
+        else
+        {
+          this.blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(this.CTCOffice.greenSections));    
+        }
+        this.blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Block #"}));
     }//GEN-LAST:event_blockClosingsLineDropActionPerformed
 
     private void routeTrainsTrainDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainsTrainDropActionPerformed
-        // TODO add your handling code here:
+        String x = String.valueOf(this.routeTrainsTrainDrop.getSelectedItem());
+        //System.out.println("CTC Train " + x + " selected on line: " + this.CTCOffice.trains.get(Integer.parseInt(x)).lineColor());
+        if(this.CTCOffice.trains.get(Integer.parseInt(x)).lineColor().equals("Yard"))
+        {
+          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Line", "GREEN", "RED"}));  
+        }
+        else
+        {
+          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {this.CTCOffice.trains.get(Integer.parseInt(x)).lineColor()}));    
+        }
+        this.routeTrainAuthorityValueLabel.setText("0");
     }//GEN-LAST:event_routeTrainsTrainDropActionPerformed
 
-    private void switchPositionLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionLineDropActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_switchPositionLineDropActionPerformed
+    private void switchPositionsLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionsLineDropActionPerformed
+        String x = String.valueOf(this.switchPositionsLineDrop.getSelectedItem());
+        ArrayList<String> switches = new ArrayList<>();
+        for(int i = 0; i < this.CTCOffice.switchPostions.size(); i++)
+        {
+            if(x.equals(lineString(this.CTCOffice.switchPostions.get(i).lineID)))
+            {
+              switches.add(Integer.toString(this.CTCOffice.switchPostions.get(i).switchID));
+            }
+        }
+        
+        this.switchPositionSwitchesDrop.setModel(new javax.swing.DefaultComboBoxModel(switches.toArray(new String[0])));
+
+        
+    }//GEN-LAST:event_switchPositionsLineDropActionPerformed
 
     private void switchPositionsDivergentRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionsDivergentRadioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_switchPositionsDivergentRadioActionPerformed
 
+    //bad method, not able to delete
         private void blockClosingLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingLineDropActionPerformed
         // TODO add your handling code here:
-        String x = String.valueOf(this.blockClosingsLineDrop.getSelectedItem());
-        if(x.equals("RED"))
-        {
-          //this.blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(redSections));  
-        }
-        else
-        {
-          //this.blockClosingsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(greenSections));    
-        }
+
         
         //blockClosingSectionDrop.setModel(new DefaultComboBoxModel(greenSections));
     }//GEN-LAST:event_blockClosingLineDropActionPerformed
     
-    private void blockClosingSectionDropActionPerformed(java.awt.event.ActionEvent evt) 
-    {                                                     
-        ArrayList<String> blocks = new ArrayList<>();
-        blocks.add("Block #");
-        
-        String line = String.valueOf(this.blockClosingsLineDrop.getSelectedItem());
-        String section = String.valueOf(this.blockClosingsSectionDrop.getSelectedItem()).toUpperCase();
-        if(line.toUpperCase().equals("RED"))
-        {
-            for(String[] s: this.CTCOffice.red)
-            {
-                if(s[0].toUpperCase().equals(section))
-                {
-                    blocks.add(s[1]);
-                }
-            }            
-            this.blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));  
-        }
-        else
-        {
-            for(String[] s: this.CTCOffice.green)
-            {
-                if(s[0].toUpperCase().equals(section))
-                {
-                    blocks.add(s[1]);
-                }
-            }            
-            this.blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));
-        }
-    }
     private void blockClosingBlockDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingBlockDropActionPerformed
         // TODO add your handling code here:
 
@@ -596,72 +627,11 @@ public class CTCGUI extends javax.swing.JPanel {
         String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
         String block = String.valueOf(routeTrainsBlockDrop.getSelectedItem()).toUpperCase();
         
-        this.CTCOffice.trains.set(trainID, new TrainsClass(lineDestination, this.CTCOffice.trains.get(trainID).SectionCurrent,  this.CTCOffice.trains.get(trainID).BlockCurrent, this.CTCOffice.calculateAuthority(trainID,this.CTCOffice.trains.get(trainID).line).size(),block, section));
+        this.CTCOffice.trains.set(trainID, new TrainsClass(lineDestination, this.CTCOffice.trains.get(trainID).SectionCurrent,  this.CTCOffice.trains.get(trainID).BlockCurrent, this.CTCOffice.calculateAuthority(this.CTCOffice.trains.get(trainID),this.CTCOffice.trains.get(trainID).line).size(),block, section));
      }
     
     private void blockClosingSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingSubmitButtonActionPerformed
-        // TODO add your handling code here:
-        
-        int index;
-        String line = String.valueOf(blockClosingsLineDrop.getSelectedItem()).toUpperCase();
-        String section = String.valueOf(blockClosingsSectionDrop.getSelectedItem()).toUpperCase();
-        String block = String.valueOf(blockClosingsBlockDrop.getSelectedItem()).toUpperCase();
-        
-        
-        
-        
-        System.out.println(line + ", " + section + ", " + block + " | Open: " + blockClosingsOpenRadio.isSelected());
-        if(blockClosingsOpenRadio.isSelected() || blockClosingsCloseRadio.isSelected() && (!section.equals("SECTION") && !line.equals("LINE") && !block.equals("BLOCK #")))
-        {
-            index = this.CTCOffice.containsClosings(this.lineEnum(line), Integer.parseInt(block));
-            if(blockClosingsCloseRadio.isSelected())
-            {
-                if(index == -1)
-                {
-                    this.CTCOffice.BlockClosings.add(new BlockSignalBundle(0, 0, 0.0, Integer.parseInt(block), this.lineEnum(line), true));
-                    String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
-                    
-                    if(this.CTCOffice.BlockClosings.size() > 0)
-                    {
-                        for(int i = 0; i < blocks.length-1; i++)
-                        {
-                            blocks[i] = new String[]{line, block};
-                        }
-                    }                
-                    
-                    blockClosingsTable.setModel(new javax.swing.table.DefaultTableModel(blocks,new String [] {"Line", "Block"}));
-                    System.out.println("Added, new blockClosing size:" + this.CTCOffice.BlockClosings.size());
-                }
-            }
-            else if(blockClosingsOpenRadio.isSelected())
-            {
-                if(index != -1)
-                {
-                    //blockClosings.remove(new String[] {line,block});
-                    //System.out.println(blockClosings.removeAll(new String[] {line,block}));
-                    this.CTCOffice.BlockClosings.remove(index);
-                    
-                    //System.out.println(blocks.length);
-                    String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
-                    
-                    if(this.CTCOffice.BlockClosings.size() > 0)
-                    {
-                        
-                        for(int i = 0; i < blocks.length; i++)
-                        {
-                            blocks[i] = new String[]{this.lineString(this.CTCOffice.BlockClosings.get(i).LineID), Integer.toString(this.CTCOffice.BlockClosings.get(i).BlockID)};
-                        }
-                    }
-                    
-                    blockClosingsTable.setModel(new javax.swing.table.DefaultTableModel(blocks,new String [] {"Line", "Block"}));            
-                    //System.out.println("Removed, new blockClosing size:" + blockClosings.size() + " | Number of Closings: " + closings);
-                }
-            }
-        }
-        //for(String[] s: blockClosings)
-        //{
-        //    System.out.println(s[0] + " " + s[1]);
-        //}
+
     }//GEN-LAST:event_blockClosingSubmitButtonActionPerformed
 
     private void changeSwitchPositionLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSwitchPositionLineDropActionPerformed
@@ -671,7 +641,7 @@ public class CTCGUI extends javax.swing.JPanel {
     private void blockClosingsCloseRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingCloseRadioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_blockClosingCloseRadioActionPerformed
-
+/*
     private void routeTrainsBlockDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainBlockDropActionPerformed
         // TODO add your handling code here:
         
@@ -679,35 +649,10 @@ public class CTCGUI extends javax.swing.JPanel {
 
     private void routeTrainsSectionDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainSectionDropActionPerformed
         // TODO add your handling code here:
-        ArrayList<String> blocks = new ArrayList<>();
-        blocks.add("Block #");
-        
-        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem());
-        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
-        if(line.toUpperCase().equals("RED"))
-        {
-            for(String[] s: this.CTCOffice.red)
-            {
-                if(s[0].toUpperCase().equals(section))
-                {
-                    blocks.add(s[1]);
-                }
-            }            
-            this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));  
-        }
-        else
-        {
-            for(String[] s: this.CTCOffice.green)
-            {
-                if(s[0].toUpperCase().equals(section))
-                {
-                    blocks.add(s[1]);
-                }
-            }            
-            this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));
-        }
-    }//GEN-LAST:event_routeTrainSectionDropActionPerformed
 
+    }//GEN-LAST:event_routeTrainSectionDropActionPerformed
+*/
+    //bad method, not able to delete
     private void systemAutomaticRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_systemAutomaticRadioActionPerformed
         // TODO add your handling code here:
         
@@ -726,19 +671,181 @@ public class CTCGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_routeTrainLineDropActionPerformed
 
-    private void routeTrainTrainDropActionPerformed( java.awt.event.ActionEvent evt)
-    {
-        String x = String.valueOf(this.routeTrainsTrainDrop.getSelectedItem());
-        if(this.CTCOffice.trains.get(Integer.parseInt(x)).BlockCurrent.equals("Yard"))
+    private void blockClosingsSectionDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingsSectionDropActionPerformed
+       ArrayList<String> blocks = new ArrayList<>();
+        blocks.add("Block #");
+        
+        String line = String.valueOf(this.blockClosingsLineDrop.getSelectedItem());
+        String section = String.valueOf(this.blockClosingsSectionDrop.getSelectedItem()).toUpperCase();
+        
+        //System.out.println("CTC" + line);
+        if(line.toUpperCase().equals("RED"))
         {
-          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Line", "RED","GREEN"}));  
+            for(String[] s: this.CTCOffice.red)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }      
+            
+            this.blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));  
         }
-        else
+        else if(line.toUpperCase().equals("GREEN"))
         {
-          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {this.CTCOffice.trains.get(Integer.parseInt(x)).line.toString()}));    
-        }        
-    }
-    
+            
+            for(String[] s: this.CTCOffice.green)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }            
+            this.blockClosingsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));
+        }
+    }//GEN-LAST:event_blockClosingsSectionDropActionPerformed
+
+    private void blockClosingsSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingsSubmitButtonActionPerformed
+        // TODO add your handling code here:
+        
+        int index;
+        String line = String.valueOf(blockClosingsLineDrop.getSelectedItem()).toUpperCase();
+        String section = String.valueOf(blockClosingsSectionDrop.getSelectedItem()).toUpperCase();
+        String block = String.valueOf(blockClosingsBlockDrop.getSelectedItem()).toUpperCase();
+        
+        System.out.println(line + ", " + section + ", " + block + " | Open: " + blockClosingsOpenRadio.isSelected());
+        if(blockClosingsOpenRadio.isSelected() || blockClosingsCloseRadio.isSelected() && (!section.equals("SECTION") || !line.equals("LINE") || !block.equals("BLOCK #")))
+        {
+            index = this.CTCOffice.containsClosings(this.lineEnum(line), Integer.parseInt(block));
+            System.out.println("CTC Block Closings ID: " + index);
+            if(blockClosingsCloseRadio.isSelected())
+            {
+                if(index == -1)
+                {
+                    this.CTCOffice.BlockClosings.add(new BlockSignalBundle(0, 0, 0.0, Integer.parseInt(block), this.lineEnum(line), true));
+                    String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
+                    
+                    if(this.CTCOffice.BlockClosings.size() > 0)
+                    {
+                        for(int i = 0; i < this.CTCOffice.BlockClosings.size(); i++)
+                        {
+                            blocks[i] = new String[]{lineString(this.CTCOffice.BlockClosings.get(i).LineID), Integer.toString(this.CTCOffice.BlockClosings.get(i).BlockID)};
+                        }
+                    }                
+                    this.CTCOffice.closureBundle.set(0, new BlockSignalBundle(0, 0, 0.0, Integer.parseInt(block), this.lineEnum(line), true));
+                    blockClosingsTable.setModel(new javax.swing.table.DefaultTableModel(blocks,new String [] {"Line", "Block ID"}));
+                    System.out.println("Added, new blockClosing size: " + this.CTCOffice.BlockClosings.size());
+                }
+            }
+            else if(blockClosingsOpenRadio.isSelected())
+            {
+                if(index != -1)
+                {
+                    //blockClosings.remove(new String[] {line,block});
+                    //System.out.println(blockClosings.removeAll(new String[] {line,block}));
+                    this.CTCOffice.BlockClosings.remove(index);
+                    
+                    //System.out.println(blocks.length);
+                    String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
+                    
+                    if(this.CTCOffice.BlockClosings.size() > 0)
+                    {                        
+                        for(int i = 0; i < blocks.length; i++)
+                        {
+                            blocks[i] = new String[]{this.lineString(this.CTCOffice.BlockClosings.get(i).LineID), Integer.toString(this.CTCOffice.BlockClosings.get(i).BlockID)};
+                        }
+                    }
+                    this.CTCOffice.closureBundle.set(0, new BlockSignalBundle(0, 0, -1.0, Integer.parseInt(block), this.lineEnum(line), false));
+                    blockClosingsTable.setModel(new javax.swing.table.DefaultTableModel(blocks,new String [] {"Line", "Block"}));            
+                    //System.out.println("Removed, new blockClosing size:" + blockClosings.size() + " | Number of Closings: " + closings);
+                }
+            }
+        }
+    }//GEN-LAST:event_blockClosingsSubmitButtonActionPerformed
+
+    private void routeTrainsLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainsLineDropActionPerformed
+        // TODO add your handling code here:
+        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem());
+        
+        if(line.equals("RED"))
+        {
+          routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(this.CTCOffice.redSections));  
+        }
+        else if(line.equals("GREEN"))
+        {
+          routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(this.CTCOffice.greenSections));    
+        }
+        this.routeTrainAuthorityValueLabel.setText("0");
+    }//GEN-LAST:event_routeTrainsLineDropActionPerformed
+
+    private void routeTrainsSectionDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainsSectionDropActionPerformed
+        this.routeTrainAuthorityValueLabel.setText("0");
+        ArrayList<String> blocks = new ArrayList<>();
+        blocks.add("Block #");
+        
+        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem());
+        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
+        //System.out.println("CTC Route Train Line Selected: " + line);
+        if(line.toUpperCase().equals("RED"))
+        {
+            //System.out.println("CTC Route Train Adding Red blocks to the drop down menu");
+            for(String[] s: this.CTCOffice.red)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }            
+            this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));  
+        }
+        else if(line.toUpperCase().equals("GREEN"))
+        {
+            //System.out.println("CTC Route Train Adding Green blocks to the drop down menu");
+            for(String[] s: this.CTCOffice.green)
+            {
+                if(s[0].toUpperCase().equals(section))
+                {
+                    blocks.add(s[1]);
+                }
+            }            
+            this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(blocks.toArray(new String[0])));
+        }
+    }//GEN-LAST:event_routeTrainsSectionDropActionPerformed
+
+    private void routeTrainsBlockDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainsBlockDropActionPerformed
+        String trainID = String.valueOf(routeTrainsTrainDrop.getSelectedItem());
+        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem());
+        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();        
+        String blockID = String.valueOf(routeTrainsBlockDrop.getSelectedItem());
+        int authority;
+        
+        if(!blockID.equals("Block #") || !line.equals("Line") || !section.equals("Section"))
+        {
+            
+            int index = Integer.parseInt(trainID);
+            TrainsClass train  = new TrainsClass(LineColor.YARD, this.CTCOffice.trains.get(index).SectionCurrent, this.CTCOffice.trains.get(index).BlockCurrent, 0, blockID, section);
+            train.PreviousBlock = this.CTCOffice.trains.get(index).PreviousBlock;
+            train.BlockDestination = blockID;
+            train.SectionDestination = this.CTCOffice.returnSection(lineEnum(line), blockID);
+            train.StationDestination = this.CTCOffice.returnStationBlock(lineEnum(line), blockID);
+            authority = (this.CTCOffice.calculateAuthority(train, this.lineEnum(line)).size());
+            if(authority == 0)
+            {
+                this.routeTrainAuthorityValueLabel.setText(Integer.toString(0));
+            }
+            else
+            {
+                this.routeTrainAuthorityValueLabel.setText(Integer.toString(authority-1));
+            }
+            
+        }
+    }//GEN-LAST:event_routeTrainsBlockDropActionPerformed
+
+    private void switchPositionSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionSubmitButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_switchPositionSubmitButtonActionPerformed
+
+   
     public void setClosures()
     {
         String line ;
@@ -784,6 +891,32 @@ public class CTCGUI extends javax.swing.JPanel {
             this.trainDestinationTable.setValueAt(this.CTCOffice.trains.get(i).SectionDestination, i, 2);
             this.trainDestinationTable.setValueAt(this.CTCOffice.trains.get(i).BlockDestination, i, 3);
             this.trainDestinationTable.setValueAt(this.CTCOffice.trains.get(i).StationDestination, i, 4);            
+        }
+    }
+    
+    public void SetSwitchPositions()
+    {
+        String connection;
+        String position;
+        
+        for(int i = 0; i <this.CTCOffice.switchPostions.size(); i++)
+        {
+            this.switchPositionsTable.setValueAt(lineString(this.CTCOffice.switchPostions.get(i).lineID), i, 0);
+            this.switchPositionsTable.setValueAt(this.CTCOffice.switchPostions.get(i).switchID, i , 1);
+            if(this.CTCOffice.switchPostions.get(i).straight)
+            {
+                position = "Straight";
+                connection = this.CTCOffice.switchPostions.get(i).approachBlock + ":" + this.CTCOffice.switchPostions.get(i).straightBlock;
+            }
+            else
+            {
+                position = "Divergent";
+                connection = this.CTCOffice.switchPostions.get(i).approachBlock + ":" + this.CTCOffice.switchPostions.get(i).divergentBlock;
+                
+            }
+            
+            this.switchPositionsTable.setValueAt(connection, i , 2);
+            this.switchPositionsTable.setValueAt(position, i , 3);
         }
     }
     /**
@@ -832,6 +965,7 @@ public class CTCGUI extends javax.swing.JPanel {
     private javax.swing.JComboBox blockClosingsLineDrop;
     private javax.swing.JRadioButton blockClosingsOpenRadio;
     private javax.swing.JPanel blockClosingsPanel;
+    private javax.swing.ButtonGroup blockClosingsRadioGroup;
     private javax.swing.JComboBox blockClosingsSectionDrop;
     private javax.swing.JButton blockClosingsSubmitButton;
     private javax.swing.JTable blockClosingsTable;
@@ -851,12 +985,13 @@ public class CTCGUI extends javax.swing.JPanel {
     private javax.swing.JLabel routeTrainsSpeedLabel;
     private javax.swing.JComboBox routeTrainsTrainDrop;
     private javax.swing.JLabel switchPositionLabel;
-    private javax.swing.JComboBox switchPositionLineDrop;
     private javax.swing.JButton switchPositionSubmitButton;
     private javax.swing.JComboBox switchPositionSwitchesDrop;
     private javax.swing.JRadioButton switchPositionsDivergentRadio;
     private javax.swing.JLabel switchPositionsLabel;
+    private javax.swing.JComboBox switchPositionsLineDrop;
     private javax.swing.JPanel switchPositionsPanel;
+    private javax.swing.ButtonGroup switchPositionsRadioGroup;
     private javax.swing.JRadioButton switchPositionsStraightRadio;
     private javax.swing.JTable switchPositionsTable;
     private javax.swing.JLabel trainDestinationLabel;

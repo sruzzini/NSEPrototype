@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="switchPositionsRadioGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="blockClosingsRadioGroup">
+    </Component>
+  </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -168,12 +174,39 @@
         <Component class="javax.swing.JTable" name="switchPositionsTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="14">
+              <Table columnCount="4" rowCount="9">
                 <Column editable="true" title="Line" type="java.lang.String"/>
                 <Column editable="true" title="Switch ID" type="java.lang.Integer"/>
                 <Column editable="true" title="Block:Block" type="java.lang.String"/>
                 <Column editable="true" title="Position" type="java.lang.String"/>
               </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
         </Component>
@@ -306,6 +339,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blockClosingsSectionDropActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="blockClosingsBlockDrop">
           <Properties>
@@ -318,11 +354,17 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="blockClosingsCloseRadio">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="blockClosingsRadioGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Close"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="blockClosingsOpenRadio">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="blockClosingsRadioGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Open"/>
           </Properties>
         </Component>
@@ -330,6 +372,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Submit"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blockClosingsSubmitButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="blockClosingsLabel1">
           <Properties>
@@ -457,6 +502,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="routeTrainsBlockDropActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="routeTrainsTrainDrop">
           <Properties>
@@ -479,6 +527,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="routeTrainsLineDropActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="routeTrainsSectionDrop">
           <Properties>
@@ -488,6 +539,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="routeTrainsSectionDropActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="routeTrainSubmitButton">
           <Properties>
@@ -518,7 +572,7 @@
                   <EmptySpace pref="36" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="switchPositionsDivergentRadio" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="switchPositionLineDrop" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="switchPositionsLineDrop" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -549,7 +603,7 @@
                   <Component id="switchPositionLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="switchPositionLineDrop" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="switchPositionsLineDrop" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="switchPositionSwitchesDrop" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
@@ -569,19 +623,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Submit"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchPositionSubmitButtonActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="switchPositionLineDrop">
+        <Component class="javax.swing.JComboBox" name="switchPositionsLineDrop">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Line"/>
-                <StringItem index="1" value="Gree"/>
-                <StringItem index="2" value="Red"/>
+                <StringItem index="1" value="GREEN"/>
+                <StringItem index="2" value="RED"/>
               </StringArray>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchPositionLineDropActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchPositionsLineDropActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="switchPositionSwitchesDrop">
@@ -595,6 +652,9 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="switchPositionsDivergentRadio">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="switchPositionsRadioGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Divergent"/>
           </Properties>
           <Events>
@@ -611,6 +671,9 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="switchPositionsStraightRadio">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="switchPositionsRadioGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Straight"/>
           </Properties>
         </Component>
