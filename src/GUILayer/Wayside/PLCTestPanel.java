@@ -263,7 +263,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
                 throw new NumberFormatException();
             }
             signal = new BlockSignalBundle(authority, destination, speed, blockNum, this.controller.getLine());
-            this.controller.sendTravelSignal2(signal);
+            this.controller.sendTravelSignal2(signal, 0);
             }
             catch (NumberFormatException e)
             {

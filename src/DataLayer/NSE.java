@@ -196,10 +196,7 @@ public class NSE implements Runnable
             
             
             ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.getRouteInfo();
-            for (BlockSignalBundle bundle : toWaysideInfo)
-            {
-                this.Wayside.sendTravelSignal(bundle);
-            }
+            this.Wayside.sendTravelSignal(toWaysideInfo);
             
             //Communicate from Track to Trains
             this.Track.updateTrainLocations();

@@ -82,6 +82,7 @@ public class TrackController implements Runnable {
     {
         this.switchArray.add(s);
         this.switchInfo.put(s.switchID, s);
+        //System.out.println("Added switch: " + s.switchID + " to TC: " + this.line + "" + this.id);
     }
     
     public boolean containsBlock(int n)
@@ -255,10 +256,19 @@ public class TrackController implements Runnable {
             { 
                 commandSwitchLock.lock(); 
             }
+            
+          /*  this.waitSignalLock.lock();
+            try
+            {
             for (BlockSignalBundle b : this.signalsNotWaiting())
             {
                 c.pushCommand(b);
             }
+            }
+            finally
+            {
+                this.waitSignalLock.unlock();
+            }*/
               
             
             this.emptyCommandQueues();
@@ -281,7 +291,7 @@ public class TrackController implements Runnable {
         this.commandSwitchQueue.add(new Switch(packet.lineID, packet.switchID, packet.approachBlock, packet.straightBlock, packet.divergentBlock, packet.straight));
     }
     
-    public BlockSignalBundle sendTravelSignal(BlockSignalBundle sentPacket)
+   public BlockSignalBundle sendTravelSignal(BlockSignalBundle sentPacket)
     {
         BlockSignalBundle packet = sentPacket.copy();
         BlockSignalBundle returnSignal = null;
@@ -289,6 +299,7 @@ public class TrackController implements Runnable {
         double speed;
         int next;
         Block currentBlock = this.blockInfo.get(packet.BlockID);
+        
         //System.out.println("BlockSignal: " + packet.BlockID + " " + packet.Authority + " sent to tc: " + this.id + " and current block is: " + currentBlock.getBlockID());
         //System.out.println("Current block next" + currentBlock.next + " prev " + currentBlock.prev);
         
@@ -370,18 +381,20 @@ public class TrackController implements Runnable {
     
     public void sendTravelSignal(ArrayList<BlockSignalBundle> route)
     {
+        int k = 0;
         for (BlockSignalBundle b : route)
         {
-            this.sendTravelSignal2(b);
+            this.sendTravelSignal2(b, k++);
         }
     }
     
-    public void sendTravelSignal2(BlockSignalBundle packet)
+    public void sendTravelSignal2(BlockSignalBundle packet, int count)
     {
         int blockNum = packet.BlockID;
         Block block = this.blockInfo.get(blockNum);
         double speed;
-        if (block.isOccupied())
+        if (block.isOccupied() && count > 0)
+        //if (false)
         {
             waitSignalLock.lock();
             try 
@@ -421,17 +434,28 @@ public class TrackController implements Runnable {
     
     public void setPLC()
     {
+        HashMap routeTable = new HashMap();
         if (this.id == 0)
         {
-             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo);
+            routeTable.put(13, 12);
+            routeTable.put(1, 13);
+            routeTable.put(150, 28);
+            routeTable.put(28, 29);
+             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
         }
         else if (id == 1)
         {
-            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo);
+            routeTable.put(57, 151);
+            routeTable.put(152, 62);
+            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
         }
         else if (id == 2)
         {
-            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo);
+            routeTable.put(76, 77);
+            routeTable.put(85, 86);
+            routeTable.put(100, 85);
+            routeTable.put(77, 101);
+            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
         }/*
         else if (id == 3)
         {
@@ -447,7 +471,7 @@ public class TrackController implements Runnable {
         }*/
         else
         {
-            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo);
+            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
             //this is bad and should not happen. create exception to be thrown
         }
     }
@@ -471,7 +495,7 @@ public class TrackController implements Runnable {
         }
     }
     
-    public ArrayList<BlockSignalBundle> signalsNotWaiting()
+   /* public ArrayList<BlockSignalBundle> signalsNotWaiting()
     {
         ArrayList<BlockSignalBundle> commands = new ArrayList<>();
         
@@ -498,7 +522,7 @@ public class TrackController implements Runnable {
         
         
         return commands;
-    }
+    }*/
     
     @Override
     public String toString()

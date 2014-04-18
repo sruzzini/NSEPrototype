@@ -26,8 +26,8 @@ public class PLCGreenOne extends PLC {
     private boolean trainWaitingAt1;
     private boolean trainWaitingAt150;
 
-    public PLCGreenOne(int id, LineColor line, Hashtable<Integer, Block> blockNums, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches) {
-        super(id, line, blockNums, blockArray, switches);
+    public PLCGreenOne(int id, LineColor line, Hashtable<Integer, Block> blockNums, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable) {
+        super(id, line, blockNums, blockArray, switches, routeTable);
         trainsAway = 0;
         trainsInLoop = 0;
         trainsComing = 0;
