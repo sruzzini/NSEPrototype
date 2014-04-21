@@ -126,6 +126,7 @@ public class NSE implements Runnable
         this.Track.theTrainLocations = this.TrainLocations; //setting Track's Train Locaitons to the newly created TrainLocations
         this.Track.theTrains = this.Trains; //setting Track's Trains to the newly created Trains
         this.TimeMultiplier = REAL_TIME;
+        this.CTCOffice.switchPostions = this.Wayside.getSwitchInfo();
         
         this.nseGUI.setNSE(this);
         this.nseGUI.setSystemTime(Time.toString());
@@ -165,6 +166,8 @@ public class NSE implements Runnable
                 this.nseGUI.setSystemTime(this.Time.toString());
             }
             
+            this.CTCOffice.SetMode(this.IsAutomatic);
+            
             //dispatch a train?
             if (this.IsAutomatic) //running in manual mode
             {
@@ -193,9 +196,9 @@ public class NSE implements Runnable
             
             //Send info from Wayside to CTC
             this.CTCOffice.updateBlockInfo(occInfo, switchInfo);
-            
-            
+           
             ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.getRouteInfo();
+
             this.Wayside.sendTravelSignal(toWaysideInfo);
             
             //Communicate from Track to Trains
