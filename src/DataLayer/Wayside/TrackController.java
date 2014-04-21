@@ -586,6 +586,7 @@ public class TrackController implements Runnable {
             switchID = s.switchID;
             theSwitch = this.switchInfo.get(switchID);
             theSwitch.straight = dir;
+            System.out.println("Track Controller - processCommands - set switch: " + switchID + " " + dir + " towards straight:divergent: " + theSwitch.straightBlock + ":" + theSwitch.divergentBlock);
             
         }
     }

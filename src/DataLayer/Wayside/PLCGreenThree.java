@@ -56,7 +56,7 @@ public class PLCGreenThree extends PLC{
         Switch switch5 = this.switches.get(5);  
         
         //System.out.println("Block 149: " + block149.getBlockID() + " Block 150: " + block150.getBlockID());
-        if ( block76.isOccupied())
+        if ( block76.isOccupied() && !block77.isOccupied())
         {
             if (trainsComing > 0)
             {
@@ -77,13 +77,13 @@ public class PLCGreenThree extends PLC{
                 //push signal command to increase speed of blocks 149 and 150 to the speed limit
                // c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
                 //        block149.getDestination(), block149.getSpeedLimit(), 149, LineColor.GREEN));
-                c.pushCommand(new BlockSignalBundle(block76.getAuthority(), 
-                        block76.getDestination(), block76.getSpeedLimit(), block76.getBlockID(), LineColor.GREEN));
+                //c.pushCommand(new BlockSignalBundle(block76.getAuthority(), 
+                  //      block76.getDestination(), block76.getSpeedLimit(), block76.getBlockID(), LineColor.GREEN));
                 trainWaitingAt76 = false;
                 trainPassingThru76 = true;
             }
         }
-        if (block77.isOccupied())
+        if (block77.isOccupied() && !block76.isOccupied())
         {
            trainExiting = false;
            if (trainPassingThru76)
@@ -96,7 +96,7 @@ public class PLCGreenThree extends PLC{
                trainExiting = true;
            }
         }   
-        if (block101.isOccupied())
+        if (block101.isOccupied() && !block77.isOccupied())
         {
             if (trainExiting)
             {
@@ -104,7 +104,7 @@ public class PLCGreenThree extends PLC{
                 trainExiting = false;
             }
         }
-        if (block85.isOccupied())
+        if (block85.isOccupied() && !block86.isOccupied() && !block100.isOccupied())
         {
             if (trainPassingThru100)
             {
@@ -112,7 +112,7 @@ public class PLCGreenThree extends PLC{
                 trainsInLoop--;
                 trainsComing++;
             }
-            else
+            else if (trainsAway > 0)
             {
                 //push switch signal to set switch -2 towards A
                 boolean dir = false;
@@ -123,7 +123,7 @@ public class PLCGreenThree extends PLC{
                 enteringLoop = true;
             }
         }  
-        if (block86.isOccupied())
+        if (block86.isOccupied() && !block85.isOccupied())
         {
             if (enteringLoop)
             {
@@ -133,8 +133,9 @@ public class PLCGreenThree extends PLC{
             }
             
         }
-        if (block100.isOccupied())
+        if (block100.isOccupied() && !block85.isOccupied())
         {
+            System.out.println("Trains away = " + this.trainsAway);
             if (trainsAway == 0)
             {
                 trainPassingThru100 = true;
@@ -145,8 +146,8 @@ public class PLCGreenThree extends PLC{
                 c.pushCommand(new Switch(switch6.lineID, switch6.switchID, 
                         switch6.approachBlock, switch6.straightBlock, switch6.divergentBlock, dir));
                 //push signal to block one to tell train to go
-                c.pushCommand(new BlockSignalBundle(block100.getAuthority(), block100.getDestination(),
-                        block100.getSpeedLimit(), block100.getBlockID(), LineColor.GREEN));
+                //c.pushCommand(new BlockSignalBundle(block100.getAuthority(), block100.getDestination(),
+                        //block100.getSpeedLimit(), block100.getBlockID(), LineColor.GREEN));
             }
             else 
             {

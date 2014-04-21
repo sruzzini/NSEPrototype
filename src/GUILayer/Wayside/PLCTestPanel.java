@@ -276,6 +276,12 @@ public class PLCTestPanel extends javax.swing.JPanel {
             selectedBlocks[k++] = Integer.parseInt((String) this.blockOccList.getModel().getElementAt(n));
         }
         Hashtable<Integer, Block> blockTable = this.controller.getBlockTable();
+        ArrayList<Block> blockArray = this.controller.getBlockInfo();
+        
+        for (Block b : blockArray)
+        {
+            b.setOccupied(false);
+        }
         
         for (int occupiedBlock : selectedBlocks)
         {
