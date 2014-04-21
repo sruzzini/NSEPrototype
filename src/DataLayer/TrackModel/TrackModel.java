@@ -189,6 +189,7 @@ public class TrackModel
                 lineNum = 1;
             }
     	    int block = theTrainLocations.get(i).currentBlock;
+    	    int switchAlternate = -1;
     	    int prev = theLines.get(lineNum).theBlocks.get(block).prev;
     	    if(prev < 0)
     	    {
@@ -199,10 +200,12 @@ public class TrackModel
     	            if (aSwitch.isStraight())
     	            {
     	            	prev = aSwitch.straightBlock;
+    	            	switchAlternate = aSwitch.divergentBlock;
     	            }
     	            else
     	            {
     	            	prev = aSwitch.divergentBlock;
+    	            	switchAlternate = aSwitch.straightBlock;
     	            }
     	        }
     	        else if(block == aSwitch.straightBlock)
@@ -233,10 +236,12 @@ public class TrackModel
     	            if (aSwitch.isStraight())
     	            {
     	            	next = aSwitch.straightBlock;
+    	            	switchAlternate = aSwitch.divergentBlock;
     	            }
     	            else
     	            {
     	            	next = aSwitch.divergentBlock;
+    	            	switchAlternate = aSwitch.straightBlock;
     	            }
     	        }
     	        else if(block == aSwitch.straightBlock)
@@ -258,7 +263,7 @@ public class TrackModel
     	        
     	    }
     	    double length = theLines.get(lineNum).theBlocks.get(block).getLength();
-    	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next);
+    	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next, switchAlternate);
     	    
     	    int newCurrentBlock = theTrainLocations.get(i).currentBlock;
     	    if(block == newCurrentBlock)
