@@ -273,6 +273,11 @@ public class TrackModel
                 {
                     theLines.get(lineNum).theBlocks.get(theTrainLocations.get(i).prevBlock).setOccupied(false);
                 }
+                // special case for block 77 to block 101
+                else if(theTrainLocations.get(i).prevBlock == 101 && theTrainLocations.get(i).currentBlock == 102)
+                {
+                    theLines.get(lineNum).theBlocks.get(77).setOccupied(false);
+                }
     	    }
     	    else
     	    {
