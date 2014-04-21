@@ -30,12 +30,14 @@ public class TrainPanel extends javax.swing.JPanel {
     
     public void setAutomatic()
     {
-        trainModelPanel.setAutomatic();
+        this.trainModelPanel.setAutomatic();
+        this.trainControllerPanel.setAutomatic();
     }
     
     public void setManual()
     {
-        trainModelPanel.setManual();
+        this.trainModelPanel.setManual();
+        this.trainControllerPanel.setManual();
     }
     
     public void setTrain(Train t)

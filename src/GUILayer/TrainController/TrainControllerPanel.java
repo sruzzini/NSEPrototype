@@ -30,6 +30,84 @@ public class TrainControllerPanel extends javax.swing.JPanel {
         this.controller = null;
     }
     
+    public void setAutomatic()
+    {
+        this.vSetPoint_slide.setEnabled(false); //VsetPoint
+        this.desiredTemp_slide.setEnabled(false); //Desired Temp
+        
+        //Interior Lights
+        this.intLights_off.setSelected(false);
+        this.intLights_off.setEnabled(false);
+        this.intLights_on.setSelected(false);
+        this.intLights_on.setEnabled(false);
+        this.controller.OperatorIntLights = TrainController.OperatorInputStatus.AUTO;
+        
+        //Exterior Lights
+        this.extLights_off.setSelected(false);
+        this.extLights_off.setEnabled(false);
+        this.extLights_on.setSelected(false);
+        this.extLights_on.setEnabled(false);
+        this.controller.OperatorExtLights = TrainController.OperatorInputStatus.AUTO;
+        
+        //EBrake
+        this.eBrake_off.setSelected(false);
+        this.eBrake_off.setEnabled(false);
+        this.eBrake_on.setSelected(false);
+        this.eBrake_on.setEnabled(false);
+        this.controller.OperatorEBrake = TrainController.OperatorInputStatus.AUTO;
+        
+        //SBrake
+        this.sBrake_off.setSelected(false);
+        this.sBrake_off.setEnabled(false);
+        this.sBrake_on.setSelected(false);
+        this.sBrake_on.setEnabled(false);
+        this.controller.OperatorSBrake = TrainController.OperatorInputStatus.AUTO;
+        
+        //R Doors
+        this.rDoors_close.setSelected(false);
+        this.rDoors_close.setEnabled(false);
+        this.rDoors_open.setSelected(false);
+        this.rDoors_open.setEnabled(false);
+        this.controller.OperatorRightDoor = TrainController.OperatorInputStatus.AUTO;
+        
+        //L Doors
+        this.lDoors_close.setSelected(false);
+        this.lDoors_close.setEnabled(false);
+        this.lDoors_open.setSelected(false);
+        this.lDoors_open.setEnabled(false);
+        this.controller.OperatorLeftDoor = TrainController.OperatorInputStatus.AUTO;
+    }
+    
+    public void setManual()
+    {
+        this.vSetPoint_slide.setEnabled(true); //VsetPoint
+        this.desiredTemp_slide.setEnabled(true); //Desired Temp
+        
+        //Interior Lights
+        this.intLights_off.setEnabled(true);
+        this.intLights_on.setEnabled(true);
+        
+        //Exterior Lights
+        this.extLights_off.setEnabled(true);
+        this.extLights_on.setEnabled(true);
+        
+        //EBrake
+        this.eBrake_off.setEnabled(true);
+        this.eBrake_on.setEnabled(true);
+        
+        //SBrake
+        this.sBrake_off.setEnabled(true);
+        this.sBrake_on.setEnabled(true);
+        
+        //R Doors
+        this.rDoors_close.setEnabled(true);
+        this.rDoors_open.setEnabled(true);
+        
+        //L Doors
+        this.lDoors_close.setEnabled(true);
+        this.lDoors_open.setEnabled(true);
+    }
+    
     public void setTrainController(TrainController c)
     {
         this.controller = c;
