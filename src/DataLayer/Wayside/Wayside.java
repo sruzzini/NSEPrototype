@@ -243,13 +243,13 @@ public final class Wayside
             
             //array.add(new BlockSignalBundle(packet, 152, LineColor.GREEN));
             //this.sendTravelSignal(array);
-            this.sendTravelSignal(new BlockSignalBundle(20, packet.Destination, packet.Speed, 152, LineColor.GREEN));
+            this.sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, 152, LineColor.GREEN));
         }
         else
         {
-            array.add(new BlockSignalBundle(packet, 77, LineColor.RED));
-            this.sendTravelSignal(array);
-            //this.sendTravelSignal(new BlockSignalBundle(packet, 77, LineColor.RED));
+            //array.add(new BlockSignalBundle(packet, 77, LineColor.RED));
+            //this.sendTravelSignal(array);
+            this.sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, 77, LineColor.RED));
         }
     }
     
@@ -266,7 +266,7 @@ public final class Wayside
         }
     }
     
-    public void sendTravelSignal(BlockSignalBundle sentPacket)
+   /* public void sendTravelSignal(BlockSignalBundle sentPacket)
     {
         if (sentPacket == null) 
         {
@@ -293,9 +293,51 @@ public final class Wayside
                 }
             }
         }
+    }*/
+    
+    private void sendTravelSignal(BlockSignalBundle packet)
+    {
+        if (packet == null)
+        {
+            System.out.println("Wayside - sendTravelSignal array version - packet is null");
+        }
+        
+        LineColor line = packet.LineID;
+        int blockNum = packet.BlockID;
+        
+        for (TrackController tc : this.controllers)
+        {
+            if (tc.getLine() == line)
+            {
+                if (tc.containsBlock(blockNum))
+                {
+                    tc.sendTravelSignal(packet.copy());
+                    break;
+                }
+            }
+        }
     }
     
     public void sendTravelSignal(ArrayList<BlockSignalBundle> signal)
+    {
+        if (signal == null)
+        {
+            System.out.println("Wayside - sendTravelSignal(ArrayList) - list is null");
+        }
+        else
+        {
+            if (signal.size() > 0)
+            {
+                BlockSignalBundle packet = signal.get(0);
+                this.sendTravelSignal(packet);
+            }
+        }
+        
+        
+        
+    }
+    
+    /*public void sendTravelSignal(ArrayList<BlockSignalBundle> signal)
     {
         int k = 0;
         for (BlockSignalBundle packet : signal)
@@ -318,14 +360,14 @@ public final class Wayside
                 {
                     if (tc.containsBlock(blockNum))
                     {
-                        tc.sendTravelSignal2(packet.copy(), k++);
+                        //tc.sendTravelSignal2(packet.copy(), k++);
                     }
                 }
             }
             if ( k > 0)
                 break;
         }
-    }
+    }*/
     
    /* public void sendTravelSignal(BlockSignalBundle packet)
     {

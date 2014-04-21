@@ -75,15 +75,15 @@ public class PLCGreenOne extends PLC {
                         switch3.approachBlock, switch3.straightBlock, 
                         switch3.divergentBlock, dir ));
                 //push signal command to increase speed of blocks 149 and 150 to the speed limit
-                c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
+               /* c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
                         block149.getDestination(), block149.getSpeedLimit(), 149, LineColor.GREEN));
                 c.pushCommand(new BlockSignalBundle(block150.getAuthority(), 
-                        block150.getDestination(), block150.getSpeedLimit(), 150, LineColor.GREEN));
+                        block150.getDestination(), block150.getSpeedLimit(), 150, LineColor.GREEN));*/
                 trainWaitingAt150 = false;
                 trainPassingThru150 = true;
             }
         }
-        if (block28.isOccupied())
+        if (block28.isOccupied() && !block150.isOccupied() && ! block29.isOccupied())
         {
            trainExiting = false;
            if (trainPassingThru150)
@@ -91,12 +91,17 @@ public class PLCGreenOne extends PLC {
                 trainPassingThru150 = false;
                 trainsAway++;
            }
-           else 
+           else if (trainsComing > 0)
            {
+               boolean dir = false;
+                if (switch3.straightBlock == 29) dir = true;
+                c.pushCommand(new Switch(LineColor.GREEN, switch3.switchID, 
+                        switch3.approachBlock, switch3.straightBlock, 
+                        switch3.divergentBlock, dir ));
                trainExiting = true;
            }
         }   
-        if (block29.isOccupied())
+        if (block29.isOccupied() && !block28.isOccupied() && !block150.isOccupied())
         {
             if (trainExiting)
             {
@@ -104,7 +109,7 @@ public class PLCGreenOne extends PLC {
                 trainExiting = false;
             }
         }
-        if (block13.isOccupied())
+        if (block13.isOccupied() && !block1.isOccupied() && !block12.isOccupied())
         {
             if (trainPassingThru1)
             {
@@ -112,18 +117,18 @@ public class PLCGreenOne extends PLC {
                 trainsInLoop--;
                 trainsComing++;
             }
-            else
+            else if (trainsAway > 0)
             {
                 //push switch signal to set switch -2 towards A
                 boolean dir = false;
-                if (switch2.straightBlock == 1) dir = true;
+                if (switch2.straightBlock == 12) dir = true;
                 c.pushCommand(new Switch(switch2.lineID, switch2.switchID, 
                         switch2.approachBlock, switch2.straightBlock, 
                         switch2.divergentBlock, dir));
                 enteringLoop = true;
             }
         }  
-        if (block12.isOccupied())
+        if (block12.isOccupied() && !block1.isOccupied() && !block13.isOccupied())
         {
             if (enteringLoop)
             {
@@ -133,7 +138,7 @@ public class PLCGreenOne extends PLC {
             }
             
         }
-        if (block1.isOccupied())
+        if (block1.isOccupied() && !block12.isOccupied() && !block13.isOccupied())
         {
             if (trainsAway == 0)
             {
@@ -145,10 +150,10 @@ public class PLCGreenOne extends PLC {
                 c.pushCommand(new Switch(switch2.lineID, switch2.switchID, 
                         switch2.approachBlock, switch2.straightBlock, switch2.divergentBlock, dir));
                 //push signal to block one to tell train to go
-                c.pushCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
-                        block1.getSpeedLimit(), block1.getBlockID(), LineColor.GREEN));
+               /* c.pushCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
+                        block1.getSpeedLimit(), block1.getBlockID(), LineColor.GREEN));*/
             }
-            else 
+            else if (trainsComing > 0)
             {
                 trainPassingThru1 = false;
                 trainWaitingAt1 = true;
