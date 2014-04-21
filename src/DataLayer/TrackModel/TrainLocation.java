@@ -41,18 +41,18 @@ public class TrainLocation {
         }
     }
     
-    public void updateLocation(double deltaX, double length, int prev, int next)
+    public void updateLocation(double deltaX, double length, int prev, int next, int switchAlternate)
     {
         distanceSoFar = deltaX + distanceSoFar;
         if(distanceSoFar > length)
         {
             distanceSoFar -= length;
-            if(prev == prevBlock)
+            if(prev == prevBlock || prev == switchAlternate)
             {
                 prevBlock = currentBlock;
                 currentBlock = next;
             }
-            else if(next == prevBlock)
+            else if(next == prevBlock || next == switchAlternate)
             {
                 prevBlock = currentBlock;
                 currentBlock = prev;
