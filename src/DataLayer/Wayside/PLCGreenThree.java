@@ -83,7 +83,7 @@ public class PLCGreenThree extends PLC{
                 trainPassingThru76 = true;
             }
         }
-        if (block77.isOccupied() && !block76.isOccupied())
+        if (block77.isOccupied() && !block76.isOccupied() && !block101.isOccupied())
         {
            trainExiting = false;
            if (trainPassingThru76)
@@ -91,9 +91,14 @@ public class PLCGreenThree extends PLC{
                 trainPassingThru76 = false;
                 trainsAway++;
            }
-           else 
+           else if (trainsComing > 0)
            {
                trainExiting = true;
+               boolean dir = false;
+               if (switch5.straightBlock == 101) dir = true;
+               c.pushCommand(new Switch(LineColor.GREEN, switch5.switchID, 
+                        switch5.approachBlock, switch5.straightBlock, 
+                        switch5.divergentBlock, dir ));
            }
         }   
         if (block101.isOccupied() && !block77.isOccupied())
@@ -135,7 +140,7 @@ public class PLCGreenThree extends PLC{
         }
         if (block100.isOccupied() && !block85.isOccupied())
         {
-            System.out.println("Trains away = " + this.trainsAway);
+            //System.out.println("Trains away = " + this.trainsAway);
             if (trainsAway == 0)
             {
                 trainPassingThru100 = true;

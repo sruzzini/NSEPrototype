@@ -119,13 +119,17 @@ public abstract class PLC {
         ArrayList<BlockSignalBundle> signals;
         signals = new ArrayList<>();
         int prev, next;
+        int authority;
+        double speed;
         boolean sendSignal;
+        Block nextBlock;
         
         for (Block b : this.blockArray)
         {
                 if (b.isOccupied() && b.getVelocity() != 0)
                 {
-                    if (this.findBlock(b.prev, b.getBlockID()) != null && !this.findBlock(b.prev, b.getBlockID()).isOccupied())
+                    nextBlock = this.findBlock(b.prev, b.getBlockID());
+                    if (nextBlock != null && !nextBlock.isOccupied())
                     {
                         sendSignal = true;
                         prev = b.prev;
@@ -143,12 +147,28 @@ public abstract class PLC {
                             }
                         }
                         if (sendSignal)
-                            signals.add(new BlockSignalBundle(b.getAuthority() - 1, b.getDestination(), b.getVelocity(), prev, this.line, b.isClosed()));
-                       // System.out.println("PLC - replicateSignals - added signal auth: " + (b.getAuthority() - 1) + " dest: " + b.getDestination() + 
+                        {
+                            authority = b.getAuthority() - 1;
+                            if (authority < 0)
+                            {
+                                authority = 0;
+                            }
+                            if (b.getVelocity() > nextBlock.getSpeedLimit())
+                            {
+                                speed = nextBlock.getSpeedLimit();
+                            }
+                            else
+                            {
+                                speed = b.getVelocity();
+                            }
+                            signals.add(new BlockSignalBundle(authority, b.getDestination(), speed, prev, this.line, b.isClosed()));
+                        }
+// System.out.println("PLC - replicateSignals - added signal auth: " + (b.getAuthority() - 1) + " dest: " + b.getDestination() + 
                           //              " speed: " + b.getVelocity() + " to block " + prev);
                         
                     }
-                    if (this.findBlock(b.next, b.getBlockID()) != null && !this.findBlock(b.next, b.getBlockID()).isOccupied())
+                    nextBlock = this.findBlock(b.next, b.getBlockID());
+                    if (nextBlock != null && !nextBlock.isOccupied())
                     {
                         sendSignal = true;
                         next = b.next;
@@ -166,7 +186,23 @@ public abstract class PLC {
                             }
                         }
                         if (sendSignal)
-                            signals.add(new BlockSignalBundle(b.getAuthority() - 1, b.getDestination(), b.getVelocity(), next, this.line, b.isClosed()));
+                        {
+                            authority = b.getAuthority() - 1;
+                            if (authority < 0)
+                            {
+                                authority = 0;
+                            }
+                            if (b.getVelocity() > nextBlock.getSpeedLimit())
+                            {
+                                speed = nextBlock.getSpeedLimit();
+                            }
+                            else
+                            {
+                                speed = b.getVelocity();
+                            }
+                            signals.add(new BlockSignalBundle(authority, b.getDestination(), speed, next, this.line, b.isClosed()));
+                        }
+                            //signals.add(new BlockSignalBundle(b.getAuthority() - 1, b.getDestination(), b.getVelocity(), next, this.line, b.isClosed()));
                        // System.out.println("PLC - replicateSignals - added signal auth: " + (b.getAuthority() - 1) + " dest: " + b.getDestination() + 
                          //               " speed: " + b.getVelocity() + " to block " + next); 
                         
@@ -180,42 +216,48 @@ public abstract class PLC {
     
     private Block findBlock(int next, int current)
     {
-        Block b;
+        Block b = null;
         Switch s;
         int approach, divergent, straight;
         
         if (next < 0)
         {
             //follow switch
-            s = this.switches.get(-next);
-            if (s == null)
+            try 
             {
-                System.out.println("PLC - findBlock - switch is null. switch lookup: " + next + " in plc: " + this.id);
-            }
-            approach = s.approachBlock;
-            divergent = s.divergentBlock;
-            straight = s.straightBlock;
-            if (current == straight || current == divergent)
-            {
-                b = this.blocks.get(approach);
-            }
-            else
-            {
-                if (s.straight)
+                s = this.switches.get(-next);
+                if (s == null)
                 {
-                    b = this.blocks.get(straight);
+                    //System.out.println("PLC - findBlock - switch is null. switch lookup: " + next + " in plc: " + this.id);
+                }
+                approach = s.approachBlock;
+                divergent = s.divergentBlock;
+                straight = s.straightBlock;
+                if (current == straight || current == divergent)
+                {
+                    b = this.blocks.get(approach);
                 }
                 else
                 {
-                    b = this.blocks.get(divergent);
+                    if (s.straight)
+                    {
+                        b = this.blocks.get(straight);
+                    }
+                    else
+                    {
+                        b = this.blocks.get(divergent);
+                    }
                 }
             }
+            catch (NullPointerException e)
+            {}
         }
-        else
-        {
+        
+          else
+          {
             b = this.blocks.get(next);
-        }
-        //if (b == null)
+          }
+            //if (b == null)
             //System.out.println("PLC - findBlock - returning null instead of block. current: " + current + " next: " + next);
         return b;
     }
@@ -241,6 +283,10 @@ public abstract class PLC {
             if (!c.containsCommandForBlockID(b.BlockID))
             {
                 c.pushCommand(b);  
+            }
+            else
+            {
+                //System.out.println("PLC - runAllPLCTasks - leaving out a replication siginal due to conflict for block: " + b.BlockID);
             }
             
         }

@@ -16,13 +16,13 @@ package DataLayer.TrackModel;
 public class TrackSignal 
 {
     public double VelocityCommand; // meters/sec
-    public int Authority;
-    public boolean IsUnderground;
-    public String NextDestination;
-    public double Gradient;
-    public int DeltaPassengers;
+    public int Authority; // authority of the block
+    public boolean IsUnderground; // whether or not the block is underground
+    public String NextDestination; // next station the train should be going to
+    public double Gradient; // gradient of the current track block
+    public int DeltaPassengers; // the change in the number of passangers on the train
     
-    //Constructors
+    // TrackSignal() instantiates a new TrackSignal object with default values
     public TrackSignal()
     {
         this.VelocityCommand = 0;
@@ -32,6 +32,12 @@ public class TrackSignal
         this.Gradient = 0;
     }
     
+    // TrackSignal() instantiates a new TrackSignal object with parameterized values
+    // Parameters:
+    //     double velocity - the commanded velocity to be set to the tracksignal
+    //     int authority - the commanded authority to be set to the tracksignal
+    //     boolean isUnderground - whether or not the track associated with this track signal is underground
+    //     String nextDestination - the name of the next station the train should be going to
     public TrackSignal(double velocity, int authority, boolean isUnderground, String nextDestination)
     {
         this.VelocityCommand = velocity;
@@ -41,6 +47,13 @@ public class TrackSignal
         this.Gradient = 0;
     }
     
+    // TrackSignal() instantiates a new TrackSignal object with parameterized values
+    // Parameters:
+    //     double velocity - the commanded velocity to be set to the tracksignal
+    //     int authority - the commanded authority to be set to the tracksignal
+    //     boolean isUnderground - whether or not the track associated with this track signal is underground
+    //     String nextDestination - the name of the next station the train should be going to
+    //     double gradient - the grade of the section of track associated with the tracksignal
     public TrackSignal(double velocity, int authority, boolean isUnderground, String nextDestination, double gradient)
     {
         this.VelocityCommand = velocity;

@@ -22,9 +22,9 @@ public class TrainsClass
     public boolean Idle;
     public double DistanceSoFar;
     
-    public String BlockCurrent;    
-    public String SectionCurrent;
-    public String BlockDestination; 
+    public int BlockCurrent;    
+    public int BlockDestination; 
+    public String SectionCurrent;    
     public String SectionDestination;
     
     public String StationCurrent;
@@ -32,15 +32,23 @@ public class TrainsClass
         
     public TrainsClass()
     {
-        this.BlockCurrent = "";
         this.StopIndex = 0;
         this.Authority = 0;
-        this.DistanceSoFar = 0;
-        this.BlockDestination = "";
+        
+        this.BlockCurrent = 0;
+        this.BlockDestination = 0;       
+
+        this.DistanceSoFar = 0.0;
+        
+        this.SectionCurrent = "";
         this.SectionDestination = "";
     }
     
-    public TrainsClass(LineColor l, String s, String b, int a, String d, String sd)
+    /*
+        Set the Line Color, current block and section, and destination block and section
+    */
+    
+    public TrainsClass(LineColor l, String s, int b, int a, String sd, int d)
     {
         this.line = l;
         this.BlockCurrent = b;
@@ -79,6 +87,7 @@ public class TrainsClass
     {
         this.Idle = Idle;
     }
+    
     public String lineColor()
     {
         if(this.line == LineColor.RED)
