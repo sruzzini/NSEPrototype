@@ -9,6 +9,7 @@ import DataLayer.Bundles.BlockSignalBundle;
 import DataLayer.CTC.CTC;
 import DataLayer.CTC.TrainsClass;
 import DataLayer.EnumTypes.LineColor;
+import DataLayer.TrackModel.Switch;
 import java.util.ArrayList;
 
 /**
@@ -424,7 +425,7 @@ public class CTCGUI extends javax.swing.JPanel {
             }
         });
 
-        switchPositionSwitchesDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Switches" }));
+        switchPositionSwitchesDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Switch #" }));
 
         switchPositionsRadioGroup.add(switchPositionsDivergentRadio);
         switchPositionsDivergentRadio.setText("Divergent");
@@ -569,20 +570,29 @@ public class CTCGUI extends javax.swing.JPanel {
         }
         else
         {
-          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {this.CTCOffice.trains.get(Integer.parseInt(x)).lineColor()}));    
+          this.routeTrainsLineDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Line", this.CTCOffice.trains.get(Integer.parseInt(x)).lineColor()}));    
         }
+        this.routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Section"}));
+        this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Block #"}));
         this.routeTrainAuthorityValueLabel.setText("0");
     }//GEN-LAST:event_routeTrainsTrainDropActionPerformed
 
     private void switchPositionsLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionsLineDropActionPerformed
         String x = String.valueOf(this.switchPositionsLineDrop.getSelectedItem());
         ArrayList<String> switches = new ArrayList<>();
+        
+        switches.add("Switch #");
+        
         for(int i = 0; i < this.CTCOffice.switchPostions.size(); i++)
         {
             if(x.equals(lineString(this.CTCOffice.switchPostions.get(i).lineID)))
             {
               switches.add(Integer.toString(this.CTCOffice.switchPostions.get(i).switchID));
             }
+        }
+        if(switches.size() == 0)
+        {
+            switches.add("Switch #");
         }
         
         this.switchPositionSwitchesDrop.setModel(new javax.swing.DefaultComboBoxModel(switches.toArray(new String[0])));
@@ -625,9 +635,9 @@ public class CTCGUI extends javax.swing.JPanel {
             lineDestination = LineColor.YARD;
         }
         String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
-        String block = String.valueOf(routeTrainsBlockDrop.getSelectedItem()).toUpperCase();
+        int block = Integer.parseInt(String.valueOf(routeTrainsBlockDrop.getSelectedItem()));
         
-        this.CTCOffice.trains.set(trainID, new TrainsClass(lineDestination, this.CTCOffice.trains.get(trainID).SectionCurrent,  this.CTCOffice.trains.get(trainID).BlockCurrent, this.CTCOffice.calculateAuthority(this.CTCOffice.trains.get(trainID),this.CTCOffice.trains.get(trainID).line).size(),block, section));
+        this.CTCOffice.trains.set(trainID, new TrainsClass(lineDestination, this.CTCOffice.trains.get(trainID).SectionCurrent,  this.CTCOffice.trains.get(trainID).BlockCurrent, this.CTCOffice.calculateAuthority(this.CTCOffice.trains.get(trainID),this.CTCOffice.trains.get(trainID).line).size(),section, block));
      }
     
     private void blockClosingSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingSubmitButtonActionPerformed
@@ -651,13 +661,13 @@ public class CTCGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_routeTrainSectionDropActionPerformed
-*/
+
     //bad method, not able to delete
     private void systemAutomaticRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_systemAutomaticRadioActionPerformed
         // TODO add your handling code here:
         
     }//GEN-LAST:event_systemAutomaticRadioActionPerformed
-
+*/
     private void routeTrainLineDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainLineDropActionPerformed
         // TODO add your handling code here:
         String x = String.valueOf(routeTrainsLineDrop.getSelectedItem());
@@ -775,7 +785,8 @@ public class CTCGUI extends javax.swing.JPanel {
         {
           routeTrainsSectionDrop.setModel(new javax.swing.DefaultComboBoxModel(this.CTCOffice.greenSections));    
         }
-        this.routeTrainAuthorityValueLabel.setText("0");
+        this.routeTrainAuthorityValueLabel.setText("0");        
+        this.routeTrainsBlockDrop.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Block #"}));
     }//GEN-LAST:event_routeTrainsLineDropActionPerformed
 
     private void routeTrainsSectionDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainsSectionDropActionPerformed
@@ -815,20 +826,21 @@ public class CTCGUI extends javax.swing.JPanel {
     private void routeTrainsBlockDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainsBlockDropActionPerformed
         String trainID = String.valueOf(routeTrainsTrainDrop.getSelectedItem());
         String line = String.valueOf(routeTrainsLineDrop.getSelectedItem());
-        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();        
-        String blockID = String.valueOf(routeTrainsBlockDrop.getSelectedItem());
+        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();       
+        
         int authority;
         
-        if(!blockID.equals("Block #") || !line.equals("Line") || !section.equals("Section"))
+        if(!routeTrainsBlockDrop.getSelectedItem().equals("Block #") || !line.equals("Line") || !section.equals("Section"))
         {
-            
             int index = Integer.parseInt(trainID);
-            TrainsClass train  = new TrainsClass(LineColor.YARD, this.CTCOffice.trains.get(index).SectionCurrent, this.CTCOffice.trains.get(index).BlockCurrent, 0, blockID, section);
+            int blockID = Integer.parseInt(routeTrainsBlockDrop.getSelectedItem().toString());            
+            TrainsClass train  = new TrainsClass(LineColor.YARD, this.CTCOffice.trains.get(index).SectionCurrent, this.CTCOffice.trains.get(index).BlockCurrent, 0, section, blockID);
             train.PreviousBlock = this.CTCOffice.trains.get(index).PreviousBlock;
             train.BlockDestination = blockID;
             train.SectionDestination = this.CTCOffice.returnSection(lineEnum(line), blockID);
             train.StationDestination = this.CTCOffice.returnStationBlock(lineEnum(line), blockID);
             authority = (this.CTCOffice.calculateAuthority(train, this.lineEnum(line)).size());
+            System.out.println("CTC Train's " + index + " Authority: " + authority);
             if(authority == 0)
             {
                 this.routeTrainAuthorityValueLabel.setText(Integer.toString(0));
@@ -842,9 +854,35 @@ public class CTCGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_routeTrainsBlockDropActionPerformed
 
     private void switchPositionSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionSubmitButtonActionPerformed
-        // TODO add your handling code here:
+        
+        
+        String line = this.switchPositionsLineDrop.getSelectedItem().toString();
+        String switchNumber = this.switchPositionsLineDrop.getSelectedItem().toString();
+        
+        if(!switchNumber.equals("Switch #") && !line.equals("Line"))
+        {          
+            int switchID = Integer.parseInt(switchNumber);
+            
+            for(int i = 0; i < this.CTCOffice.switchPostions.size(); i++)
+            {
+                if(switchID == this.CTCOffice.switchPostions.get(i).switchID)
+                {
+                    if(this.switchPositionsStraightRadio.isSelected() && !this.CTCOffice.switchPostions.get(i).isStraight())
+                    {
+                        this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
+                        this.CTCOffice.switchBundle.get(0).straight = true;
+                    }
+                    else if(this.switchPositionsDivergentRadio.isSelected() && this.CTCOffice.switchPostions.get(i).isStraight()) 
+                    {
+                        this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
+                        this.CTCOffice.switchBundle.get(0).straight = false;
+                    }
+                }
+                
+            }
+        }
+        
     }//GEN-LAST:event_switchPositionSubmitButtonActionPerformed
-
    
     public void setClosures()
     {
@@ -919,9 +957,6 @@ public class CTCGUI extends javax.swing.JPanel {
             this.switchPositionsTable.setValueAt(position, i , 3);
         }
     }
-    /**
-     * @param args the command line arguments
-     */
 
     private String lineString(LineColor line)
     {
