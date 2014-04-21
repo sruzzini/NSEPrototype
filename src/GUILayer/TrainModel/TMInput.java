@@ -41,6 +41,24 @@ public class TMInput extends javax.swing.JPanel {
         trainState = s;
     }
     
+    public void setAutomatic()
+    {
+        eBrakeRequestButton.setEnabled(false);
+        engineFaultInputCheckBox.setEnabled(false);
+        sBrakeFaultInputCheckBox.setEnabled(false);
+        signalFaultInputCheckBox.setEnabled(false);
+        temperatureInputApplyButton.setEnabled(false);
+        eBrakeFaultInputCheckBox.setEnabled(false);
+    }
+    public void setManual()
+    {
+        eBrakeRequestButton.setEnabled(true);
+        engineFaultInputCheckBox.setEnabled(true);
+        sBrakeFaultInputCheckBox.setEnabled(true);
+        signalFaultInputCheckBox.setEnabled(true);
+        temperatureInputApplyButton.setEnabled(true);
+        eBrakeFaultInputCheckBox.setEnabled(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

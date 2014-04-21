@@ -17,8 +17,6 @@ import DataLayer.Train.PhysicsInput;
 
 public class TrainModel {
         
-    
-    
     private final StateInput stateInput;
     public final TrainState state;
     public final PhysicsEngine physics;

@@ -28,6 +28,15 @@ public class TrainModelPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void setAutomatic()
+    {
+        tMInput.setAutomatic();
+    }
+    
+    public void setManual()
+    {
+        tMInput.setManual();
+    }
     
     public void setTrainModel(TrainModel m)
     {
