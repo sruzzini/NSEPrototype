@@ -58,6 +58,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.NSEObject = n;
         this.trainPanel1.setTrain(this.NSEObject.Trains.get(0));
         this.cTCGUI1.setCTCOffice(this.NSEObject.CTCOffice);
+        this.automatic_Clicked(null);
     }
     
     /* SetSystemTime(String s) sets teh systemTime_txt label to the string
@@ -389,10 +390,12 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         if (this.automatic_radio.isSelected()) //selected automatic
         {
             this.NSEObject.IsAutomatic = true;
+            this.trainPanel1.setAutomatic();
         }
         else //manual mode selected
         {
             this.NSEObject.IsAutomatic = false;
+            this.trainPanel1.setManual();
         }
     }//GEN-LAST:event_automatic_Clicked
 
@@ -400,10 +403,12 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         if (this.automatic_radio.isSelected()) //selected automatic
         {
             this.NSEObject.IsAutomatic = true;
+            this.trainPanel1.setAutomatic();
         }
         else //manual mode selected
         {
             this.NSEObject.IsAutomatic = false;
+            this.trainPanel1.setManual();
         }
     }//GEN-LAST:event_manual_Clicked
 
