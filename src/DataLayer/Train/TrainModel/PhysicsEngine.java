@@ -62,6 +62,10 @@ public class PhysicsEngine implements Runnable
         physicsInput = mp;
     }
 
+    /*
+    computeFailureCode() adds the values of active failures and returns the result
+    Returns - int
+    */
     public int computeFailureCode()
     {
         int failureCode = 0;
@@ -83,30 +87,58 @@ public class PhysicsEngine implements Runnable
         }
         return failureCode;
     }
+    /*
+    getEmergencyBrake() returns the status of the emergency brake
+    Returns - boolean
+    */
     public boolean getEmergencyBrake()
     {
         return eBrakeStatus;
     }
+    /*
+    getFailureCode() returns the value of the failure code
+    Returns - int
+    */
     public int getFailureCode()
     {
         return computeFailureCode();
     }
+    /*
+    getGradient() returns the gradient
+    Returns - double
+    */
     public double getGradient()
     {
         return gradient;
     }
+    /*
+    getMass() returns the train's mass
+    Returns - double
+    */
     public double getMass()
     {
         return mass;
     }
+    /*
+    getPassengerEBrakeRequest() returns the state of the E brake request
+    Returns - boolean
+    */
     public boolean getPassengerEBrakeRequest()
     {
         return passengerEBrakeRequest;
     }
+    /*
+    getPassengers() returns the number of passengers
+    Returns - int
+    */
     public int getPassengers()
     {
         return passengers;
     }
+    /*
+    getPhysicsInfo() updates PhysicsEngine's info using it's PhysicsInput object
+    Returns - void
+    */
     private void getPhysicsInfo()
     {
         motorPower = physicsInput.MotorPower;
@@ -117,22 +149,43 @@ public class PhysicsEngine implements Runnable
         delta_x = physicsInput.Delta_x;
         passengers = passengers + physicsInput.PassengerChange;
     }
+    /*
+    getPower() returns the motorPower
+    Returns - double
+    */
     public double getPower()
     {
         return motorPower;
     }
+    /*
+    getFailureCode() returns sBrakeStatus
+    Returns - boolean
+    */
     public boolean getServiceBrake()
     {
         return sBrakeStatus;
     }
+    /*
+    getTimeMultiplier() returns time_multiplier
+    Returns - int
+    */
     public int getTimeMultiplier()
     {
         return time_multiplier;
     }
+    /*
+    getFailureCode() returns the current velocity of the train
+    Returns - double
+    */
     public double getVelocity()
     {
         return velocity;
     }   
+    /*
+    sendPhysicsInfo() updates the PhysicsInput object's values with the 
+    PhysicsEngine's values
+    Returns - void
+    */
     private void sendPhysicsInfo()
     {
         physicsInput.Velocity = velocity;
@@ -143,28 +196,57 @@ public class PhysicsEngine implements Runnable
         physicsInput.SignalFailure = signalFailure;
         physicsInput.EngineFailure = engineFailure;
     }
+    /*
+    setGradient(double newGradient) sets the value of gradient
+    Parameters:
+        double newGradient - the desired new gradient value
+    */
     public void setGradient(double newGradient)
     {
         gradient = newGradient;
     }
+    /*
+    setEmergencyBrake(boolean value) sets eBrakeStatus
+    Parameters:
+        boolean value - the desired value for eBrakeStatus
+    */
     public void setEmergencyBrake(boolean value)
     {
         eBrakeStatus = value;
     }
+    /*
+    setEBrakeFault(boolean value) sets eBrakeFailure
+    Parameters:
+        boolean val - the desired value for eBrakeFailure
+    */
     public void setEBrakeFault(boolean val)
     {
         eBrakeFailure = val;
     }
+    /*
+    setEngineFault(boolean value) sets engineFailure
+    Parameters:
+        boolean val - the desired value for engineFailure
+    */
     public void setEngineFault(boolean val)
     {
         engineFailure = val;
     }
-
+    /*
+    setPassengerEBrakeRequest(boolean value) sets passengerEBrakeRequest
+    Parameters:
+        boolean val - the desired value for passengerEBrakeRequest
+    */
     public void setPassengerEBrakeRequest(boolean value)
     {
         passengerEBrakeRequest = value;
     }
-    
+    /*
+    setPassengers(int number) sets passengers
+    Parameters:
+        boolean val - the desired value for passengers
+    Enforces 0 <= passengers <= maxPassengers
+    */
     public void setPassengers(int number)
     {
         if (passengers + number < 0)
@@ -180,7 +262,12 @@ public class PhysicsEngine implements Runnable
             passengers = passengers + number;
         }
     }
-    
+    /*
+    setPower(double power) sets motorPower
+    Parameters:
+        double power - desired value of motorPower
+    Enforces 0 <= power <= 120000
+    */
     public void setPower(double power)
     {
         if (power > 120000)
@@ -196,47 +283,84 @@ public class PhysicsEngine implements Runnable
             motorPower = power;
         }
     }
-
+    /*
+    setSBrakeFault(boolean value) sets sBrakeFault
+    Parameters:
+        boolean val - the desired value for sBrakeFault
+    */
     public void setSBrakeFault(boolean val)
     {
         sBrakeFailure = val;
     }
+    /*
+    setSBrakeFault(boolean value) sets sBrakeFault
+    Parameters:
+        boolean value - the desired value for sBrakeFault
+    */
     public void setServiceBrake(boolean value)
     {
         sBrakeStatus = value;
     }
+    /*
+    setSignalFault(boolean val) sets setSignalFault
+    Parameters:
+        boolean val - the desired value for setSignalFault
+    */
     public void setSignalFault(boolean val)
     {
         signalFailure = val;
     }
+    /*
+    setSignalFault(boolean newMultiplier) sets time_multiplier
+    Parameters:
+        int newMultiplier - the desired value for time_multiplier
+    */
     public void setTimeMultiplier(int newMultiplier)
     {
         time_multiplier = newMultiplier;
     }
-    
+    /*
+    run() is PhysicsEngine's method defined to implement Runnable
+    It calls simply simulate()
+    */
     public void run()
     {
         simulate();
     }
-
+    /*
+    calcEBrakeForce() calculates the force of the Ebrake based on defined
+    final values
+    */
     private double calcEBrakeForce()
     {
         double twoThirdLoadMass = (fullMass - emptyMass) * (2.0/3.0) + emptyMass;
         double eBrakeForce = twoThirdLoadMass * twoThirdLoadEBrakeAccel;
         return eBrakeForce;
     }
+    /*
+    calcMaxEngineForce() calculates the force of the Ebrake based on defined
+    final values
+    */
     private double calcMaxEngineForce()
     {
         double twoThirdLoadMass = (fullMass - emptyMass) * (2.0/3.0) + emptyMass;
         double maxEngineForce = twoThirdLoadMass * twoThirdLoadMaxAccel;
         return maxEngineForce; 
     }
+    /*
+    calcSBrakeForce() calculates the force of the Ebrake based on defined
+    final values
+    */
     private double calcSBrakeForce()
     {
         double twoThirdLoadMass = (fullMass - emptyMass) * (2.0/3.0) + emptyMass;
         double sBrakeForce = twoThirdLoadMass * twoThirdLoadSBrakeAccel;
         return sBrakeForce;
     }
+    /*
+    simulate() contains the while loop that constantly computes the train's
+    velocity based on inputs such as the power, gradient, and brake statuses
+    */
     private void simulate()
     {
         // F_engine + F_friction + F_mg / m = a
