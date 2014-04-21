@@ -32,7 +32,7 @@ public class NSE implements Runnable
     //Constatns
     public static final int REAL_TIME = 1; //multiplier for real time
     public static final int SPEED_UP_10X = 10; //multiplier for 10x real time
-    private static final long dispatchIntervalMin = 1; //dispatch interval
+    private static final long dispatchIntervalMin = 10; //dispatch interval
     private static final long secondsInMin = 60; //number of milliseconds in a minute
     private static final long dispatchInterval = dispatchIntervalMin * secondsInMin; // convert minutes to milliseconds 
     
