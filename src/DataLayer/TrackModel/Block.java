@@ -5,31 +5,32 @@ import DataLayer.EnumTypes.*;
 
 public class Block {
     
+    public int next;
+    public int prev;
+    private int authority;
+    private BeaconSignal beacon;
     private int blockID;
-    public int next, prev;
-    private double length;
-    private double speedLimit;
-    private double elevation;
-    private double cumElev;
-    private double gradient;
-    private int failureState;
-    private boolean occupied;
-    private int occupyingTrainID;
     private boolean closed;
-    private boolean underground;
+    private double cumElev;
+    private int destination;
+    private double elevation;
+    private int failureState;
+    private double gradient;
+    private double length;
     private boolean light;
     private LightColor lightColor;
+    private boolean occupied;
+    private int occupyingTrainID;
     private boolean rrxing;
     private XingState rrxingState;
+    private double speedLimit;
     private boolean station;
     private int stationID;
     private String stationString;
-    private double velocity;
-    private int authority;
-    private int destination;
     private boolean tswitch;
     private int tswitchID;
-    private BeaconSignal beacon;
+    private boolean underground;
+    private double velocity;
     
     public Block(int blockID, int next, int prev, double length, double speedLimit, double elevation, double cumElev,
             double gradient, boolean underground, boolean light, boolean rrxing,
@@ -56,115 +57,70 @@ public class Block {
         this.authority = 0;
         this.destination = 0;
     }
-
+    
+    public int getAuthority() 
+    {
+        return authority;
+    }
+    
+    public BeaconSignal getBeacon() 
+    {
+        return beacon;
+    }
+    
     public int getBlockID() 
     {
         return blockID;
     }
-
-    public double getLength() 
-    {
-        return length;
-    }
-
-    public double getSpeedLimit() 
-    {
-        return speedLimit;
-    }
-
-    public double getElevation() 
-    {
-        return elevation;
-    }
-
+    
     public double getCumElev() 
     {
         return cumElev;
     }
-
-    public double getGradient() 
+    
+    public int getDestination() 
     {
-        return gradient;
+        return destination;
     }
-
+    
+    public double getElevation() 
+    {
+        return elevation;
+    }
+    
     public int getFailureState() 
     {
         return failureState;
     }
-
-    public void setFailureState(int failureState) 
+    
+    public double getGradient() 
     {
-        this.failureState = failureState;
+        return gradient;
     }
-
-    public boolean isOccupied() 
+    
+    public double getLength() 
     {
-        return occupied;
+        return length;
     }
-
-    public void setOccupied(boolean occupied) 
-    {
-        this.occupied = occupied;
-    }
-
-    public int getOccupyingTrainID() 
-    {
-        return occupyingTrainID;
-    }
-
-    public void setOccupyingTrainID(int occupyingTrainID) 
-    {
-        this.occupyingTrainID = occupyingTrainID;
-    }
-
-    public boolean isClosed() 
-    {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) 
-    {
-        this.closed = closed;
-    }
-
-    public boolean isUnderground() 
-    {
-        return underground;
-    }
-
-    public boolean hasLight() 
-    {
-        return light;
-    }
-
+    
     public LightColor getLightColor() 
     {
         return lightColor;
     }
-
-    public void setLightColor(LightColor lightColor) 
+    
+    public int getOccupyingTrainID() 
     {
-        this.lightColor = lightColor;
+        return occupyingTrainID;
     }
-
-    public boolean hasRRXing() 
-    {
-        return rrxing;
-    }
-
+    
     public XingState getRRXingState() 
     {
         return rrxingState;
     }
 
-    public void setRRXingState(XingState rrxingState) 
+    public double getSpeedLimit() 
     {
-        this.rrxingState = rrxingState;
-    }
-
-    public boolean hasStation() 
-    {
-        return station;
+        return speedLimit;
     }
 
     public int getStationID() 
@@ -176,8 +132,94 @@ public class Block {
         return stationString;
     }
 
-    public void setStationString(String stationString) {
-        this.stationString = stationString;
+    public int getTswitchID() 
+    {
+        return tswitchID;
+    }
+    
+    public double getVelocity() 
+    {
+        return velocity;
+    }
+
+    public boolean hasLight() 
+    {
+        return light;
+    }
+    
+    public boolean hasRRXing() 
+    {
+        return rrxing;
+    }
+    
+    public boolean hasStation() 
+    {
+        return station;
+    }
+    
+    public boolean hasTswitch() 
+    {
+        return tswitch;
+    }
+    
+    public boolean isClosed() 
+    {
+        return closed;
+    }
+    
+    public boolean isOccupied() 
+    {
+        return occupied;
+    }
+    
+    public boolean isUnderground() 
+    {
+        return underground;
+    }
+    
+    public void setAuthority(int authority) 
+    {
+        this.authority = authority;
+    }
+    
+    public void setBeacon(BeaconSignal beacon) 
+    {
+        this.beacon = beacon;
+    }
+    
+    public void setClosed(boolean closed) 
+    {
+        this.closed = closed;
+    }
+    
+    public void setDestination(int destination) 
+    {
+        this.destination = destination;
+    }
+    
+    public void setFailureState(int failureState) 
+    {
+        this.failureState = failureState;
+    }
+
+    public void setLightColor(LightColor lightColor) 
+    {
+        this.lightColor = lightColor;
+    }
+
+    public void setOccupied(boolean occupied) 
+    {
+        this.occupied = occupied;
+    }
+
+    public void setOccupyingTrainID(int occupyingTrainID) 
+    {
+        this.occupyingTrainID = occupyingTrainID;
+    }
+
+    public void setRRXingState(XingState rrxingState) 
+    {
+        this.rrxingState = rrxingState;
     }
 
     public void setStationID(int stationID) 
@@ -185,44 +227,8 @@ public class Block {
         this.stationID = stationID;
     }
 
-    public double getVelocity() 
-    {
-        return velocity;
-    }
-
-    public void setVelocity(double velocity) 
-    {
-        this.velocity = velocity;
-    }
-
-    public int getAuthority() 
-    {
-        return authority;
-    }
-
-    public void setAuthority(int authority) 
-    {
-        this.authority = authority;
-    }
-
-    public int getDestination() 
-    {
-        return destination;
-    }
-
-    public void setDestination(int destination) 
-    {
-        this.destination = destination;
-    }
-
-    public boolean hasTswitch() 
-    {
-        return tswitch;
-    }
-
-    public int getTswitchID() 
-    {
-        return tswitchID;
+    public void setStationString(String stationString) {
+        this.stationString = stationString;
     }
 
     public void setTswitchID(int tswitchID) 
@@ -230,14 +236,8 @@ public class Block {
         this.tswitchID = tswitchID;
     }
 
-    public BeaconSignal getBeacon() 
+    public void setVelocity(double velocity) 
     {
-        return beacon;
+        this.velocity = velocity;
     }
-
-    public void setBeacon(BeaconSignal beacon) 
-    {
-        this.beacon = beacon;
-    }
-    
 }
