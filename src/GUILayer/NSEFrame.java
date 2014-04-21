@@ -61,7 +61,7 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         this.automatic_Clicked(null);
     }
     
-    /* SetSystemTime(String s) sets teh systemTime_txt label to the string
+    /* SetSystemTime(String s) sets the systemTime_txt label to the string
      * Parameters:
      *     String s - time to set to systemTime_txt
     */

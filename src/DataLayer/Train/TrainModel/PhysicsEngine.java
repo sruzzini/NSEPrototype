@@ -377,7 +377,8 @@ public class PhysicsEngine implements Runnable
         double mass;
         double gravAngle;
         long currTime;
-        long lastTime = Calendar.getInstance().getTimeInMillis();
+        //long lastTime = Calendar.getInstance().getTimeInMillis();
+        long lastTime = System.nanoTime();
         double deltaT;
         
         // used for debugging and printing information every 5 sec
@@ -473,9 +474,11 @@ public class PhysicsEngine implements Runnable
             //System.out.println(fTotal);
             trainAccel = fTotal / mass;
             
-            currTime = Calendar.getInstance().getTimeInMillis();
-            deltaT = (currTime - lastTime) * time_multiplier; // in ms
-            deltaT = deltaT  / 1000; // in s
+            //currTime = Calendar.getInstance().getTimeInMillis();
+            currTime = System.nanoTime();
+            deltaT = (double) (currTime - lastTime) * time_multiplier; // in ms
+            //deltaT = deltaT  / 1000; // in s
+            deltaT = deltaT / 1000000000; // in s
             lastTime = currTime;
             
             velocity = velocity + trainAccel * deltaT;
