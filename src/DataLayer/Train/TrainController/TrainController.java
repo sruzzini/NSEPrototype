@@ -226,6 +226,7 @@ public class TrainController
     */
     public void setBeaconSignal(BeaconSignal s)
     {
+        System.out.println("Received beacon: "+s.StationName);
         this.lastBeacon = s;
         this.calculateStop();
     }

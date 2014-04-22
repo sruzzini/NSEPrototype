@@ -295,7 +295,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
             blockTable.get(occupiedBlock).setOccupied(true);
         }
         
-        Commands results = this.controller.plcProgram.runPLCProgram();
+        Commands results = this.controller.plcProgram.runPLCProgram(this.controller.getBlockInfo(), this.controller.getSwitchInfo());
         
         display = results.toString();
         

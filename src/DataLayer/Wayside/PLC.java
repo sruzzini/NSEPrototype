@@ -18,44 +18,46 @@ import java.util.*;
  * @since 04-04-2014
  */
 public abstract class PLC {
-    protected final  ArrayList<Block> blockArray;
-    protected final HashMap<Integer, Block> blocks;
-    protected final ArrayList<Integer> blocksWithCrossing;
+    protected ArrayList<Block> blockArray;
+    protected HashMap<Integer, Block> blocks;
+    protected ArrayList<Integer> blocksWithCrossing;
     protected final int id;
     protected final LineColor line;
-    protected final ArrayList<Switch> switchArray;
-    protected final HashMap<Integer, Switch> switches;
+    protected ArrayList<Switch> switchArray;
+    protected HashMap<Integer, Switch> switches;
     private final HashMap routeTable;
 
-    public PLC(int id, LineColor line,  HashMap<Integer, Block> blocks, ArrayList<Block> blockArray, HashMap<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
+    public PLC(int id, LineColor line,  HashMap routeTable) {
         this.id = id;
         this.line = line;
-        this.blocks = blocks;
-        this.switches = switches;
-        this.blockArray = blockArray;
-        this.blocksWithCrossing = new ArrayList<>();
+        //this.blocks = blocks;
+        //this.switches = switches;
+        //this.blockArray = blockArray;
+        //this.blocksWithCrossing = new ArrayList<>();
         this.routeTable = routeTable;
-        this.switchArray = switchArray;
+        //this.switchArray = switchArray;
         
-        for (Block b : blockArray)
+        /*for (Block b : blockArray)
         {
             if (b.hasRRXing())
             {
                 blocksWithCrossing.add(b.getBlockID());
             }
-        }
+        }*/
     }
     
-    public Commands runPLCProgram()
+    public Commands runPLCProgram(ArrayList<Block> blocks, ArrayList<Switch> switches)
     {
-        Commands tryOne = runAllPLCTasks();
-        //Commands tryTwo = runAllPLCTasks();
-        //Commands tryThree = runAllPLCTasks();
+        this.setupInputs(blocks, switches);
         
-        //Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
+        Commands tryOne = runAllPLCTasks();
+        Commands tryTwo = runAllPLCTasks();
+        Commands tryThree = runAllPLCTasks();
+        
+        Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
 
-        //return votingResult;
-        return tryOne;
+        return votingResult;
+        //return tryOne;
     }
     
     protected ArrayList<BlockInfoBundle> checkRRCrossings()
@@ -263,6 +265,28 @@ public abstract class PLC {
             //if (b == null)
             //System.out.println("PLC - findBlock - returning null instead of block. current: " + current + " next: " + next);
         return b;
+    }
+    
+    private void setupInputs(ArrayList<Block> blocks, ArrayList<Switch> switches)
+    {
+        this.blockArray = blocks;
+        this.switchArray = switches;
+        this.blocks = new HashMap();
+        this.switches = new HashMap();
+        this.blocksWithCrossing = new ArrayList<>();
+        
+        for (Block b : blocks)
+        {
+            this.blocks.put(b.getBlockID(), b);
+            if (b.hasRRXing())
+            {
+                this.blocksWithCrossing.add(b.getBlockID());
+            }
+        }
+        for (Switch s : switches)
+        {
+            this.switches.put(s.SwitchID, s);
+        }
     }
     
     private Commands runAllPLCTasks()

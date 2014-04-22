@@ -229,8 +229,8 @@ public class TrackController implements Runnable {
         Commands c;// = new Commands();
         while (true)
         {
-            //c = this.plcProgram.runPLCProgram(this.blockSnapShot(), this.switchSnapShot());
-            c = this.plcProgram.runPLCProgram();
+            c = this.plcProgram.runPLCProgram(this.blockSnapShot(), this.switchSnapShot());
+            //c = this.plcProgram.runPLCProgram();
             
             processCommandsLock.lock();
             try
@@ -539,13 +539,13 @@ public class TrackController implements Runnable {
             routeTable.put(1, 13);
             routeTable.put(150, 28);
             routeTable.put(28, 29);
-             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
+             this.plcProgram = new PLCGreenOne(id, line, routeTable);
         }
         else if (id == 1)
         {
             routeTable.put(57, 151);
             routeTable.put(152, 62);
-            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
+            this.plcProgram = new PLCGreenTwo(id, line, routeTable);
         }
         else if (id == 2)
         {
@@ -553,7 +553,7 @@ public class TrackController implements Runnable {
             routeTable.put(85, 86);
             routeTable.put(100, 85);
             routeTable.put(77, 101);
-            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
+            this.plcProgram = new PLCGreenThree(id, line, routeTable);
         }/*
         else if (id == 3)
         {
@@ -569,8 +569,9 @@ public class TrackController implements Runnable {
         }*/
         else
         {
-            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
+            //this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
             //this is bad and should not happen. create exception to be thrown
+            this.plcProgram = null;
         }
     }
     
@@ -635,8 +636,7 @@ public class TrackController implements Runnable {
         
         for (Block b : this.blockArray)
         {
-            snap.add(new Block(b.getBlockID(), b.Next, b.Prev, b.getLength(), b.getSpeedLimit(), b.getElevation(),
-            b.getCumElev(), b.getGradient(), b.isUnderground(), b.hasLight(), b.hasRRXing(), b.hasStation(), b.hasTswitch()));
+            snap.add(b.copy());
         }
         
         return snap;
@@ -715,6 +715,11 @@ public class TrackController implements Runnable {
     {
         ArrayList<Switch> snap;
         snap = new ArrayList<>();
+        
+        for (Switch sw : this.switchArray)
+        {
+            snap.add(sw.copy());
+        }
         
         
         return snap;
