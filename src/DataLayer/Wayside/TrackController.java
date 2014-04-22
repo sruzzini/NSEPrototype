@@ -512,13 +512,13 @@ public class TrackController implements Runnable {
             routeTable.put(1, 13);
             routeTable.put(150, 28);
             routeTable.put(28, 29);
-             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
         }
         else if (id == 1)
         {
             routeTable.put(57, 151);
             routeTable.put(152, 62);
-            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
         }
         else if (id == 2)
         {
@@ -526,7 +526,7 @@ public class TrackController implements Runnable {
             routeTable.put(85, 86);
             routeTable.put(100, 85);
             routeTable.put(77, 101);
-            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
         }/*
         else if (id == 3)
         {
@@ -542,7 +542,7 @@ public class TrackController implements Runnable {
         }*/
         else
         {
-            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
             //this is bad and should not happen. create exception to be thrown
         }
     }

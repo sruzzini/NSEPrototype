@@ -22,8 +22,8 @@ public class PLCGreenTwo extends PLC{
     private boolean stoppingAtJEnd;
     private int trainsInJ;
 
-    public PLCGreenTwo(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable) {
-        super(id, line, blocks, blockArray, switches, routeTable);
+    public PLCGreenTwo(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
+        super(id, line, blocks, blockArray, switches, routeTable, switchArray);
         this.trainsInJ = 0;
         this.enteringJ = false;
         this.leavingJ = false;

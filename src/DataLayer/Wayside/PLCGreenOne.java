@@ -26,8 +26,8 @@ public class PLCGreenOne extends PLC {
     private boolean trainWaitingAt1;
     private boolean trainWaitingAt150;
 
-    public PLCGreenOne(int id, LineColor line, Hashtable<Integer, Block> blockNums, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable) {
-        super(id, line, blockNums, blockArray, switches, routeTable);
+    public PLCGreenOne(int id, LineColor line, Hashtable<Integer, Block> blockNums, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
+        super(id, line, blockNums, blockArray, switches, routeTable, switchArray);
         trainsAway = 0;
         trainsInLoop = 0;
         trainsComing = 0;
@@ -63,6 +63,7 @@ public class PLCGreenOne extends PLC {
                 //push signal commands to stop at block 149 and 150
                 c.pushCommand(new BlockSignalBundle(block149.getAuthority(), block149.getDestination(), 0.0, 149, LineColor.GREEN));
                 c.pushCommand(new BlockSignalBundle(block150.getAuthority(), block150.getDestination(), 0.0, 150, LineColor.GREEN));
+               // c.pushCommand(new BlockInfoBundle(LightColor.RED, block150.getRRXingState(), block150.getBlockID(), LineColor.GREEN, block150.isClosed()));
                 trainWaitingAt150 = true;
                 trainPassingThru150 = false;
             }
