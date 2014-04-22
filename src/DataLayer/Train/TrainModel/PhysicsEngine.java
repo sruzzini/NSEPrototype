@@ -478,7 +478,9 @@ public class PhysicsEngine implements Runnable
             currTime = System.nanoTime();
             deltaT = (double) (currTime - lastTime) * time_multiplier; // in ms
             //deltaT = deltaT  / 1000; // in s
+            System.out.println(deltaT);
             deltaT = deltaT / 1000000000; // in s
+            System.out.println(deltaT);
             lastTime = currTime;
             
             velocity = velocity + trainAccel * deltaT;
