@@ -144,7 +144,7 @@ public class NSE implements Runnable
     public void runAutomatic()
     {
         this.isRunning = Boolean.TRUE;
-        lastDispatchTime = new SystemTime(-1, -1, -1, 1); //set lastDispatch to invalid number (so immediate dispatch in auto mode)
+        lastDispatchTime = new SystemTime(-1, -1, -1, 1, 0); //set lastDispatch to invalid number (so immediate dispatch in auto mode)
         
         //spawn new thread for the SystemTime
         new Thread(this.Time).start();
@@ -176,10 +176,10 @@ public class NSE implements Runnable
                 //check for 10 min elapsed, if so, dispatch new train
                 
                 if ((this.lastDispatchTime.Hour == -1) || //the simulation just started
-                    (this.Time.secondsSince(this.lastDispatchTime) >= dispatchInterval)) //it's been 10 minutes
+                    (this.Time.tenthSecondsSince(this.lastDispatchTime) >= dispatchInterval)) //it's been 10 minutes
                 {
                     this.Wayside.sendDispatchSignal(CTCOffice.getDispatcher());
-                    this.lastDispatchTime = new SystemTime(this.Time.Hour, this.Time.Minute, this.Time.Second, this.TimeMultiplier);
+                    this.lastDispatchTime = new SystemTime(this.Time.Hour, this.Time.Minute, this.Time.Second, this.TimeMultiplier, this.Time.Tenth);
                 }
             }
             else

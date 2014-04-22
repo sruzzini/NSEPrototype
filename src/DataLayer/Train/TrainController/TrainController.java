@@ -423,7 +423,8 @@ public class TrainController
             }
             else
             {
-                this.beaconSignalReceived = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier);
+                this.beaconSignalReceived = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier, this.time.Tenth);
+                System.out.println("Beacon Time = " + this.beaconSignalReceived.toString());
                 calculateStopBrakeDelay();
             }
         }
@@ -435,7 +436,7 @@ public class TrainController
         //double stopTime = ((this.trainStatus.getMass() * (this.trainStatus.getVelocity() / 2)) / TrainController.SERVICE_BRAKE_FORCE); //calculate time it takes to stop the train now
         double stopDistance = ((this.beaconSignalVelocity * this.beaconSignalVelocity) / (2 * (TrainController.SERVICE_BRAKE_FORCE / this.trainStatus.getMass()))); //distance it takes to stop
         double distanceUntilEngagingStop = (this.lastBeacon.DistanceFromStation - stopDistance);
-        this.stopBrakeEngageDelay = (int) (distanceUntilEngagingStop / this.trainStatus.getVelocity()); //calculate time until getting to brake engage point
+        this.stopBrakeEngageDelay = (int) ((distanceUntilEngagingStop / this.trainStatus.getVelocity()) * 10); //calculate time in tenths of a second until getting to brake engage point
         System.out.println("Brake Delay = " + stopBrakeEngageDelay);
     }
     
@@ -474,7 +475,7 @@ public class TrainController
         
         //check for finished 1 minute at the station
         if (this.stoppedAtStation &&  //stopped at the station
-            (this.time.secondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been 1 minute
+            (this.time.tenthSecondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been 1 minute
             this.OperatorLeftDoor != OperatorInputStatus.ON && //left door is not being held open by operator
             this.OperatorRightDoor != OperatorInputStatus.ON && //right door is not being held open by operator
             this.OperatorSBrake != OperatorInputStatus.ON && //operator isn't holding service brake on
@@ -490,7 +491,7 @@ public class TrainController
         {
             if (!this.stoppedAtStation)
             {
-                this.stoppedAtStationTime = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier);
+                this.stoppedAtStationTime = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier, this.time.Tenth);
             }
             this.stoppedAtStation = true;
         }
@@ -504,7 +505,7 @@ public class TrainController
         //check for stopping stuff
         if ((this.stoppedAtStation) ||  //if stopped at station and it's been less than 1 minute
             (this.engagingStop) || //engaging stop at station
-            (this.preparingStop && (this.time.secondsSince(this.beaconSignalReceived) >= this.stopBrakeEngageDelay))) //if about to engage stop at station
+            (this.preparingStop && (this.time.tenthSecondsSince(this.beaconSignalReceived) >= this.stopBrakeEngageDelay))) //if about to engage stop at station
         {
             currVError = 0 - currTrainVelocity;
             this.engagingStop = true;

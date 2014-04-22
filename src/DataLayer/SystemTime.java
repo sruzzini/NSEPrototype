@@ -26,6 +26,7 @@ public class SystemTime implements Runnable
     public int Hour; //24 hour time (0-23)
     public int Minute; //60 minutes in an hour (0-59)
     public int Second; //60 seconds in a minute (0-59)
+    public int Tenth; //10 tenths in 1 second
     private int multiplier; //must be greater than 1
     
     public SystemTime()
@@ -34,6 +35,7 @@ public class SystemTime implements Runnable
         this.Minute = 0;
         this.Second = 0;
         this.multiplier = 1;
+        this.Tenth = 0;
     }
     
     public SystemTime(int multiplier)
@@ -42,14 +44,16 @@ public class SystemTime implements Runnable
         this.Minute = 0;
         this.Second = 0;
         this.multiplier = multiplier;
+        this.Tenth = 0;
     }
     
-    public SystemTime(int hours, int minutes, int seconds, int multiplier)
+    public SystemTime(int hours, int minutes, int seconds, int multiplier, int tenths)
     {
         this.Hour = hours;
         this.Minute = minutes;
         this.Second = seconds;
         this.multiplier = multiplier;
+        this.Tenth = tenths;
     }
     
     
@@ -65,7 +69,7 @@ public class SystemTime implements Runnable
             {
                 if (this.multiplier > 0)
                 {
-                    Thread.sleep(1000 / this.multiplier);
+                    Thread.sleep(100 / this.multiplier);
                 }
             } 
             catch (InterruptedException ex) 
@@ -74,7 +78,7 @@ public class SystemTime implements Runnable
             }
             if (this.multiplier > 0)
             {
-                this.secondTick();
+                this.tenthSecondTick();
             }
         }
     }
@@ -82,9 +86,9 @@ public class SystemTime implements Runnable
     /* Seconds() returns the number of seconds that have elapsed since 00 : 00 ; 00
      * Returns - int, number of seconds elapsed
     */
-    public int getSeconds()
+    public int getTenthSeconds()
     {
-        return ((SECONDS_IN_HOUR * this.Hour) + (SECONDS_IN_MINUTE * this.Minute) + this.Second);
+        return ((((SECONDS_IN_HOUR * this.Hour) + (SECONDS_IN_MINUTE * this.Minute) + this.Second) * 10) + this.Tenth);
     }
     
     /* SecondsSince(SystemTime t) gets the number of seconds between the current time and the parameter
@@ -92,15 +96,15 @@ public class SystemTime implements Runnable
      *     SystemTime t - time to calculate from
      * Returns - int, (this.Time - t.Time)
     */
-    public int secondsSince(SystemTime t)
+    public int tenthSecondsSince(SystemTime t)
     {
-        int tSeconds = t.getSeconds();
-        int currSeconds = this.getSeconds();
-        if (currSeconds < tSeconds)
+        int tTenths = t.getTenthSeconds();
+        int currTenths = this.getTenthSeconds();
+        if (currTenths < tTenths)
         {
-            currSeconds = currSeconds + SystemTime.SECONDS_IN_DAY;
+            currTenths = currTenths + (SystemTime.SECONDS_IN_DAY * 10);
         }
-        return (currSeconds - tSeconds);
+        return (currTenths - tTenths);
     }
     
     /* SetMultiplier(int m) sets the multiplier
@@ -137,20 +141,25 @@ public class SystemTime implements Runnable
     
     /* secondTick() increments the system time by 1 second
     */
-    private void secondTick()
+    private void tenthSecondTick()
     {
-        this.Second += 1;
-        if (this.Second == 60)
+        this.Tenth += 1;
+        if (this.Tenth == 10)
         {
-            this.Second = 0;
-            this.Minute += 1;
-            if (this.Minute == 60)
+            this.Tenth = 0;
+            this.Second += 1;
+            if (this.Second == 60) 
             {
-                this.Minute = 0;
-                this.Hour += 1;
-                if (this.Hour == 24)
+                this.Second = 0;
+                this.Minute += 1;
+                if (this.Minute == 60) 
                 {
-                    this.Hour = 0;
+                    this.Minute = 0;
+                    this.Hour += 1;
+                    if (this.Hour == 24) 
+                    {
+                        this.Hour = 0;
+                    }
                 }
             }
         }
