@@ -11,6 +11,16 @@ public class Switch
     public int StraightBlock; // number of block that is the Straight block of the switch
     public int SwitchID; // switch identifier
     
+    // copy() returns a new instance of switch with attributes that match the 
+    // attributes of the calling switch
+    // Returns - a new switch instance
+    public Switch copy()
+    {
+        Switch s = new Switch(this.LineID, this.SwitchID, this.ApproachBlock, 
+                this.StraightBlock, this.DivergentBlock, this.Straight);
+        
+        return s;
+    }
     // isStraight() returns whether or not the switch is in the Straight position
     // Returns - boolean, whether or not the switch is in the Straight position
     public boolean isStraight() 

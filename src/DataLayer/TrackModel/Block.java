@@ -60,6 +60,33 @@ public class Block {
         this.destination = 0;
     }
     
+    public Block copy()
+    {
+        Block b = new Block(this.getBlockID(), this.Next, this.Prev, this.getLength(), this.getSpeedLimit(), this.getElevation(),
+            this.getCumElev(), this.getGradient(), this.isUnderground(), this.hasLight(), this.hasRRXing(), this.hasStation(), this.hasTswitch());
+    
+        b.setAuthority(this.authority);
+        b.setBeacon(this.beacon);
+        b.setBeaconLocation(this.beaconLocation);
+        b.setClosed(this.closed);
+        b.setDestination(this.destination);
+        b.setFailureState(this.failureState);
+        b.setHasABeacon(this.hasBeacon);
+        b.setLightColor(this.lightColor);
+        b.setOccupied(this.occupied);
+        b.setOccupyingTrainID(this.occupyingTrainID);
+        b.setRRXingState(this.rrxingState);
+        b.setStationID(this.stationID);
+        b.setStationString(this.stationString);
+        b.setTswitchID(this.tswitchID);
+        b.setVelocity(this.velocity);
+        
+        
+        
+        
+        return b;
+    }
+    
     public int getAuthority() 
     {
         return authority;
