@@ -319,6 +319,10 @@ public class TrackModel
                     } 
                 }
             }
+            if(i == 0)
+            {
+                System.out.println("CurrentBlock: " + TheTrainLocations.get(i).CurrentBlock + " Distance in: " +TheTrainLocations.get(i).DistanceSoFar);
+            }
     	}
     }
     
