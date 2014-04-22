@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 public class TrackController implements Runnable {
     public PLC plcProgram;
     private ArrayList<Block> blockArray;
-    private Hashtable<Integer, Block> blockInfo; //change to hashmap
+    private HashMap<Integer, Block> blockInfo; //change to hashmap
     private final int[] blocksInSector;
     private final Lock commandBlockLock;
     private final ArrayList<BlockInfoBundle> commandBlockQueue;
@@ -43,7 +43,7 @@ public class TrackController implements Runnable {
     private final LineColor line;
     private final Lock processCommandsLock;
     private ArrayList<Switch> switchArray;
-    private Hashtable<Integer, Switch> switchInfo;  //change to hashmap
+    private HashMap<Integer, Switch> switchInfo;  //change to hashmap
     private final Lock waitSignalLock;
     
     
@@ -63,8 +63,8 @@ public class TrackController implements Runnable {
         this.commandSignalWaitQueue = new ArrayList<>();
         this.commandSwitchQueue = new ArrayList<>();
         this.commandBlockQueue = new ArrayList<>();
-        this.blockInfo = new Hashtable();
-        this.switchInfo = new Hashtable();
+        this.blockInfo = new HashMap();
+        this.switchInfo = new HashMap();
         this.blockArray = new ArrayList<>();
         this.switchArray = new ArrayList<>();
         this.commandSignalLock = new ReentrantLock();
@@ -184,7 +184,7 @@ public class TrackController implements Runnable {
         return commandSwitchQueue;
     }
     
-    public Hashtable<Integer, Block> getBlockTable()
+    public HashMap<Integer, Block> getBlockTable()
     {
         return this.blockInfo;
     }

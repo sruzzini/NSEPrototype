@@ -27,7 +27,7 @@ public class PLCGreenThree extends PLC{
     private boolean trainWaitingAt76;
 
 
-    public PLCGreenThree(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
+    public PLCGreenThree(int id, LineColor line, HashMap<Integer, Block> blocks, ArrayList<Block> blockArray, HashMap<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
         super(id, line, blocks, blockArray, switches, routeTable, switchArray);
         this.trainsInLoop = 0;
         this.trainsAway = 0;

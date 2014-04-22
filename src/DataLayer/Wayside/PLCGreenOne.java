@@ -26,7 +26,7 @@ public class PLCGreenOne extends PLC {
     private boolean trainWaitingAt1;
     private boolean trainWaitingAt150;
 
-    public PLCGreenOne(int id, LineColor line, Hashtable<Integer, Block> blockNums, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
+    public PLCGreenOne(int id, LineColor line, HashMap<Integer, Block> blockNums, ArrayList<Block> blockArray, HashMap<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
         super(id, line, blockNums, blockArray, switches, routeTable, switchArray);
         trainsAway = 0;
         trainsInLoop = 0;
@@ -155,7 +155,7 @@ public class PLCGreenOne extends PLC {
                 {
                     c.pushCommand(new Switch(switch2.lineID, switch2.switchID, 
                         switch2.approachBlock, switch2.straightBlock, switch2.divergentBlock, dir));
-                    System.out.println("PLCGreenOne - plcProgram - setting switch 2 towards block1");
+                    //System.out.println("PLCGreenOne - plcProgram - setting switch 2 towards block1");
                 }
                 //push signal to block one to tell train to go
                /* c.pushCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),

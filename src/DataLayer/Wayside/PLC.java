@@ -19,15 +19,15 @@ import java.util.*;
  */
 public abstract class PLC {
     protected final  ArrayList<Block> blockArray;
-    protected final Hashtable<Integer, Block> blocks;
+    protected final HashMap<Integer, Block> blocks;
     protected final ArrayList<Integer> blocksWithCrossing;
     protected final int id;
     protected final LineColor line;
     protected final ArrayList<Switch> switchArray;
-    protected final Hashtable<Integer, Switch> switches;
+    protected final HashMap<Integer, Switch> switches;
     private final HashMap routeTable;
 
-    public PLC(int id, LineColor line,  Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
+    public PLC(int id, LineColor line,  HashMap<Integer, Block> blocks, ArrayList<Block> blockArray, HashMap<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
         this.id = id;
         this.line = line;
         this.blocks = blocks;
