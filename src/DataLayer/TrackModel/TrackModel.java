@@ -312,12 +312,16 @@ public class TrackModel
                 }
                 else
                 {
-                   if((TheTrainLocations.get(i).DistanceSoFar >= (TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getLength() - TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation())) && !TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconSent())
+                    if((TheTrainLocations.get(i).DistanceSoFar >= (TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getLength() - TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation())) && !TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconSent())
                     {
                         TheTrains.get(i).setBeaconSignal(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeacon());
                         TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).setBeaconSent(true);
                     } 
                 }
+            }
+            if(i == 0)
+            {
+                System.out.println("CurrentBlock: " + TheTrainLocations.get(i).CurrentBlock + " Distance in: " +TheTrainLocations.get(i).DistanceSoFar);
             }
     	}
     }

@@ -432,8 +432,8 @@ public class TrainController
     // calculateStopBrakeDelay() calculates the delay to engage the service brake when stopping
     private void calculateStopBrakeDelay()
     {
-        double stopTime = ((this.trainStatus.getMass() * (this.trainStatus.getVelocity() / 2)) / TrainController.SERVICE_BRAKE_FORCE); //calculate time it takes to stop the train now
-        double stopDistance = ((this.trainStatus.getVelocity() / 2) * stopTime); //distance it takes to stop
+        //double stopTime = ((this.trainStatus.getMass() * (this.trainStatus.getVelocity() / 2)) / TrainController.SERVICE_BRAKE_FORCE); //calculate time it takes to stop the train now
+        double stopDistance = ((this.beaconSignalVelocity * this.beaconSignalVelocity) / (2 * (TrainController.SERVICE_BRAKE_FORCE / this.trainStatus.getMass()))); //distance it takes to stop
         double distanceUntilEngagingStop = (this.lastBeacon.DistanceFromStation - stopDistance);
         this.stopBrakeEngageDelay = (int) (distanceUntilEngagingStop / this.trainStatus.getVelocity()); //calculate time until getting to brake engage point
         System.out.println("Brake Delay = " + stopBrakeEngageDelay);
