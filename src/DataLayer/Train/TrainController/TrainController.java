@@ -51,6 +51,7 @@ public class TrainController
     public OperatorInputStatus OperatorSBrake; //service brake request status
     public double VelocitySetPoint; //Velcotiy set poitn (meters/sec)
     private SystemTime beaconSignalReceived; //time the last beacon signal was received
+    private double beaconSignalVelocity; //velocity of train when it passes the beacon
     private boolean engagingStop; //boolean true if sBrake is on going into a station
     private final int iD; //id of the controller
     private BeaconSignal lastBeacon; //the last beacon passed
@@ -76,6 +77,7 @@ public class TrainController
         this.stoppedAtStation = false;
         this.timeMultiplier = 1;
         this.beaconSignalReceived = new SystemTime();
+        this.beaconSignalVelocity = 0;
         this.stoppedAtStationTime = new SystemTime();
         this.time = new SystemTime();
         this.stopBrakeEngageDelay = 0;
@@ -103,6 +105,7 @@ public class TrainController
         this.stoppedAtStation = false;
         this.timeMultiplier = multiplier;
         this.beaconSignalReceived = new SystemTime();
+        this.beaconSignalVelocity = 0;
         this.time = time;
         this.stopBrakeEngageDelay = 0;
         this.stoppedAtStationTime = new SystemTime();
@@ -132,6 +135,7 @@ public class TrainController
         this.stoppedAtStation = false;
         this.timeMultiplier = multiplier;
         this.beaconSignalReceived = new SystemTime();
+        this.beaconSignalVelocity = 0;
         this.time = time;
         this.stopBrakeEngageDelay = 0;
         this.stoppedAtStationTime = new SystemTime();
@@ -228,6 +232,7 @@ public class TrainController
     {
         System.out.println("Received beacon: "+s.StationName);
         this.lastBeacon = s;
+        this.beaconSignalVelocity = this.trainStatus.getVelocity();
         this.calculateStop();
     }
     
@@ -451,7 +456,7 @@ public class TrainController
         {
             if (this.preparingStop && !this.engagingStop) //if passed a beacon and preparing to stop make sure the safe velocity is the current velocity for accurate stop at station
             {
-                safeVelocity = currTrainVelocity;
+                safeVelocity = this.beaconSignalVelocity;
             }
             else if (this.VelocitySetPoint < velocityCommand) //if Vsetpoint is less than Vcommand, that is the safe speed
             {
@@ -494,7 +499,7 @@ public class TrainController
         double currVError = safeVelocity - currTrainVelocity;
         if (this.preparingStop)
         {
-            currVError = 0;
+            currVError = this.beaconSignalVelocity - currTrainVelocity;
         }
         //check for stopping stuff
         if ((this.stoppedAtStation) ||  //if stopped at station and it's been less than 1 minute
