@@ -297,6 +297,23 @@ public class TrackModel
             boolean u = theLines.get(lineNum).theBlocks.get(newCurrentBlock).isUnderground();
             TrackSignal t = new TrackSignal(s, a, u, dd, g);
             theTrains.get(i).setTrackSignal(t);
+            /*if(theLines.get(lineNum).theBlocks.get(newCurrentBlock).hasABeacon())
+            {
+                if(theTrainLocations.get(i).prevBlock < theTrainLocations.get(i).currentBlock)
+                {
+                    if(theTrainLocations.get(i).distanceSoFar >= theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeaconLocation())
+                    {
+                        theTrains.get(i).setBeaconSignal(theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeacon());
+                    }
+                }
+                else
+                {
+                   if(theTrainLocations.get(i).distanceSoFar >= (theLines.get(lineNum).theBlocks.get(newCurrentBlock).getLength() - theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeaconLocation()))
+                    {
+                        theTrains.get(i).setBeaconSignal(theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeacon());
+                    } 
+                }
+            }*/
     	    
     	}
     }
