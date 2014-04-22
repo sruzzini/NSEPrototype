@@ -251,6 +251,7 @@ public class Train implements Runnable
     {
         status.setVelocity(physicsInput.Velocity); 
         status.setMass(Model.getMass());
+        System.out.println(Model.getMass());
         status.setTemperature(stateInput.Temperature);
         status.setFailure(Model.getFailureCode());
         status.setSBrakeStatus(Model.getSBrakeStatus());

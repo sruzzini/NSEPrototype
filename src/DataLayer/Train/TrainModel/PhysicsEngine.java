@@ -55,11 +55,14 @@ public class PhysicsEngine implements Runnable
         signalFailure = false;
         sBrakeFailure = false;
         eBrakeFailure = false;
+        mass = 40900 + crewCount * passengerMass;
     }
     
     public PhysicsEngine(PhysicsInput mp)
     {
         physicsInput = mp;
+        mass = 40900 + crewCount * passengerMass;
+        passengers = 0;
     }
 
     /*
@@ -383,7 +386,7 @@ public class PhysicsEngine implements Runnable
         
         // used for debugging and printing information every 5 sec
         long lastPrint = 0;
-        long interval = 5 * 1000;
+        long interval = 2 * 1000;
         
         // max force possible from engine, cap fEngine at this value
         double maxEngineForce = calcMaxEngineForce();
@@ -494,7 +497,7 @@ public class PhysicsEngine implements Runnable
             //System.out.println(delta_x);
             
             sendPhysicsInfo();
-            /*
+            ///*
             if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
             {
                 System.out.println();
@@ -505,10 +508,11 @@ public class PhysicsEngine implements Runnable
                 System.out.println("sBrake: " + sBrakeStatus);
                 System.out.println("eBrake: " + eBrakeStatus);
                 System.out.println("Velocity: " + velocity);
+                System.out.println(delta_x);
                 lastPrint = Calendar.getInstance().getTimeInMillis();
                 System.out.println();
             }   
-            */
+            //*/
         }
         
         
