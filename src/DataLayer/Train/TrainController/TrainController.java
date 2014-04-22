@@ -50,7 +50,7 @@ public class TrainController
     public OperatorInputStatus OperatorRightDoor; //right door request status
     public OperatorInputStatus OperatorSBrake; //service brake request status
     public double VelocitySetPoint; //Velcotiy set poitn (meters/sec)
-    private long beaconSignalReceived; //time the last beacon signal was received
+    private SystemTime beaconSignalReceived; //time the last beacon signal was received
     private boolean engagingStop; //boolean true if sBrake is on going into a station
     private final int iD; //id of the controller
     private BeaconSignal lastBeacon; //the last beacon passed
@@ -58,7 +58,7 @@ public class TrainController
     private double lastVelocityError; //last veloicty error in power calculation
     private boolean preparingStop; //boolean true if passed a beacon before station to sop at
     private double samplePeriod; //sample period to calculate power
-    private double stopBrakeEngageDelay; //time delay from passing a beacon to engaging the service brake
+    private int stopBrakeEngageDelay; //time delay from passing a beacon to engaging the service brake
     private boolean stoppedAtStation; //boolean true if train is stopped at a station
     private SystemTime stoppedAtStationTime; //time the train first stops at a station
     private SystemTime time; //current time
@@ -75,7 +75,7 @@ public class TrainController
         this.preparingStop = false;
         this.stoppedAtStation = false;
         this.timeMultiplier = 1;
-        this.beaconSignalReceived = 0;
+        this.beaconSignalReceived = new SystemTime();
         this.stoppedAtStationTime = new SystemTime();
         this.time = new SystemTime();
         this.stopBrakeEngageDelay = 0;
@@ -102,7 +102,7 @@ public class TrainController
         this.preparingStop = false;
         this.stoppedAtStation = false;
         this.timeMultiplier = multiplier;
-        this.beaconSignalReceived = 0;
+        this.beaconSignalReceived = new SystemTime();
         this.time = time;
         this.stopBrakeEngageDelay = 0;
         this.stoppedAtStationTime = new SystemTime();
@@ -131,7 +131,7 @@ public class TrainController
         this.preparingStop = false;
         this.stoppedAtStation = false;
         this.timeMultiplier = multiplier;
-        this.beaconSignalReceived = 0;
+        this.beaconSignalReceived = new SystemTime();
         this.time = time;
         this.stopBrakeEngageDelay = 0;
         this.stoppedAtStationTime = new SystemTime();
@@ -226,6 +226,7 @@ public class TrainController
     */
     public void setBeaconSignal(BeaconSignal s)
     {
+        System.out.println("Setting Beacon for Train " + this.iD);
         this.lastBeacon = s;
         this.calculateStop();
     }
@@ -431,7 +432,7 @@ public class TrainController
             }
             else
             {
-                this.beaconSignalReceived = System.currentTimeMillis();
+                this.beaconSignalReceived = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier);
                 calculateStopBrakeDelay();
             }
         }
@@ -443,7 +444,8 @@ public class TrainController
         double stopTime = ((this.trainStatus.getMass() * this.trainStatus.getVelocity()) / TrainController.SERVICE_BRAKE_FORCE); //calculate time it takes to stop the train now
         double stopDistance = ((this.trainStatus.getVelocity() / 2) * stopTime); //distance it takes to stop
         double distanceUntilEngagingStop = (this.lastBeacon.DistanceFromStation - stopDistance);
-        this.stopBrakeEngageDelay = (distanceUntilEngagingStop / this.trainStatus.getVelocity()); //calculate time until getting to brake engage point
+        this.stopBrakeEngageDelay = (int) (distanceUntilEngagingStop / this.trainStatus.getVelocity()); //calculate time until getting to brake engage point
+        System.out.println("Calculated stop time = " + this.stopBrakeEngageDelay);
     }
     
     /* calculateTrainCommand() calculates a command ot send to the train
@@ -491,10 +493,11 @@ public class TrainController
         //check for stopping stuff
         if ((this.stoppedAtStation) ||  //if stopped at station and it's been less than 1 minute
             (this.engagingStop) || //engaging stop at station
-            (this.preparingStop && (((System.currentTimeMillis() - this.beaconSignalReceived) * this.timeMultiplier) >= this.stopBrakeEngageDelay))) //if about to engage stop at station
+            (this.preparingStop && (this.time.secondsSince(this.beaconSignalReceived) >= this.stopBrakeEngageDelay))) //if about to engage stop at station
         {
             currVError = 0 - currTrainVelocity;
             this.engagingStop = true;
+            System.out.println("WE ELAPSED THE BRAKE DELAY TIME");
         }
         
         double currIntermediary = (this.lastIntermediary + (((this.samplePeriod * this.timeMultiplier)/2) * (currVError + this.lastVelocityError)));
