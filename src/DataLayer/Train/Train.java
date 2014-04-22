@@ -134,6 +134,7 @@ public class Train implements Runnable
     {
         this.beaconSignal = s;
         this.Controller.setBeaconSignal(this.beaconSignal);
+        //System.out.println("Beacon hit");
     }
     
     /* SetIsRunning(Boolean isRunning) sets isRunning of the train
