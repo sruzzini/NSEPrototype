@@ -125,7 +125,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Authority:");
 
-        jLabel4.setText("Suggested Speed (units?):");
+        jLabel4.setText("Suggested Speed (mph):");
 
         jLabel5.setText("Track Occupancies:");
 
@@ -268,6 +268,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
             {
                 throw new NumberFormatException();
             }
+            speed *= 0.44704; //convert mph to m/s
             signal = new BlockSignalBundle(authority, destination, speed, blockNum, this.controller.getLine());
             this.controller.sendTravelSignal(signal);
             }

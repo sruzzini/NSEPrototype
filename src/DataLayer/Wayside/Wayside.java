@@ -419,6 +419,21 @@ public final class Wayside
     
     public void setBlockClosing(BlockSignalBundle packet)
     {
+        if (packet == null)
+        {
+            System.out.println("Wayside - setBlockClosing - packet is null");
+        }
+        else
+        {
+            for (TrackController tc : this.controllers)
+            {
+                if (tc.getLine() == packet.LineID && tc.containsBlock(packet.BlockID))
+                {
+                    tc.setBlockClosing(packet.copy());
+                    break;
+                }
+            }
+        }
         
     }
     

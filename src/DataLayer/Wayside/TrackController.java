@@ -459,6 +459,31 @@ public class TrackController implements Runnable {
         
     }
     
+    public void setBlockClosing(BlockSignalBundle packet)
+    {
+        if (packet.Closed || packet.Speed == -1)
+        {
+            processCommandsLock.lock();
+            try
+            {
+                commandSignalLock.lock();
+                try
+                {
+                    this.commandSignalQueue.add(packet);
+                }
+                finally
+                {
+                    commandSignalLock.unlock();
+                }
+            }
+            finally
+            {
+                processCommandsLock.unlock();
+            }
+        }
+        
+    }
+    
    /* public void sendTravelSignal2(BlockSignalBundle packet, int count)
     {
         int blockNum = packet.BlockID;
@@ -611,6 +636,7 @@ public class TrackController implements Runnable {
         double speed;
         int dest;
         int blockID;
+        boolean closed;
         Block block;
         //processCommandsLock.lock();
         //try
@@ -621,6 +647,7 @@ public class TrackController implements Runnable {
                 speed = bsb.Speed;
                 dest = bsb.Destination;
                 blockID = bsb.BlockID;
+                closed = bsb.Closed;
                 block = this.blockInfo.get(blockID);
                 if (block == null)
                 {
@@ -628,11 +655,16 @@ public class TrackController implements Runnable {
                 }
                 //System.out.println("blockID: " + blockID + " controllerID " + this.id);
                 //System.out.println("In process commands. set block: " + block.getBlockID() + " with the values a,s,d: " + authority + "," + speed + "," + dest);
-
-                block.setAuthority(authority);
-                block.setVelocity(speed);
-                block.setDestination(dest);
-
+                if (closed || speed == -1)
+                {
+                   block.setClosed(closed);
+                }
+                else
+                {
+                    block.setAuthority(authority);
+                    block.setVelocity(speed);
+                    block.setDestination(dest);
+                }
 
 
 

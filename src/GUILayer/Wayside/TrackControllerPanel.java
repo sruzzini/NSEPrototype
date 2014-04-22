@@ -18,6 +18,7 @@ package GUILayer.Wayside;
 
 import DataLayer.TrackModel.Switch;
 import DataLayer.Wayside.TrackController;
+import java.awt.Component;
 import java.util.ArrayList;
 
 public class TrackControllerPanel extends javax.swing.JPanel {
@@ -28,6 +29,17 @@ public class TrackControllerPanel extends javax.swing.JPanel {
     public TrackControllerPanel() {
         initComponents();
     }
+    
+    @Override
+    public void setEnabled(boolean e)
+    {
+        for (Component c : this.getComponents())
+        {
+            c.setEnabled(e);
+        }
+    }
+    
+    
     
     public void SetController(TrackController controller)
     {
