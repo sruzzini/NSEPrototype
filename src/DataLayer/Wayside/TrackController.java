@@ -12,6 +12,8 @@ import DataLayer.EnumTypes.*;
 import DataLayer.TrackModel.*;
 import java.util.*;
 import java.util.concurrent.locks.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -286,11 +288,11 @@ public class TrackController implements Runnable {
             
             
             
-            /*try {
+            try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TrackController.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            }
         }
     }
     

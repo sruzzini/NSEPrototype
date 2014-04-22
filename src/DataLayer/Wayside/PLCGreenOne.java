@@ -151,9 +151,12 @@ public class PLCGreenOne extends PLC {
                 //push switch signal to set switch -2 to point towards block 1
                 boolean dir = false;
                 if (switch2.straightBlock == 1) dir = true;
-                c.pushCommand(new Switch(switch2.lineID, switch2.switchID, 
+                if (switch2.straight != dir)
+                {
+                    c.pushCommand(new Switch(switch2.lineID, switch2.switchID, 
                         switch2.approachBlock, switch2.straightBlock, switch2.divergentBlock, dir));
-               //System.out.println("PLCGreenOne - plcProgram - setting switch 2 towards block1");
+                    System.out.println("PLCGreenOne - plcProgram - setting switch 2 towards block1");
+                }
                 //push signal to block one to tell train to go
                /* c.pushCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),
                         block1.getSpeedLimit(), block1.getBlockID(), LineColor.GREEN));*/
