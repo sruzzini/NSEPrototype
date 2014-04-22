@@ -431,7 +431,7 @@ public class TrainController
         double stopDistance = ((this.trainStatus.getVelocity() / 2) * stopTime); //distance it takes to stop
         double distanceUntilEngagingStop = (this.lastBeacon.DistanceFromStation - stopDistance);
         this.stopBrakeEngageDelay = (int) (distanceUntilEngagingStop / this.trainStatus.getVelocity()); //calculate time until getting to brake engage point
-        //System.out.println(stopBrakeEngageDelay);
+        System.out.println("Brake Delay = " + stopBrakeEngageDelay);
     }
     
     /* calculateTrainCommand() calculates a command ot send to the train
@@ -492,6 +492,10 @@ public class TrainController
         
         //calculate power output
         double currVError = safeVelocity - currTrainVelocity;
+        if (this.preparingStop)
+        {
+            currVError = 0;
+        }
         //check for stopping stuff
         if ((this.stoppedAtStation) ||  //if stopped at station and it's been less than 1 minute
             (this.engagingStop) || //engaging stop at station
