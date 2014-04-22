@@ -60,41 +60,87 @@ public class Block {
         this.destination = 0;
     }
     
+    // copy() returns a new instance of block with attributes that match the 
+    // attributes of the calling block
+    // Returns - Block, a new Block instance
+    public Block copy()
+    {
+        Block b = new Block(this.getBlockID(), this.Next, this.Prev, this.getLength(), this.getSpeedLimit(), this.getElevation(),
+            this.getCumElev(), this.getGradient(), this.isUnderground(), this.hasLight(), this.hasRRXing(), this.hasStation(), this.hasTswitch());
+    
+        b.setAuthority(this.authority);
+        b.setBeacon(this.beacon);
+        b.setBeaconLocation(this.beaconLocation);
+        b.setClosed(this.closed);
+        b.setDestination(this.destination);
+        b.setFailureState(this.failureState);
+        b.setHasABeacon(this.hasBeacon);
+        b.setLightColor(this.lightColor);
+        b.setOccupied(this.occupied);
+        b.setOccupyingTrainID(this.occupyingTrainID);
+        b.setRRXingState(this.rrxingState);
+        b.setStationID(this.stationID);
+        b.setStationString(this.stationString);
+        b.setTswitchID(this.tswitchID);
+        b.setVelocity(this.velocity);
+        
+        
+        
+        
+        return b;
+    }
+    
+    // getAuthority() returns the authority set in the block
+    // Returns - int, authority
     public int getAuthority() 
     {
         return authority;
     }
     
+    // getBeacon() returns the Beacon in the block if there is one
+    // Returns - BeaconSignal, beacon
     public BeaconSignal getBeacon() 
     {
         return beacon;
     }
     
+    // getBeaconLocation() returns the location of the beacon in the block if there is one
+    // Returns - double, the location of the beacon
     public double getBeaconLocation()
     {
         return beaconLocation;
     }
     
+    // getBlockID() returns the block number
+    // Returns - int, block number
     public int getBlockID() 
     {
         return blockID;
     }
     
+    // getCumElev() returns the cumulative elevation of the block
+    // Returns - double, the cumulative elevation
     public double getCumElev() 
     {
         return cumElev;
     }
     
+    // getDestination() returns the destination a train on this block should eb going to
+    // Returns - int, the number of that set next destination block
     public int getDestination() 
     {
         return destination;
     }
     
+    // getElevation() returns the elevation relative to the previous block
+    // Returns - double, the elevation
     public double getElevation() 
     {
         return elevation;
     }
     
+    // getFailureState() returns the current Failure State of the block
+    // Returns - int, the current failute state
     public int getFailureState() 
     {
         return failureState;

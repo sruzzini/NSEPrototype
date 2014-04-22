@@ -633,6 +633,12 @@ public class TrackController implements Runnable {
         ArrayList<Block> snap;
         snap = new ArrayList<>();
         
+        for (Block b : this.blockArray)
+        {
+            snap.add(new Block(b.getBlockID(), b.Next, b.Prev, b.getLength(), b.getSpeedLimit(), b.getElevation(),
+            b.getCumElev(), b.getGradient(), b.isUnderground(), b.hasLight(), b.hasRRXing(), b.hasStation(), b.hasTswitch()));
+        }
+        
         return snap;
     }
     
