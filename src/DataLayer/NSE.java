@@ -25,6 +25,8 @@ import DataLayer.Wayside.*;
 import GUILayer.NSEFrame;
 import java.util.*;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class NSE implements Runnable
@@ -232,6 +234,12 @@ public class NSE implements Runnable
                 lastPrint = Calendar.getInstance().getTimeInMillis();
             }
             */
+            
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TrackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
