@@ -48,8 +48,11 @@ public class TrackControllerPanel extends javax.swing.JPanel {
              
          }
          switchComboBox.setModel(new javax.swing.DefaultComboBoxModel(s));
+         this.switchLabelOne.setText(s[0]);
+         this.switchLabelTwo.setText(s[1]);
          
          updateSwitchSelectText();
+         updateSwitchStatus();
          
          
 
@@ -57,15 +60,45 @@ public class TrackControllerPanel extends javax.swing.JPanel {
     
     private void updateSwitchSelectText()
     {
-                 ArrayList<Switch> switches = this.controller.getSwitchInfo();
+        ArrayList<Switch> switches = this.controller.getSwitchInfo();
 
         int n = this.switchComboBox.getSelectedIndex();
         
         Switch sw = switches.get(n);
         this.straightRB.setText(sw.approachBlock + " to " + sw.straightBlock);
-             this.divergentRB.setText(sw.approachBlock + " to " + sw.divergentBlock);
+        this.divergentRB.setText(sw.approachBlock + " to " + sw.divergentBlock);
+             
+        
     }
 
+    private void updateSwitchStatus()
+    {
+        ArrayList<Switch> switches = this.controller.getSwitchInfo();
+        Switch sw1 = switches.get(0);
+        Switch sw2 = switches.get(1);
+        String statusOne, statusTwo;
+        
+        if (sw1.straight)
+        {
+            statusOne = sw1.approachBlock + ":" + sw1.straightBlock;
+        }
+        else
+        {
+            statusOne = sw1.approachBlock + ":" + sw1.divergentBlock;
+        }
+        
+        if (sw2.straight)
+        {
+            statusTwo = sw2.approachBlock + ":" + sw2.straightBlock;
+        }
+        else
+        {
+            statusTwo = sw2.approachBlock + ":" + sw2.divergentBlock;
+        }
+        
+        this.switchStatusOne.setText(statusOne);
+        this.switchStatusTwo.setText(statusTwo);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,6 +128,12 @@ public class TrackControllerPanel extends javax.swing.JPanel {
         activeRB = new javax.swing.JRadioButton();
         inactiveRB = new javax.swing.JRadioButton();
         setCrossingButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        switchLabelOne = new javax.swing.JLabel();
+        switchStatusOne = new javax.swing.JLabel();
+        switchLabelTwo = new javax.swing.JLabel();
+        switchStatusTwo = new javax.swing.JLabel();
+        updateStatusButton = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(360, 200));
 
@@ -149,6 +188,23 @@ public class TrackControllerPanel extends javax.swing.JPanel {
 
         setCrossingButton.setText("Set");
 
+        jLabel5.setText("Switch Status");
+
+        switchLabelOne.setText("jLabel6");
+
+        switchStatusOne.setText("jLabel7");
+
+        switchLabelTwo.setText("jLabel8");
+
+        switchStatusTwo.setText("jLabel9");
+
+        updateStatusButton.setText("Update");
+        updateStatusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateStatusButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,7 +216,6 @@ public class TrackControllerPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,23 +243,48 @@ public class TrackControllerPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(setLightButton)
-                                    .addComponent(setSwitchButton)
-                                    .addComponent(setCrossingButton))))))
-                .addContainerGap(86, Short.MAX_VALUE))
+                                    .addComponent(setCrossingButton)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(setSwitchButton)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(switchLabelOne)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(switchStatusOne)
+                                                .addGap(29, 29, 29)
+                                                .addComponent(switchLabelTwo)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(switchStatusTwo))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(updateStatusButton))))))
+                            .addComponent(jLabel2))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)))
+                    .addComponent(updateStatusButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(switchComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(straightRB)
                     .addComponent(divergentRB)
-                    .addComponent(setSwitchButton))
+                    .addComponent(setSwitchButton)
+                    .addComponent(switchLabelOne)
+                    .addComponent(switchStatusOne)
+                    .addComponent(switchLabelTwo)
+                    .addComponent(switchStatusTwo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -224,18 +304,44 @@ public class TrackControllerPanel extends javax.swing.JPanel {
                     .addComponent(activeRB)
                     .addComponent(inactiveRB)
                     .addComponent(setCrossingButton))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void setSwitchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSwitchButtonActionPerformed
         // TODO add your handling code here:
+        ArrayList<Switch> switches = this.controller.getSwitchInfo();
+        Switch switchCommand = null;
+        Switch selectedSwitch;
+        boolean dir;
+        selectedSwitch = switches.get(this.switchComboBox.getSelectedIndex());
+        
+        if (this.straightRB.isSelected())
+        {
+            dir = true;
+        }
+        else
+        {
+            dir = false;
+        }
+        
+        switchCommand = new Switch(selectedSwitch.lineID, selectedSwitch.switchID, selectedSwitch.approachBlock, 
+                selectedSwitch.straightBlock, selectedSwitch.divergentBlock, dir);
+        
+        this.controller.sendSwitchStateSignal(switchCommand);
+        //this.updateSwitchStatus();
+        
     }//GEN-LAST:event_setSwitchButtonActionPerformed
 
     private void switchComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchComboBoxActionPerformed
         // TODO add your handling code here:
         this.updateSwitchSelectText();
     }//GEN-LAST:event_switchComboBoxActionPerformed
+
+    private void updateStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStatusButtonActionPerformed
+        // TODO add your handling code here:
+        this.updateSwitchStatus();
+    }//GEN-LAST:event_updateStatusButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -249,6 +355,7 @@ public class TrackControllerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.ButtonGroup lightButtonGroup;
     private javax.swing.JComboBox lightComboBox;
     private javax.swing.JRadioButton redRB;
@@ -258,6 +365,11 @@ public class TrackControllerPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton straightRB;
     private javax.swing.ButtonGroup switchButtonGroup;
     private javax.swing.JComboBox switchComboBox;
+    private javax.swing.JLabel switchLabelOne;
+    private javax.swing.JLabel switchLabelTwo;
+    private javax.swing.JLabel switchStatusOne;
+    private javax.swing.JLabel switchStatusTwo;
+    private javax.swing.JButton updateStatusButton;
     private javax.swing.JRadioButton yellowRB;
     // End of variables declaration//GEN-END:variables
 }

@@ -296,8 +296,31 @@ public class TrackController implements Runnable {
     
     public void sendSwitchStateSignal(Switch packet)
     {
-        
-        this.commandSwitchQueue.add(new Switch(packet.lineID, packet.switchID, packet.approachBlock, packet.straightBlock, packet.divergentBlock, packet.straight));
+        if (packet == null)
+        {
+            System.out.println("TrackController - sendSwitchStateSignal - packet is null");
+        }
+        else
+        {
+            this.processCommandsLock.lock();
+            try
+            {
+                this.commandSwitchLock.lock();
+                try
+                {
+
+                    this.commandSwitchQueue.add(packet);
+                }
+                finally
+                {
+                    this.commandSwitchLock.unlock();
+                }
+            }
+            finally
+            {
+                this.processCommandsLock.unlock();
+            }
+        }
     }
     
   /* public BlockSignalBundle sendTravelSignal(BlockSignalBundle sentPacket)
