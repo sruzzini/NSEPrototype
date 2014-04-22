@@ -183,10 +183,20 @@ public class NSE implements Runnable
             else
             {
                 //check for dispatching a train
+                //this.Wayside.sendTravelSignal(this.CTCOffice.setRoute());
                 
                 //check for block closings
+                for (BlockSignalBundle b : this.CTCOffice.setClosing())
+                {
+                    this.Wayside.setBlockClosing(b);
+                }
                 
                 //check for switch positions
+                for (Switch s : this.CTCOffice.setSwitch())
+                {
+                  this.Wayside.sendSwitchStateSignal(s);  
+                }
+                
                 
             }
             
