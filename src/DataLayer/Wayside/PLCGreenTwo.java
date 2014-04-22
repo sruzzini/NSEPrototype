@@ -50,9 +50,10 @@ public class PLCGreenTwo extends PLC{
        // System.out.println("block152: " + block152.getBlockID());
         //System.out.println("switch1: " + switch1.switchID);
         
-        if (block57.isOccupied())
+        if (block57.isOccupied() && !block58.isOccupied())
         {
-            if (block57.getDestination() == 151 || block57.getDestination() == 0)
+            //if (block57.getDestination() == 151 || block57.getDestination() == 0)
+            if (true) //hard code to tell train to go back to yard
             {
                 dir = false;
                 if (switch4.straightBlock == 151) dir = true;
@@ -69,7 +70,7 @@ public class PLCGreenTwo extends PLC{
             }
         }
         
-        if (block58.isOccupied())
+        if (block58.isOccupied() && !block57.isOccupied())
         {
             if (enteringJ)
             {
@@ -78,7 +79,7 @@ public class PLCGreenTwo extends PLC{
             }
         }
         
-        if (block152.isOccupied())
+        if (block152.isOccupied() && !block62.isOccupied())
         {
             if (!leavingJ)
             {
@@ -103,7 +104,7 @@ public class PLCGreenTwo extends PLC{
             }
         }
         
-        if (block60.isOccupied())
+        if (block60.isOccupied() && !block61.isOccupied())
         {
             if (!stoppingAtJEnd)
             {
@@ -117,7 +118,7 @@ public class PLCGreenTwo extends PLC{
             }
         }
         
-        if (block61.isOccupied())
+        if (block61.isOccupied() && !block60.isOccupied())
         {
             //leavingJ = true;
             if (!stoppingAtJEnd)
@@ -139,7 +140,7 @@ public class PLCGreenTwo extends PLC{
         }
                  
         
-        if (block62.isOccupied())
+        if (block62.isOccupied() && !block61.isOccupied())
         {
             if (leavingJ)
             {

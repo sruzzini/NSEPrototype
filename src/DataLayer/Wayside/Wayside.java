@@ -312,6 +312,8 @@ public final class Wayside
                 if (tc.containsBlock(blockNum))
                 {
                     tc.sendTravelSignal(packet.copy());
+                   //System.out.println("Wayside - sendTravelSignal(BlockSignalBundle) - signal for block: " + packet.BlockID +
+                     //     " Authority: " + packet.Authority + " Destination: " + packet.Destination);
                     break;
                 }
             }
@@ -328,6 +330,7 @@ public final class Wayside
         {
             if (signal.size() > 0)
             {
+                
                 BlockSignalBundle packet = signal.get(0);
                 this.sendTravelSignal(packet);
             }
@@ -407,6 +410,11 @@ public final class Wayside
         }
         
     }*/
+    
+    public void setBlockClosing(BlockSignalBundle packet)
+    {
+        
+    }
     
     public void StartSimulation()
     {
