@@ -32,11 +32,11 @@ public class TrackModelPanel extends javax.swing.JPanel {
     public void setTrack(TrackModel t)
     {
         this.theTrackModel = t;
-        for(int i = 0; i < theTrackModel.theLines.size(); i++) {
-            lineComboBox.addItem(theTrackModel.theLines.get(i).getLineString());
+        for(int i = 0; i < theTrackModel.TheLines.size(); i++) {
+            lineComboBox.addItem(theTrackModel.TheLines.get(i).getLineString());
         }
-        for(int i = 0; i < theTrackModel.theLines.get(0).theBlocks.size(); i++) {
-            blockComboBox.addItem(theTrackModel.theLines.get(0).theBlocks.get(i).getBlockID());
+        for(int i = 0; i < theTrackModel.TheLines.get(0).TheBlocks.size(); i++) {
+            blockComboBox.addItem(theTrackModel.TheLines.get(0).TheBlocks.get(i).getBlockID());
         }
         updateDisplay();
     }
@@ -509,19 +509,19 @@ public class TrackModelPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int line = lineComboBox.getSelectedIndex();
         int block = blockComboBox.getSelectedIndex();
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 0)
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 0)
         {
             normal.setSelected(true);
         }
-        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 1)
+        else if(theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 1)
         {
             rail.setSelected(true);
         }
-        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 2)
+        else if(theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 2)
         {
             track.setSelected(true);
         }
-        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 3)
+        else if(theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 3)
         {
             power.setSelected(true);
         }
@@ -535,19 +535,19 @@ public class TrackModelPanel extends javax.swing.JPanel {
         int block = blockComboBox.getSelectedIndex();
         if(normal.isSelected())
         {
-            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(0);
+            theTrackModel.TheLines.get(line).TheBlocks.get(block).setFailureState(0);
         }
         else if(rail.isSelected())
         {
-            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(1);
+            theTrackModel.TheLines.get(line).TheBlocks.get(block).setFailureState(1);
         }
         else if(track.isSelected())
         {
-            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(2);
+            theTrackModel.TheLines.get(line).TheBlocks.get(block).setFailureState(2);
         }
         else if(power.isSelected())
         {
-            theTrackModel.theLines.get(line).theBlocks.get(block).setFailureState(3);
+            theTrackModel.TheLines.get(line).TheBlocks.get(block).setFailureState(3);
         }
         updateDisplay();
     }//GEN-LAST:event_failSubmitActionPerformed
@@ -573,10 +573,10 @@ public class TrackModelPanel extends javax.swing.JPanel {
         int line = lineComboBox.getSelectedIndex();
         int block = blockComboBox.getSelectedIndex();
         //System.out.println("line = "+line+" block = "+block);
-        lengthOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getLength()).toString());
-        double speed = theTrackModel.theLines.get(line).theBlocks.get(block).getSpeedLimit() * 2.23694;
+        lengthOut.setText(((Double)theTrackModel.TheLines.get(line).TheBlocks.get(block).getLength()).toString());
+        double speed = theTrackModel.TheLines.get(line).TheBlocks.get(block).getSpeedLimit() * 2.23694;
         speedLimitOut.setText(((Double)speed).toString());
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).isOccupied())
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).isOccupied())
         {
             occupiedOut.setText("Yes");
         }
@@ -584,7 +584,7 @@ public class TrackModelPanel extends javax.swing.JPanel {
         {
             occupiedOut.setText("No");
         }
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).isClosed())
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).isClosed())
         {
             closedOut.setText("Yes");
         }
@@ -592,18 +592,18 @@ public class TrackModelPanel extends javax.swing.JPanel {
         {
             closedOut.setText("No");
         }
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasLight())
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).hasLight())
         {
             hasLightOut.setText("Yes");
-            if (theTrackModel.theLines.get(line).theBlocks.get(block).getLightColor() == LightColor.RED)
+            if (theTrackModel.TheLines.get(line).TheBlocks.get(block).getLightColor() == LightColor.RED)
             {
                 lightColorOut.setText("Red");
             }
-            else if (theTrackModel.theLines.get(line).theBlocks.get(block).getLightColor() == LightColor.YELLOW)
+            else if (theTrackModel.TheLines.get(line).TheBlocks.get(block).getLightColor() == LightColor.YELLOW)
             {
                 lightColorOut.setText("Yellow");
             }
-            else if (theTrackModel.theLines.get(line).theBlocks.get(block).getLightColor() == LightColor.GREEN)
+            else if (theTrackModel.TheLines.get(line).TheBlocks.get(block).getLightColor() == LightColor.GREEN)
             {
                 lightColorOut.setText("Green");
             }
@@ -615,14 +615,14 @@ public class TrackModelPanel extends javax.swing.JPanel {
             lightColorOut.setText("N/A");
         }
         
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasRRXing())
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).hasRRXing())
         {
             hasRRXingOut.setText("Yes");
-            if (theTrackModel.theLines.get(line).theBlocks.get(block).getRRXingState() == XingState.NOT_ACTIVE)
+            if (theTrackModel.TheLines.get(line).TheBlocks.get(block).getRRXingState() == XingState.NOT_ACTIVE)
             {
                 rrxingStateOut.setText("Inactive");
             }
-            else if (theTrackModel.theLines.get(line).theBlocks.get(block).getRRXingState() == XingState.ACTIVE)
+            else if (theTrackModel.TheLines.get(line).TheBlocks.get(block).getRRXingState() == XingState.ACTIVE)
             {
                 rrxingStateOut.setText("Active");
             }            
@@ -632,10 +632,10 @@ public class TrackModelPanel extends javax.swing.JPanel {
             hasRRXingOut.setText("No");
             rrxingStateOut.setText("N/A");
         }
-        elevationOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getElevation()).toString());
-        gradientOut.setText(((Double)theTrackModel.theLines.get(line).theBlocks.get(block).getGradient()).toString());
-        destinationOut.setText(((Integer)theTrackModel.theLines.get(line).theBlocks.get(block).getDestination()).toString());
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).isUnderground())
+        elevationOut.setText(((Double)theTrackModel.TheLines.get(line).TheBlocks.get(block).getElevation()).toString());
+        gradientOut.setText(((Double)theTrackModel.TheLines.get(line).TheBlocks.get(block).getGradient()).toString());
+        destinationOut.setText(((Integer)theTrackModel.TheLines.get(line).TheBlocks.get(block).getDestination()).toString());
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).isUnderground())
         {
             undergroundOut.setText("Yes");
         }
@@ -643,32 +643,39 @@ public class TrackModelPanel extends javax.swing.JPanel {
         {
             undergroundOut.setText("No");
         }
-        double velocity = theTrackModel.theLines.get(line).theBlocks.get(block).getVelocity() * 2.23694;
+        double velocity = theTrackModel.TheLines.get(line).TheBlocks.get(block).getVelocity() * 2.23694;
         velocityOut.setText(((Double)velocity).toString());
-        authorityOut.setText(((Integer)theTrackModel.theLines.get(line).theBlocks.get(block).getAuthority()).toString());
-        beaconOut.setText("Not yet implemented");
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasStation())
+        authorityOut.setText(((Integer)theTrackModel.TheLines.get(line).TheBlocks.get(block).getAuthority()).toString());
+        if(theTrackModel.TheLines.get(line).TheBlocks.get(block).hasABeacon())
+        {
+            beaconOut.setText(theTrackModel.TheLines.get(line).TheBlocks.get(block).getBeacon().StationName + " Distance: " + theTrackModel.TheLines.get(line).TheBlocks.get(block).getBeacon().DistanceFromStation);
+        }
+        else
+        {
+            beaconOut.setText("No Beacon Here");
+        }
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).hasStation())
         {
             hasStationOut.setText("Yes");
-            stationIDOut.setText(theTrackModel.theLines.get(line).theBlocks.get(block).getStationString());
+            stationIDOut.setText(theTrackModel.TheLines.get(line).TheBlocks.get(block).getStationString());
         }
         else
         {
             hasStationOut.setText("No");
             stationIDOut.setText("N/A");
         }
-        if (theTrackModel.theLines.get(line).theBlocks.get(block).hasTswitch())
+        if (theTrackModel.TheLines.get(line).TheBlocks.get(block).hasTswitch())
         {
             hasSwitchOut.setText("Yes");
-            int switchID = theTrackModel.theLines.get(line).theBlocks.get(block).getTswitchID();
-            Switch temp = theTrackModel.theLines.get(line).getSwitch(switchID);
+            int switchID = theTrackModel.TheLines.get(line).TheBlocks.get(block).getTswitchID();
+            Switch temp = theTrackModel.TheLines.get(line).getSwitch(switchID);
             if(temp.isStraight())
             {
-                switchPosOut.setText(temp.approachBlock + " to " + temp.straightBlock);
+                switchPosOut.setText(temp.ApproachBlock + " to " + temp.StraightBlock);
             }
             else
             {
-                switchPosOut.setText(temp.approachBlock + " to " + temp.divergentBlock);
+                switchPosOut.setText(temp.ApproachBlock + " to " + temp.DivergentBlock);
             }
         }
         else
@@ -676,19 +683,19 @@ public class TrackModelPanel extends javax.swing.JPanel {
             hasSwitchOut.setText("No");
             switchPosOut.setText("N/A");
         }
-        if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 0)
+        if(theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 0)
         {
             failStateOut.setText("Normal");
         }
-        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 1)
+        else if(theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 1)
         {
             failStateOut.setText("Broken Rail");
         }
-        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 2)
+        else if(theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 2)
         {
             failStateOut.setText("Track Circuit Failure");
         }
-        else if(theTrackModel.theLines.get(line).theBlocks.get(block).getFailureState() == 3)
+        else if(theTrackModel.TheLines.get(line).TheBlocks.get(block).getFailureState() == 3)
         {
             failStateOut.setText("Power Failure");
         }

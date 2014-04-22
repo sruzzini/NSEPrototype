@@ -22,8 +22,8 @@ public class PLCGreenTwo extends PLC{
     private boolean stoppingAtJEnd;
     private int trainsInJ;
 
-    public PLCGreenTwo(int id, LineColor line, Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable) {
-        super(id, line, blocks, blockArray, switches, routeTable);
+    public PLCGreenTwo(int id, LineColor line, HashMap<Integer, Block> blocks, ArrayList<Block> blockArray, HashMap<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
+        super(id, line, blocks, blockArray, switches, routeTable, switchArray);
         this.trainsInJ = 0;
         this.enteringJ = false;
         this.leavingJ = false;
@@ -48,28 +48,29 @@ public class PLCGreenTwo extends PLC{
         boolean dir;
        // System.out.println("PLC id: " + this.id + " PLC line " + this.line);
        // System.out.println("block152: " + block152.getBlockID());
-        //System.out.println("switch1: " + switch1.switchID);
+        //System.out.println("switch1: " + switch1.SwitchID);
         
-        if (block57.isOccupied())
+        if (block57.isOccupied() && !block58.isOccupied())
         {
-            if (block57.getDestination() == 151 || block57.getDestination() == 0)
+            //if (block57.getDestination() == 151 || block57.getDestination() == 0)
+            if (true) //hard code to tell train to go back to yard
             {
                 dir = false;
-                if (switch4.straightBlock == 151) dir = true;
-                c.pushCommand(new Switch(LineColor.GREEN, switch4.switchID, switch4.approachBlock,
-                        switch4.straightBlock, switch4.divergentBlock, dir));
+                if (switch4.StraightBlock == 151) dir = true;
+                c.pushCommand(new Switch(LineColor.GREEN, switch4.SwitchID, switch4.ApproachBlock,
+                        switch4.StraightBlock, switch4.DivergentBlock, dir));
             }
             else
             {
                 dir = false;
-                if (switch4.straightBlock == 58) dir = true;
-                c.pushCommand(new Switch(LineColor.GREEN, switch4.switchID, switch4.approachBlock,
-                        switch4.straightBlock, switch4.divergentBlock, dir));
+                if (switch4.StraightBlock == 58) dir = true;
+                c.pushCommand(new Switch(LineColor.GREEN, switch4.SwitchID, switch4.ApproachBlock,
+                        switch4.StraightBlock, switch4.DivergentBlock, dir));
                 enteringJ = true;
             }
         }
         
-        if (block58.isOccupied())
+        if (block58.isOccupied() && !block57.isOccupied())
         {
             if (enteringJ)
             {
@@ -78,16 +79,16 @@ public class PLCGreenTwo extends PLC{
             }
         }
         
-        if (block152.isOccupied())
+        if (block152.isOccupied() && !block62.isOccupied())
         {
             if (!leavingJ)
             {
                  //set switch state
                  dir = false;
-             //System.out.println("Switch 1: " + switch1.switchID);
-             if (switch1.straightBlock == 152) dir = true;
-             c.pushCommand(new Switch(LineColor.GREEN, switch1.switchID, switch1.approachBlock,
-             switch1.straightBlock, switch1.divergentBlock, dir));
+             //System.out.println("Switch 1: " + switch1.SwitchID);
+             if (switch1.StraightBlock == 152) dir = true;
+             c.pushCommand(new Switch(LineColor.GREEN, switch1.SwitchID, switch1.ApproachBlock,
+             switch1.StraightBlock, switch1.DivergentBlock, dir));
              /*c.pushCommand( new BlockSignalBundle(block60.getAuthority(), block60.getDestination(),
                      0.0, block60.getBlockID(), LineColor.GREEN));
              c.pushCommand( new BlockSignalBundle(block61.getAuthority(), block61.getDestination(),
@@ -103,7 +104,7 @@ public class PLCGreenTwo extends PLC{
             }
         }
         
-        if (block60.isOccupied())
+        if (block60.isOccupied() && !block61.isOccupied())
         {
             if (!stoppingAtJEnd)
             {
@@ -117,16 +118,16 @@ public class PLCGreenTwo extends PLC{
             }
         }
         
-        if (block61.isOccupied())
+        if (block61.isOccupied() && !block60.isOccupied())
         {
             //leavingJ = true;
             if (!stoppingAtJEnd)
             {
                 leavingJ = true;
                 dir = false;
-                if (switch1.straightBlock == 61) dir = true;
-                c.pushCommand(new Switch(LineColor.GREEN, switch1.switchID, switch1.approachBlock,
-                    switch1.straightBlock, switch1.divergentBlock, dir));
+                if (switch1.StraightBlock == 61) dir = true;
+                c.pushCommand(new Switch(LineColor.GREEN, switch1.SwitchID, switch1.ApproachBlock,
+                    switch1.StraightBlock, switch1.DivergentBlock, dir));
                 c.pushCommand(new BlockSignalBundle(block61.getAuthority(), block61.getDestination(),
                     block61.getSpeedLimit(), block61.getBlockID(), LineColor.GREEN));
                 
@@ -139,7 +140,7 @@ public class PLCGreenTwo extends PLC{
         }
                  
         
-        if (block62.isOccupied())
+        if (block62.isOccupied() && !block61.isOccupied())
         {
             if (leavingJ)
             {
@@ -151,9 +152,9 @@ public class PLCGreenTwo extends PLC{
                 c.pushCommand(new BlockSignalBundle(block152.getAuthority(), block152.getDestination(),
                     block152.getSpeedLimit(), block152.getBlockID(), LineColor.GREEN));
                 dir = false;
-                if (switch1.straightBlock == 152) dir = true;
-                c.pushCommand(new Switch(LineColor.GREEN, switch1.switchID, switch1.approachBlock,
-             switch1.straightBlock, switch1.divergentBlock, dir));
+                if (switch1.StraightBlock == 152) dir = true;
+                c.pushCommand(new Switch(LineColor.GREEN, switch1.SwitchID, switch1.ApproachBlock,
+             switch1.StraightBlock, switch1.DivergentBlock, dir));
                 holdAtYard = false;
             }
             

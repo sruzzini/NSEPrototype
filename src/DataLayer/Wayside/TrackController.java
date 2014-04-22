@@ -12,6 +12,8 @@ import DataLayer.EnumTypes.*;
 import DataLayer.TrackModel.*;
 import java.util.*;
 import java.util.concurrent.locks.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -28,7 +30,7 @@ import java.util.concurrent.locks.*;
 public class TrackController implements Runnable {
     public PLC plcProgram;
     private ArrayList<Block> blockArray;
-    private Hashtable<Integer, Block> blockInfo; //change to hashmap
+    private HashMap<Integer, Block> blockInfo; //change to hashmap
     private final int[] blocksInSector;
     private final Lock commandBlockLock;
     private final ArrayList<BlockInfoBundle> commandBlockQueue;
@@ -39,8 +41,9 @@ public class TrackController implements Runnable {
     private final ArrayList<Switch> commandSwitchQueue;
     private final int id;
     private final LineColor line;
+    private final Lock processCommandsLock;
     private ArrayList<Switch> switchArray;
-    private Hashtable<Integer, Switch> switchInfo;  //change to hashmap
+    private HashMap<Integer, Switch> switchInfo;  //change to hashmap
     private final Lock waitSignalLock;
     
     
@@ -60,13 +63,14 @@ public class TrackController implements Runnable {
         this.commandSignalWaitQueue = new ArrayList<>();
         this.commandSwitchQueue = new ArrayList<>();
         this.commandBlockQueue = new ArrayList<>();
-        this.blockInfo = new Hashtable();
-        this.switchInfo = new Hashtable();
+        this.blockInfo = new HashMap();
+        this.switchInfo = new HashMap();
         this.blockArray = new ArrayList<>();
         this.switchArray = new ArrayList<>();
         this.commandSignalLock = new ReentrantLock();
         this.commandBlockLock = new ReentrantLock();
         this.commandSwitchLock = new ReentrantLock();
+        this.processCommandsLock = new ReentrantLock();
         this.waitSignalLock = new ReentrantLock();
         
     }
@@ -81,7 +85,7 @@ public class TrackController implements Runnable {
     public void addSwitch(Switch s)
     {
         this.switchArray.add(s);
-        this.switchInfo.put(s.switchID, s);
+        this.switchInfo.put(s.SwitchID, s);
         //System.out.println("Added switch: " + s.switchID + " to TC: " + this.line + "" + this.id);
     }
     
@@ -120,35 +124,43 @@ public class TrackController implements Runnable {
     
     public void emptyCommandQueues()
     {
-        commandBlockLock.lock();
-        try 
-        {
-            this.commandBlockQueue.clear();
-        }
-        finally 
-        { 
-            commandBlockLock.unlock(); 
-        }
-        
-        commandSignalLock.lock();
-        try 
-        {
-            this.commandSignalQueue.clear();
-        }
-        finally 
-        { 
-            commandSignalLock.unlock(); 
-        }
-        
-        commandSwitchLock.lock();
-        try 
-        {
-            this.commandSwitchQueue.clear();
-        }
-        finally 
-        {   
-            commandSwitchLock.unlock(); 
-        }
+        //processCommandsLock.lock();
+        //try
+        //{
+            commandBlockLock.lock();
+            try 
+            {
+                this.commandBlockQueue.clear();
+            }
+            finally 
+            { 
+                commandBlockLock.unlock(); 
+            }
+
+            commandSignalLock.lock();
+            try 
+            {
+                this.commandSignalQueue.clear();
+            }
+            finally 
+            { 
+                commandSignalLock.unlock(); 
+            }
+
+            commandSwitchLock.lock();
+            try 
+            {
+                this.commandSwitchQueue.clear();
+            }
+            finally 
+            {   
+                commandSwitchLock.unlock(); 
+            }
+        //}
+        //finally
+        //{
+          //  processCommandsLock.unlock();
+        //}
     }
     
     public ArrayList<Block> getBlockInfo()
@@ -172,7 +184,7 @@ public class TrackController implements Runnable {
         return commandSwitchQueue;
     }
     
-    public Hashtable<Integer, Block> getBlockTable()
+    public HashMap<Integer, Block> getBlockTable()
     {
         return this.blockInfo;
     }
@@ -205,7 +217,7 @@ public class TrackController implements Runnable {
         ArrayList<Switch> copiedArray = new ArrayList<>();
         for (Switch s : this.switchArray)
         {
-            copiedArray.add(new Switch(s.lineID, s.switchID, s.approachBlock, s.straightBlock, s.divergentBlock, s.straight));
+            copiedArray.add(new Switch(s.LineID, s.SwitchID, s.ApproachBlock, s.StraightBlock, s.DivergentBlock, s.Straight));
         }
         return copiedArray;
     }
@@ -217,78 +229,100 @@ public class TrackController implements Runnable {
         Commands c;// = new Commands();
         while (true)
         {
+            //c = this.plcProgram.runPLCProgram(this.blockSnapShot(), this.switchSnapShot());
             c = this.plcProgram.runPLCProgram();
             
-            commandSignalLock.lock();
-            try {
-            for (BlockSignalBundle b : this.commandSignalQueue)
-            {
-                c.pushCommand(b);
-            }
-            } 
-            finally 
-            { 
-                commandSignalLock.unlock(); 
-            }
-            
-            commandBlockLock.lock();
-            try 
-            {
-            for (BlockInfoBundle b : this.commandBlockQueue)
-            {
-                c.pushCommand(b);
-            }
-            }
-            finally 
-            { 
-                commandBlockLock.unlock(); 
-            }
-            
-            commandSwitchLock.lock();
-            try 
-            {
-            for (Switch s : this.commandSwitchQueue)
-            {
-                c.pushCommand(s);
-            }
-            }
-            finally 
-            { 
-                commandSwitchLock.unlock(); 
-            }
-            
-          /*  this.waitSignalLock.lock();
+            processCommandsLock.lock();
             try
             {
-            for (BlockSignalBundle b : this.signalsNotWaiting())
-            {
-                c.pushCommand(b);
-            }
+                commandSignalLock.lock();
+                try 
+                {
+                    for (BlockSignalBundle b : this.commandSignalQueue)
+                    {
+                        c.pushCommand(b);
+                    }
+                } 
+                finally 
+                { 
+                    commandSignalLock.unlock(); 
+                }
+            
+                commandBlockLock.lock();
+                try 
+                {
+                    for (BlockInfoBundle b : this.commandBlockQueue)
+                    {
+                        c.pushCommand(b);
+                    }
+                }
+                finally 
+                { 
+                    commandBlockLock.unlock(); 
+                }
+            
+                commandSwitchLock.lock();
+                try 
+                {
+                    for (Switch s : this.commandSwitchQueue)
+                    {
+                        c.pushCommand(s);
+                    }
+                }
+                finally 
+                { 
+                    commandSwitchLock.unlock(); 
+                }
+            
+            
+              
+            
+                this.emptyCommandQueues();
             }
             finally
             {
-                this.waitSignalLock.unlock();
-            }*/
-              
-            
-            this.emptyCommandQueues();
+                processCommandsLock.unlock();
+            }
             this.processCommands(c);
             
             
             
             
-            /*try {
+            try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TrackController.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            }
         }
     }
     
     public void sendSwitchStateSignal(Switch packet)
     {
-        
-        this.commandSwitchQueue.add(new Switch(packet.lineID, packet.switchID, packet.approachBlock, packet.straightBlock, packet.divergentBlock, packet.straight));
+        if (packet == null)
+        {
+            System.out.println("TrackController - sendSwitchStateSignal - packet is null");
+        }
+        else
+        {
+            this.processCommandsLock.lock();
+            try
+            {
+                this.commandSwitchLock.lock();
+                try
+                {
+                    //System.out.println("TrackController - sendSwitchStateSignal - received packet for switch: " + packet.switchID);
+                    this.commandSwitchQueue.add(packet);
+                }
+                finally
+                {
+                    this.commandSwitchLock.unlock();
+                }
+            }
+            finally
+            {
+                this.processCommandsLock.unlock();
+            }
+        }
     }
     
   /* public BlockSignalBundle sendTravelSignal(BlockSignalBundle sentPacket)
@@ -394,9 +428,7 @@ public class TrackController implements Runnable {
         Block block = this.blockInfo.get(blockNum);
         double speed;
         
-        commandSignalLock.lock();
-            try
-            {
+        
                 if (packet.Speed > block.getSpeedLimit())
                 {
                     speed = block.getSpeedLimit();
@@ -407,13 +439,50 @@ public class TrackController implements Runnable {
                 }
                 BlockSignalBundle copiedPacket = packet.copy();
                 copiedPacket.Speed = speed;
-                this.commandSignalQueue.add(copiedPacket);
+                
+            processCommandsLock.lock();
+            try
+            {
+                commandSignalLock.lock();
+                try
+                {
+                    this.commandSignalQueue.add(copiedPacket);
+                }
+                finally
+                {
+                    commandSignalLock.unlock();
+                }
             }
             finally
             {
-                commandSignalLock.unlock();
+                processCommandsLock.unlock();
             }
         
+        
+    }
+    
+    public void setBlockClosing(BlockSignalBundle packet)
+    {
+        if (packet.Closed || packet.Speed == -1)
+        {
+            processCommandsLock.lock();
+            try
+            {
+                commandSignalLock.lock();
+                try
+                {
+                    this.commandSignalQueue.add(packet);
+                }
+                finally
+                {
+                    commandSignalLock.unlock();
+                }
+            }
+            finally
+            {
+                processCommandsLock.unlock();
+            }
+        }
         
     }
     
@@ -470,13 +539,13 @@ public class TrackController implements Runnable {
             routeTable.put(1, 13);
             routeTable.put(150, 28);
             routeTable.put(28, 29);
-             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+             this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
         }
         else if (id == 1)
         {
             routeTable.put(57, 151);
             routeTable.put(152, 62);
-            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+            this.plcProgram = new PLCGreenTwo(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
         }
         else if (id == 2)
         {
@@ -484,7 +553,7 @@ public class TrackController implements Runnable {
             routeTable.put(85, 86);
             routeTable.put(100, 85);
             routeTable.put(77, 101);
-            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+            this.plcProgram = new PLCGreenThree(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
         }/*
         else if (id == 3)
         {
@@ -500,7 +569,7 @@ public class TrackController implements Runnable {
         }*/
         else
         {
-            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable);
+            this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
             //this is bad and should not happen. create exception to be thrown
         }
     }
@@ -519,7 +588,7 @@ public class TrackController implements Runnable {
         this.switchArray = info;
         for (Switch s : info)
         {
-            this.switchInfo.put(s.switchID, s);
+            this.switchInfo.put(s.SwitchID, s);
             //System.out.println("Setting switch with switch ID: " + s.switchID);
         }
     }
@@ -559,7 +628,13 @@ public class TrackController implements Runnable {
         return "Track Controller " + this.line + "" + this.id;
     }
  
-    
+    private ArrayList<Block> blockSnapShot()
+    {
+        ArrayList<Block> snap;
+        snap = new ArrayList<>();
+        
+        return snap;
+    }
     
     private void processCommands(Commands c)
     {
@@ -569,56 +644,80 @@ public class TrackController implements Runnable {
         double speed;
         int dest;
         int blockID;
+        boolean closed;
         Block block;
-        for (BlockSignalBundle bsb : c.blockSignalCommands)
-        {
-            authority = bsb.Authority;
-            speed = bsb.Speed;
-            dest = bsb.Destination;
-            blockID = bsb.BlockID;
-            block = this.blockInfo.get(blockID);
-            if (block == null)
+        //processCommandsLock.lock();
+        //try
+        //{
+            for (BlockSignalBundle bsb : c.blockSignalCommands)
             {
-                System.out.println("TrackController - processCommands - block is null. Attempted to get blockID: " + blockID + " in controller " + this.id);
+                authority = bsb.Authority;
+                speed = bsb.Speed;
+                dest = bsb.Destination;
+                blockID = bsb.BlockID;
+                closed = bsb.Closed;
+                block = this.blockInfo.get(blockID);
+                if (block == null)
+                {
+                    System.out.println("TrackController - processCommands - block is null. Attempted to get blockID: " + blockID + " in controller " + this.id);
+                }
+                //System.out.println("blockID: " + blockID + " controllerID " + this.id);
+                //System.out.println("In process commands. set block: " + block.getBlockID() + " with the values a,s,d: " + authority + "," + speed + "," + dest);
+                if (closed || speed == -1)
+                {
+                   block.setClosed(closed);
+                }
+                else
+                {
+                    block.setAuthority(authority);
+                    block.setVelocity(speed);
+                    block.setDestination(dest);
+                }
+
+
+
             }
-            //System.out.println("blockID: " + blockID + " controllerID " + this.id);
-            //System.out.println("In process commands. set block: " + block.getBlockID() + " with the values a,s,d: " + authority + "," + speed + "," + dest);
-            
-            block.setAuthority(authority);
-            block.setVelocity(speed);
-            block.setDestination(dest);
-            
-            
-            
-            
-        }
-        //info - set blocks with rrxing and light info
-        LightColor lc;
-        XingState xing;
-        for (BlockInfoBundle bib : c.blockInfoCommands)
-        {
-            lc = bib.LightColor;
-            xing = bib.RRXingState;
-            blockID = bib.BlockID;
-            block = this.blockInfo.get(blockID);
-            block.setLightColor(lc);
-            block.setRRXingState(xing);
-        }
-        //switch - change switches as needed
-        boolean dir;
-        //Switch switch;
-        int switchID;
-        Switch theSwitch;
-        for (Switch s : c.switchCommands)
-        {
-            dir = s.straight;
-            switchID = s.switchID;
-            theSwitch = this.switchInfo.get(switchID);
-            theSwitch.straight = dir;
-            //System.out.println("Track Controller - processCommands - set switch: " + switchID + " " + dir + " towards straight:divergent: " + theSwitch.straightBlock + ":" + theSwitch.divergentBlock);
-            
-        }
+            //info - set blocks with rrxing and light info
+            LightColor lc;
+            XingState xing;
+            for (BlockInfoBundle bib : c.blockInfoCommands)
+            {
+                lc = bib.LightColor;
+                xing = bib.RRXingState;
+                blockID = bib.BlockID;
+                block = this.blockInfo.get(blockID);
+                block.setLightColor(lc);
+                block.setRRXingState(xing);
+            }
+            //switch - change switches as needed
+            boolean dir;
+            //Switch switch;
+            int switchID;
+            Switch theSwitch;
+            for (Switch s : c.switchCommands)
+            {
+                dir = s.Straight;
+                switchID = s.SwitchID;
+                theSwitch = this.switchInfo.get(switchID);
+                theSwitch.Straight = dir;
+                //System.out.println("Track Controller - processCommands - set switch: " + switchID + " " + dir + " towards straight:divergent: " + theSwitch.straightBlock + ":" + theSwitch.divergentBlock);
+
+            }
     }
+    
+    private ArrayList<Switch> switchSnapShot()
+    {
+        ArrayList<Switch> snap;
+        snap = new ArrayList<>();
+        
+        
+        return snap;
+    }
+    
+    //finally
+    //{
+      //  processCommandsLock.unlock();
+    //}
     
     
     

@@ -19,14 +19,15 @@ import java.util.*;
  */
 public abstract class PLC {
     protected final  ArrayList<Block> blockArray;
-    protected final Hashtable<Integer, Block> blocks;
+    protected final HashMap<Integer, Block> blocks;
     protected final ArrayList<Integer> blocksWithCrossing;
     protected final int id;
     protected final LineColor line;
-    protected final Hashtable<Integer, Switch> switches;
+    protected final ArrayList<Switch> switchArray;
+    protected final HashMap<Integer, Switch> switches;
     private final HashMap routeTable;
 
-    public PLC(int id, LineColor line,  Hashtable<Integer, Block> blocks, ArrayList<Block> blockArray, Hashtable<Integer, Switch> switches, HashMap routeTable) {
+    public PLC(int id, LineColor line,  HashMap<Integer, Block> blocks, ArrayList<Block> blockArray, HashMap<Integer, Switch> switches, HashMap routeTable, ArrayList<Switch> switchArray) {
         this.id = id;
         this.line = line;
         this.blocks = blocks;
@@ -34,6 +35,7 @@ public abstract class PLC {
         this.blockArray = blockArray;
         this.blocksWithCrossing = new ArrayList<>();
         this.routeTable = routeTable;
+        this.switchArray = switchArray;
         
         for (Block b : blockArray)
         {
@@ -47,12 +49,13 @@ public abstract class PLC {
     public Commands runPLCProgram()
     {
         Commands tryOne = runAllPLCTasks();
-        Commands tryTwo = runAllPLCTasks();
-        Commands tryThree = runAllPLCTasks();
+        //Commands tryTwo = runAllPLCTasks();
+        //Commands tryThree = runAllPLCTasks();
         
-        Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
+        //Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
 
-        return votingResult;
+        //return votingResult;
+        return tryOne;
     }
     
     protected ArrayList<BlockInfoBundle> checkRRCrossings()
@@ -66,8 +69,8 @@ public abstract class PLC {
         for (int n : this.blocksWithCrossing)
         {
             b = this.blocks.get(n);
-            prev = this.blocks.get(b.prev);
-            next = this.blocks.get(b.next);
+            prev = this.blocks.get(b.Prev);
+            next = this.blocks.get(b.Next);
             
             if (b.isOccupied() || prev.isOccupied() || next.isOccupied())
             {
@@ -128,11 +131,11 @@ public abstract class PLC {
         {
                 if (b.isOccupied() && b.getVelocity() != 0)
                 {
-                    nextBlock = this.findBlock(b.prev, b.getBlockID());
+                    nextBlock = this.findBlock(b.Prev, b.getBlockID());
                     if (nextBlock != null && !nextBlock.isOccupied())
                     {
                         sendSignal = true;
-                        prev = b.prev;
+                        prev = b.Prev;
                         if (prev < 0)
                         {
                             try
@@ -167,11 +170,11 @@ public abstract class PLC {
                           //              " speed: " + b.getVelocity() + " to block " + prev);
                         
                     }
-                    nextBlock = this.findBlock(b.next, b.getBlockID());
+                    nextBlock = this.findBlock(b.Next, b.getBlockID());
                     if (nextBlock != null && !nextBlock.isOccupied())
                     {
                         sendSignal = true;
-                        next = b.next;
+                        next = b.Next;
                         if (next < 0)
                         {
                             try
@@ -230,16 +233,16 @@ public abstract class PLC {
                 {
                     //System.out.println("PLC - findBlock - switch is null. switch lookup: " + next + " in plc: " + this.id);
                 }
-                approach = s.approachBlock;
-                divergent = s.divergentBlock;
-                straight = s.straightBlock;
+                approach = s.ApproachBlock;
+                divergent = s.DivergentBlock;
+                straight = s.StraightBlock;
                 if (current == straight || current == divergent)
                 {
                     b = this.blocks.get(approach);
                 }
                 else
                 {
-                    if (s.straight)
+                    if (s.Straight)
                     {
                         b = this.blocks.get(straight);
                     }
@@ -269,14 +272,15 @@ public abstract class PLC {
         
         
         
-        // ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
+         ArrayList<BlockInfoBundle> rrCommands = this.checkRRCrossings();
          ArrayList<BlockSignalBundle> replicateCommands = this.replicateSignals();
         //ArrayList<BlockSignalBundle> safetyCommands = this.checkTrainsTooClose();
+         ArrayList<BlockInfoBundle> lightCommands = this.checkLights();
         
-        /*for (BlockInfoBundle b : rrCommands)
+        for (BlockInfoBundle b : rrCommands)
         {
             c.pushCommand(b);
-        }*/
+        }
         
         for (BlockSignalBundle b : replicateCommands)
         {
@@ -291,6 +295,11 @@ public abstract class PLC {
             
         }
         
+        for (BlockInfoBundle b : lightCommands)
+        {
+            c.pushCommand(b);
+        }
+        
         /*for (BlockSignalBundle b : safetyCommands)
         {
             c.pushCommand(b);
@@ -298,6 +307,68 @@ public abstract class PLC {
         
         return c;
         
+    }
+    
+    private ArrayList<BlockInfoBundle> checkLights()
+    {
+        ArrayList<BlockInfoBundle> commands;
+        commands = new ArrayList<>();
+        Block approach, straight, divergent;
+        
+        for (Switch sw : this.switchArray)
+        {
+            approach = this.blocks.get(sw.ApproachBlock);
+            straight = this.blocks.get(sw.StraightBlock);
+            divergent = this.blocks.get(sw.DivergentBlock);
+           /* if (approach.getLightColor() != LightColor.GREEN)
+            {
+                commands.add(new BlockInfoBundle(LightColor.GREEN, approach.getRRXingState(), approach.getBlockID(), this.line, approach.isClosed()));
+            }*/
+            
+            if (sw.Straight)
+            {
+                commands.add(new BlockInfoBundle(LightColor.RED, divergent.getRRXingState(), divergent.getBlockID(), this.line, divergent.isClosed()));
+                if (straight.getVelocity() > 0 && straight.getAuthority() > 0)
+                {
+                    commands.add(new BlockInfoBundle(LightColor.GREEN, straight.getRRXingState(), straight.getBlockID(), this.line, straight.isClosed()));
+                }
+                else
+                {
+                    commands.add(new BlockInfoBundle(LightColor.RED, straight.getRRXingState(), straight.getBlockID(), this.line, straight.isClosed()));
+                }
+                if (this.routeTable.get(approach.getBlockID()) != null && (int)this.routeTable.get(approach.getBlockID()) == straight.getBlockID())
+                {
+                    commands.add(new BlockInfoBundle(LightColor.GREEN, approach.getRRXingState(), approach.getBlockID(), this.line, approach.isClosed()));
+                }
+                else
+                {
+                    commands.add(new BlockInfoBundle(LightColor.RED, approach.getRRXingState(), approach.getBlockID(), this.line, approach.isClosed()));
+                }
+            }
+            else
+            {
+                commands.add(new BlockInfoBundle(LightColor.RED, straight.getRRXingState(), straight.getBlockID(), this.line, straight.isClosed()));
+                if (divergent.getVelocity() > 0 && divergent.getAuthority() > 0)
+                {
+                    commands.add(new BlockInfoBundle(LightColor.GREEN, divergent.getRRXingState(), divergent.getBlockID(), this.line, divergent.isClosed()));
+                }
+                else
+                {
+                    commands.add(new BlockInfoBundle(LightColor.RED, divergent.getRRXingState(), divergent.getBlockID(), this.line, divergent.isClosed()));
+                }
+                if (this.routeTable.get(approach.getBlockID()) != null && (int)this.routeTable.get(approach.getBlockID()) == divergent.getBlockID())
+                {
+                    commands.add(new BlockInfoBundle(LightColor.GREEN, approach.getRRXingState(), approach.getBlockID(), this.line, approach.isClosed()));
+                }
+                else
+                {
+                    commands.add(new BlockInfoBundle(LightColor.RED, approach.getRRXingState(), approach.getBlockID(), this.line, approach.isClosed()));
+                }
+            }
+        }
+        
+        
+        return commands;
     }
 
 }

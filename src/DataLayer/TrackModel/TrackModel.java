@@ -8,13 +8,13 @@ import java.io.*;
 
 public class TrackModel 
 {
-    public ArrayList<Line> theLines; // array of lines within the track model
-    public ArrayList<TrainLocation> theTrainLocations; // array of train locations for the trains within the track model
-    public ArrayList<Train> theTrains; // array of trains within the track model
+    public ArrayList<Line> TheLines; // array of lines within the track model
+    public ArrayList<TrainLocation> TheTrainLocations; // array of train locations for the trains within the track model
+    public ArrayList<Train> TheTrains; // array of trains within the track model
     
-    // getBlockInfoBundle(LineColor line, int block) returns the current block info for the specified block on the specified line
+    // getBlockInfoBundle(LineColor Line, int block) returns the current block info for the specified block on the specified Line
     // Parameters:
-    //     LineColor line - the line that is to be accessed
+    //     LineColor Line - the Line that is to be accessed
     //     int Block - the block that is to be accessed
     // Returns - BlockInfoBundle, the current info set in the specified block
     public BlockInfoBundle getBlockInfoBundle(LineColor line, int block)
@@ -28,16 +28,16 @@ public class TrackModel
         {
             lineNum = 1;
         }
-        XingState s = theLines.get(lineNum).theBlocks.get(block).getRRXingState();
-        LightColor l = theLines.get(lineNum).theBlocks.get(block).getLightColor();
-        boolean c = theLines.get(lineNum).theBlocks.get(block).isClosed();
+        XingState s = TheLines.get(lineNum).TheBlocks.get(block).getRRXingState();
+        LightColor l = TheLines.get(lineNum).TheBlocks.get(block).getLightColor();
+        boolean c = TheLines.get(lineNum).TheBlocks.get(block).isClosed();
         BlockInfoBundle b = new BlockInfoBundle(l, s, block, line, c);
         return b;
     }
     
-    // getBlockSignalBundle(LineColor line, int block) returns the current block signal for the specified block on the specified line
+    // getBlockSignalBundle(LineColor Line, int block) returns the current block signal for the specified block on the specified Line
     // Parameters:
-    //     LineColor line - the line that is to be accessed
+    //     LineColor Line - the Line that is to be accessed
     //     int Block - the block that is to be accessed
     // Returns - BlockSignalBundle, the current signal set in the specified block
     public BlockSignalBundle getBlockSignalBundle(LineColor line, int block) 
@@ -51,17 +51,17 @@ public class TrackModel
         {
             lineNum = 1;
         }
-        int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
-        int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
-        double s = theLines.get(lineNum).theBlocks.get(block).getVelocity();
-        boolean c = theLines.get(lineNum).theBlocks.get(block).isClosed();
+        int a = TheLines.get(lineNum).TheBlocks.get(block).getAuthority();
+        int d = TheLines.get(lineNum).TheBlocks.get(block).getDestination();
+        double s = TheLines.get(lineNum).TheBlocks.get(block).getVelocity();
+        boolean c = TheLines.get(lineNum).TheBlocks.get(block).isClosed();
         BlockSignalBundle b = new BlockSignalBundle(a, d, s, block, line, c);
         return b;
     }
     
-    // getTrackSignal(LineColor line, int block) returns the current track signal for the specified block on the specified line
+    // getTrackSignal(LineColor Line, int block) returns the current track signal for the specified block on the specified Line
     // Parameters:
-    //     LineColor line - the line that is to be accessed
+    //     LineColor Line - the Line that is to be accessed
     //     int block - the block that is to be accessed
     // Returns - TrackSignal, the current signal set in the specified block
     public TrackSignal getTrackSignal(LineColor line, int block)
@@ -75,12 +75,12 @@ public class TrackModel
         {
             lineNum = 1;
         }
-        int a = theLines.get(lineNum).theBlocks.get(block).getAuthority();
-        int d = theLines.get(lineNum).theBlocks.get(block).getDestination();
-        String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
-        double s = theLines.get(lineNum).theBlocks.get(block).getVelocity();
-        double g = theLines.get(lineNum).theBlocks.get(block).getGradient();
-        boolean u = theLines.get(lineNum).theBlocks.get(block).isUnderground();
+        int a = TheLines.get(lineNum).TheBlocks.get(block).getAuthority();
+        int d = TheLines.get(lineNum).TheBlocks.get(block).getDestination();
+        String dd = TheLines.get(lineNum).TheBlocks.get(d).getStationString();
+        double s = TheLines.get(lineNum).TheBlocks.get(block).getVelocity();
+        double g = TheLines.get(lineNum).TheBlocks.get(block).getGradient();
+        boolean u = TheLines.get(lineNum).TheBlocks.get(block).isUnderground();
         TrackSignal t = new TrackSignal(s, a, u, dd, g);
         return t;
     }
@@ -101,8 +101,8 @@ public class TrackModel
             line = 1;
         }
         int block = b.BlockID;
-        theLines.get(line).theBlocks.get(block).setRRXingState(b.RRXingState);
-        theLines.get(line).theBlocks.get(block).setLightColor(b.LightColor);
+        TheLines.get(line).TheBlocks.get(block).setRRXingState(b.RRXingState);
+        TheLines.get(line).TheBlocks.get(block).setLightColor(b.LightColor);
     }
     
     // setBlockSignal(BlockSignalBundle b) sets the block signal of the block specified in the passed in BlockSignalBundle
@@ -121,15 +121,15 @@ public class TrackModel
             line = 1;
         }
         int block = b.BlockID;
-        theLines.get(line).theBlocks.get(block).setAuthority(b.Authority);
-        theLines.get(line).theBlocks.get(block).setDestination(b.Destination);
-        theLines.get(line).theBlocks.get(block).setVelocity(b.Speed);
+        TheLines.get(line).TheBlocks.get(block).setAuthority(b.Authority);
+        TheLines.get(line).TheBlocks.get(block).setDestination(b.Destination);
+        TheLines.get(line).TheBlocks.get(block).setVelocity(b.Speed);
     }
     
-    // setDispatchSignal(DispatchBundle b) sets the block signal of the first block out of the yard of the line specified in the passed in DispatchBundle
+    // setDispatchSignal(DispatchBundle b) sets the block signal of the first block out of the yard of the Line specified in the passed in DispatchBundle
     // to the information contained within the DispatchBundle
     // Parameters:
-    //      DispatchBundle d - the signal packet to be set to the first block of the line specified within the DispatchBundle object
+    //      DispatchBundle d - the signal packet to be set to the first block of the Line specified within the DispatchBundle object
     public void setDispatchSignal(DispatchBundle d)
     {
     	int line = 0;
@@ -144,30 +144,30 @@ public class TrackModel
             line = 1;
             block = 77;
         }
-        theLines.get(line).theBlocks.get(block).setAuthority(d.Authority);
-        theLines.get(line).theBlocks.get(block).setDestination(d.Destination);
-        theLines.get(line).theBlocks.get(block).setVelocity(d.Speed);
+        TheLines.get(line).TheBlocks.get(block).setAuthority(d.Authority);
+        TheLines.get(line).TheBlocks.get(block).setDestination(d.Destination);
+        TheLines.get(line).TheBlocks.get(block).setVelocity(d.Speed);
         
-        theTrainLocations.get(d.trainID).setStartLocation(line);
+        TheTrainLocations.get(d.trainID).setStartLocation(line);
         
-        boolean u = theLines.get(line).theBlocks.get(block).isUnderground();
-        int dest = theLines.get(line).theBlocks.get(block).getDestination();
-        String dd = theLines.get(line).theBlocks.get(dest).getStationString();
-        double g = theLines.get(line).theBlocks.get(block).getGradient();
-        theLines.get(line).theBlocks.get(block).setOccupied(true);
+        boolean u = TheLines.get(line).TheBlocks.get(block).isUnderground();
+        int dest = TheLines.get(line).TheBlocks.get(block).getDestination();
+        String dd = TheLines.get(line).TheBlocks.get(dest).getStationString();
+        double g = TheLines.get(line).TheBlocks.get(block).getGradient();
+        TheLines.get(line).TheBlocks.get(block).setOccupied(true);
         
         TrackSignal t = new TrackSignal(d.Speed, d.Authority, u, dd, g);
         
-        theTrains.get(d.trainID).setTrackSignal(t);
+        TheTrains.get(d.trainID).setTrackSignal(t);
     }
     
     // TrackModel() creates a new instance of a Track Model
     public TrackModel()
     {
         
-        theLines = new ArrayList<>();
-        theLines.add(new Line(LineColor.GREEN));
-        theLines.add(new Line(LineColor.RED));
+        TheLines = new ArrayList<>();
+        TheLines.add(new Line(LineColor.GREEN));
+        TheLines.add(new Line(LineColor.RED));
         uploadTrackSpec();
         
     }
@@ -175,10 +175,9 @@ public class TrackModel
     // updateTrainLocations() updates the locations of the trains on the track
     public void updateTrainLocations()
     {
-    	for(int i = 0; i < theTrainLocations.size(); i++)
+    	for(int i = 0; i < TheTrainLocations.size(); i++)
     	{
-    	    double deltaX = theTrains.get(i).getDeltaX();
-    	    LineColor line = theTrainLocations.get(i).line;
+    	    LineColor line = TheTrainLocations.get(i).Line;
     	    int lineNum = 0;
             if (line == LineColor.GREEN)
             {
@@ -188,37 +187,37 @@ public class TrackModel
             {
                 lineNum = 1;
             }
-    	    int block = theTrainLocations.get(i).currentBlock;
+    	    int block = TheTrainLocations.get(i).CurrentBlock;
     	    int switchAlternate = -1;
-    	    int prev = theLines.get(lineNum).theBlocks.get(block).prev;
+    	    int prev = TheLines.get(lineNum).TheBlocks.get(block).Prev;
     	    if(prev < 0)
     	    {
     	        prev = (-prev) - 1;
-    	        Switch aSwitch = theLines.get(lineNum).theSwitches.get(prev);
-    	        if (block == aSwitch.approachBlock)
+    	        Switch aSwitch = TheLines.get(lineNum).TheSwitches.get(prev);
+    	        if (block == aSwitch.ApproachBlock)
     	        {
     	            if (aSwitch.isStraight())
     	            {
-    	            	prev = aSwitch.straightBlock;
-    	            	switchAlternate = aSwitch.divergentBlock;
+    	            	prev = aSwitch.StraightBlock;
+    	            	switchAlternate = aSwitch.DivergentBlock;
     	            }
     	            else
     	            {
-    	            	prev = aSwitch.divergentBlock;
-    	            	switchAlternate = aSwitch.straightBlock;
+    	            	prev = aSwitch.DivergentBlock;
+    	            	switchAlternate = aSwitch.StraightBlock;
     	            }
     	        }
-    	        else if(block == aSwitch.straightBlock)
+    	        else if(block == aSwitch.StraightBlock)
     	        {
-    	            prev = aSwitch.approachBlock;
+    	            prev = aSwitch.ApproachBlock;
     	            if (!aSwitch.isStraight())
     	            {
     	            	//System.out.println("the switch was in the wrong position");
     	            }
     	        }
-    	        else if(block == aSwitch.divergentBlock)
+    	        else if(block == aSwitch.DivergentBlock)
     	        {
-    	            prev = aSwitch.approachBlock;
+    	            prev = aSwitch.ApproachBlock;
     	            if (aSwitch.isStraight())
     	            {
     	            	//System.out.println("the switch was in the wrong position");
@@ -226,35 +225,35 @@ public class TrackModel
     	        }
     	        
     	    }
-    	    int next = theLines.get(lineNum).theBlocks.get(block).next;
+    	    int next = TheLines.get(lineNum).TheBlocks.get(block).Next;
     	    if(next < 0)
     	    {
     	        next = (-next) - 1;
-    	        Switch aSwitch = theLines.get(lineNum).theSwitches.get(next);
-    	        if (block == aSwitch.approachBlock)
+    	        Switch aSwitch = TheLines.get(lineNum).TheSwitches.get(next);
+    	        if (block == aSwitch.ApproachBlock)
     	        {
     	            if (aSwitch.isStraight())
     	            {
-    	            	next = aSwitch.straightBlock;
-    	            	switchAlternate = aSwitch.divergentBlock;
+    	            	next = aSwitch.StraightBlock;
+    	            	switchAlternate = aSwitch.DivergentBlock;
     	            }
     	            else
     	            {
-    	            	next = aSwitch.divergentBlock;
-    	            	switchAlternate = aSwitch.straightBlock;
+    	            	next = aSwitch.DivergentBlock;
+    	            	switchAlternate = aSwitch.StraightBlock;
     	            }
     	        }
-    	        else if(block == aSwitch.straightBlock)
+    	        else if(block == aSwitch.StraightBlock)
     	        {
-    	            next = aSwitch.approachBlock;
+    	            next = aSwitch.ApproachBlock;
     	            if (!aSwitch.isStraight())
     	            {
     	            	//System.out.println("the switch was in the wrong position");
     	            }
     	        }
-    	        else if(block == aSwitch.divergentBlock)
+    	        else if(block == aSwitch.DivergentBlock)
     	        {
-    	            next = aSwitch.approachBlock;
+    	            next = aSwitch.ApproachBlock;
     	            if (aSwitch.isStraight())
     	            {
     	            	//System.out.println("the switch was in the wrong position");
@@ -262,40 +261,59 @@ public class TrackModel
     	        }
     	        
     	    }
-    	    double length = theLines.get(lineNum).theBlocks.get(block).getLength();
-    	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next, switchAlternate);
+    	    double length = TheLines.get(lineNum).TheBlocks.get(block).getLength();
+            double deltaX = TheTrains.get(i).getDeltaX();
+            //if (i == 0) {System.out.println("Asked for deltaX: " + deltaX);}
+    	    TheTrainLocations.get(i).updateLocation(deltaX, length, prev, next, switchAlternate);
     	    
-    	    int newCurrentBlock = theTrainLocations.get(i).currentBlock;
+    	    int newCurrentBlock = TheTrainLocations.get(i).CurrentBlock;
     	    if(block == newCurrentBlock)
     	    {
-    	    	theLines.get(lineNum).theBlocks.get(block).setOccupied(true);
-                if(theTrainLocations.get(i).distanceSoFar > 32.2)
+    	    	TheLines.get(lineNum).TheBlocks.get(block).setOccupied(true);
+                if(TheTrainLocations.get(i).DistanceSoFar > 32.2)
                 {
-                    theLines.get(lineNum).theBlocks.get(theTrainLocations.get(i).prevBlock).setOccupied(false);
+                    TheLines.get(lineNum).TheBlocks.get(TheTrainLocations.get(i).PrevBlock).setOccupied(false);
                 }
                 // special case for block 77 to block 101
-                else if(theTrainLocations.get(i).prevBlock == 101 && theTrainLocations.get(i).currentBlock == 102)
+                else if(TheTrainLocations.get(i).PrevBlock == 101 && TheTrainLocations.get(i).CurrentBlock == 102)
                 {
-                    theLines.get(lineNum).theBlocks.get(77).setOccupied(false);
+                    TheLines.get(lineNum).TheBlocks.get(77).setOccupied(false);
                 }
     	    }
     	    else
     	    {
-                if(theTrainLocations.get(i).distanceSoFar > 32.2)
+                if(TheTrainLocations.get(i).DistanceSoFar > 32.2)
                 {
-                    theLines.get(lineNum).theBlocks.get(block).setOccupied(false);
+                    TheLines.get(lineNum).TheBlocks.get(block).setOccupied(false);
                 }
-    	    	theLines.get(lineNum).theBlocks.get(newCurrentBlock).setOccupied(true);
+    	    	TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).setOccupied(true);
     	    }
     	    
-    	    int a = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getAuthority();
-            int d = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getDestination();
-            String dd = theLines.get(lineNum).theBlocks.get(d).getStationString();
-            double s = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getVelocity();
-            double g = theLines.get(lineNum).theBlocks.get(newCurrentBlock).getGradient();
-            boolean u = theLines.get(lineNum).theBlocks.get(newCurrentBlock).isUnderground();
+    	    int a = TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getAuthority();
+            int d = TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getDestination();
+            String dd = TheLines.get(lineNum).TheBlocks.get(d).getStationString();
+            double s = TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getVelocity();
+            double g = TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getGradient();
+            boolean u = TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).isUnderground();
             TrackSignal t = new TrackSignal(s, a, u, dd, g);
-            theTrains.get(i).setTrackSignal(t);
+            TheTrains.get(i).setTrackSignal(t);
+            /*if(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).hasABeacon())
+            {
+                if(TheTrainLocations.get(i).PrevBlock < TheTrainLocations.get(i).CurrentBlock)
+                {
+                    if(TheTrainLocations.get(i).DistanceSoFar >= TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation())
+                    {
+                        TheTrains.get(i).setBeaconSignal(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeacon());
+                    }
+                }
+                else
+                {
+                   if(TheTrainLocations.get(i).DistanceSoFar >= (TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getLength() - TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation()))
+                    {
+                        TheTrains.get(i).setBeaconSignal(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeacon());
+                    } 
+                }
+            }*/
     	    
     	}
     }
@@ -371,12 +389,37 @@ public class TrackModel
                             
                             underground = Boolean.parseBoolean(blockSpec[13]);
                             rrxing = Boolean.parseBoolean(blockSpec[14]);
-
+                            
                             Block b = new Block(blockID, next, prev, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             b.setTswitchID(tswitchID);
-                            theLines.get(0).theBlocks.add(b);
+                            
+                            boolean hasBeacon = Boolean.parseBoolean(blockSpec[15]);
+                            if(hasBeacon)
+                            {
+                                String beaconName = blockSpec[16];
+                                double distanceIn = Double.parseDouble(blockSpec[17]);
+                                boolean specialBeacon = Boolean.parseBoolean(blockSpec[19]);
+                                BeaconSignal theBeacon;
+                                if(specialBeacon)
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]), Double.parseDouble(blockSpec[20]));
+                                }
+                                else
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]));
+                                }
+                                b.setBeacon(theBeacon);
+                                b.setBeaconLocation(distanceIn);
+                                b.setHasABeacon(true);
+                            }
+                            else
+                            {
+                                b.setHasABeacon(false);
+                            }
+                            
+                            TheLines.get(0).TheBlocks.add(b);
                         }
                         else if(blockSpec[1].equalsIgnoreCase("s"))
                         {
@@ -385,7 +428,7 @@ public class TrackModel
                             straight = Integer.parseInt(blockSpec[4]);
                             divergent = Integer.parseInt(blockSpec[5]);
                             Switch s = new Switch(LineColor.GREEN, blockID, approach, straight, divergent, true);
-                            theLines.get(0).theSwitches.add(s);
+                            TheLines.get(0).TheSwitches.add(s);
                         }
                     }
                     else if(blockSpec[0].equalsIgnoreCase("red"))
@@ -444,7 +487,32 @@ public class TrackModel
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             b.setTswitchID(tswitchID);
-                            theLines.get(1).theBlocks.add(b);
+                            
+                            boolean hasBeacon = Boolean.parseBoolean(blockSpec[15]);
+                            if(hasBeacon)
+                            {
+                                String beaconName = blockSpec[16];
+                                double distanceIn = Double.parseDouble(blockSpec[17]);
+                                boolean specialBeacon = Boolean.parseBoolean(blockSpec[19]);
+                                BeaconSignal theBeacon;
+                                if(specialBeacon)
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]), Double.parseDouble(blockSpec[20]));
+                                }
+                                else
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]));
+                                }
+                                b.setBeacon(theBeacon);
+                                b.setBeaconLocation(distanceIn);
+                                b.setHasABeacon(true);
+                            }
+                            else
+                            {
+                                b.setHasABeacon(false);
+                            }
+                            
+                            TheLines.get(1).TheBlocks.add(b);
                         }
                         else if(blockSpec[1].equalsIgnoreCase("s"))
                         {
@@ -453,7 +521,7 @@ public class TrackModel
                             straight = Integer.parseInt(blockSpec[4]);
                             divergent = Integer.parseInt(blockSpec[5]);
                             Switch s = new Switch(LineColor.RED, blockID, approach, straight, divergent, true);
-                            theLines.get(1).theSwitches.add(s);
+                            TheLines.get(1).TheSwitches.add(s);
                         }
                     }
                     

@@ -5,40 +5,42 @@ import DataLayer.EnumTypes.*;
 
 public class Block {
     
-    public int next;
-    public int prev;
-    private int authority;
-    private BeaconSignal beacon;
-    private int blockID;
-    private boolean closed;
-    private double cumElev;
-    private int destination;
-    private double elevation;
-    private int failureState;
-    private double gradient;
-    private double length;
-    private boolean light;
-    private LightColor lightColor;
-    private boolean occupied;
-    private int occupyingTrainID;
-    private boolean rrxing;
-    private XingState rrxingState;
-    private double speedLimit;
-    private boolean station;
-    private int stationID;
-    private String stationString;
-    private boolean tswitch;
-    private int tswitchID;
-    private boolean underground;
-    private double velocity;
+    public int Next; // the next block number from this one
+    public int Prev; // the previous block number from this one
+    private int authority; // the authority set on the block
+    private BeaconSignal beacon; // the beacon signal on the block
+    private double beaconLocation; // the location of the beacon
+    private int blockID; // the number of this block
+    private boolean closed; // whether or not the block is closed
+    private double cumElev; // the cumulative elevation of the block
+    private int destination; // the current set destination of a train on this block
+    private double elevation; // the elevation from the last block
+    private int failureState; // the state of the block: normal, power failure, broken rail, signal failure
+    private double gradient; // the grade of the block
+    private boolean hasBeacon; // whether or not the block has a beacon
+    private double length; // the length of the block
+    private boolean light; // whether or not the block has a light
+    private LightColor lightColor; // the color the light is set to if there is one
+    private boolean occupied; // whether or not the block is occupied
+    private int occupyingTrainID; // the ID of the train occupying the block
+    private boolean rrxing; // whether or not the block has a railroad crossing
+    private XingState rrxingState; // the state of the railroad crossing if there is one
+    private double speedLimit; // the speed limit for the block
+    private boolean station; // whether or not the block has a station
+    private int stationID; // the numeric ID of the station
+    private String stationString; // the string representing the name of the station
+    private boolean tswitch; // whether or not there is a switch on the block
+    private int tswitchID; // the ID of the switch if there is one
+    private boolean underground; // whether or not the block is underground
+    private double velocity; // the current set velocity of the block
     
     public Block(int blockID, int next, int prev, double length, double speedLimit, double elevation, double cumElev,
             double gradient, boolean underground, boolean light, boolean rrxing,
             boolean station, boolean tswitch)
     {
         this.blockID = blockID;
-        this.next = next;
-        this.prev = prev;
+        this.Next = next;
+        this.Prev = prev;
         this.length = length;
         this.speedLimit = speedLimit;
         this.elevation = elevation;
@@ -66,6 +68,11 @@ public class Block {
     public BeaconSignal getBeacon() 
     {
         return beacon;
+    }
+    
+    public double getBeaconLocation()
+    {
+        return beaconLocation;
     }
     
     public int getBlockID() 
@@ -142,6 +149,10 @@ public class Block {
         return velocity;
     }
 
+    public boolean hasABeacon() {
+        return hasBeacon;
+    }
+
     public boolean hasLight() 
     {
         return light;
@@ -187,6 +198,11 @@ public class Block {
         this.beacon = beacon;
     }
     
+    void setBeaconLocation(double distanceIn) 
+    {
+        this.beaconLocation = distanceIn;
+    }
+    
     public void setClosed(boolean closed) 
     {
         this.closed = closed;
@@ -202,6 +218,10 @@ public class Block {
         this.failureState = failureState;
     }
 
+    public void setHasABeacon(boolean hasBeacon) {
+        this.hasBeacon = hasBeacon;
+    }
+    
     public void setLightColor(LightColor lightColor) 
     {
         this.lightColor = lightColor;

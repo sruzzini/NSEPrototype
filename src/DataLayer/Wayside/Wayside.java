@@ -91,10 +91,10 @@ public final class Wayside
             //catch error
             e1.printStackTrace();
         }
-        this.setBlockInfoArray(track.theLines.get(0).theBlocks, LineColor.GREEN);
-        this.setBlockInfoArray(track.theLines.get(1).theBlocks, LineColor.RED);
-        this.setSwitchArray(track.theLines.get(0).theSwitches);
-        this.setSwitchArray(track.theLines.get(1).theSwitches);
+        this.setBlockInfoArray(track.TheLines.get(0).TheBlocks, LineColor.GREEN);
+        this.setBlockInfoArray(track.TheLines.get(1).TheBlocks, LineColor.RED);
+        this.setSwitchArray(track.TheLines.get(0).TheSwitches);
+        this.setSwitchArray(track.TheLines.get(1).TheSwitches);
         this.configurePLCs();
   
     }
@@ -255,13 +255,19 @@ public final class Wayside
     
     public void sendSwitchStateSignal(Switch packet)
     {
-        for (TrackController tc : this.controllers)
+        if (packet == null)
         {
-            if (tc.getLine() == packet.lineID && (tc.containsBlock(packet.straightBlock) || 
-                    tc.containsBlock(packet.approachBlock) || tc.containsBlock(packet.divergentBlock) ))
+            System.out.println("Wayside - sendSwitchStateSignal - packet is null");
+        }
+        else
+        {
+            for (TrackController tc : this.controllers)
             {
-                tc.sendSwitchStateSignal(new Switch(packet.lineID, packet.switchID, packet.approachBlock, packet.straightBlock, packet.divergentBlock, packet.straight));
-                break;
+                if (tc.getLine() == packet.LineID && tc.containsBlock(packet.ApproachBlock) )
+                {
+                    tc.sendSwitchStateSignal(new Switch(packet.LineID, packet.SwitchID, packet.ApproachBlock, packet.StraightBlock, packet.DivergentBlock, packet.Straight));
+                    break;
+                }
             }
         }
     }
@@ -312,6 +318,8 @@ public final class Wayside
                 if (tc.containsBlock(blockNum))
                 {
                     tc.sendTravelSignal(packet.copy());
+                  // System.out.println("Wayside - sendTravelSignal(BlockSignalBundle) - signal for block: " + packet.BlockID +
+                    //      " Authority: " + packet.Authority + " Destination: " + packet.Destination);
                     break;
                 }
             }
@@ -328,6 +336,7 @@ public final class Wayside
         {
             if (signal.size() > 0)
             {
+                
                 BlockSignalBundle packet = signal.get(0);
                 this.sendTravelSignal(packet);
             }
@@ -408,6 +417,26 @@ public final class Wayside
         
     }*/
     
+    public void setBlockClosing(BlockSignalBundle packet)
+    {
+        if (packet == null)
+        {
+            System.out.println("Wayside - setBlockClosing - packet is null");
+        }
+        else
+        {
+            for (TrackController tc : this.controllers)
+            {
+                if (tc.getLine() == packet.LineID && tc.containsBlock(packet.BlockID))
+                {
+                    tc.setBlockClosing(packet.copy());
+                    break;
+                }
+            }
+        }
+        
+    }
+    
     public void StartSimulation()
     {
         //put each tc into a thread and start those bad boys
@@ -450,10 +479,10 @@ public final class Wayside
         
         for (Switch s : switchArray)
         {
-            line = s.lineID;
+            line = s.LineID;
             for (TrackController tc : this.controllers)
             {
-                if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock)))// || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
+                if (tc.getLine() == s.LineID && ( tc.containsBlock(s.ApproachBlock)))// || tc.containsBlock(s.DivergentBlock) || tc.containsBlock(s.StraightBlock) ))
                 {
                     tc.addSwitch(s);
                 }

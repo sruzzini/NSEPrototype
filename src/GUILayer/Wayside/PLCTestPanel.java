@@ -22,7 +22,7 @@ import DataLayer.TrackModel.Switch;
 import DataLayer.Wayside.Commands;
 import DataLayer.Wayside.TrackController;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 public class PLCTestPanel extends javax.swing.JPanel {
@@ -44,7 +44,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
         
         for (Block b : controller.getBlockInfo())
         {
-            newBlock = new Block(b.getBlockID(), b.next, b.prev, b.getLength(), b.getSpeedLimit(), b.getElevation(), b.getCumElev(), b.getGradient(), b.isUnderground(), b.hasLight(),
+            newBlock = new Block(b.getBlockID(), b.Next, b.Prev, b.getLength(), b.getSpeedLimit(), b.getElevation(), b.getCumElev(), b.getGradient(), b.isUnderground(), b.hasLight(),
             b.hasRRXing(), b.hasStation(), b.hasTswitch());
             /*
             blockArray.add(newBlock);
@@ -55,7 +55,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
         
         for (Switch s : controller.getSwitchInfo())
         {
-            newSwitch = new Switch(s.lineID, s.switchID, s.approachBlock, s.straightBlock, s.divergentBlock, s.straight);
+            newSwitch = new Switch(s.LineID, s.SwitchID, s.ApproachBlock, s.StraightBlock, s.DivergentBlock, s.Straight);
            // switchArray.add(newSwitch);
             newController.addSwitch(newSwitch);
         }
@@ -125,7 +125,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Authority:");
 
-        jLabel4.setText("Suggested Speed (units?):");
+        jLabel4.setText("Suggested Speed (mph):");
 
         jLabel5.setText("Track Occupancies:");
 
@@ -268,6 +268,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
             {
                 throw new NumberFormatException();
             }
+            speed *= 0.44704; //convert mph to m/s
             signal = new BlockSignalBundle(authority, destination, speed, blockNum, this.controller.getLine());
             this.controller.sendTravelSignal(signal);
             }
@@ -281,7 +282,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
         {
             selectedBlocks[k++] = Integer.parseInt((String) this.blockOccList.getModel().getElementAt(n));
         }
-        Hashtable<Integer, Block> blockTable = this.controller.getBlockTable();
+        HashMap<Integer, Block> blockTable = this.controller.getBlockTable();
         ArrayList<Block> blockArray = this.controller.getBlockInfo();
         
         for (Block b : blockArray)
