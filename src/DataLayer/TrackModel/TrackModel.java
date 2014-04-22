@@ -177,7 +177,6 @@ public class TrackModel
     {
     	for(int i = 0; i < theTrainLocations.size(); i++)
     	{
-    	    double deltaX = theTrains.get(i).getDeltaX();
     	    LineColor line = theTrainLocations.get(i).line;
     	    int lineNum = 0;
             if (line == LineColor.GREEN)
@@ -263,6 +262,8 @@ public class TrackModel
     	        
     	    }
     	    double length = theLines.get(lineNum).theBlocks.get(block).getLength();
+            double deltaX = theTrains.get(i).getDeltaX();
+            //if (i == 0) {System.out.println("Asked for deltaX: " + deltaX);}
     	    theTrainLocations.get(i).updateLocation(deltaX, length, prev, next, switchAlternate);
     	    
     	    int newCurrentBlock = theTrainLocations.get(i).currentBlock;
@@ -296,6 +297,23 @@ public class TrackModel
             boolean u = theLines.get(lineNum).theBlocks.get(newCurrentBlock).isUnderground();
             TrackSignal t = new TrackSignal(s, a, u, dd, g);
             theTrains.get(i).setTrackSignal(t);
+            /*if(theLines.get(lineNum).theBlocks.get(newCurrentBlock).hasABeacon())
+            {
+                if(theTrainLocations.get(i).prevBlock < theTrainLocations.get(i).currentBlock)
+                {
+                    if(theTrainLocations.get(i).distanceSoFar >= theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeaconLocation())
+                    {
+                        theTrains.get(i).setBeaconSignal(theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeacon());
+                    }
+                }
+                else
+                {
+                   if(theTrainLocations.get(i).distanceSoFar >= (theLines.get(lineNum).theBlocks.get(newCurrentBlock).getLength() - theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeaconLocation()))
+                    {
+                        theTrains.get(i).setBeaconSignal(theLines.get(lineNum).theBlocks.get(newCurrentBlock).getBeacon());
+                    } 
+                }
+            }*/
     	    
     	}
     }
@@ -371,11 +389,36 @@ public class TrackModel
                             
                             underground = Boolean.parseBoolean(blockSpec[13]);
                             rrxing = Boolean.parseBoolean(blockSpec[14]);
-
+                            
                             Block b = new Block(blockID, next, prev, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             b.setTswitchID(tswitchID);
+                            
+                            boolean hasBeacon = Boolean.parseBoolean(blockSpec[15]);
+                            if(hasBeacon)
+                            {
+                                String beaconName = blockSpec[16];
+                                double distanceIn = Double.parseDouble(blockSpec[17]);
+                                boolean specialBeacon = Boolean.parseBoolean(blockSpec[19]);
+                                BeaconSignal theBeacon;
+                                if(specialBeacon)
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]), Double.parseDouble(blockSpec[20]));
+                                }
+                                else
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]));
+                                }
+                                b.setBeacon(theBeacon);
+                                b.setBeaconLocation(distanceIn);
+                                b.setHasABeacon(true);
+                            }
+                            else
+                            {
+                                b.setHasABeacon(false);
+                            }
+                            
                             theLines.get(0).theBlocks.add(b);
                         }
                         else if(blockSpec[1].equalsIgnoreCase("s"))
@@ -444,6 +487,31 @@ public class TrackModel
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             b.setTswitchID(tswitchID);
+                            
+                            boolean hasBeacon = Boolean.parseBoolean(blockSpec[15]);
+                            if(hasBeacon)
+                            {
+                                String beaconName = blockSpec[16];
+                                double distanceIn = Double.parseDouble(blockSpec[17]);
+                                boolean specialBeacon = Boolean.parseBoolean(blockSpec[19]);
+                                BeaconSignal theBeacon;
+                                if(specialBeacon)
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]), Double.parseDouble(blockSpec[20]));
+                                }
+                                else
+                                {
+                                    theBeacon = new BeaconSignal(beaconName, Boolean.parseBoolean(blockSpec[18]));
+                                }
+                                b.setBeacon(theBeacon);
+                                b.setBeaconLocation(distanceIn);
+                                b.setHasABeacon(true);
+                            }
+                            else
+                            {
+                                b.setHasABeacon(false);
+                            }
+                            
                             theLines.get(1).theBlocks.add(b);
                         }
                         else if(blockSpec[1].equalsIgnoreCase("s"))

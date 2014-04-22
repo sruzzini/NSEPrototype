@@ -646,7 +646,14 @@ public class TrackModelPanel extends javax.swing.JPanel {
         double velocity = theTrackModel.theLines.get(line).theBlocks.get(block).getVelocity() * 2.23694;
         velocityOut.setText(((Double)velocity).toString());
         authorityOut.setText(((Integer)theTrackModel.theLines.get(line).theBlocks.get(block).getAuthority()).toString());
-        beaconOut.setText("Not yet implemented");
+        if(theTrackModel.theLines.get(line).theBlocks.get(block).hasABeacon())
+        {
+            beaconOut.setText(theTrackModel.theLines.get(line).theBlocks.get(block).getBeacon().StationName + " Distance: " + theTrackModel.theLines.get(line).theBlocks.get(block).getBeacon().DistanceFromStation);
+        }
+        else
+        {
+            beaconOut.setText("No Beacon Here");
+        }
         if (theTrackModel.theLines.get(line).theBlocks.get(block).hasStation())
         {
             hasStationOut.setText("Yes");
