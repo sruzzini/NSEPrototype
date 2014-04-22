@@ -273,11 +273,13 @@ public class TrackModel
                 if(TheTrainLocations.get(i).DistanceSoFar > 32.2)
                 {
                     TheLines.get(lineNum).TheBlocks.get(TheTrainLocations.get(i).PrevBlock).setOccupied(false);
+                    TheLines.get(lineNum).TheBlocks.get(TheTrainLocations.get(i).PrevBlock).setBeaconSent(false);
                 }
                 // special case for block 77 to block 101
                 else if(TheTrainLocations.get(i).PrevBlock == 101 && TheTrainLocations.get(i).CurrentBlock == 102)
                 {
                     TheLines.get(lineNum).TheBlocks.get(77).setOccupied(false);
+                    TheLines.get(lineNum).TheBlocks.get(77).setBeaconSent(false);
                 }
     	    }
     	    else
@@ -285,6 +287,7 @@ public class TrackModel
                 if(TheTrainLocations.get(i).DistanceSoFar > 32.2)
                 {
                     TheLines.get(lineNum).TheBlocks.get(block).setOccupied(false);
+                    TheLines.get(lineNum).TheBlocks.get(block).setBeaconSent(false);
                 }
     	    	TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).setOccupied(true);
     	    }
@@ -301,20 +304,21 @@ public class TrackModel
             {
                 if(TheTrainLocations.get(i).PrevBlock < TheTrainLocations.get(i).CurrentBlock)
                 {
-                    if(TheTrainLocations.get(i).DistanceSoFar >= TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation())
+                    if((TheTrainLocations.get(i).DistanceSoFar >= TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation()) && !TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconSent())
                     {
                         TheTrains.get(i).setBeaconSignal(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeacon());
+                        TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).setBeaconSent(true);
                     }
                 }
                 else
                 {
-                   if(TheTrainLocations.get(i).DistanceSoFar >= (TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getLength() - TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation()))
+                   if((TheTrainLocations.get(i).DistanceSoFar >= (TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getLength() - TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconLocation())) && !TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeaconSent())
                     {
                         TheTrains.get(i).setBeaconSignal(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).getBeacon());
+                        TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).setBeaconSent(true);
                     } 
                 }
             }
-    	    
     	}
     }
     

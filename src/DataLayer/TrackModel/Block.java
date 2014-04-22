@@ -10,6 +10,7 @@ public class Block {
     private int authority; // the authority set on the block
     private BeaconSignal beacon; // the beacon signal on the block
     private double beaconLocation; // the location of the beacon
+    private boolean beaconSent; // prevents the beacon from being sent to a train more than once
     private int blockID; // the number of this block
     private boolean closed; // whether or not the block is closed
     private double cumElev; // the cumulative elevation of the block
@@ -58,6 +59,7 @@ public class Block {
         this.velocity = 0;
         this.authority = 0;
         this.destination = 0;
+        this.beaconSent = false;
     }
     
     // copy() returns a new instance of block with attributes that match the 
@@ -83,9 +85,7 @@ public class Block {
         b.setStationString(this.stationString);
         b.setTswitchID(this.tswitchID);
         b.setVelocity(this.velocity);
-        
-        
-        
+        b.setBeaconSent(this.beaconSent);
         
         return b;
     }
@@ -109,6 +109,11 @@ public class Block {
     public double getBeaconLocation()
     {
         return beaconLocation;
+    }
+    
+    public boolean getBeaconSent()
+    {
+        return beaconSent;
     }
     
     // getBlockID() returns the block number
@@ -244,9 +249,14 @@ public class Block {
         this.beacon = beacon;
     }
     
-    void setBeaconLocation(double distanceIn) 
+    public void setBeaconLocation(double distanceIn) 
     {
         this.beaconLocation = distanceIn;
+    }
+    
+    public void setBeaconSent(boolean b)
+    {
+        this.beaconSent = b;
     }
     
     public void setClosed(boolean closed) 
