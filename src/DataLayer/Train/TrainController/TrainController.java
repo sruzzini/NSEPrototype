@@ -226,7 +226,6 @@ public class TrainController
     */
     public void setBeaconSignal(BeaconSignal s)
     {
-        System.out.println("Setting Beacon for Train " + this.iD);
         this.lastBeacon = s;
         this.calculateStop();
     }
@@ -277,17 +276,17 @@ public class TrainController
         String s;
         if (this.stoppedAtStation)
         {
-            s = "Stopped at: ";
+            s = "Stopped at: " + this.lastBeacon.StationName;
         }
         else if (this.preparingStop || this.engagingStop)
         {
-            s = "Approaching: ";
+            s = "Approaching: " + this.lastBeacon.StationName;
         }
         else
         {
-            s = "Next Stop: ";
+            s = "Next Stop: " + this.trackSignal.NextDestination;
         }
-        return (s + this.trackSignal.NextDestination);
+        return s;
     }
     
     /* calculateEBrakeCommand(int failure) calculates the emergency brake command
@@ -355,7 +354,7 @@ public class TrainController
     {
         boolean door = false;
         if ((vCurr == 0) && (this.OperatorLeftDoor == OperatorInputStatus.ON) ||  //Train is stopped and conductor has left door input on
-            (this.stoppedAtStation && !this.lastBeacon.StationOnRight && (this.time.secondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) //stopped and station on the left and it's not been a minute
+            (this.stoppedAtStation && !this.lastBeacon.StationOnRight)) //stopped and station on the left
         {
             door = true;
         }
@@ -371,7 +370,7 @@ public class TrainController
     {
         boolean door = false;
         if ((vCurr == 0) && (this.OperatorRightDoor == OperatorInputStatus.ON) || //Train is stopped and conductor has right door input on
-            (this.stoppedAtStation && this.lastBeacon.StationOnRight && (this.time.secondsSince(this.stoppedAtStationTime) < SystemTime.SECONDS_IN_MINUTE))) // stopped and station on the right and it's not been a minute
+            (this.stoppedAtStation && this.lastBeacon.StationOnRight)) // stopped and station on the right
         {
             door = true;
         }
@@ -393,28 +392,14 @@ public class TrainController
         boolean eBrakeFailure = hasEBrakeFailure(failure); //check if there is an e-brake failure
         
         if (((this.OperatorSBrake == OperatorInputStatus.ON) && !sBrakeFailure) || //Operator pulls brake an no s-brake failure
-            (vError <= TrainController.MIN_VERROR_FOR_S_BRAKE && !sBrakeFailure) || //Verror is under -5mph and no s-brake failure
-            (vSafe == 0 && !sBrakeFailure) || //Vcommand safe is 0 and no s-brake failure
-            (!sBrakeFailure && (this.trackSignal.getAuthority() == 0)) || //Authority is 0 and no s-brake failure
+            (vError <= TrainController.MIN_VERROR_FOR_S_BRAKE && !sBrakeFailure && !this.preparingStop) || //Verror is under -5mph and no s-brake failure
+            (vSafe == 0 && !sBrakeFailure && !this.preparingStop) || //Vcommand safe is 0 and no s-brake failure
+            (!sBrakeFailure && (this.trackSignal.getAuthority() == 0) && !this.preparingStop) || //Authority is 0 and no s-brake failure
             (!sBrakeFailure &&  eBrakeFailure) || //There is an e-brake failure and no s-brake failure
             (this.engagingStop && !sBrakeFailure)) //stopping at station and no sBrakeFailure
         {
             sBrake = true;
         }
-        
-        //check for releasing brake after done stopping
-        if (this.stoppedAtStation &&  //stopped at a station
-            (this.time.secondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been a minute
-            !this.trainStatus.getRightDoorStatus() && //right doors closed
-            !this.trainStatus.getLeftDoorStatus()) //left doors closed
-        {
-            sBrake = false;
-            this.stoppedAtStation = false;
-            this.engagingStop = false;
-            this.preparingStop = false;
-        }
-        
-        
         return sBrake;
     }
     
@@ -445,7 +430,6 @@ public class TrainController
         double stopDistance = ((this.trainStatus.getVelocity() / 2) * stopTime); //distance it takes to stop
         double distanceUntilEngagingStop = (this.lastBeacon.DistanceFromStation - stopDistance);
         this.stopBrakeEngageDelay = (int) (distanceUntilEngagingStop / this.trainStatus.getVelocity()); //calculate time until getting to brake engage point
-        System.out.println("Calculated stop time = " + this.stopBrakeEngageDelay);
     }
     
     /* calculateTrainCommand() calculates a command ot send to the train
@@ -481,11 +465,27 @@ public class TrainController
             }
         }
         
+        //check for finished 1 minute at the station
+        if (this.stoppedAtStation &&  //stopped at the station
+            (this.time.secondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been 1 minute
+            this.OperatorLeftDoor != OperatorInputStatus.ON && //left door is not being held open by operator
+            this.OperatorRightDoor != OperatorInputStatus.ON && //right door is not being held open by operator
+            this.OperatorSBrake != OperatorInputStatus.ON && //operator isn't holding service brake on
+            this.OperatorEBrake != OperatorInputStatus.ON) //operator isn't holding emergency brake on
+        {
+            this.stoppedAtStation = false;
+            this.engagingStop = false;
+            this.preparingStop = false;
+        }
+        
         //check for stopped at station
         if (this.engagingStop && (this.trainStatus.getVelocity() == 0))
         {
+            if (!this.stoppedAtStation)
+            {
+                this.stoppedAtStationTime = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier);
+            }
             this.stoppedAtStation = true;
-            this.stoppedAtStationTime = new SystemTime(this.time.Hour, this.time.Minute, this.time.Second, this.timeMultiplier);
         }
         
         //calculate power output
@@ -497,9 +497,7 @@ public class TrainController
         {
             currVError = 0 - currTrainVelocity;
             this.engagingStop = true;
-            System.out.println("WE ELAPSED THE BRAKE DELAY TIME");
         }
-        
         double currIntermediary = (this.lastIntermediary + (((this.samplePeriod * this.timeMultiplier)/2) * (currVError + this.lastVelocityError)));
         double power = (TrainController.PROPORTIONAL_GAIN * currVError) + (TrainController.INTEGRAL_GAIN * currIntermediary);
         if (power > TrainController.MAX_TRAIN_MOTOR_POWER)
@@ -562,7 +560,7 @@ public class TrainController
             if(command.PowerCommand > 0 &&  
                !command.RightDoorsOpen && //right door closed
                !command.LeftDoorsOpen &&  //left door closed
-               (this.trackSignal.getAuthority() > 0) && //authority is positive
+               ((this.trackSignal.getAuthority() > 0 && !this.preparingStop) || this.preparingStop) && //authority is positive
                (trainFailure == 0)) //no failure
             {
                 //check brakes and doors
