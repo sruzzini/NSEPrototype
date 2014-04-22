@@ -49,12 +49,13 @@ public abstract class PLC {
     public Commands runPLCProgram()
     {
         Commands tryOne = runAllPLCTasks();
-        Commands tryTwo = runAllPLCTasks();
-        Commands tryThree = runAllPLCTasks();
+        //Commands tryTwo = runAllPLCTasks();
+        //Commands tryThree = runAllPLCTasks();
         
-        Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
+        //Commands votingResult = commandsFromVote(tryOne, tryTwo, tryThree);
 
-        return votingResult;
+        //return votingResult;
+        return tryOne;
     }
     
     protected ArrayList<BlockInfoBundle> checkRRCrossings()

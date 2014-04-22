@@ -143,7 +143,7 @@ public class PLCGreenOne extends PLC {
         }
         if (block1.isOccupied() && !block12.isOccupied() && !block13.isOccupied())
         {
-            //System.out.println("PLCGreenOne - plcProgram - block1 is occupied with no adjacent occupancies. TrainsAway ==" + trainsAway);
+            System.out.println("PLCGreenOne - plcProgram - block1 is occupied with no adjacent occupancies. TrainsAway ==" + trainsAway);
             if (trainsAway == 0)
             {
                 trainPassingThru1 = true;
@@ -155,7 +155,7 @@ public class PLCGreenOne extends PLC {
                 {
                     c.pushCommand(new Switch(switch2.lineID, switch2.switchID, 
                         switch2.approachBlock, switch2.straightBlock, switch2.divergentBlock, dir));
-                    //System.out.println("PLCGreenOne - plcProgram - setting switch 2 towards block1");
+                    System.out.println("PLCGreenOne - plcProgram - setting switch 2 towards block1");
                 }
                 //push signal to block one to tell train to go
                /* c.pushCommand(new BlockSignalBundle(block1.getAuthority(), block1.getDestination(),

@@ -229,8 +229,8 @@ public class TrackController implements Runnable {
         Commands c;// = new Commands();
         while (true)
         {
+            //c = this.plcProgram.runPLCProgram(this.blockSnapShot(), this.switchSnapShot());
             c = this.plcProgram.runPLCProgram();
-            
             
             processCommandsLock.lock();
             try
@@ -628,7 +628,13 @@ public class TrackController implements Runnable {
         return "Track Controller " + this.line + "" + this.id;
     }
  
-    
+    private ArrayList<Block> blockSnapShot()
+    {
+        ArrayList<Block> snap;
+        snap = new ArrayList<>();
+        
+        return snap;
+    }
     
     private void processCommands(Commands c)
     {
@@ -697,6 +703,15 @@ public class TrackController implements Runnable {
                 //System.out.println("Track Controller - processCommands - set switch: " + switchID + " " + dir + " towards straight:divergent: " + theSwitch.straightBlock + ":" + theSwitch.divergentBlock);
 
             }
+    }
+    
+    private ArrayList<Switch> switchSnapShot()
+    {
+        ArrayList<Switch> snap;
+        snap = new ArrayList<>();
+        
+        
+        return snap;
     }
     
     //finally

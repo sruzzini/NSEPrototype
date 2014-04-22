@@ -23,7 +23,6 @@ import DataLayer.Wayside.Commands;
 import DataLayer.Wayside.TrackController;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import javax.swing.JOptionPane;
 
 public class PLCTestPanel extends javax.swing.JPanel {
