@@ -308,7 +308,7 @@ public class TrackController implements Runnable {
                 this.commandSwitchLock.lock();
                 try
                 {
-
+                    //System.out.println("TrackController - sendSwitchStateSignal - received packet for switch: " + packet.switchID);
                     this.commandSwitchQueue.add(packet);
                 }
                 finally
