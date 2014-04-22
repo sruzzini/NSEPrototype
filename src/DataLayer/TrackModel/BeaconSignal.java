@@ -21,6 +21,14 @@ public class BeaconSignal
         this.DistanceFromStation = DEFAULT_DISTANCE_FROM_STATION;
     }
     
+    public BeaconSignal(String station, boolean stationOnRight) 
+    {
+        this.StationName = station;
+        this.Velocity = DEFAULT_BEACON_VELOCITY;
+        this.StationOnRight = stationOnRight;
+        this.DistanceFromStation = DEFAULT_DISTANCE_FROM_STATION;
+    }
+    
     public BeaconSignal(String station, boolean stationOnRight, double distanceFromStation) 
     {
         this.StationName = station;

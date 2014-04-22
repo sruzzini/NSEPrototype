@@ -9,6 +9,7 @@ public class Block {
     public int prev;
     private int authority;
     private BeaconSignal beacon;
+    private double beaconLocation;
     private int blockID;
     private boolean closed;
     private double cumElev;
@@ -16,6 +17,7 @@ public class Block {
     private double elevation;
     private int failureState;
     private double gradient;
+    private boolean hasBeacon;
     private double length;
     private boolean light;
     private LightColor lightColor;
@@ -66,6 +68,11 @@ public class Block {
     public BeaconSignal getBeacon() 
     {
         return beacon;
+    }
+    
+    public double getBeaconLocation()
+    {
+        return beaconLocation;
     }
     
     public int getBlockID() 
@@ -142,6 +149,10 @@ public class Block {
         return velocity;
     }
 
+    public boolean hasABeacon() {
+        return hasBeacon;
+    }
+
     public boolean hasLight() 
     {
         return light;
@@ -187,6 +198,11 @@ public class Block {
         this.beacon = beacon;
     }
     
+    void setBeaconLocation(double distanceIn) 
+    {
+        this.beaconLocation = distanceIn;
+    }
+    
     public void setClosed(boolean closed) 
     {
         this.closed = closed;
@@ -202,6 +218,10 @@ public class Block {
         this.failureState = failureState;
     }
 
+    public void setHasABeacon(boolean hasBeacon) {
+        this.hasBeacon = hasBeacon;
+    }
+    
     public void setLightColor(LightColor lightColor) 
     {
         this.lightColor = lightColor;
