@@ -22,6 +22,7 @@ import DataLayer.TrackModel.Switch;
 import DataLayer.Wayside.Commands;
 import DataLayer.Wayside.TrackController;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import javax.swing.JOptionPane;
 
@@ -282,7 +283,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
         {
             selectedBlocks[k++] = Integer.parseInt((String) this.blockOccList.getModel().getElementAt(n));
         }
-        Hashtable<Integer, Block> blockTable = this.controller.getBlockTable();
+        HashMap<Integer, Block> blockTable = this.controller.getBlockTable();
         ArrayList<Block> blockArray = this.controller.getBlockInfo();
         
         for (Block b : blockArray)
