@@ -5,34 +5,24 @@ import java.util.*;
 
 public class Line 
 {
-    public ArrayList<Block> theBlocks; //Array of blocks in the line
-    public ArrayList<Switch> theSwitches; //Array of switches in the line
+    public ArrayList<Block> TheBlocks; //Array of blocks in the line
+    public ArrayList<Switch> TheSwitches; //Array of switches in the line
     private LineColor lineID; //Line Identification
     
-    // Line(LineColor lineID) creates a new line with the specified Line Identifier
-    // Parameters:
-    //     LineColor lineID - the specified Line Identifier
-    public Line(LineColor lineID)
-    {
-        this.lineID = lineID;
-        theBlocks = new ArrayList<>();
-        theSwitches = new ArrayList<>();
-    }
-    
-    // addBlock(Block b) adds a new block to the theBlocks arraylist
+    // addBlock(Block b) adds a new block to the TheBlocks arraylist
     // Parameters:
     //     Block b - the block object to be added to the line
     public void addBlock(Block b)
     {
-        theBlocks.add(b);
+        TheBlocks.add(b);
     }
     
-    // addSwitch(Switch s) adds a new switch to the theSwitches arraylist
+    // addSwitch(Switch s) adds a new switch to the TheSwitches arraylist
     // Parameters:
     //     Switch s - the switch object to be added to the line
     public void addSwitch(Switch s)
     {
-        theSwitches.add(s);
+        TheSwitches.add(s);
     }
     
     // getBlock(int blockID) returns the block object specified in the parameters
@@ -41,7 +31,7 @@ public class Line
     // Returns - Block, specified block
     public Block getBlock(int blockID) 
     {
-        return theBlocks.get(blockID - 1);
+        return TheBlocks.get(blockID - 1);
     }
     
     // getLineID() returns the identifier of the line
@@ -74,6 +64,16 @@ public class Line
     // Returns - Switch, specified switch
     public Switch getSwitch(int switchID) 
     {
-        return theSwitches.get(switchID - 1);
+        return TheSwitches.get(switchID - 1);
+    }
+    
+    // Line(LineColor lineID) creates a new line with the specified Line Identifier
+    // Parameters:
+    //     LineColor lineID - the specified Line Identifier
+    public Line(LineColor lineID)
+    {
+        this.lineID = lineID;
+        TheBlocks = new ArrayList<>();
+        TheSwitches = new ArrayList<>();
     }
 }

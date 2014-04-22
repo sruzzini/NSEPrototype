@@ -70,10 +70,10 @@ public class PLCGreenThree extends PLC{
             {
                 //puh switch command to switch -3 to point towards block 150
                 boolean dir = false;
-                if (switch5.straightBlock == 76) dir = true;
-                c.pushCommand(new Switch(LineColor.GREEN, switch5.switchID, 
-                        switch5.approachBlock, switch5.straightBlock, 
-                        switch5.divergentBlock, dir ));
+                if (switch5.StraightBlock == 76) dir = true;
+                c.pushCommand(new Switch(LineColor.GREEN, switch5.SwitchID, 
+                        switch5.ApproachBlock, switch5.StraightBlock, 
+                        switch5.DivergentBlock, dir ));
                 //push signal command to increase speed of blocks 149 and 150 to the speed limit
                // c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
                 //        block149.getDestination(), block149.getSpeedLimit(), 149, LineColor.GREEN));
@@ -95,10 +95,10 @@ public class PLCGreenThree extends PLC{
            {
                trainExiting = true;
                boolean dir = false;
-               if (switch5.straightBlock == 101) dir = true;
-               c.pushCommand(new Switch(LineColor.GREEN, switch5.switchID, 
-                        switch5.approachBlock, switch5.straightBlock, 
-                        switch5.divergentBlock, dir ));
+               if (switch5.StraightBlock == 101) dir = true;
+               c.pushCommand(new Switch(LineColor.GREEN, switch5.SwitchID, 
+                        switch5.ApproachBlock, switch5.StraightBlock, 
+                        switch5.DivergentBlock, dir ));
            }
         }   
         if (block101.isOccupied() && !block77.isOccupied())
@@ -121,10 +121,10 @@ public class PLCGreenThree extends PLC{
             {
                 //push switch signal to set switch -2 towards A
                 boolean dir = false;
-                if (switch6.straightBlock == 86) dir = true;
-                c.pushCommand(new Switch(switch6.lineID, switch6.switchID, 
-                        switch6.approachBlock, switch6.straightBlock, 
-                        switch6.divergentBlock, dir));
+                if (switch6.StraightBlock == 86) dir = true;
+                c.pushCommand(new Switch(switch6.LineID, switch6.SwitchID, 
+                        switch6.ApproachBlock, switch6.StraightBlock, 
+                        switch6.DivergentBlock, dir));
                 enteringLoop = true;
             }
         }  
@@ -147,9 +147,9 @@ public class PLCGreenThree extends PLC{
                 trainWaitingAt100 = false;
                 //push switch signal to set switch -2 to point towards block 1
                 boolean dir = false;
-                if (switch6.straightBlock == 100) dir = true;
-                c.pushCommand(new Switch(switch6.lineID, switch6.switchID, 
-                        switch6.approachBlock, switch6.straightBlock, switch6.divergentBlock, dir));
+                if (switch6.StraightBlock == 100) dir = true;
+                c.pushCommand(new Switch(switch6.LineID, switch6.SwitchID, 
+                        switch6.ApproachBlock, switch6.StraightBlock, switch6.DivergentBlock, dir));
                 //push signal to block one to tell train to go
                 //c.pushCommand(new BlockSignalBundle(block100.getAuthority(), block100.getDestination(),
                         //block100.getSpeedLimit(), block100.getBlockID(), LineColor.GREEN));

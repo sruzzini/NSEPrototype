@@ -4,38 +4,18 @@ import DataLayer.EnumTypes.LineColor;
 
 public class Switch 
 {
-    public int approachBlock; // number of block that is the approach block of the switch
-    public int divergentBlock; // number of block that is the divergent block of the switch
-    public LineColor lineID; // line identifier for the line that the switch belongs to
-    public boolean straight; // boolean - is the switch in the straight or divergent position
-    public int straightBlock; // number of block that is the straight block of the switch
-    public int switchID; // switch identifier
+    public int ApproachBlock; // number of block that is the approach block of the switch
+    public int DivergentBlock; // number of block that is the divergent block of the switch
+    public LineColor LineID; // line identifier for the line that the switch belongs to
+    public boolean Straight; // boolean - is the switch in the Straight or divergent position
+    public int StraightBlock; // number of block that is the Straight block of the switch
+    public int SwitchID; // switch identifier
     
-    // Switch(LineColor lineID, int switchID, int approachBlock, int straightBlock, int divergentBlock, boolean straight)
-    // instantiates a new switch object with the specified parameters
-    // Parameters:
-    //     LineColor lineID - line that the new switch belongs to
-    //     int switchID - identifier for the new switch
-    //     int approachBlock - identifier for the approach block
-    //     int straightBlock - identifier for the straight block
-    //     int divergentBlock - identifier for the divergent block
-    //     boolean straight - initial position of the switch upon instantiation
-    public Switch(LineColor lineID, int switchID, int approachBlock, 
-            int straightBlock, int divergentBlock, boolean straight)
-    {
-        this.lineID = lineID;
-        this.switchID = switchID;
-        this.approachBlock = approachBlock;
-        this.straightBlock = straightBlock;
-        this.divergentBlock = divergentBlock;
-        this.straight = straight;
-    }
-    
-    // isStraight() returns whether or not the switch is in the straight position
-    // Returns - boolean, whether or not the switch is in the straight position
+    // isStraight() returns whether or not the switch is in the Straight position
+    // Returns - boolean, whether or not the switch is in the Straight position
     public boolean isStraight() 
     {
-        return straight;
+        return Straight;
     }
     
     // matches(Switch s) returns whether or not this switch object has all the same 
@@ -47,12 +27,33 @@ public class Switch
     {
         boolean result = true;
         
-        if (this.lineID != s.lineID || this.switchID != s.switchID || this.approachBlock != s.approachBlock ||
-                this.straightBlock != s.straightBlock || this.divergentBlock != s.divergentBlock || this.straight != s.straight)
+        if (this.LineID != s.LineID || this.SwitchID != s.SwitchID || this.ApproachBlock != s.ApproachBlock ||
+                this.StraightBlock != s.StraightBlock || this.DivergentBlock != s.DivergentBlock || this.Straight != s.Straight)
         {
             result = false;
         }
         
         return result;
     }
+    
+    // Switch(LineColor LineID, int SwitchID, int ApproachBlock, int StraightBlock, int DivergentBlock, boolean Straight)
+    // instantiates a new switch object with the specified parameters
+    // Parameters:
+    //     LineColor LineID - line that the new switch belongs to
+    //     int SwitchID - identifier for the new switch
+    //     int ApproachBlock - identifier for the approach block
+    //     int StraightBlock - identifier for the Straight block
+    //     int DivergentBlock - identifier for the divergent block
+    //     boolean Straight - initial position of the switch upon instantiation
+    public Switch(LineColor lineID, int switchID, int approachBlock, 
+            int straightBlock, int divergentBlock, boolean straight)
+    {
+        this.LineID = lineID;
+        this.SwitchID = switchID;
+        this.ApproachBlock = approachBlock;
+        this.StraightBlock = straightBlock;
+        this.DivergentBlock = divergentBlock;
+        this.Straight = straight;
+    }
+    
 }

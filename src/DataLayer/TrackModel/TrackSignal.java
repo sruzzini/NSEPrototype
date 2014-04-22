@@ -22,6 +22,71 @@ public class TrackSignal
     public double Gradient; // gradient of the current track block
     public int DeltaPassengers; // the change in the number of passangers on the train
     
+    // getAuthority() returns the current set authority in the track signal
+    // Returns - int, the current authority
+    public int getAuthority()
+    {
+        return this.Authority;
+    }
+    
+    // getNextDestination() returns the current set next destination in the track signal
+    // Returns - String, the current next destination
+    public String getNextDestination()
+    {
+        String s = "**Destination Not Specified**";
+        if (this.NextDestination != null)
+        {
+            s = this.NextDestination;
+        }
+        return s;
+    }
+    
+    // getUndergroundStatus() returns that current underground status in the track signal
+    // Returns - boolean, the current underground status
+    public boolean getUndergroundStatus()
+    {
+        return this.IsUnderground;
+    }
+    
+    // getVelocityCommand() returns the current set velocity command in the track signal
+    // Returns - double, the current velocity command
+    public double getVelocityCommand()
+    {
+        return this.VelocityCommand;
+    }
+    
+    // setAuthority(int x) updates the authority in the track signal
+    // Parameters:
+    //     int x - the new authority to be set
+    public void setAuthority(int x)
+    {
+        this.Authority = x;
+    }
+    
+    // setNextDestination(String x) updates the next destination in the track signal
+    // Parameters:
+    //     String s - the new next destination to be set
+    public void setNextDestination(String x)
+    {
+        this.NextDestination = x;
+    }
+    
+    // setUndergroundStatus(boolean x) updates the underground status in the track signal
+    // Parameters:
+    //     boolean x - the new underground status to be set
+    public void setUndergroundStatus(boolean x)
+    {
+        this.IsUnderground = x;
+    }
+    
+    // setVelocityCommand(double x) updates the velocity command in the track signal
+    // Parameters:
+    //     double x - the new velocity command to be set
+    public void setVelocityCommand(double x)
+    {
+        this.VelocityCommand = x;
+    }
+    
     // TrackSignal() instantiates a new TrackSignal object with default values
     public TrackSignal()
     {
@@ -61,54 +126,5 @@ public class TrackSignal
         this.IsUnderground = isUnderground;
         this.NextDestination = nextDestination;
         this.Gradient = gradient;
-    }
-    
-    
-    //Getters
-    public double getVelocityCommand()
-    {
-        return this.VelocityCommand;
-    }
-    
-    public int getAuthority()
-    {
-        return this.Authority;
-    }
-    
-    public boolean getUndergroundStatus()
-    {
-        return this.IsUnderground;
-    }
-    
-    public String getNextDestination()
-    {
-        String s = "**Destination Not Specified**";
-        if (this.NextDestination != null)
-        {
-            s = this.NextDestination;
-        }
-        return s;
-    }
-    
-    
-    //Setters
-    public void setVelocityCommand(double x)
-    {
-        this.VelocityCommand = x;
-    }
-    
-    public void setAuthority(int x)
-    {
-        this.Authority = x;
-    }
-    
-    public void setUndergroundStatus(boolean x)
-    {
-        this.IsUnderground = x;
-    }
-    
-    public void setNextDestination(String x)
-    {
-        this.NextDestination = x;
     }
 }

@@ -13,49 +13,62 @@ import DataLayer.EnumTypes.*;
  * @author rmertz92
  */
 public class TrainLocation {
-    public LineColor line;
-    public int currentBlock;
-    public int prevBlock;
-    public double distanceSoFar;
+    public LineColor Line; // the Line the train is on
+    public int CurrentBlock; // the current block the train is on
+    public int PrevBlock; // the block the train was on before the current block
+    public double DistanceSoFar; // distance into the current block the train has traveled
     
-    public TrainLocation()
-    {
-        this.line = LineColor.YARD;
-        this.currentBlock = 0;
-        this.distanceSoFar = 0.0;
-    }
-    
+    // setStartLocation(int lineNum) places the train on the first block of the 
+    // specified Line when dispatched from the yard
+    // Parameters:
+    //     int lineNum - the identifier for the Line the train should be dispatched to
     public void setStartLocation(int lineNum)
     {
-        prevBlock = 0;
-        distanceSoFar = 0.0;
+        PrevBlock = 0;
+        DistanceSoFar = 0.0;
         if (lineNum == 0) // green
         {
-            line = LineColor.GREEN;
-            currentBlock = 152;
+            Line = LineColor.GREEN;
+            CurrentBlock = 152;
         }
         else if (lineNum == 1) // red
         {
-            line = LineColor.RED;
-            currentBlock = 77;
+            Line = LineColor.RED;
+            CurrentBlock = 77;
         }
     }
     
+    // TrainLocation() creates a new instance of a train location object
+    public TrainLocation()
+    {
+        this.Line = LineColor.YARD;
+        this.CurrentBlock = 0;
+        this.DistanceSoFar = 0.0;
+    }
+    
+    // updateLocation(double deltaX, double length, int prev, int next, int switchAlternate) updates
+    // the current location of the train on the track
+    // Parameters:
+    //     double deltaX - the distance the train has traveled since the last update
+    //     double length - the length of the current block the train is on
+    //     int prev - the previous block to the current block the train is on
+    //     int next - the next block to the current block the train is on
+    //     int switchAlternate - used for resolving discrepancies caused by switch positions in the previous block
     public void updateLocation(double deltaX, double length, int prev, int next, int switchAlternate)
     {
-        distanceSoFar = deltaX + distanceSoFar;
-        if(distanceSoFar > length)
+        DistanceSoFar = deltaX + DistanceSoFar;
+        if(DistanceSoFar > length)
         {
-            distanceSoFar -= length;
-            if(prev == prevBlock || prev == switchAlternate)
+            DistanceSoFar -= length;
+            if(prev == PrevBlock || prev == switchAlternate)
             {
-                prevBlock = currentBlock;
-                currentBlock = next;
+                PrevBlock = CurrentBlock;
+                CurrentBlock = next;
             }
-            else if(next == prevBlock || next == switchAlternate)
+            else if(next == PrevBlock || next == switchAlternate)
             {
-                prevBlock = currentBlock;
-                currentBlock = prev;
+                PrevBlock = CurrentBlock;
+                CurrentBlock = prev;
             }
         }
     }

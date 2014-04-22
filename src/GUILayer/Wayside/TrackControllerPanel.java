@@ -56,7 +56,7 @@ public class TrackControllerPanel extends javax.swing.JPanel {
          int i = 0;
          for (Switch sw : switches)
          {
-             s[i++] = "Switch " + (sw.switchID-1);
+             s[i++] = "Switch " + (sw.SwitchID-1);
              
          }
          switchComboBox.setModel(new javax.swing.DefaultComboBoxModel(s));
@@ -77,8 +77,8 @@ public class TrackControllerPanel extends javax.swing.JPanel {
         int n = this.switchComboBox.getSelectedIndex();
         
         Switch sw = switches.get(n);
-        this.straightRB.setText(sw.approachBlock + " to " + sw.straightBlock);
-        this.divergentRB.setText(sw.approachBlock + " to " + sw.divergentBlock);
+        this.straightRB.setText(sw.ApproachBlock + " to " + sw.StraightBlock);
+        this.divergentRB.setText(sw.ApproachBlock + " to " + sw.DivergentBlock);
              
         
     }
@@ -90,22 +90,22 @@ public class TrackControllerPanel extends javax.swing.JPanel {
         Switch sw2 = switches.get(1);
         String statusOne, statusTwo;
         
-        if (sw1.straight)
+        if (sw1.Straight)
         {
-            statusOne = sw1.approachBlock + ":" + sw1.straightBlock;
+            statusOne = sw1.ApproachBlock + ":" + sw1.StraightBlock;
         }
         else
         {
-            statusOne = sw1.approachBlock + ":" + sw1.divergentBlock;
+            statusOne = sw1.ApproachBlock + ":" + sw1.DivergentBlock;
         }
         
-        if (sw2.straight)
+        if (sw2.Straight)
         {
-            statusTwo = sw2.approachBlock + ":" + sw2.straightBlock;
+            statusTwo = sw2.ApproachBlock + ":" + sw2.StraightBlock;
         }
         else
         {
-            statusTwo = sw2.approachBlock + ":" + sw2.divergentBlock;
+            statusTwo = sw2.ApproachBlock + ":" + sw2.DivergentBlock;
         }
         
         this.switchStatusOne.setText(statusOne);
@@ -337,8 +337,8 @@ public class TrackControllerPanel extends javax.swing.JPanel {
             dir = false;
         }
         
-        switchCommand = new Switch(selectedSwitch.lineID, selectedSwitch.switchID, selectedSwitch.approachBlock, 
-                selectedSwitch.straightBlock, selectedSwitch.divergentBlock, dir);
+        switchCommand = new Switch(selectedSwitch.LineID, selectedSwitch.SwitchID, selectedSwitch.ApproachBlock, 
+                selectedSwitch.StraightBlock, selectedSwitch.DivergentBlock, dir);
         
         this.controller.sendSwitchStateSignal(switchCommand);
         //this.updateSwitchStatus();

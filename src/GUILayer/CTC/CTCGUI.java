@@ -591,9 +591,9 @@ public class CTCGUI extends javax.swing.JPanel {
         
         for(int i = 0; i < this.CTCOffice.switchPostions.size(); i++)
         {
-            if(x.equals(lineString(this.CTCOffice.switchPostions.get(i).lineID)))
+            if(x.equals(lineString(this.CTCOffice.switchPostions.get(i).LineID)))
             {
-              switches.add(Integer.toString(this.CTCOffice.switchPostions.get(i).switchID));
+              switches.add(Integer.toString(this.CTCOffice.switchPostions.get(i).SwitchID));
             }
         }
         if(switches.size() == 0)
@@ -871,17 +871,17 @@ public class CTCGUI extends javax.swing.JPanel {
             
             for(int i = 0; i < this.CTCOffice.switchPostions.size(); i++)
             {
-                if(switchID == this.CTCOffice.switchPostions.get(i).switchID)
+                if(switchID == this.CTCOffice.switchPostions.get(i).SwitchID)
                 {
                     if(this.switchPositionsStraightRadio.isSelected() && !this.CTCOffice.switchPostions.get(i).isStraight())
                     {
                         this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
-                        this.CTCOffice.switchBundle.get(0).straight = true;
+                        this.CTCOffice.switchBundle.get(0).Straight = true;
                     }
                     else if(this.switchPositionsDivergentRadio.isSelected() && this.CTCOffice.switchPostions.get(i).isStraight()) 
                     {
                         this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
-                        this.CTCOffice.switchBundle.get(0).straight = false;
+                        this.CTCOffice.switchBundle.get(0).Straight = false;
                     }
                 }
                 
@@ -945,17 +945,17 @@ public class CTCGUI extends javax.swing.JPanel {
         
         for(int i = 0; i <this.CTCOffice.switchPostions.size(); i++)
         {
-            this.switchPositionsTable.setValueAt(lineString(this.CTCOffice.switchPostions.get(i).lineID), i, 0);
-            this.switchPositionsTable.setValueAt(this.CTCOffice.switchPostions.get(i).switchID, i , 1);
-            if(this.CTCOffice.switchPostions.get(i).straight)
+            this.switchPositionsTable.setValueAt(lineString(this.CTCOffice.switchPostions.get(i).LineID), i, 0);
+            this.switchPositionsTable.setValueAt(this.CTCOffice.switchPostions.get(i).SwitchID, i , 1);
+            if(this.CTCOffice.switchPostions.get(i).Straight)
             {
                 position = "Straight";
-                connection = this.CTCOffice.switchPostions.get(i).approachBlock + ":" + this.CTCOffice.switchPostions.get(i).straightBlock;
+                connection = this.CTCOffice.switchPostions.get(i).ApproachBlock + ":" + this.CTCOffice.switchPostions.get(i).StraightBlock;
             }
             else
             {
                 position = "Divergent";
-                connection = this.CTCOffice.switchPostions.get(i).approachBlock + ":" + this.CTCOffice.switchPostions.get(i).divergentBlock;
+                connection = this.CTCOffice.switchPostions.get(i).ApproachBlock + ":" + this.CTCOffice.switchPostions.get(i).DivergentBlock;
                 
             }
             

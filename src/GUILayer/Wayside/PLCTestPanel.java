@@ -44,7 +44,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
         
         for (Block b : controller.getBlockInfo())
         {
-            newBlock = new Block(b.getBlockID(), b.next, b.prev, b.getLength(), b.getSpeedLimit(), b.getElevation(), b.getCumElev(), b.getGradient(), b.isUnderground(), b.hasLight(),
+            newBlock = new Block(b.getBlockID(), b.Next, b.Prev, b.getLength(), b.getSpeedLimit(), b.getElevation(), b.getCumElev(), b.getGradient(), b.isUnderground(), b.hasLight(),
             b.hasRRXing(), b.hasStation(), b.hasTswitch());
             /*
             blockArray.add(newBlock);
@@ -55,7 +55,7 @@ public class PLCTestPanel extends javax.swing.JPanel {
         
         for (Switch s : controller.getSwitchInfo())
         {
-            newSwitch = new Switch(s.lineID, s.switchID, s.approachBlock, s.straightBlock, s.divergentBlock, s.straight);
+            newSwitch = new Switch(s.LineID, s.SwitchID, s.ApproachBlock, s.StraightBlock, s.DivergentBlock, s.Straight);
            // switchArray.add(newSwitch);
             newController.addSwitch(newSwitch);
         }

@@ -127,7 +127,7 @@ public class Commands {
         }
         for (Switch sw : this.switchCommands)
         {
-            s += "Switch Command - switch: " + (sw.switchID -1) + " straight block: " + sw.straightBlock + " divergent block: " + sw.divergentBlock + " is straight: " + sw.straight + "\n";
+            s += "Switch Command - switch: " + (sw.SwitchID -1) + " straight block: " + sw.StraightBlock + " divergent block: " + sw.DivergentBlock + " is straight: " + sw.Straight + "\n";
             //s += sw.toString();
         }
         

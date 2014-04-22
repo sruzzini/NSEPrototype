@@ -91,10 +91,10 @@ public final class Wayside
             //catch error
             e1.printStackTrace();
         }
-        this.setBlockInfoArray(track.theLines.get(0).theBlocks, LineColor.GREEN);
-        this.setBlockInfoArray(track.theLines.get(1).theBlocks, LineColor.RED);
-        this.setSwitchArray(track.theLines.get(0).theSwitches);
-        this.setSwitchArray(track.theLines.get(1).theSwitches);
+        this.setBlockInfoArray(track.TheLines.get(0).TheBlocks, LineColor.GREEN);
+        this.setBlockInfoArray(track.TheLines.get(1).TheBlocks, LineColor.RED);
+        this.setSwitchArray(track.TheLines.get(0).TheSwitches);
+        this.setSwitchArray(track.TheLines.get(1).TheSwitches);
         this.configurePLCs();
   
     }
@@ -263,9 +263,9 @@ public final class Wayside
         {
             for (TrackController tc : this.controllers)
             {
-                if (tc.getLine() == packet.lineID && tc.containsBlock(packet.approachBlock) )
+                if (tc.getLine() == packet.LineID && tc.containsBlock(packet.ApproachBlock) )
                 {
-                    tc.sendSwitchStateSignal(new Switch(packet.lineID, packet.switchID, packet.approachBlock, packet.straightBlock, packet.divergentBlock, packet.straight));
+                    tc.sendSwitchStateSignal(new Switch(packet.LineID, packet.SwitchID, packet.ApproachBlock, packet.StraightBlock, packet.DivergentBlock, packet.Straight));
                     break;
                 }
             }
@@ -479,10 +479,10 @@ public final class Wayside
         
         for (Switch s : switchArray)
         {
-            line = s.lineID;
+            line = s.LineID;
             for (TrackController tc : this.controllers)
             {
-                if (tc.getLine() == s.lineID && ( tc.containsBlock(s.approachBlock)))// || tc.containsBlock(s.divergentBlock) || tc.containsBlock(s.straightBlock) ))
+                if (tc.getLine() == s.LineID && ( tc.containsBlock(s.ApproachBlock)))// || tc.containsBlock(s.DivergentBlock) || tc.containsBlock(s.StraightBlock) ))
                 {
                     tc.addSwitch(s);
                 }
