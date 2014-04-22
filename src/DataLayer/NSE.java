@@ -65,7 +65,7 @@ public class NSE implements Runnable
         this.TrainLocations = new ArrayList<TrainLocation>();
         this.Trains = new ArrayList<Train>();
         //creates 10 Train Objects and 10 TrainLocations
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
         {
             this.Trains.add(new Train(i, this.isRunning, this.Time));
             this.Trains.get(i).setTimeMultiplier(this.TimeMultiplier);

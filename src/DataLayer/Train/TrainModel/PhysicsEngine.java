@@ -478,9 +478,9 @@ public class PhysicsEngine implements Runnable
             currTime = System.nanoTime();
             deltaT = (double) (currTime - lastTime) * time_multiplier; // in ms
             //deltaT = deltaT  / 1000; // in s
-            System.out.println(deltaT);
+            //System.out.println(deltaT);
             deltaT = deltaT / 1000000000; // in s
-            System.out.println(deltaT);
+            //System.out.println(deltaT);
             lastTime = currTime;
             
             velocity = velocity + trainAccel * deltaT;
@@ -492,6 +492,7 @@ public class PhysicsEngine implements Runnable
             delta_x = delta_x + velocity * deltaT;
  
             //System.out.println(delta_x);
+            
             sendPhysicsInfo();
             /*
             if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
