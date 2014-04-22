@@ -69,8 +69,8 @@ public abstract class PLC {
         for (int n : this.blocksWithCrossing)
         {
             b = this.blocks.get(n);
-            prev = this.blocks.get(b.prev);
-            next = this.blocks.get(b.next);
+            prev = this.blocks.get(b.Prev);
+            next = this.blocks.get(b.Next);
             
             if (b.isOccupied() || prev.isOccupied() || next.isOccupied())
             {
@@ -131,11 +131,11 @@ public abstract class PLC {
         {
                 if (b.isOccupied() && b.getVelocity() != 0)
                 {
-                    nextBlock = this.findBlock(b.prev, b.getBlockID());
+                    nextBlock = this.findBlock(b.Prev, b.getBlockID());
                     if (nextBlock != null && !nextBlock.isOccupied())
                     {
                         sendSignal = true;
-                        prev = b.prev;
+                        prev = b.Prev;
                         if (prev < 0)
                         {
                             try
@@ -170,11 +170,11 @@ public abstract class PLC {
                           //              " speed: " + b.getVelocity() + " to block " + prev);
                         
                     }
-                    nextBlock = this.findBlock(b.next, b.getBlockID());
+                    nextBlock = this.findBlock(b.Next, b.getBlockID());
                     if (nextBlock != null && !nextBlock.isOccupied())
                     {
                         sendSignal = true;
-                        next = b.next;
+                        next = b.Next;
                         if (next < 0)
                         {
                             try
@@ -233,16 +233,16 @@ public abstract class PLC {
                 {
                     //System.out.println("PLC - findBlock - switch is null. switch lookup: " + next + " in plc: " + this.id);
                 }
-                approach = s.approachBlock;
-                divergent = s.divergentBlock;
-                straight = s.straightBlock;
+                approach = s.ApproachBlock;
+                divergent = s.DivergentBlock;
+                straight = s.StraightBlock;
                 if (current == straight || current == divergent)
                 {
                     b = this.blocks.get(approach);
                 }
                 else
                 {
-                    if (s.straight)
+                    if (s.Straight)
                     {
                         b = this.blocks.get(straight);
                     }
@@ -317,15 +317,15 @@ public abstract class PLC {
         
         for (Switch sw : this.switchArray)
         {
-            approach = this.blocks.get(sw.approachBlock);
-            straight = this.blocks.get(sw.straightBlock);
-            divergent = this.blocks.get(sw.divergentBlock);
+            approach = this.blocks.get(sw.ApproachBlock);
+            straight = this.blocks.get(sw.StraightBlock);
+            divergent = this.blocks.get(sw.DivergentBlock);
            /* if (approach.getLightColor() != LightColor.GREEN)
             {
                 commands.add(new BlockInfoBundle(LightColor.GREEN, approach.getRRXingState(), approach.getBlockID(), this.line, approach.isClosed()));
             }*/
             
-            if (sw.straight)
+            if (sw.Straight)
             {
                 commands.add(new BlockInfoBundle(LightColor.RED, divergent.getRRXingState(), divergent.getBlockID(), this.line, divergent.isClosed()));
                 if (straight.getVelocity() > 0 && straight.getAuthority() > 0)

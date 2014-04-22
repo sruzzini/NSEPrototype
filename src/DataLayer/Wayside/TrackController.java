@@ -85,7 +85,7 @@ public class TrackController implements Runnable {
     public void addSwitch(Switch s)
     {
         this.switchArray.add(s);
-        this.switchInfo.put(s.switchID, s);
+        this.switchInfo.put(s.SwitchID, s);
         //System.out.println("Added switch: " + s.switchID + " to TC: " + this.line + "" + this.id);
     }
     
@@ -217,7 +217,7 @@ public class TrackController implements Runnable {
         ArrayList<Switch> copiedArray = new ArrayList<>();
         for (Switch s : this.switchArray)
         {
-            copiedArray.add(new Switch(s.lineID, s.switchID, s.approachBlock, s.straightBlock, s.divergentBlock, s.straight));
+            copiedArray.add(new Switch(s.LineID, s.SwitchID, s.ApproachBlock, s.StraightBlock, s.DivergentBlock, s.Straight));
         }
         return copiedArray;
     }
@@ -588,7 +588,7 @@ public class TrackController implements Runnable {
         this.switchArray = info;
         for (Switch s : info)
         {
-            this.switchInfo.put(s.switchID, s);
+            this.switchInfo.put(s.SwitchID, s);
             //System.out.println("Setting switch with switch ID: " + s.switchID);
         }
     }
@@ -696,10 +696,10 @@ public class TrackController implements Runnable {
             Switch theSwitch;
             for (Switch s : c.switchCommands)
             {
-                dir = s.straight;
-                switchID = s.switchID;
+                dir = s.Straight;
+                switchID = s.SwitchID;
                 theSwitch = this.switchInfo.get(switchID);
-                theSwitch.straight = dir;
+                theSwitch.Straight = dir;
                 //System.out.println("Track Controller - processCommands - set switch: " + switchID + " " + dir + " towards straight:divergent: " + theSwitch.straightBlock + ":" + theSwitch.divergentBlock);
 
             }
