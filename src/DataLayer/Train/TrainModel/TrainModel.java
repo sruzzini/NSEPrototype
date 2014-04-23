@@ -29,6 +29,14 @@ public class TrainModel {
         state = new TrainState(stateInput);
         physics = new PhysicsEngine(physicsInput);
     }
+    /*
+    addPassengers(int passengers) adds a specificied number of passsengers to the train's total
+    */
+    public void addPassengers(int passengers)
+    {
+        physics.addPassengers(passengers);
+    }
+    
     
      /*
     getAdvertisement() returns advertisement

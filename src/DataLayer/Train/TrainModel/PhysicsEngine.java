@@ -66,6 +66,14 @@ public class PhysicsEngine implements Runnable
     }
 
     /*
+    addPassengers(int passengers) adds the specified number of passengers to the model
+    */
+    public void addPassengers(int passengers)
+    {
+        this.passengers += passengers;
+    }
+    
+    /*
     computeFailureCode() adds the values of active failures and returns the result
     Returns - int
     */
