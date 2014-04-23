@@ -261,13 +261,13 @@ public final class Wayside
             
             //array.add(new BlockSignalBundle(packet, 152, LineColor.GREEN));
             //this.sendTravelSignal(array);
-            this.sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, 152, LineColor.GREEN));
+            this.sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, 152, LineColor.GREEN), null);
         }
         else
         {
             //array.add(new BlockSignalBundle(packet, 77, LineColor.RED));
             //this.sendTravelSignal(array);
-            this.sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, 77, LineColor.RED));
+            this.sendTravelSignal(new BlockSignalBundle(packet.Authority, packet.Destination, packet.Speed, 77, LineColor.RED), null);
         }
     }
     
@@ -319,7 +319,7 @@ public final class Wayside
         }
     }*/
     
-    private void sendTravelSignal(BlockSignalBundle packet)
+    private void sendTravelSignal(BlockSignalBundle packet, ArrayList<BlockSignalBundle> route)
     {
         if (packet == null)
         {
@@ -335,7 +335,7 @@ public final class Wayside
             {
                 if (tc.containsBlock(blockNum))
                 {
-                    tc.sendTravelSignal(packet.copy());
+                    tc.sendTravelSignal(packet.copy(), route);
                   //System.out.println("Wayside - sendTravelSignal(BlockSignalBundle) - signal for block: " + packet.BlockID +
                     //      " Authority: " + packet.Authority + " Destination: " + packet.Destination);
                     break;
@@ -356,7 +356,7 @@ public final class Wayside
             {
                 
                 BlockSignalBundle packet = signal.get(0);
-                this.sendTravelSignal(packet);
+                this.sendTravelSignal(packet,signal);
             }
         }
         

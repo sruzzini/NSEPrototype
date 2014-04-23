@@ -452,6 +452,32 @@ public class TrackController implements Runnable {
         }
     }*/
     
+    public void sendTravelSignal(BlockSignalBundle packet, ArrayList<BlockSignalBundle> route)
+    {
+        int safeAuthority = packet.Authority;
+        if (route != null)
+        {
+            Block block;
+            //figure out safe authority
+            for (BlockSignalBundle b : route)
+            {
+                if (packet.BlockID != b.BlockID)
+                {
+                    if (this.containsBlock(b.BlockID))
+                    {
+                        block = this.blockInfo.get(b.BlockID);
+                        if (block.isOccupied())
+                        {
+                            safeAuthority = packet.Authority - b.Authority - 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        this.sendTravelSignal(new BlockSignalBundle(safeAuthority, packet.Destination, packet.Speed, packet.BlockID, this.line));
+    }
+    
     public void sendTravelSignal(BlockSignalBundle packet)
     {
         int blockNum = packet.BlockID;
