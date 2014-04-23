@@ -392,12 +392,14 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             this.NSEObject.IsAutomatic = true;
             this.trainPanel1.setAutomatic();
             this.waysidePanel1.setAutomatic();
+            this.cTCGUI1.setAutomatic();
         }
         else //manual mode selected
         {
             this.NSEObject.IsAutomatic = false;
             this.trainPanel1.setManual();
             this.waysidePanel1.setManual();
+            this.cTCGUI1.setManual();
         }
     }//GEN-LAST:event_automatic_Clicked
 
@@ -407,12 +409,14 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
             this.NSEObject.IsAutomatic = true;
             this.trainPanel1.setAutomatic();
             this.waysidePanel1.setAutomatic();
+            this.cTCGUI1.setAutomatic();
         }
         else //manual mode selected
         {
             this.NSEObject.IsAutomatic = false;
             this.trainPanel1.setManual();
             this.waysidePanel1.setManual();
+            this.cTCGUI1.setManual();
         }
     }//GEN-LAST:event_manual_Clicked
 
