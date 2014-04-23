@@ -165,6 +165,8 @@ public class TMOutput extends javax.swing.JPanel {
         announcementOutputLabel = new javax.swing.JLabel();
         advertisementDisplayBox = new javax.swing.JTextField();
         advertisementOutputLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         outputsLabel.setText("Outputs");
 
@@ -215,6 +217,15 @@ public class TMOutput extends javax.swing.JPanel {
 
         advertisementOutputLabel.setText("Advertisement");
 
+        jLabel1.setText("Passengers");
+
+        jTextField1.setText("0");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -234,7 +245,8 @@ public class TMOutput extends javax.swing.JPanel {
                         .addGap(113, 113, 113)
                         .addComponent(outputsLabel))
                     .addComponent(announcementOutputLabel)
-                    .addComponent(advertisementOutputLabel))
+                    .addComponent(advertisementOutputLabel)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(advertisementDisplayBox)
@@ -251,7 +263,8 @@ public class TMOutput extends javax.swing.JPanel {
                             .addComponent(leftDoorDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(intLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(extLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -302,13 +315,21 @@ public class TMOutput extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(advertisementDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(advertisementOutputLabel))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void announcementDisplayBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_announcementDisplayBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_announcementDisplayBoxActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -324,6 +345,8 @@ public class TMOutput extends javax.swing.JPanel {
     private javax.swing.JLabel heaterOutputLabel;
     private javax.swing.JTextField intLightsDisplayBox;
     private javax.swing.JLabel interiorLightsOutputLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField leftDoorDisplayBox;
     private javax.swing.JLabel leftDoorOutputLabel;
     private javax.swing.JLabel mphLabel;
