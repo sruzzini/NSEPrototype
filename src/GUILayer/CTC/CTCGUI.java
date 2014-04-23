@@ -69,6 +69,59 @@ public class CTCGUI extends javax.swing.JPanel {
         
     }
     
+    
+    public void setManual()
+    {       
+        //Disable all the buttons and drop down menus in the Block Closing section
+        this.blockClosingsSubmitButton.setEnabled(true);
+        this.blockClosingsLineDrop.setEnabled(true);
+        this.blockClosingsSectionDrop.setEnabled(true);
+        this.blockClosingsBlockDrop.setEnabled(true);
+        this.blockClosingsOpenRadio.setEnabled(true);
+        this.blockClosingsCloseRadio.setEnabled(true);
+        
+        //Disable all the buttons and drop down menus in the Route Train section
+        this.routeTrainSubmitButton.setEnabled(true);
+        this.routeTrainSpeedText.setEnabled(true);
+        this.routeTrainsBlockDrop.setEnabled(true);
+        this.routeTrainsSectionDrop.setEnabled(true);
+        this.routeTrainsTrainDrop.setEnabled(true);
+        this.routeTrainsLineDrop.setEnabled(true);
+        
+        //Disable all the buttons and drop down menus in the Change Switch Position section
+        this.switchPositionSubmitButton.setEnabled(true);
+        this.switchPositionsStraightRadio.setEnabled(true);
+        this.switchPositionsDivergentRadio.setEnabled(true);
+        this.switchPositionSwitchesDrop.setEnabled(true);
+        this.switchPositionsLineDrop.setEnabled(true);
+    }
+        
+    public void setAutomatic()
+    {
+         //Disable all the buttons and drop down menus in the Block Closing section
+        this.blockClosingsSubmitButton.setEnabled(false);
+        this.blockClosingsLineDrop.setEnabled(false);
+        this.blockClosingsSectionDrop.setEnabled(false);
+        this.blockClosingsBlockDrop.setEnabled(false);
+        this.blockClosingsOpenRadio.setEnabled(false);
+        this.blockClosingsCloseRadio.setEnabled(false);
+        
+        //Disable all the buttons and drop down menus in the Route Train section
+        this.routeTrainSubmitButton.setEnabled(false);
+        this.routeTrainSpeedText.setEnabled(false);
+        this.routeTrainsBlockDrop.setEnabled(false);
+        this.routeTrainsSectionDrop.setEnabled(false);
+        this.routeTrainsTrainDrop.setEnabled(false);
+        this.routeTrainsLineDrop.setEnabled(false);
+        
+        //Disable all the buttons and drop down menus in the Change Switch Position section
+        this.switchPositionSubmitButton.setEnabled(false);
+        this.switchPositionsStraightRadio.setEnabled(false);
+        this.switchPositionsDivergentRadio.setEnabled(false);
+        this.switchPositionSwitchesDrop.setEnabled(false);
+        this.switchPositionsLineDrop.setEnabled(false);
+    }
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
