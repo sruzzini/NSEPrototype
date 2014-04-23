@@ -475,7 +475,7 @@ public class TrainController
         
         //check for finished 1 minute at the station
         if (this.stoppedAtStation &&  //stopped at the station
-            (this.time.tenthSecondsSince(this.stoppedAtStationTime) >= SystemTime.SECONDS_IN_MINUTE) && //it's been 1 minute
+            (this.time.tenthSecondsSince(this.stoppedAtStationTime) >= (SystemTime.SECONDS_IN_MINUTE * 10)) && //it's been 1 minute
             this.OperatorLeftDoor != OperatorInputStatus.ON && //left door is not being held open by operator
             this.OperatorRightDoor != OperatorInputStatus.ON && //right door is not being held open by operator
             this.OperatorSBrake != OperatorInputStatus.ON && //operator isn't holding service brake on
