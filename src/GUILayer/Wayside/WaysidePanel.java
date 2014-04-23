@@ -31,7 +31,18 @@ public class WaysidePanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    public void setMode(int mode) // 0 - manual, 1 - auto
+    public void setAutomatic()
+    {
+        this.trackControllerPanel1.setEnabled(false);
+        this.loadPLCButton.setEnabled(false);
+    }
+    
+    public void setManual()
+    {
+        this.trackControllerPanel1.setEnabled(true);
+        this.loadPLCButton.setEnabled(true);
+    }
+   /* public void setMode(int mode) // 0 - manual, 1 - auto
     {
         if (mode == 0)
         {
@@ -43,7 +54,7 @@ public class WaysidePanel extends javax.swing.JPanel {
             this.trackControllerPanel1.setEnabled(true);
             this.loadPLCButton.setEnabled(true);
         }
-    }
+    }*/
     
     public void setWayside(Wayside wayside)
     {
