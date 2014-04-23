@@ -177,10 +177,9 @@ public abstract class PLC {
             else 
             {
                // b.setRRXingState(XingState.NOT_ACTIVE);
-                if (b.getRRXingState() == XingState.ACTIVE)
-                {
+                
                     commands.add(new BlockInfoBundle(b.getLightColor(), XingState.NOT_ACTIVE, b.getBlockID(), this.line));
-                }
+                
             }
         }
         
