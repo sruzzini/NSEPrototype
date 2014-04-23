@@ -41,6 +41,7 @@ public class TrackController implements Runnable {
     private final ArrayList<Switch> commandSwitchQueue;
     private final int id;
     private final LineColor line;
+    private int plcVersion;
     private final Lock processCommandsLock;
     private ArrayList<Switch> switchArray;
     private HashMap<Integer, Switch> switchInfo;  //change to hashmap
@@ -72,6 +73,7 @@ public class TrackController implements Runnable {
         this.commandSwitchLock = new ReentrantLock();
         this.processCommandsLock = new ReentrantLock();
         this.waitSignalLock = new ReentrantLock();
+        this.plcVersion = 0;
         
     }
     
@@ -242,6 +244,11 @@ public class TrackController implements Runnable {
         return occ;
     }
     
+    public int getPLCVersion()
+    {
+        return this.plcVersion;
+    }
+    
     public ArrayList<Switch> getSwitchInfo()
     {
         ArrayList<Switch> copiedArray = new ArrayList<>();
@@ -250,6 +257,33 @@ public class TrackController implements Runnable {
             copiedArray.add(new Switch(s.LineID, s.SwitchID, s.ApproachBlock, s.StraightBlock, s.DivergentBlock, s.Straight));
         }
         return copiedArray;
+    }
+    
+    public void loadPLC(String plcVersion)
+    {
+        boolean changePLC = false;
+        if (plcVersion != null && plcVersion.length() > 0)
+        {
+            if (plcVersion.equals("Default"))
+            {
+                this.plcVersion = 0;
+                changePLC = true;
+            }
+            else if (plcVersion.equals("Version1"))
+            {
+                this.plcVersion = 1;
+                changePLC = true;
+            }
+            else if (plcVersion.equals("Version2"))
+            {
+                this.plcVersion = 2;
+                changePLC = true;
+            }
+        }
+        if (changePLC)
+        {
+            this.setPLC();
+        }
     }
 
     
@@ -595,7 +629,18 @@ public class TrackController implements Runnable {
             routeTable.put(1, 13);
             routeTable.put(150, 28);
             routeTable.put(28, 29);
-             this.plcProgram = new PLCGreenOne(id, line, routeTable);
+            if (this.plcVersion == 0)
+            {
+                this.plcProgram = new PLCGreenOne(id, line, routeTable);
+            }
+            else if (this.plcVersion == 1)
+            {
+                this.plcProgram = new PLCGreenOneV1(id, line, routeTable);
+            }
+            else
+            {
+                this.plcProgram = new PLCGreenOne(id, line, routeTable);
+            }
         }
         else if (id == 1)
         {
@@ -715,7 +760,7 @@ public class TrackController implements Runnable {
     @Override
     public String toString()
     {
-        return "Track Controller " + this.line + "" + this.id;
+        return this.line + "" + this.id;
     }
  
     private ArrayList<Block> blockSnapShot()

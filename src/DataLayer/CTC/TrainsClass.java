@@ -19,7 +19,6 @@ public class TrainsClass
     public int Authority;
     public int StopIndex;
     public int PreviousBlock;
-    public boolean Idle;
     public double DistanceSoFar;
     
     public int BlockCurrent;    
@@ -81,11 +80,6 @@ public class TrainsClass
     public void setPreviousBlock(int block)
     {
         this.PreviousBlock = block;
-    }
-    
-    public void setIdle(boolean Idle)
-    {
-        this.Idle = Idle;
     }
     
     public String lineColor()

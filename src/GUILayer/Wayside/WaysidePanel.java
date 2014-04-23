@@ -19,6 +19,7 @@ package GUILayer.Wayside;
 import DataLayer.Wayside.TrackController;
 import DataLayer.Wayside.Wayside;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 
 public class WaysidePanel extends javax.swing.JPanel {
@@ -30,17 +31,30 @@ public class WaysidePanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    public void setMode(int mode) // 0 - manual, 1 - auto
+    public void setAutomatic()
+    {
+        this.trackControllerPanel1.setEnabled(false);
+        this.loadPLCButton.setEnabled(false);
+    }
+    
+    public void setManual()
+    {
+        this.trackControllerPanel1.setEnabled(true);
+        this.loadPLCButton.setEnabled(true);
+    }
+   /* public void setMode(int mode) // 0 - manual, 1 - auto
     {
         if (mode == 0)
         {
-            this.trackControllerPanel1.setEnabled(false);
+            this.trackControllerPanel1.setEnabled(true); //should be false
+            this.loadPLCButton.setEnabled(true); //should be false
         }
         else if (mode == 1)
         {
             this.trackControllerPanel1.setEnabled(true);
+            this.loadPLCButton.setEnabled(true);
         }
-    }
+    }*/
     
     public void setWayside(Wayside wayside)
     {
@@ -79,6 +93,9 @@ public class WaysidePanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         controllerSelectComboBox = new javax.swing.JComboBox();
         pLCTestPanel1 = new GUILayer.Wayside.PLCTestPanel();
+        jLabel1 = new javax.swing.JLabel();
+        plcVersionDisplay = new javax.swing.JLabel();
+        loadPLCButton = new javax.swing.JButton();
         trackControllerPanel1 = new GUILayer.Wayside.TrackControllerPanel();
 
         jLabel5.setText("Track Controllers");
@@ -92,21 +109,39 @@ public class WaysidePanel extends javax.swing.JPanel {
 
         pLCTestPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel1.setText("Current PLC:");
+
+        plcVersionDisplay.setText("Default");
+
+        loadPLCButton.setText("Load PLC");
+        loadPLCButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadPLCButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(controllerSelectComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5)))
-                        .addGap(18, 18, 18)
-                        .addComponent(trackControllerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(controllerSelectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(trackControllerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(plcVersionDisplay))
+                            .addComponent(loadPLCButton))
+                        .addGap(26, 26, 26))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 8, Short.MAX_VALUE)
                         .addComponent(pLCTestPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -120,6 +155,12 @@ public class WaysidePanel extends javax.swing.JPanel {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(controllerSelectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(plcVersionDisplay))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(loadPLCButton))
                     .addComponent(trackControllerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(pLCTestPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,12 +173,32 @@ public class WaysidePanel extends javax.swing.JPanel {
         setControllers();
     }//GEN-LAST:event_controllerSelectComboBoxActionPerformed
 
+    private void loadPLCButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPLCButtonActionPerformed
+        // TODO add your handling code here:
+        Object[] plcVersions = {"Default", "Version1", "Version2"};
+        String s = (String)JOptionPane.showInputDialog(null, "Select the PLC program desired",
+                                                        "PLC", JOptionPane.QUESTION_MESSAGE, null,
+                                                        plcVersions, "Default");
+        
+        if (s!= null && s.length() > 0)
+        {
+            this.plcVersionDisplay.setText(s);
+        }
+        
+        this.trackControllerPanel1.updatePLC(s);
+        this.pLCTestPanel1.updatePLC(s);
+               
+    }//GEN-LAST:event_loadPLCButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup controllerRadioGroup;
     private javax.swing.JComboBox controllerSelectComboBox;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton loadPLCButton;
     private GUILayer.Wayside.PLCTestPanel pLCTestPanel1;
+    private javax.swing.JLabel plcVersionDisplay;
     private GUILayer.Wayside.TrackControllerPanel trackControllerPanel1;
     // End of variables declaration//GEN-END:variables
 }
