@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 public class Train implements Runnable
 {
     //Class Variables
+    public boolean PassengerFlag;
     public TrainController Controller; //controller that sends commands
     public TrainModel Model; //model that acts on commands sent by controller
     private BeaconSignal beaconSignal; //signal from the last beacon passed
@@ -54,6 +55,7 @@ public class Train implements Runnable
         this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
         this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
+        PassengerFlag = false;
     }
     
     public Train(int id, Boolean running, SystemTime time)
@@ -71,6 +73,7 @@ public class Train implements Runnable
         this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
         this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
+        PassengerFlag = false;
     }
     
     public Train(int id, int multiplier, SystemTime time, Boolean running, TrainStatus status, TrackSignal signal, BeaconSignal beacon)
@@ -88,6 +91,7 @@ public class Train implements Runnable
         this.Controller = new TrainController(this.timeMultiplier, this.time, this.status, this.trackSignal, this.beaconSignal);
         this.Model = new TrainModel(this.physicsInput, this.stateInput);
         lastDeltaX = 0;
+        PassengerFlag = false;
     }
     
     
@@ -180,11 +184,21 @@ public class Train implements Runnable
         this.status = s;
         this.Controller.setTrainStatus(this.status);
     }
+    /*
+    sendDeltaPassengers(int deltaPassengers) adds passengers to the train's
+    current count345
+    */
+    public void sendDeltaPassengers(int deltaPassengers)
+    {
+        Model.addPassengers(deltaPassengers);
+        PassengerFlag = true;
+    }
     
     /* Simulate() called by "run()".  Performs simulation on train object
     */
     public void simulate()
     {
+        double oldVelocity = 0;
         Model.startPhysics();
         
         while(this.isRunning.booleanValue() == Boolean.TRUE)
@@ -192,7 +206,10 @@ public class Train implements Runnable
             this.commands = this.Controller.getTrainCommand();
             translateStateCommand(this.commands);
             Model.updateState();
-            
+            if ((physicsInput.Velocity > 0) && (oldVelocity == 0))
+            {
+                PassengerFlag = false;
+            }
             translatePhysicsCommand(this.commands);
             try {
                 if (this.timeMultiplier > 0) //check to make sure time multiplier is not zero
@@ -203,6 +220,7 @@ public class Train implements Runnable
                 Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateStatus();  // update status object
+            oldVelocity = physicsInput.Velocity;
         }
     }
     
