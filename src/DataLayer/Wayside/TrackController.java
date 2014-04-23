@@ -760,7 +760,7 @@ public class TrackController implements Runnable {
     @Override
     public String toString()
     {
-        return "Track Controller " + this.line + "" + this.id;
+        return this.line + "" + this.id;
     }
  
     private ArrayList<Block> blockSnapShot()
