@@ -48,6 +48,7 @@ public class TMOutput extends javax.swing.JPanel {
         double velocity = physicsEngine.getVelocity();
         boolean sBrake = physicsEngine.getServiceBrake();
         boolean eBrake = physicsEngine.getEmergencyBrake();
+        int passengers = physicsEngine.getPassengers();
         boolean lDoor = trainState.getLeftDoors();
         boolean rDoor = trainState.getRightDoors();
         boolean extLights = trainState.getExteriorLights();
@@ -130,6 +131,8 @@ public class TMOutput extends javax.swing.JPanel {
         
         announcementDisplayBox.setText(announcement);
         advertisementDisplayBox.setText(advertisement);
+        
+        passengerDisplayBox.setText(Integer.toString(passengers));
     }
     
     
@@ -165,8 +168,8 @@ public class TMOutput extends javax.swing.JPanel {
         announcementOutputLabel = new javax.swing.JLabel();
         advertisementDisplayBox = new javax.swing.JTextField();
         advertisementOutputLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        passengerOutputLabel = new javax.swing.JLabel();
+        passengerDisplayBox = new javax.swing.JTextField();
 
         outputsLabel.setText("Outputs");
 
@@ -217,12 +220,12 @@ public class TMOutput extends javax.swing.JPanel {
 
         advertisementOutputLabel.setText("Advertisement");
 
-        jLabel1.setText("Passengers");
+        passengerOutputLabel.setText("Passengers");
 
-        jTextField1.setText("0");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        passengerDisplayBox.setText("0");
+        passengerDisplayBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                passengerDisplayBoxActionPerformed(evt);
             }
         });
 
@@ -246,7 +249,7 @@ public class TMOutput extends javax.swing.JPanel {
                         .addComponent(outputsLabel))
                     .addComponent(announcementOutputLabel)
                     .addComponent(advertisementOutputLabel)
-                    .addComponent(jLabel1))
+                    .addComponent(passengerOutputLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(advertisementDisplayBox)
@@ -264,7 +267,7 @@ public class TMOutput extends javax.swing.JPanel {
                             .addComponent(intLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(extLightsDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(heaterDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(passengerDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -317,8 +320,8 @@ public class TMOutput extends javax.swing.JPanel {
                     .addComponent(advertisementOutputLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passengerOutputLabel)
+                    .addComponent(passengerDisplayBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -327,9 +330,9 @@ public class TMOutput extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_announcementDisplayBoxActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void passengerDisplayBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passengerDisplayBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_passengerDisplayBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -345,12 +348,12 @@ public class TMOutput extends javax.swing.JPanel {
     private javax.swing.JLabel heaterOutputLabel;
     private javax.swing.JTextField intLightsDisplayBox;
     private javax.swing.JLabel interiorLightsOutputLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField leftDoorDisplayBox;
     private javax.swing.JLabel leftDoorOutputLabel;
     private javax.swing.JLabel mphLabel;
     private javax.swing.JLabel outputsLabel;
+    private javax.swing.JTextField passengerDisplayBox;
+    private javax.swing.JLabel passengerOutputLabel;
     private javax.swing.JTextField rightDoorDisplayBox;
     private javax.swing.JLabel rightDoorOutputLabel;
     private javax.swing.JTextField sBrakeDisplayBox;
