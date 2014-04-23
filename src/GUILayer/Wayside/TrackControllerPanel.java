@@ -28,6 +28,7 @@ public class TrackControllerPanel extends javax.swing.JPanel {
      */
     public TrackControllerPanel() {
         initComponents();
+        this.setEnabled(false);
     }
     
     @Override
@@ -61,7 +62,14 @@ public class TrackControllerPanel extends javax.swing.JPanel {
          }
          switchComboBox.setModel(new javax.swing.DefaultComboBoxModel(s));
          this.switchLabelOne.setText(s[0]);
-         this.switchLabelTwo.setText(s[1]);
+         if (i > 1)
+         {
+             this.switchLabelTwo.setText(s[1]);
+         }
+         else
+         {
+             this.switchLabelTwo.setText("");
+         }
          
          updateSwitchSelectText();
          updateSwitchStatus();
@@ -87,7 +95,11 @@ public class TrackControllerPanel extends javax.swing.JPanel {
     {
         ArrayList<Switch> switches = this.controller.getSwitchInfo();
         Switch sw1 = switches.get(0);
-        Switch sw2 = switches.get(1);
+        Switch sw2 = null;
+        if (switches.size() > 1)
+        {
+            sw2 = switches.get(1);
+        }
         String statusOne, statusTwo;
         
         if (sw1.Straight)
@@ -98,17 +110,25 @@ public class TrackControllerPanel extends javax.swing.JPanel {
         {
             statusOne = sw1.ApproachBlock + ":" + sw1.DivergentBlock;
         }
+        this.switchStatusOne.setText(statusOne);
         
-        if (sw2.Straight)
+        if (sw2 != null)
         {
-            statusTwo = sw2.ApproachBlock + ":" + sw2.StraightBlock;
+            if (sw2.Straight)
+            {
+                statusTwo = sw2.ApproachBlock + ":" + sw2.StraightBlock;
+            }
+            else
+            {
+                statusTwo = sw2.ApproachBlock + ":" + sw2.DivergentBlock;
+            }
         }
         else
         {
-            statusTwo = sw2.ApproachBlock + ":" + sw2.DivergentBlock;
+            statusTwo = "";
         }
+
         
-        this.switchStatusOne.setText(statusOne);
         this.switchStatusTwo.setText(statusTwo);
     }
     /**
@@ -339,7 +359,8 @@ public class TrackControllerPanel extends javax.swing.JPanel {
         
         switchCommand = new Switch(selectedSwitch.LineID, selectedSwitch.SwitchID, selectedSwitch.ApproachBlock, 
                 selectedSwitch.StraightBlock, selectedSwitch.DivergentBlock, dir);
-        
+       // System.out.println("TrackControllerPanel - setSwitchButtonActionPerformed() - sending switch object for switch: " + (switchCommand.SwitchID - 1) + 
+         //       " on line: " + switchCommand.LineID + " to controller: " + this.controller.getId());
         this.controller.sendSwitchStateSignal(switchCommand);
         //this.updateSwitchStatus();
         

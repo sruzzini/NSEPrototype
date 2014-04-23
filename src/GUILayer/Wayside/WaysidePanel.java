@@ -30,6 +30,18 @@ public class WaysidePanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    public void setMode(int mode) // 0 - manual, 1 - auto
+    {
+        if (mode == 0)
+        {
+            this.trackControllerPanel1.setEnabled(false);
+        }
+        else if (mode == 1)
+        {
+            this.trackControllerPanel1.setEnabled(true);
+        }
+    }
+    
     public void setWayside(Wayside wayside)
     {
         this.wayside = wayside;
