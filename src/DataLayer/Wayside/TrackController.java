@@ -637,6 +637,10 @@ public class TrackController implements Runnable {
             {
                 this.plcProgram = new PLCGreenOneV1(id, line, routeTable);
             }
+            else if (this.plcVersion == 2)
+            {
+                this.plcProgram = new PLCGreenOneV2(id, line, routeTable);
+            }
             else
             {
                 this.plcProgram = new PLCGreenOne(id, line, routeTable);

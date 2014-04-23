@@ -24,6 +24,8 @@ public class PLCRedOne extends PLC{
     private boolean returningToYard;
     private boolean leavingLoop;
     private boolean enteringLoop;
+    private boolean entering;
+    private boolean exiting;
     
     public PLCRedOne(int id, LineColor line, HashMap routeTable) 
     {
@@ -50,6 +52,8 @@ public class PLCRedOne extends PLC{
         Block block15 = this.blocks.get(15);
         Block block16 = this.blocks.get(16);
         Block block10 = this.blocks.get(10);
+        Block block20 = this.blocks.get(20);
+        Block block21 = this.blocks.get(21);
         Switch switch1 = this.switches.get(1);
         Switch switch7 = this.switches.get(7);
         
@@ -157,6 +161,32 @@ public class PLCRedOne extends PLC{
                 enteringLoop = false;
                 trainsComing--;
                 trainsDeparting++;
+            }
+        }
+        
+        if (block20.isOccupied() && !block21.isOccupied())
+        {
+            if (trainsGoing > 0)
+            {
+                exiting = true;
+            }
+            else if (entering)
+            {
+                entering = false;
+                trainsComing++;
+            }
+        }
+        
+        if (block21.isOccupied() && !block20.isOccupied())
+        {
+            if (exiting)
+            {
+                exiting = false;
+                trainsGoing--;
+            }
+            else
+            {
+                entering = true;
             }
         }
         
