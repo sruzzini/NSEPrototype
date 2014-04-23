@@ -598,16 +598,16 @@ public class CTC
         this.trainLocations = trainLocations;
     }      
     
-    public DispatchBundle getDispatcher()
+    public ArrayList<DispatchBundle> getDispatcher()
     {
         //System.out.println("The number of trains: " + this.trainLocations.size());
-        DispatchBundle train = null;
-        for(int i = 0; i < this.trainLocations.size(); i++)
+        ArrayList<DispatchBundle> train = new ArrayList<>();
+        for(int i = 0; i < this.trainLocations.size(); i+= 2)
         {
             //System.out.println("Train " + i + "'s locations: " + this.trainLocations.get(i).CurrentBlock);
             if(this.trainLocations.get(i).CurrentBlock == 0)
             {
-                train = new DispatchBundle(new BlockSignalBundle(4, 65, ((double)(70*1000)/(double)(3600)),0, LineColor.YARD), i , LineColor.GREEN);
+                train.add(new DispatchBundle(new BlockSignalBundle(4, 65, ((double)(70*1000)/(double)(3600)),0, LineColor.YARD), i , LineColor.GREEN));
                 this.trains.get(i).line = LineColor.GREEN;
                 this.trains.get(i).Authority = 5;
                 this.trains.get(i).BlockDestination = this.GREEN_NEXT_STATION.get(0).NEXTBLOCKID;
@@ -617,6 +617,21 @@ public class CTC
             }
             
         }        
+        
+        for(int i = 1; i < this.trainLocations.size(); i+= 2)
+        {
+            //System.out.println("Train " + i + "'s locations: " + this.trainLocations.get(i).CurrentBlock);
+            if(this.trainLocations.get(i).CurrentBlock == 0)
+            {
+                train.add(new DispatchBundle(new BlockSignalBundle(4, 65, ((double)(70*1000)/(double)(3600)),0, LineColor.YARD), i , LineColor.RED));
+                this.trains.get(i).line = LineColor.RED;
+                this.trains.get(i).Authority = 5;
+                this.trains.get(i).BlockDestination = this.GREEN_NEXT_STATION.get(0).NEXTBLOCKID;
+                this.trains.get(i).StationDestination = this.GREEN_NEXT_STATION.get(0).NEXTSTATION;
+                this.trains.get(i).SectionDestination = this.returnSection(this.trains.get(i).line, this.GREEN_NEXT_STATION.get(0).NEXTBLOCKID);
+                break;
+            }
+        }
         return train;    
     }
     
