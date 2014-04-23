@@ -20,6 +20,7 @@ import DataLayer.TrackModel.Switch;
 import DataLayer.Wayside.TrackController;
 import java.awt.Component;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class TrackControllerPanel extends javax.swing.JPanel {
     TrackController controller;
@@ -28,7 +29,7 @@ public class TrackControllerPanel extends javax.swing.JPanel {
      */
     public TrackControllerPanel() {
         initComponents();
-        this.setEnabled(false);
+        this.setEnabled(true);
     }
     
     @Override
@@ -57,7 +58,7 @@ public class TrackControllerPanel extends javax.swing.JPanel {
          int i = 0;
          for (Switch sw : switches)
          {
-             s[i++] = "Switch " + (sw.SwitchID-1);
+             s[i++] = "Switch " + (sw.SwitchID);
              
          }
          switchComboBox.setModel(new javax.swing.DefaultComboBoxModel(s));
@@ -244,11 +245,11 @@ public class TrackControllerPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -274,26 +275,32 @@ public class TrackControllerPanel extends javax.swing.JPanel {
                                         .addComponent(inactiveRB)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(setLightButton)
-                                    .addComponent(setCrossingButton)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(setSwitchButton)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(setLightButton)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(switchLabelOne)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(switchStatusOne)
-                                                .addGap(35, 35, 35)
-                                                .addComponent(switchLabelTwo)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(switchStatusTwo))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(updateStatusButton))))))
-                            .addComponent(jLabel2))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(setSwitchButton)
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(switchLabelOne)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(switchStatusOne)
+                                                        .addGap(35, 35, 35)
+                                                        .addComponent(switchLabelTwo)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(switchStatusTwo))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel5)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(updateStatusButton)))))
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(setCrossingButton)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,7 +382,10 @@ public class TrackControllerPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         this.updateSwitchStatus();
     }//GEN-LAST:event_updateStatusButtonActionPerformed
-
+public void updatePLC(String plcVersion)
+{
+    this.controller.loadPLC(plcVersion);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton activeRB;

@@ -66,6 +66,52 @@ public class PLCTestPanel extends javax.swing.JPanel {
       
     }
     
+    public void updatePLC(String plcVersion)
+    {
+        this.controller.loadPLC(plcVersion);
+    }
+    
+    public void replaceController(TrackController controller)
+    {
+        TrackController newController = new TrackController(controller.getId(), controller.getLine(), controller.getBlockNums());
+        Block newBlock;
+        Switch newSwitch;
+        
+        for (Block b : controller.getBlockInfo())
+        {
+            newBlock =  b.copy();
+            /*
+            blockArray.add(newBlock);
+            blockTable.put(newBlock.getBlockID(), newBlock);*/
+            newController.addBlock(newBlock);
+           
+        }
+        
+        for (Switch s : controller.getSwitchInfo())
+        {
+            newSwitch = s.copy();
+           // switchArray.add(newSwitch);
+            newController.addSwitch(newSwitch);
+        }
+        
+        String s = "Default";
+        if (controller.getPLCVersion() == 1)
+        {
+            s = "Version1";
+        }
+        else if (controller.getPLCVersion() == 2)
+        {
+            s = "Version2";
+        }
+                
+        
+        newController.loadPLC(s);
+        
+       // newController.setPLC();
+        
+        this.controllers.set(newController.getId(), newController);
+    }
+    
     public void selectController(int n)
     {
         this.controller = this.controllers.get(n);
