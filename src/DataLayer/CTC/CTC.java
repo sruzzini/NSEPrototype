@@ -66,6 +66,7 @@ public class CTC
         this.trainLocations = new ArrayList<>();
         this.switchPostions = new ArrayList<>();
         this.closureBundle = new ArrayList<>();
+        this.switchBundle = new ArrayList<>();
         this.setRoute = new ArrayList<>();
         
         this.greenPath = new ArrayList<>();
@@ -97,6 +98,7 @@ public class CTC
         this.closureBundle = new ArrayList<>();
         this.switchPostions = new ArrayList<>();
         this.setRoute = new ArrayList<>();
+        this.switchBundle = new ArrayList<>();
         
         this.red = new ArrayList<>();
         this.green = new ArrayList<>();
