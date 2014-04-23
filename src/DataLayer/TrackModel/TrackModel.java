@@ -349,6 +349,7 @@ public class TrackModel
         double speedLimit, length, elevation, cumElev, gradient;
         boolean underground, light, rrxing, station, tswitch;
         String stationString;
+        LightColor lColor;
         
         try {
  
@@ -377,12 +378,14 @@ public class TrackModel
                             	    tswitchID = prev - (2 * prev);
                             	}
                             	light = true;
+                                lColor = LightColor.GREEN;
                             }
                             else
                             {
                             	tswitch = false;
                             	tswitchID = -1;
                             	light = false;
+                                lColor = LightColor.NO_LIGHT_ON_BLOCK;
                             }
                             
                             gradient = Double.parseDouble(blockSpec[6]);
@@ -407,11 +410,22 @@ public class TrackModel
                             
                             underground = Boolean.parseBoolean(blockSpec[13]);
                             rrxing = Boolean.parseBoolean(blockSpec[14]);
+                            XingState xState;
+                            if (rrxing)
+                            {
+                                xState = XingState.NOT_ACTIVE;
+                            }
+                            else
+                            {
+                                xState = XingState.NO_XING_ON_BLOCK;
+                            }
                             
                             Block b = new Block(blockID, next, prev, length, speedLimit, elevation, cumElev, gradient, underground, light, rrxing, station, tswitch);
                             b.setStationID(stationID);
                             b.setStationString(stationString);
                             b.setTswitchID(tswitchID);
+                            b.setLightColor(lColor);
+                            b.setRRXingState(xState);
                             
                             boolean hasBeacon = Boolean.parseBoolean(blockSpec[15]);
                             if(hasBeacon)
