@@ -273,6 +273,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
                 manual_Clicked(evt);
             }
         });
+        manual_radio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manual_radioActionPerformed(evt);
+            }
+        });
 
         mode_group.add(automatic_radio);
         automatic_radio.setSelected(true);
@@ -280,6 +285,11 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
         automatic_radio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 automatic_Clicked(evt);
+            }
+        });
+        automatic_radio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                automatic_radioActionPerformed(evt);
             }
         });
 
@@ -415,6 +425,16 @@ public class NSEFrame extends javax.swing.JFrame implements Runnable {
     private void reset_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_buttonActionPerformed
         NSEObject.reset();
     }//GEN-LAST:event_reset_buttonActionPerformed
+
+    private void manual_radioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manual_radioActionPerformed
+        // TODO add your handling code here:
+        this.waysidePanel1.setMode(1);
+    }//GEN-LAST:event_manual_radioActionPerformed
+
+    private void automatic_radioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_automatic_radioActionPerformed
+        // TODO add your handling code here:
+        this.waysidePanel1.setMode(0);
+    }//GEN-LAST:event_automatic_radioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

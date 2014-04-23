@@ -309,6 +309,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="manual_Clicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manual_radioActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="automatic_radio">
@@ -321,6 +322,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="automatic_Clicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="automatic_radioActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
