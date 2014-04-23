@@ -65,7 +65,7 @@ public class NSE implements Runnable
         this.TrainLocations = new ArrayList<TrainLocation>();
         this.Trains = new ArrayList<Train>();
         //creates 10 Train Objects and 10 TrainLocations
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 2; i++)
         {
             this.Trains.add(new Train(i, this.isRunning, this.Time));
             this.Trains.get(i).setTimeMultiplier(this.TimeMultiplier);
@@ -178,7 +178,11 @@ public class NSE implements Runnable
                 if ((this.lastDispatchTime.Hour == -1) || //the simulation just started
                     (this.Time.tenthSecondsSince(this.lastDispatchTime) >= dispatchInterval)) //it's been 10 minutes
                 {
-                    this.Wayside.sendDispatchSignal(CTCOffice.getDispatcher());
+                    for(DispatchBundle d: CTCOffice.getDispatcher())
+                    {
+                        this.Wayside.sendDispatchSignal(d);
+                    }
+                    
                     this.lastDispatchTime = new SystemTime(this.Time.Hour, this.Time.Minute, this.Time.Second, this.TimeMultiplier, this.Time.Tenth);
                 }
             }
