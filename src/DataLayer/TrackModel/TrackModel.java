@@ -319,10 +319,20 @@ public class TrackModel
                     } 
                 }
             }
+            if(block != newCurrentBlock)
+            {
+                if(TheLines.get(lineNum).TheBlocks.get(block).hasABeacon() && !TheLines.get(lineNum).TheBlocks.get(block).getBeaconSent())
+                {
+                    TheTrains.get(i).setBeaconSignal(TheLines.get(lineNum).TheBlocks.get(block).getBeacon());
+                    TheLines.get(lineNum).TheBlocks.get(block).setBeaconSent(true);
+                }
+            }
+            /*
             if(i == 0)
             {
                 System.out.println("CurrentBlock: " + TheTrainLocations.get(i).CurrentBlock + " Distance in: " +TheTrainLocations.get(i).DistanceSoFar);
             }
+            */
     	}
     }
     
