@@ -84,8 +84,38 @@ public class TrackController implements Runnable {
     
     public void addSwitch(Switch s)
     {
-        this.switchArray.add(s);
-        this.switchInfo.put(s.SwitchID, s);
+        boolean addSwitch = false;
+            if (this.line == LineColor.RED)
+            {
+                if (this.id == 4)
+                {
+                    if (s.SwitchID == 2 || s.SwitchID == 3)
+                    {
+                        addSwitch = true;
+                    }
+                }
+                else if (this.id == 5)
+                {
+                    if (s.SwitchID == 4 || s.SwitchID == 5)
+                    {
+                        addSwitch = true;
+                    }
+                }
+                else
+                {
+                    addSwitch = true;
+                }
+            }
+            else
+            {
+                addSwitch = true;
+            }
+            if (addSwitch)
+            {
+                this.switchInfo.put(s.SwitchID, s); 
+                this.switchArray.add(s);
+            }
+        
         //System.out.println("Added switch: " + s.switchID + " to TC: " + this.line + "" + this.id);
     }
     
@@ -554,19 +584,23 @@ public class TrackController implements Runnable {
             routeTable.put(100, 85);
             routeTable.put(77, 101);
             this.plcProgram = new PLCGreenThree(id, line, routeTable);
-        }/*
+        }
         else if (id == 3)
         {
-            this.plcProgram = new PLCRedOne(id, line, blockInfo);
+            this.plcProgram = new PLCRedOne(id, line, routeTable);
         }
         else if (id == 4)
         {
-            this.plcProgram = new PLCRedTwo(id, line, blockInfo);
+            this.plcProgram = new PLCRedTwo(id, line, routeTable);
         }
         else if (id == 5)
         {
-            this.plcProgram = new PLCRedThree(id, line, blockInfo);
-        }*/
+            this.plcProgram = new PLCRedThree(id, line, routeTable);
+        }
+        else if (id == 6)
+        {
+            this.plcProgram = new PLCRedFour(id, line, routeTable);
+        }
         else
         {
             //this.plcProgram = new PLCGreenOne(id, line, this.blockInfo, this.blockArray, this.switchInfo, routeTable, this.switchArray);
@@ -584,15 +618,44 @@ public class TrackController implements Runnable {
         }
     }
     
-    public void setSwitchInfo(ArrayList<Switch> info)
+   /* public void setSwitchInfo(ArrayList<Switch> info)
     {
         this.switchArray = info;
         for (Switch s : info)
         {
-            this.switchInfo.put(s.SwitchID, s);
+            boolean addSwitch = false;
+            if (this.line == LineColor.RED)
+            {
+                if (this.id == 4)
+                {
+                    if (s.SwitchID == 2 || s.SwitchID == 3)
+                    {
+                        addSwitch = true;
+                    }
+                }
+                else if (this.id == 5)
+                {
+                    if (s.SwitchID == 4 || s.SwitchID == 5)
+                    {
+                        addSwitch = true;
+                    }
+                }
+                else
+                {
+                    addSwitch = true;
+                }
+            }
+            else
+            {
+                addSwitch = true;
+            }
+            if (addSwitch)
+            {
+                this.switchInfo.put(s.SwitchID, s);  
+            }
             //System.out.println("Setting switch with switch ID: " + s.switchID);
         }
-    }
+    }*/
     
    /* public ArrayList<BlockSignalBundle> signalsNotWaiting()
     {

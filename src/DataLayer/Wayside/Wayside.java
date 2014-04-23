@@ -216,15 +216,33 @@ public final class Wayside
     {
         ArrayList<Switch> switchInfo;
         switchInfo = new ArrayList<>();
+        boolean addSwitch;
         
         for (TrackController tc : this.controllers)
         {
             for (Switch s : tc.getSwitchInfo())
             {
-                switchInfo.add(s);
+                addSwitch = true;
+                for (Switch s1 : switchInfo)
+                {
+                    if (s.matches(s1))
+                    {
+                        addSwitch = false;
+                        break;
+                    }
+                }
+                if (addSwitch)
+                {
+                    switchInfo.add(s);
+                }
+                
             }
         }
-        
+       /* System.out.println("Wayside - getSwitchInfo - return arraylist of switches of size: " + switchInfo.size());
+        for (Switch s : switchInfo)
+        {
+            System.out.println("Switch: " + s.LineID + s.SwitchID);
+        }*/
         return switchInfo;
     }
     
@@ -493,14 +511,12 @@ public final class Wayside
     
     private void startControllers()
     {
+        for (TrackController tc : this.controllers)
+        {
+            new Thread(tc).start();
+        }
         
-        TrackController tc0 = this.controllers[0];
-        TrackController tc1 = this.controllers[1];
-        TrackController tc2 = this.controllers[2];
         
-        new Thread(tc0).start();
-        new Thread(tc1).start();
-        new Thread(tc2).start();
     }
     
 }
