@@ -11,6 +11,7 @@ public class TrackModel
     public ArrayList<Line> TheLines; // array of lines within the track model
     public ArrayList<TrainLocation> TheTrainLocations; // array of train locations for the trains within the track model
     public ArrayList<Train> TheTrains; // array of trains within the track model
+    private static Random rand;
     
     // getBlockInfoBundle(LineColor Line, int block) returns the current block info for the specified block on the specified Line
     // Parameters:
@@ -168,6 +169,8 @@ public class TrackModel
         TheLines = new ArrayList<>();
         TheLines.add(new Line(LineColor.GREEN));
         TheLines.add(new Line(LineColor.RED));
+        rand = new Random();
+        rand.setSeed(System.currentTimeMillis());
         uploadTrackSpec();
         
     }
@@ -333,6 +336,11 @@ public class TrackModel
                 System.out.println("CurrentBlock: " + TheTrainLocations.get(i).CurrentBlock + " Distance in: " +TheTrainLocations.get(i).DistanceSoFar);
             }
             */
+            if(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).hasStation() && TheTrains.get(i).Model.physics.getVelocity() == 0.0 && !TheTrains.get(i).PassengerFlag)
+            {
+                int temp = rand.nextInt(40) - 20;
+                TheTrains.get(i).sendDeltaPassengers(temp);
+            }
     	}
     }
     
