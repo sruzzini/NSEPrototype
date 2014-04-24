@@ -19,7 +19,10 @@ import DataLayer.TrackModel.Switch;
 import java.util.HashMap;
 
 /**
- *
+ *<h1>PLCRedThree</h1>
+ * <p>
+ * This class contains the PLC for the Red Line controller that controls the bottom-middle portion
+ * of the Red Line according to the excel layout</p>
  * @author nwhachten
  */
 public class PLCRedThree extends PLC {
@@ -28,6 +31,9 @@ public class PLCRedThree extends PLC {
         super(id, line, routeTable);
     }
     
+    //plcProgram() is the method that overrides PLC abstract method. This is the portion of code
+    //specific to this portion of the Track
+    //Returns - Commands, the commands for this program given a set of inputs
     @Override
     protected Commands plcProgram()
     {

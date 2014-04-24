@@ -30,54 +30,65 @@ public class Commands {
     
     public Commands()
     {
+        //initialize the arraylists
         blockInfoCommands = new ArrayList<>();
         blockSignalCommands = new ArrayList<>();
         switchCommands = new ArrayList<>();
         
     }
     
+    //containsCommandForBlockID(ind id) checks to see if this Commands object contains
+    //a signal command to be sent to a block as specified by the input id
+    //Parameters:
+    //  int id - the block number to send the signal to
+    //Returns - boolean, true if a signal is found, false if not
     public boolean containsCommandForBlockID(int id)
     {
-        boolean result = false;
-        for (BlockSignalBundle b : this.blockSignalCommands)
+        boolean result = false;             //start by assuming false
+        for (BlockSignalBundle b : this.blockSignalCommands)    //iterate through all blockSignalCommands
         {
-            if (b.BlockID == id)
+            if (b.BlockID == id)        //if a signal is already present
             {
-                result = true;
-                break;
+                result = true;          //set return value to true
+                break;                  //stop searching
             }
         }
         
-        return result;
+        return result;                  //return result
     }
     
+    //matches(Commands a) goes through all commands in this and a to determine if tey match
+    //this method is used by the PLC voting algorithm to determine if a set of commands differs
+    //Paramereters:
+    //  Commands a - a Commands object to be compared to
+    //Returns boolean - true if the objects match, else false
     public boolean matches(Commands a)
     {
-        boolean result = true;
+        boolean result = true;          //start by assuming they match
         boolean commandFound;
         
-        for (BlockInfoBundle b : this.blockInfoCommands)
+        for (BlockInfoBundle b : this.blockInfoCommands)        //iterate through all blockInfoBundle commands in this
         {
-            commandFound = false;
-           for (BlockInfoBundle c : a.blockInfoCommands)
+            commandFound = false;                               //for each command start by assuming another command is not found
+           for (BlockInfoBundle c : a.blockInfoCommands)        //iterate through all blockInfoBundle commands in a
            {
-               if (b.matches(c))
+               if (b.matches(c))                                //if the two bundles match
                {
-                   commandFound = true;
-                   break;
+                   commandFound = true;                         //set commandfound true
+                   break;                                       //and stop searching through a
                }
            }
-           if (commandFound = false)
+           if (commandFound = false)                            //if commandFound is still false at this point, there was no signal in a that matched this
            {
-               result = false;
-               break;
+               result = false;                                  //therefore the objects do not match
+               break;                                           //stop searching
            }
         }
         
-        if (result == true)
+        if (result == true)                                     //if result is still true after searching the blockInfoCommands
         {
-           for (BlockSignalBundle b : this.blockSignalCommands)
-        {
+           for (BlockSignalBundle b : this.blockSignalCommands) //search through the blocksignalcommands
+            {
             commandFound = false;
            for (BlockSignalBundle c : a.blockSignalCommands)
            {
@@ -95,31 +106,33 @@ public class Commands {
         } 
         }
         
-        if (result == true)
+        if (result == true)                                 //if the result is stil true after search signals and info bundles, search through all switch commands
         {
             for (Switch b : this.switchCommands)
-        {
-            commandFound = false;
-           for (Switch c : a.switchCommands)
-           {
+            {
+                commandFound = false;
+            for (Switch c : a.switchCommands)
+            {
                if (b.matches(c))
                {
                    commandFound = true;
                    break;
                }
-           }
-           if (commandFound = false)
-           {
+            }
+            if (commandFound = false)
+            {
                result = false;
                break;
-           }
+            }
         }
-        }
+       }
         
         
         return result;
     }
     
+    //display this command object as a string
+    @Override
     public String toString()
     {
         String s = new String();
@@ -144,16 +157,25 @@ public class Commands {
         return s;
     }
     
+    //pushCommand(BlockInfoBundle b) pushes a command of type BlockInfoBundle
+    //Parameters:
+    //  BlockInfoBundle b - command to add
     public void pushCommand(BlockInfoBundle b)
     {
         blockInfoCommands.add(b);
     }
     
+    //pushCommand(BlockSignalBundle b) pushes a command of type BlockSignalBundle
+    //Parameters:
+    //  BlockInfoBundle b - command to add
     public void pushCommand(BlockSignalBundle b)
     {
         blockSignalCommands.add(b);
     }
     
+    //pushCommand(Switch s) pushes a command of type Switch
+    //Parameters:
+    //  BlockInfoBundle b - command to add
     public void pushCommand(Switch s)
     {
         switchCommands.add(s);

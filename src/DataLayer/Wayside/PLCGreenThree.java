@@ -19,7 +19,10 @@ import DataLayer.TrackModel.*;
 import java.util.*;
 
 /**
- *
+ *<h1>PLCGreenOne</h1>
+ * <p>
+ * This class contains the PLC for the Green Line controller that controls the bottom portion
+ * of the Green Line according to the excel layout</p>
  * @author nwhachten
  */
 public class PLCGreenThree extends PLC{
@@ -34,6 +37,9 @@ public class PLCGreenThree extends PLC{
     private boolean trainWaitingAt76;
 
 
+    //plcProgram() is the method that overrides PLC abstract method. This is the portion of code
+    //specific to this portion of the Track
+    //Returns - Commands, the commands for this program given a set of inputs
     public PLCGreenThree(int id, LineColor line, HashMap routeTable) {
         super(id, line, routeTable);
         this.trainsInLoop = 0;

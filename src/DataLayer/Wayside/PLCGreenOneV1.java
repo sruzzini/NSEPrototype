@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- *
+ *<h1>PLCGreenOneV1</h1>
+ * <p>
+ * This class contains a modified PLC for the Green Line controller that controls the top portion
+ * of the Green Line according to the excel layout</p>
  * @author nwhachten
  */
 public class PLCGreenOneV1 extends PLC{
@@ -48,6 +51,9 @@ public class PLCGreenOneV1 extends PLC{
         trainExiting = false;
     }
 
+    //plcProgram() is the method that overrides PLC abstract method. This is the portion of code
+    //specific to this portion of the Track
+    //Returns - Commands, the commands for this program given a set of inputs
     @Override
         public Commands plcProgram() {
         Commands c;

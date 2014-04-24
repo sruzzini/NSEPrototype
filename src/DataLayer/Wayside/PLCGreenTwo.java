@@ -19,7 +19,10 @@ import DataLayer.TrackModel.*;
 import java.util.*;
 
 /**
- *
+ *<h1>PLCGreenTwo</h1>
+ * <p>
+ * This class contains the PLC for the Green Line controller that controls the middle portion
+ * of the Green Line according to the excel layout</p>
  * @author nwhachten
  */
 public class PLCGreenTwo extends PLC{
@@ -38,6 +41,9 @@ public class PLCGreenTwo extends PLC{
         this.holdAtYard = false;
     }
     
+    //plcProgram() is the method that overrides PLC abstract method. This is the portion of code
+    //specific to this portion of the Track
+    //Returns - Commands, the commands for this program given a set of inputs
     @Override
     protected Commands plcProgram() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
