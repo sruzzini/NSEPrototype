@@ -434,6 +434,7 @@ public class CTC
         redSections = redSec.toArray(new String[0]);
     }
 
+    //Defines the route for each line as defined in route.
     private void setPath()
     {
         String csvFile = "Route.txt";
@@ -486,7 +487,7 @@ public class CTC
 	}        
     }
     
-    //Completed
+    //checks to see if train is on a given block
     private boolean trainExistsOnBlock(int blockID)
     {
         boolean exists = false;
@@ -500,7 +501,7 @@ public class CTC
         return exists;
     }
     
-    //Completed
+    //Updates CTC's local switches positions and block closure 
     public void updateBlockInfo(ArrayList<BlockSignalBundle> blockOccupiences, ArrayList<Switch> newSwitches)
     {   
         
@@ -529,13 +530,11 @@ public class CTC
         this.switchPostions = newSwitches;       
         this.sortSwitchPosition();
     }
+       
     
-    /*
-        Returns an ArrayList of BlockSignalBundles
-        If the size is 1, then set new closure, clear the ArrayList, and return a local copy of the ArrayList
-        If the size is 0, return a local copy of the ArrayList        
-    */
-    
+    //returns a arraylist of closures, the size should only should be 1 or 0
+    //if the size is equal to 0, then there are no closure to set
+    //if the size is equal to 1, then wayside will act accordingly 
     public ArrayList<BlockSignalBundle> setClosing()
     {
         ArrayList<BlockSignalBundle> newSignal = new ArrayList<>();
@@ -547,8 +546,9 @@ public class CTC
         }
         
         return newSignal;
-    }    
+    } 
     
+    //returns the suggest route for train and clears immediately
     public ArrayList<BlockSignalBundle> setRoute()
     {
         //System.out.println("CTC size of route: " + setRoute.size());
@@ -567,6 +567,9 @@ public class CTC
         return route;        
     }
     
+    
+    //Sets the changed switch a local variable and returns
+    //clears the switch Bundle
     public ArrayList<Switch> setSwitch()
     {
         ArrayList<Switch> newSwitch = new ArrayList<>();
