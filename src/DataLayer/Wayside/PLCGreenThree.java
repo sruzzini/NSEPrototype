@@ -60,8 +60,7 @@ public class PLCGreenThree extends PLC{
         {
             if (trainsComing > 0)
             {
-                //push signal commands to stop at block 149 and 150
-                //c.pushCommand(new BlockSignalBundle(block149.getAuthority(), block149.getDestination(), 0.0, 149, LineColor.GREEN));
+                
                 c.pushCommand(new BlockSignalBundle(block76.getAuthority(), block76.getDestination(), 0.0, block76.getBlockID(), LineColor.GREEN));
                 trainWaitingAt76 = true;
                 trainPassingThru76 = false;
@@ -73,18 +72,19 @@ public class PLCGreenThree extends PLC{
                 if (switch5.StraightBlock == 76) dir = true;
                 c.pushCommand(new Switch(LineColor.GREEN, switch5.SwitchID, 
                         switch5.ApproachBlock, switch5.StraightBlock, 
-                        switch5.DivergentBlock, dir ));
-                //push signal command to increase speed of blocks 149 and 150 to the speed limit
-               // c.pushCommand(new BlockSignalBundle(block149.getAuthority(), 
-                //        block149.getDestination(), block149.getSpeedLimit(), 149, LineColor.GREEN));
-                //c.pushCommand(new BlockSignalBundle(block76.getAuthority(), 
-                  //      block76.getDestination(), block76.getSpeedLimit(), block76.getBlockID(), LineColor.GREEN));
-                trainWaitingAt76 = false;
-                trainPassingThru76 = true;
+                        switch5.DivergentBlock, dir ));  
+                if (trainWaitingAt76 || true) //true should not be there, quick fix for logic error somewhere
+                {
+                    c.pushCommand(new BlockSignalBundle(block76.getAuthority(), 
+                       block76.getDestination(), block76.getSpeedLimit(), block76.getBlockID(), LineColor.GREEN));
+                    trainWaitingAt76 = false;
+                    trainPassingThru76 = true;
+                }
             }
         }
-        if (block77.isOccupied() && !block76.isOccupied() && !block101.isOccupied())
+        if (block77.isOccupied() && (!block76.isOccupied() || block76.getVelocity() == 0) && !block101.isOccupied())
         {
+           // System.out.println("PLCGreenThree - 77 is occupied. trainPassingThru76 = " + trainPassingThru76 + " trainsComing: " + trainsComing);
            trainExiting = false;
            if (trainPassingThru76)
            {
@@ -93,6 +93,7 @@ public class PLCGreenThree extends PLC{
            }
            else if (trainsComing > 0)
            {
+               //System.out.println("PLCGreenThree - about to tell switch to point towards block 101");
                trainExiting = true;
                boolean dir = false;
                if (switch5.StraightBlock == 101) dir = true;

@@ -662,18 +662,31 @@ public class TrackController implements Runnable {
         }
         else if (id == 3)
         {
+            routeTable.put(77, 9);
+            routeTable.put(1, 16);
+            routeTable.put(16, 1);
             this.plcProgram = new PLCRedOne(id, line, routeTable);
         }
         else if (id == 4)
         {
+            routeTable.put(27, 28);
+            routeTable.put(28, 27);
+            routeTable.put(32, 33);
+            routeTable.put(33, 32);
             this.plcProgram = new PLCRedTwo(id, line, routeTable);
         }
         else if (id == 5)
         {
+            routeTable.put(38, 39);
+            routeTable.put(39, 38);
+            routeTable.put(43, 44);
+            routeTable.put(44, 43);
             this.plcProgram = new PLCRedThree(id, line, routeTable);
         }
         else if (id == 6)
         {
+            routeTable.put(52, 53);
+            routeTable.put(53, 66);
             this.plcProgram = new PLCRedFour(id, line, routeTable);
         }
         else

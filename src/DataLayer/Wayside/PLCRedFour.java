@@ -49,8 +49,8 @@ public class PLCRedFour extends PLC {
         Block block48 = this.blocks.get(48);
         Block block49 = this.blocks.get(49);
         Block block50 = this.blocks.get(50);
+        Block block52 = this.blocks.get(52);
         Block block53 = this.blocks.get(53);
-        Block block54 = this.blocks.get(54);
         Block block66 = this.blocks.get(66);
         Switch switch6 = this.switches.get(6);
         
@@ -84,7 +84,7 @@ public class PLCRedFour extends PLC {
             }
         }
         
-        if (block53.isOccupied() && !block54.isOccupied() && !block66.isOccupied())
+        if (block52.isOccupied() && !block53.isOccupied() && !block66.isOccupied())
         {
             if (trainsComing > 0)
             {
@@ -92,7 +92,7 @@ public class PLCRedFour extends PLC {
                 holdAt66 = true;
                 leavingLoop = false;
                 boolean dir = false;
-                if (switch6.StraightBlock == 54) dir = true;
+                if (switch6.StraightBlock == 53) dir = true;
                 c.pushCommand(new Switch(LineColor.RED, switch6.SwitchID, 
                         switch6.ApproachBlock, switch6.StraightBlock, 
                         switch6.DivergentBlock, dir ));
@@ -108,7 +108,7 @@ public class PLCRedFour extends PLC {
             }
         }
         
-        if (block54.isOccupied() && !block53.isOccupied())
+        if (block53.isOccupied() && !block52.isOccupied())
         {
             if (enteringLoop)
             {
@@ -122,7 +122,7 @@ public class PLCRedFour extends PLC {
             }
         }
         
-        if (block66.isOccupied() && !block53.isClosed())
+        if (block66.isOccupied() && !block52.isClosed())
         {
             if (trainsComing > 0)
             {

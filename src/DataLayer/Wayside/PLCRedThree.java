@@ -38,7 +38,7 @@ public class PLCRedThree extends PLC {
         {
             //set switch 2 towards 28
             boolean dir = false;
-                if (switch4.StraightBlock == 28) dir = true;
+                if (switch4.StraightBlock == 39) dir = true;
                 c.pushCommand(new Switch(LineColor.RED, switch4.SwitchID, 
                         switch4.ApproachBlock, switch4.StraightBlock, 
                         switch4.DivergentBlock, dir ));
@@ -48,7 +48,7 @@ public class PLCRedThree extends PLC {
         {
             //set switch 3 towards 32
             boolean dir = false;
-                if (switch5.StraightBlock == 32) dir = true;
+                if (switch5.StraightBlock == 43) dir = true;
                 c.pushCommand(new Switch(LineColor.RED, switch5.SwitchID, 
                         switch5.ApproachBlock, switch5.StraightBlock, 
                         switch5.DivergentBlock, dir ));

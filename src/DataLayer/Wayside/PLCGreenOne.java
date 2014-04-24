@@ -56,7 +56,7 @@ public class PLCGreenOne extends PLC {
         Switch switch3 = this.switches.get(3);  //Z, F, G
         
         //System.out.println("Block 149: " + block149.getBlockID() + " Block 150: " + block150.getBlockID());
-        if (block149.isOccupied() || block150.isOccupied())
+        if (block150.isOccupied()) //would usually also include if block149.isOccupied || but it never gets unset
         {
             if (trainsComing > 0)
             {
@@ -143,7 +143,7 @@ public class PLCGreenOne extends PLC {
         }
         if (block1.isOccupied() && !block12.isOccupied() && !block13.isOccupied())
         {
-           // System.out.println("PLCGreenOne - plcProgram - block1 is occupied with no adjacent occupancies. TrainsAway ==" + trainsAway);
+            //System.out.println("PLCGreenOne - plcProgram - block1 is occupied with no adjacent occupancies. TrainsAway =" + trainsAway + " TrainsComing =" + trainsComing);
             if (trainsAway == 0)
             {
                 trainPassingThru1 = true;

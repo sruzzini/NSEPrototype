@@ -66,7 +66,7 @@ public class PLCRedOne extends PLC{
             }
             else
             {
-                leavingYard = false;
+                leavingYard = true;
                 boolean dir = false;
                 if (switch7.StraightBlock == 77) dir = true;
                 c.pushCommand(new Switch(LineColor.RED, switch7.SwitchID, 
