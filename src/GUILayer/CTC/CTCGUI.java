@@ -407,6 +407,11 @@ public class CTCGUI extends javax.swing.JPanel {
         });
 
         routeTrainSubmitButton.setText("Submit");
+        routeTrainSubmitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                routeTrainSubmitButtonActionPerformed(evt);
+            }
+        });
 
         routeTrainsSpeedLabel.setText("Speed:");
         routeTrainsSpeedLabel.setToolTipText("");
@@ -680,29 +685,7 @@ public class CTCGUI extends javax.swing.JPanel {
 
     }//GEN-LAST:event_blockClosingBlockDropActionPerformed
 
-     public void routeTrainSubmitButtonActionPerformed(java.awt.event.ActionEvent evt)
-     {
-        LineColor lineDestination;
-        int trainID = Integer.parseInt(String.valueOf(routeTrainsTrainDrop.getSelectedItem()));
-        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem()).toUpperCase();
-        if(line.equals("RED"))
-        {
-            lineDestination = LineColor.RED;
-        }
-        else if(line.equals("GREEN"))
-        {
-            lineDestination = LineColor.RED;
-        }        
-        else
-        {
-            lineDestination = LineColor.YARD;
-        }
-        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
-        int block = Integer.parseInt(String.valueOf(routeTrainsBlockDrop.getSelectedItem()));
-        
-        this.CTCOffice.trains.set(trainID, new TrainsClass(lineDestination, this.CTCOffice.trains.get(trainID).SectionCurrent,  this.CTCOffice.trains.get(trainID).BlockCurrent, this.CTCOffice.calculateAuthority(this.CTCOffice.trains.get(trainID),this.CTCOffice.trains.get(trainID).line).size(),section, block));
-     }
-    
+         
     private void blockClosingSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockClosingSubmitButtonActionPerformed
 
     }//GEN-LAST:event_blockClosingSubmitButtonActionPerformed
@@ -796,6 +779,7 @@ public class CTCGUI extends javax.swing.JPanel {
                 if(index == -1)
                 {
                     this.CTCOffice.BlockClosings.add(new BlockSignalBundle(0, 0, 0.0, Integer.parseInt(block), this.lineEnum(line), true));
+                    this.CTCOffice.closureBundle.add(new BlockSignalBundle(0, 0, 0.0, Integer.parseInt(block), this.lineEnum(line), true));
                     String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
                     
                     if(this.CTCOffice.BlockClosings.size() > 0)
@@ -820,6 +804,7 @@ public class CTCGUI extends javax.swing.JPanel {
                     
                     //System.out.println(blocks.length);
                     String[][] blocks = new String[this.CTCOffice.BlockClosings.size()][2];
+                    this.CTCOffice.closureBundle.add(new BlockSignalBundle(0, 0, -1.0, Integer.parseInt(block), this.lineEnum(line), false));
                     
                     if(this.CTCOffice.BlockClosings.size() > 0)
                     {                        
@@ -917,10 +902,9 @@ public class CTCGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_routeTrainsBlockDropActionPerformed
 
     private void switchPositionSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionSubmitButtonActionPerformed
-        
-        
+                
         String line = this.switchPositionsLineDrop.getSelectedItem().toString();
-        String switchNumber = this.switchPositionsLineDrop.getSelectedItem().toString();
+        String switchNumber = this.switchPositionSwitchesDrop.getSelectedItem().toString();
         
         if(!switchNumber.equals("Switch #") && !line.equals("Line"))
         {          
@@ -932,20 +916,44 @@ public class CTCGUI extends javax.swing.JPanel {
                 {
                     if(this.switchPositionsStraightRadio.isSelected() && !this.CTCOffice.switchPostions.get(i).isStraight())
                     {
-                        this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
+                        this.CTCOffice.switchBundle.add(0,this.CTCOffice.switchPostions.get(i));
                         this.CTCOffice.switchBundle.get(0).Straight = true;
                     }
                     else if(this.switchPositionsDivergentRadio.isSelected() && this.CTCOffice.switchPostions.get(i).isStraight()) 
                     {
-                        this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
+                        this.CTCOffice.switchBundle.add(0, this.CTCOffice.switchPostions.get(i));
                         this.CTCOffice.switchBundle.get(0).Straight = false;
                     }
                 }
                 
             }
-        }
-        
+        }        
     }//GEN-LAST:event_switchPositionSubmitButtonActionPerformed
+
+    private void routeTrainSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainSubmitButtonActionPerformed
+             LineColor lineDestination;
+        int trainID = Integer.parseInt(String.valueOf(routeTrainsTrainDrop.getSelectedItem()));
+        String line = String.valueOf(routeTrainsLineDrop.getSelectedItem()).toUpperCase();
+        if(line.equals("RED"))
+        {
+            lineDestination = LineColor.RED;
+        }
+        else if(line.equals("GREEN"))
+        {
+            lineDestination = LineColor.GREEN;
+            
+        }        
+        else
+        {
+            lineDestination = LineColor.YARD;
+        }
+        String section = String.valueOf(routeTrainsSectionDrop.getSelectedItem()).toUpperCase();
+        int block = Integer.parseInt(String.valueOf(routeTrainsBlockDrop.getSelectedItem()));
+        
+        this.CTCOffice.trains.set(trainID, new TrainsClass(lineDestination, this.CTCOffice.trains.get(trainID).SectionCurrent,  this.CTCOffice.trains.get(trainID).BlockCurrent, this.CTCOffice.calculateAuthority(this.CTCOffice.trains.get(trainID),this.CTCOffice.trains.get(trainID).line).size(),section, block));
+        this.CTCOffice.setRoute = this.CTCOffice.calculateAuthority(this.CTCOffice.trains.get(trainID), lineDestination);
+        //System.out.println("CTC new route submitted");
+    }//GEN-LAST:event_routeTrainSubmitButtonActionPerformed
    
     public void setClosures()
     {

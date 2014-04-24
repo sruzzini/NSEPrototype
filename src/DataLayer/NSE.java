@@ -203,6 +203,8 @@ public class NSE implements Runnable
                   this.Wayside.sendSwitchStateSignal(s);  
                 }
                 
+                ArrayList<BlockSignalBundle> toWaysideInfo = this.CTCOffice.setRoute();
+                this.Wayside.sendTravelSignal(toWaysideInfo);                
                 
             }
             

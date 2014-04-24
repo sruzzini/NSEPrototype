@@ -143,14 +143,14 @@ public class CTC
                         this.trains.get(trainIndex).StationDestination = this.returnStationBlock(this.trains.get(trainIndex).line, this.trains.get(trainIndex).BlockDestination);
                         trainRouteInfo = this.calculateAuthority(this.trains.get(trainIndex), this.trains.get(trainIndex).line);
                         this.trains.get(trainIndex).Authority = trainRouteInfo.size() - 1;
-                        System.out.println("CTC Moving onto the next staion");
+                        //System.out.println("CTC Moving onto the next staion");
                     }
                     else
                     {                        
                         trainRouteInfo = this.calculateAuthority(this.trains.get(trainIndex), this.trains.get(trainIndex).line);
                         this.trains.get(trainIndex).Authority = trainRouteInfo.size() - 1;                                        
                     }                                           
-                    System.out.println("CTC Train's new authority: " + this.trains.get(trainIndex).Authority);
+                    //System.out.println("CTC Train's new authority: " + this.trains.get(trainIndex).Authority);
                     break;
                 }
             }
@@ -225,8 +225,8 @@ public class CTC
     
     private BlockSignalBundle getNextStation(TrainsClass train)
     {
-        int newDestination;
-        int newAuthority;
+        int newDestination = 0;
+        int newAuthority = 0;
         
         if(LineColor.GREEN == train.line)
         {
@@ -234,11 +234,12 @@ public class CTC
             newDestination = this.GREEN_NEXT_STATION.get(train.StopIndex).NEXTBLOCKID;
             
         }
-        else //if(LineColor.RED == train.Line)
+        else if(LineColor.RED == train.line)
         {
             newAuthority = this.RED_NEXT_STATION.get(train.StopIndex).AUTHORITY;
             newDestination = this.RED_NEXT_STATION.get(train.StopIndex).NEXTBLOCKID;            
         }
+        
         return new BlockSignalBundle(newAuthority, (newDestination), ((double)(70*1000)/(double)(3600)), train.BlockCurrent, train.line);//returnSection(LineColor.GREEN, newDestination))
     }
         
@@ -286,21 +287,21 @@ public class CTC
                 //System.out.println(path.get(i).toString());
                 if(train.BlockCurrent == path.get(i))
                 {
-                    System.out.println("CTC Train's Current Block: " + path.get(i).toString());
-                    System.out.println("CTC Train's Previous block: " + train.PreviousBlock);
+                    //System.out.println("CTC Train's Current Block: " + path.get(i).toString());
+                    //System.out.println("CTC Train's Previous block: " + train.PreviousBlock);
                     if(i > 0 && train.PreviousBlock == path.get(i-1) || train.PreviousBlock == 0)
                     {
-                        System.out.println("CTC Train's Previous Block: " + path.get(i-1).toString());
+                        //System.out.println("CTC Train's Previous Block: " + path.get(i-1).toString());
                         for(int j = i; j < path.size(); j++)
                         {                            
                             //System.out.println("Train's Destination Block : " + (train.BlockDestination) + " | Checking Block: " + path.get(j));
                             if(train.BlockDestination == path.get(j))
                             {
-                                System.out.println("CTC Destination: " + path.get(j) + " | Current Block: " + path.get(i));
-                                System.out.println("CTC Destination Block: " + j + " | Current Block Index: " + i);                                
+                                //System.out.println("CTC Destination: " + path.get(j) + " | Current Block: " + path.get(i));
+                                //System.out.println("CTC Destination Block: " + j + " | Current Block Index: " + i);                                
                                 for(int k = 0; k <= j-i; k++)
                                 {
-                                    System.out.println("CTC Block: " + path.get(i+k) + " | Train's Authority: " + (j-i-k));
+                                    //System.out.println("CTC Block: " + path.get(i+k) + " | Train's Authority: " + (j-i-k));
                                     route.add(new BlockSignalBundle(j-i-k, train.BlockDestination, (double)((double)70*1000)/(3600), path.get(i+k), train.line));
                                 }                                        
                                 destinationFound = true;
@@ -331,13 +332,10 @@ public class CTC
                     {
                         route.add(new BlockSignalBundle(1, train.BlockDestination, (double)((double)70*1000)/(3600), path.get(i), train.line));
                         break;
-                    }
-                    
-                    
+                    }                    
                 }            
             }
         }
-
         return route;
     }
     
@@ -553,6 +551,7 @@ public class CTC
     
     public ArrayList<BlockSignalBundle> setRoute()
     {
+        //System.out.println("CTC size of route: " + setRoute.size());
         ArrayList<BlockSignalBundle> route = new ArrayList<>();
         if(this.setRoute.size() >= 1)
         {
@@ -562,6 +561,7 @@ public class CTC
             }
             
             this.setRoute.clear();
+            //System.out.println("CTC size of route: " + route.size());
         }
         
         return route;        
@@ -573,7 +573,7 @@ public class CTC
         if(this.switchBundle.size() == 1)
         {            
             newSwitch.add(this.switchBundle.get(0));
-            this.closureBundle.clear();
+            this.switchBundle.clear();
         }
         
         return newSwitch;
@@ -626,9 +626,9 @@ public class CTC
                 train.add(new DispatchBundle(new BlockSignalBundle(4, 65, ((double)(70*1000)/(double)(3600)),0, LineColor.YARD), i , LineColor.RED));
                 this.trains.get(i).line = LineColor.RED;
                 this.trains.get(i).Authority = 5;
-                this.trains.get(i).BlockDestination = this.GREEN_NEXT_STATION.get(0).NEXTBLOCKID;
-                this.trains.get(i).StationDestination = this.GREEN_NEXT_STATION.get(0).NEXTSTATION;
-                this.trains.get(i).SectionDestination = this.returnSection(this.trains.get(i).line, this.GREEN_NEXT_STATION.get(0).NEXTBLOCKID);
+                this.trains.get(i).BlockDestination = this.RED_NEXT_STATION.get(0).NEXTBLOCKID;
+                this.trains.get(i).StationDestination = this.RED_NEXT_STATION.get(0).NEXTSTATION;
+                this.trains.get(i).SectionDestination = this.returnSection(this.trains.get(i).line, this.RED_NEXT_STATION.get(0).NEXTBLOCKID);
                 break;
             }
         }
