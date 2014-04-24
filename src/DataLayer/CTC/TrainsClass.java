@@ -1,8 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * CTC class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Michael Kudlaty
+ * 
+ *****************************************************************************/
 
 package DataLayer.CTC;
 import DataLayer.EnumTypes.LineColor;

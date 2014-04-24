@@ -1,8 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * CTC class
+ * 
+ * Developed by AJility
+ * April 2014
+ * 
+ * Contributers:
+ *  Michael Kudlaty
+ * 
+ *****************************************************************************/
 
 package DataLayer.CTC;
 import DataLayer.Bundles.*;
@@ -17,10 +23,6 @@ import java.io.IOException;
 import java.util.*;
 
 
-/**
- *
- * @author domino54
- */
 public class CTC
 {
     public boolean mode;
@@ -53,10 +55,8 @@ public class CTC
     public final ArrayList<Station> GREEN_NEXT_STATION;
     public final ArrayList<Station> RED_NEXT_STATION;
     
-    /**
-     * Creates new form CTCGUI
-     * @param nTrains
-     */
+    //Initializes the all the local and public variables
+    //Receives the number of trains at the beginning with nTrains
     public CTC(int nTrains) 
     {      
         this.numberOfTrains = nTrains;
@@ -87,6 +87,8 @@ public class CTC
         iniTrains(nTrains);         
     }
     
+    //Initializes the all the local and public variables
+    //Defaults the number of trains in the yard to 10
     public CTC() 
     {
         this.numberOfTrains = 10;
@@ -117,8 +119,7 @@ public class CTC
     }    
 
     //update the local train locations, block signals, switches positions    
-
-    public ArrayList<BlockSignalBundle> getRouteInfo()//int Line, int block, double velocity, int authority, int destination)
+    public ArrayList<BlockSignalBundle> getRouteInfo()
     {
         updateTrainLocations();
         ArrayList<BlockSignalBundle> trainRouteInfo = new ArrayList<>(); 
@@ -164,6 +165,8 @@ public class CTC
         return trainRouteInfo;//new BlockSignalBundle(Line, block, velocity, authority, destination);
     }    
     
+    //A private method that updates the train current block location as well as the previous block
+    //Updates the each trains authority if it has moved
     private void updateTrainLocations()
     {
         for(int i = 0; i < this.trainLocations.size(); i++)
@@ -186,6 +189,7 @@ public class CTC
         }        
     }
     
+    //Given a line and block #, this method will return the corresponding section
     public String returnSection(LineColor line, int blockID)
     {
         //System.out.println("Line Color: " + Line);
@@ -222,6 +226,7 @@ public class CTC
         }        
         return "Not Found";            
     }
+    
     
     private BlockSignalBundle getNextStation(TrainsClass train)
     {
@@ -339,6 +344,8 @@ public class CTC
         return route;
     }
     
+    
+    //creates all the trains in the yard
     private void iniTrains(int numberOfTrains)
     {
         numberTrains = new String[numberOfTrains+1];
@@ -353,6 +360,7 @@ public class CTC
         }
     }
     
+    //reads the track.csv and parse it for block #, section, and line
     private void iniTrack()
     {
         ArrayList<String> greenSec = new ArrayList<>();
@@ -528,7 +536,6 @@ public class CTC
         }
         
         this.switchPostions = newSwitches;       
-        this.sortSwitchPosition();
     }
        
     
@@ -638,17 +645,8 @@ public class CTC
         return train;    
     }
     
-    private void sortSwitchPosition()
-    {
-        for(int i = 0; i < this.switchPostions.size(); i++)
-        {
-            for(int j = 0; j < this.switchPostions.size(); j++)
-            {
-                
-            }
-        }
-    }
-    
+    //reads the nextStation.txt file converts into a ArrayList of Stations
+    //Each Stations contains the current station, the next stations, and what the authority should be    
     private void setNextStations()
     {
         String csvFile = "nextStation.txt";
