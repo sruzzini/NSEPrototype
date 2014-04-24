@@ -395,11 +395,9 @@ public class PhysicsEngine implements Runnable
         double fTotalAbsVal;
         double fNormal;
         double trainAccel;
-        //double trainDisplacement;
         double mass;
         double gravAngle;
         long currTime;
-        //long lastTime = Calendar.getInstance().getTimeInMillis();
         long lastTime = System.nanoTime();
         double deltaT;
         
@@ -413,33 +411,27 @@ public class PhysicsEngine implements Runnable
         double eBrakeForce = calcEBrakeForce();
         
         while (true)
-        //for (int i = 0; i < 100; i++)
         {
             getPhysicsInfo();
-            //System.out.println("Power: " + motorPower);
             
             mass = emptyMass + (passengers + crewCount) * passengerMass; // calc mass using passenger count
             
             // calculate fGravity
             gravAngle = Math.atan(gradient / 100);
             fGravity = - (mass * g * Math.sin(gravAngle));
-            //System.out.println("Gravity force: " + fGravity);
                     
             // calculate fFriction
             fNormal = mass * g * Math.cos(gravAngle); // calculate Normal force
             fFriction = trackCoeffFric * fNormal;
-            //System.out.println("Friction force: " + fFriction);
             // calculate fEngine
             // if velocity is 0, accelerate at the max accel (on spec sheet)
             if (velocity == 0 && motorPower > 0 && !engineFailure)
             {
-                //System.out.println("Velocity is 0, using max accel");
                 fEngine = maxEngineForce;
             }
             // else, use P/v = F to find fEngine
             else if (!engineFailure) 
             {
-                //System.out.println("Velocity is non-zero, using P = Fv");
                 fEngine = motorPower / velocity;
                 // cap 
                 if (fEngine > maxEngineForce)
@@ -470,8 +462,6 @@ public class PhysicsEngine implements Runnable
             {
                 fBrake = 0;
             }
-            //System.out.println("Engine force: " + fEngine);
-            //System.out.println("Brake force: " + fBrake);
             fTotal = fEngine + fGravity; // sum engine and gravity forces
             // fFriction and fBrake impede movement.  Not so simple as a +/- relationship to 
             // the other forces
@@ -490,19 +480,12 @@ public class PhysicsEngine implements Runnable
                 velocity = 0; // correct potential small error
                 fTotal = 0;
             }
-            
-            //System.out.println("Total force: " + fTotal);
-            
-            //System.out.println(fTotal);
+                        
             trainAccel = fTotal / mass;
             
-            //currTime = Calendar.getInstance().getTimeInMillis();
             currTime = System.nanoTime();
             deltaT = (double) (currTime - lastTime) * time_multiplier; // in ms
-            //deltaT = deltaT  / 1000; // in s
-            //System.out.println(deltaT);
             deltaT = deltaT / 1000000000; // in s
-            //System.out.println(deltaT);
             lastTime = currTime;
             
             velocity = velocity + trainAccel * deltaT;
@@ -512,30 +495,8 @@ public class PhysicsEngine implements Runnable
             }
             
             delta_x = delta_x + velocity * deltaT;
- 
-            //System.out.println(delta_x);
-            
+             
             sendPhysicsInfo();
-            /*
-            if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
-            {
-                System.out.println();
-                System.out.println("Power: " + motorPower);
-                System.out.println("fEngine: " + fEngine);
-                System.out.println("Gravity force: " + fGravity);
-                System.out.println("fTotal: " + fTotal);
-                System.out.println("sBrake: " + sBrakeStatus);
-                System.out.println("eBrake: " + eBrakeStatus);
-                System.out.println("Velocity: " + velocity);
-                System.out.println(delta_x);
-                lastPrint = Calendar.getInstance().getTimeInMillis();
-                System.out.println();
-            }   
-            */
         }
-        
-        
-     
-        
     }
 }
