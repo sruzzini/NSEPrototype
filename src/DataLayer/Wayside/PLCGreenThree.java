@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * PLCGreenThree class
+ * 
+ * Developed by AJility
+ * April 2014
+ * CoE 1186
+ * 
+ * Contributers:
+ *  Nathaniel W. Hachten
+ *
+ *****************************************************************************/
 
 package DataLayer.Wayside;
 

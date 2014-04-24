@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/******************************************************************************
+ * 
+ * Commands class
+ * 
+ * Developed by AJility
+ * April 2014
+ * CoE 1186
+ * 
+ * Contributers:
+ *  Nathaniel W. Hachten
+ *
+ *****************************************************************************/
 
 package DataLayer.Wayside;
 
@@ -11,7 +18,9 @@ import DataLayer.TrackModel.*;
 import java.util.*;
 
 /**
- *
+ *<h1>Commands</h1>
+ * <p>
+ * This class contains functionality to add commands and read commands</p>
  * @author nwhachten
  */
 public class Commands {
