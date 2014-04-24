@@ -338,7 +338,7 @@ public class TrackModel
             */
             if(TheLines.get(lineNum).TheBlocks.get(newCurrentBlock).hasStation() && TheTrains.get(i).Model.physics.getVelocity() == 0.0 && !TheTrains.get(i).PassengerFlag)
             {
-                int temp = rand.nextInt(40) - 20;
+                int temp = rand.nextInt(40 - (-10)) + (-10);
                 TheTrains.get(i).sendDeltaPassengers(temp);
             }
     	}
