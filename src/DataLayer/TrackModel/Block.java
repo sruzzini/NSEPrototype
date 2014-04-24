@@ -35,6 +35,23 @@ public class Block {
     private boolean underground; // whether or not the block is underground
     private double velocity; // the current set velocity of the block
     
+    // Block(int blockID, int next, int prev, double length, double speedLimit, double elevation, double cumElev,
+    //         double gradient, boolean underground, boolean light, boolean rrxing,
+    //         boolean station, boolean tswitch) creates a new instance of block with the specified attributes
+    // Parameters:
+    //     int blockID - the number of the block
+    //     int next - the next block number
+    //     int prev - the previous block number
+    //     double length - length of the block
+    //     double speedLimit - the speed limit in the block
+    //     double elevation - the elevation of the block relative to the previous block
+    //     double cumElev - the cumulative elevation of the block
+    //     double gradient - the grade of the block
+    //     boolean underground - whether or not the block is underground
+    //     boolean light - whether or not the block has a light
+    //     boolean rrxing - whether or not the block has a railroad crossing
+    //     boolean station - whether or not the block has a station
+    //     boolean tswitch - whether or not the block connects to a switch
     public Block(int blockID, int next, int prev, double length, double speedLimit, double elevation, double cumElev,
             double gradient, boolean underground, boolean light, boolean rrxing,
             boolean station, boolean tswitch)
@@ -111,6 +128,8 @@ public class Block {
         return beaconLocation;
     }
     
+    // getBeaconSent() returns whether or not the beacon has been sent to a train
+    // Returns - boolean, whether or not the beacon has been sent
     public boolean getBeaconSent()
     {
         return beaconSent;
@@ -151,16 +170,22 @@ public class Block {
         return failureState;
     }
     
+    // getGradient() returns the gradient of the block
+    // Returns - double, the gradient
     public double getGradient() 
     {
         return gradient;
     }
     
+    // getLength() returns the length of the block
+    // Returns - double, the length
     public double getLength() 
     {
         return length;
     }
     
+    // getLightColor() returns the curruent state of the light color on the block
+    // Returns - LightColor, the light color
     public LightColor getLightColor() 
     {
         return lightColor;
@@ -274,7 +299,8 @@ public class Block {
         this.failureState = failureState;
     }
 
-    public void setHasABeacon(boolean hasBeacon) {
+    public void setHasABeacon(boolean hasBeacon) 
+    {
         this.hasBeacon = hasBeacon;
     }
     
@@ -303,7 +329,8 @@ public class Block {
         this.stationID = stationID;
     }
 
-    public void setStationString(String stationString) {
+    public void setStationString(String stationString) 
+    {
         this.stationString = stationString;
     }
 
