@@ -902,10 +902,9 @@ public class CTCGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_routeTrainsBlockDropActionPerformed
 
     private void switchPositionSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPositionSubmitButtonActionPerformed
-        
-        
+                
         String line = this.switchPositionsLineDrop.getSelectedItem().toString();
-        String switchNumber = this.switchPositionsLineDrop.getSelectedItem().toString();
+        String switchNumber = this.switchPositionSwitchesDrop.getSelectedItem().toString();
         
         if(!switchNumber.equals("Switch #") && !line.equals("Line"))
         {          
@@ -917,19 +916,18 @@ public class CTCGUI extends javax.swing.JPanel {
                 {
                     if(this.switchPositionsStraightRadio.isSelected() && !this.CTCOffice.switchPostions.get(i).isStraight())
                     {
-                        this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
+                        this.CTCOffice.switchBundle.add(0,this.CTCOffice.switchPostions.get(i));
                         this.CTCOffice.switchBundle.get(0).Straight = true;
                     }
                     else if(this.switchPositionsDivergentRadio.isSelected() && this.CTCOffice.switchPostions.get(i).isStraight()) 
                     {
-                        this.CTCOffice.switchBundle.set(0,this.CTCOffice.switchPostions.get(i));
+                        this.CTCOffice.switchBundle.add(0, this.CTCOffice.switchPostions.get(i));
                         this.CTCOffice.switchBundle.get(0).Straight = false;
                     }
                 }
                 
             }
-        }
-        
+        }        
     }//GEN-LAST:event_switchPositionSubmitButtonActionPerformed
 
     private void routeTrainSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routeTrainSubmitButtonActionPerformed
