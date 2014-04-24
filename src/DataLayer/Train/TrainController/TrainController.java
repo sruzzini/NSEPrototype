@@ -157,13 +157,6 @@ public class TrainController
     
     
     
-    public TrackSignal getTrackSignal()
-    {
-        return this.trackSignal;
-    }
-    
-    
-    
     /* GetTrainCommand() gets safe command to send to a train
      * Returns - TrainCommand
     */
