@@ -573,7 +573,7 @@ public class CTC
         if(this.switchBundle.size() == 1)
         {            
             newSwitch.add(this.switchBundle.get(0));
-            this.closureBundle.clear();
+            this.switchBundle.clear();
         }
         
         return newSwitch;
