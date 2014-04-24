@@ -192,9 +192,14 @@ public abstract class PLC {
         commands = new ArrayList<>();
         Block next, nextNext, prev, prevPrev;
         
+        if (this.line == LineColor.GREEN)
+        {
+            return commands;
+        }
+        
         for (Block b : this.blockArray)
         {
-            if (b.isOccupied())
+            if (b.isOccupied() && !(this.line == LineColor.RED && b.getBlockID() == 77) && !(this.line == LineColor.GREEN && b.getBlockID() == 152))
             {
                 next = this.findBlock(b.Next, b.getBlockID());
                 if (next != null)
@@ -216,14 +221,14 @@ public abstract class PLC {
                    prevPrev = null; 
                 }
                 
-                if (nextNext != null && nextNext.isOccupied())
+                if (nextNext != null && nextNext.isOccupied() &&  b.getBlockID() != nextNext.getBlockID())
                 {
                     //halt b, next, and nextNext
                     commands.add(new BlockSignalBundle(0, b.getBlockID(), 0, b.getBlockID(), this.line));
                     commands.add(new BlockSignalBundle(0, next.getBlockID(), 0, next.getBlockID(), this.line));
                     commands.add(new BlockSignalBundle(0, nextNext.getBlockID(), 0, nextNext.getBlockID(), this.line));
                 }
-                if (prevPrev != null && prevPrev.isOccupied())
+                if (prevPrev != null && prevPrev.isOccupied() && b.getBlockID() != prevPrev.getBlockID())
                 {
                     //halt b, prev, and prevPrev
                     commands.add(new BlockSignalBundle(0, b.getBlockID(), 0, b.getBlockID(), this.line));
@@ -467,7 +472,7 @@ public abstract class PLC {
         
         for (BlockSignalBundle b : safetyCommands)
         {
-            //c.pushCommand(b);
+            c.pushCommand(b);
         }
         
         return c;
