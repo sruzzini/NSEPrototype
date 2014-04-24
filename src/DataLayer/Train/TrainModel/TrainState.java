@@ -17,7 +17,7 @@ public class TrainState {
     
     private String announcement;
     private String[] actions = {"Buy", "Sell"};
-    private String[] things = {"Cars", "Stocks", "Houses", "Cows"};
+    private String[] things = {"Cars", "Stocks", "Houses", "Cows", "Souls", "TVs"};
     private String advertisement;
     private long adTimer;
     private long adInterval = 30 * 1000;
@@ -28,6 +28,7 @@ public class TrainState {
     private boolean rightDoors;
     private StateInput stateInput;
     private int temperature;
+    private int time_multiplier;
     
     public TrainState()
     {

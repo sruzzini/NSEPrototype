@@ -505,7 +505,7 @@ public class PhysicsEngine implements Runnable
             //System.out.println(delta_x);
             
             sendPhysicsInfo();
-            ///*
+            /*
             if (Calendar.getInstance().getTimeInMillis() > lastPrint  + interval)
             {
                 System.out.println();
@@ -520,7 +520,7 @@ public class PhysicsEngine implements Runnable
                 lastPrint = Calendar.getInstance().getTimeInMillis();
                 System.out.println();
             }   
-            //*/
+            */
         }
         
         

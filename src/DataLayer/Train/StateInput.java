@@ -30,6 +30,6 @@ public class StateInput {
         Temperature = 65;
         Heater = false;
         Announcement = "";
-        Advertisement = "";            
+        Advertisement = "";  
     }
 }
