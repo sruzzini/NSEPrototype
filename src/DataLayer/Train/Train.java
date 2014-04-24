@@ -130,6 +130,17 @@ public class Train implements Runnable
         this.simulate();
     }
     
+    /*
+    sendDeltaPassengers(int deltaPassengers) adds passengers to the train's
+    current count345
+    */
+    public void sendDeltaPassengers(int deltaPassengers)
+    {
+        Model.addPassengers(deltaPassengers);
+        System.out.println(deltaPassengers);
+        PassengerFlag = true;
+    }
+    
     /* SetBeaconSignal(BeaconSignal s) sets the beacon of the train
      * Parameters:
      *     BeaconSignal s - sets train's beacon signal to "s"
@@ -184,15 +195,6 @@ public class Train implements Runnable
         this.status = s;
         this.Controller.setTrainStatus(this.status);
     }
-    /*
-    sendDeltaPassengers(int deltaPassengers) adds passengers to the train's
-    current count345
-    */
-    public void sendDeltaPassengers(int deltaPassengers)
-    {
-        Model.addPassengers(deltaPassengers);
-        PassengerFlag = true;
-    }
     
     /* Simulate() called by "run()".  Performs simulation on train object
     */
@@ -206,10 +208,11 @@ public class Train implements Runnable
             this.commands = this.Controller.getTrainCommand();
             translateStateCommand(this.commands);
             Model.updateState();
-            if ((physicsInput.Velocity > 0) && (oldVelocity == 0))
+            if ((physicsInput.Velocity > 0.0) && (oldVelocity == 0.0))
             {
                 PassengerFlag = false;
             }
+            oldVelocity = physicsInput.Velocity;
             translatePhysicsCommand(this.commands);
             try {
                 if (this.timeMultiplier > 0) //check to make sure time multiplier is not zero
@@ -220,7 +223,6 @@ public class Train implements Runnable
                 Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateStatus();  // update status object
-            oldVelocity = physicsInput.Velocity;
         }
     }
     

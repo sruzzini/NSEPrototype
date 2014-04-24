@@ -467,7 +467,7 @@ public abstract class PLC {
         
         for (BlockSignalBundle b : safetyCommands)
         {
-            c.pushCommand(b);
+            //c.pushCommand(b);
         }
         
         return c;

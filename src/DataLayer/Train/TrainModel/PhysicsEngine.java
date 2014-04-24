@@ -70,7 +70,18 @@ public class PhysicsEngine implements Runnable
     */
     public void addPassengers(int passengers)
     {
-        this.passengers += passengers;
+        if (this.passengers + passengers < 0)
+        {
+            this.passengers = 0;
+        }
+        else if (passengers + passengers > maxPassengers)
+        {
+            this.passengers = maxPassengers;
+        }
+        else
+        {
+            this.passengers = this.passengers + passengers;
+        }
     }
     
     /*

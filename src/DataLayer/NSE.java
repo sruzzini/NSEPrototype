@@ -36,7 +36,7 @@ public class NSE implements Runnable
     public static final int SPEED_UP_10X = 10; //multiplier for 10x real time
     private static final long dispatchIntervalMin = 10; //dispatch interval
     private static final long secondsInMin = 60; //number of milliseconds in a minute
-    private static final long dispatchInterval = dispatchIntervalMin * secondsInMin; // convert minutes to milliseconds 
+    private static final long dispatchInterval = dispatchIntervalMin * secondsInMin * 10; // convert minutes to milliseconds 
     
     //Class variables
     public CTC CTCOffice;
@@ -65,7 +65,7 @@ public class NSE implements Runnable
         this.TrainLocations = new ArrayList<TrainLocation>();
         this.Trains = new ArrayList<Train>();
         //creates 10 Train Objects and 10 TrainLocations
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 10; i++)
         {
             this.Trains.add(new Train(i, this.isRunning, this.Time));
             this.Trains.get(i).setTimeMultiplier(this.TimeMultiplier);
